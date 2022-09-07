@@ -1,0 +1,480 @@
+@charset "UTF-8";
+
+/* 부트스트랩아이콘 */
+@import url('https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css');
+
+body {
+  margin: 0px;
+  padding: 0px;
+}
+
+ul li {
+  list-style: none;
+}
+
+button {
+  cursor: pointer;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Noto Sans KR', sans-serif;
+  text-decoration: none !important;
+}
+
+.wrap {
+  width: 1240px;
+  margin: 0 auto;
+}
+
+a {
+  text-decoration: none;
+}
+
+/* ------------------ */
+
+/* 메인이미지 슬라이드 */
+.carousel-inner {
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  height: 450px;
+}
+/* 여행지,숙소 선택박스 */
+.select_box {
+  width: 100%;
+  height: 120px;
+  background-color: #fff;
+  border-radius: 50px;
+  margin: 0 auto;
+  position: relative;
+  top: -60px;
+  display: flex;
+  align-items: center;
+  box-shadow: 0px 7px 5px #ddd;
+
+  font-weight: 300;
+}
+.search_box {
+  display: flex;
+  width: 100%;
+  padding: 12px;
+
+}
+.search_box ul {
+  display: flex;
+  width: 90%;
+  justify-content: space-around;
+ 
+}
+
+
+.search_box .travel_btn ,.person_btn{
+  border: none;
+  border-bottom: 1px solid black;
+  background-color: #fff;
+  color: #333;
+  font-weight: 300;
+  width: 200px;
+  height: 30px;
+  text-align: left;
+}
+
+.search_box .datepicker_input{
+  border: none;
+  border-bottom: 1px solid black;
+  outline: none;
+  height: 30px;
+  color: #333;
+  font-weight: 300;
+}
+
+.search_box .datepicker_input::placeholder{
+  color: #333;
+}
+
+.search_box li i {
+  color: black;
+  font-size: 33px;
+  margin-right: 10px;
+  margin-top: 15px;
+}
+
+.search_box p {
+  margin-top: 10px;
+  margin-bottom: 0px;
+}
+
+.search_box ul li {
+  display: flex;
+}
+
+.search_box .title {
+  font-size: 20px;
+  font-weight: 300;
+  color: #333;
+}
+
+.search_box .search_btn {
+  width: 150px;
+  height: 60px;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  border: none;
+  border-radius: 50px;
+  background-color: #68ae6d;
+  margin-right: 20px;
+  margin-top: 10px;
+}
+/* 숙소 부분 */
+.acco {
+  font-size: 35px;
+  font-weight: 700;
+  color: #333;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.acco:after {
+  content: '';
+  display: block;
+  border-bottom: 1px solid #999;
+  margin-top: 10px;
+}
+
+.large_container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  
+}
+
+.acco_container {
+  display: inline-flex;
+  width: 48%;
+  margin-top: 80px;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  justify-content :space-around;
+  margin-right: 40px;
+  flex: 1;
+}
+
+.list p {
+  /* margin-top: 40px; */
+  margin-bottom: 10px;
+  color: #666;
+  font-size: 16px;
+}
+
+.list_main_name {
+  font-size: 22px;
+  font-weight: 600;
+  color: #333;
+}
+
+.list_main_name:hover {
+  color: #333;
+}
+
+.list_reserve {
+  font-size: 25px;
+  color: #333;
+}
+.list_reserve:hover {
+  color: #333;
+}
+
+.hotel_picture {
+  position: relative;
+  width: 400px;
+  height: 220px;
+  display: flex;
+  align-items: center;
+  border-radius: 12px;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.hotel_picture img {
+  width: 100%;
+ 
+}
+/* 위시리스트 */
+.heart_icon {
+  position: absolute;
+  right: 10px;
+  bottom: 5px;
+  font-size: 30px;
+  color: white;
+  cursor: pointer;
+}
+
+.heart_icon.act {
+  color: red;
+}
+
+/* 페이지네이션 제작  */
+.pagination_made {
+  display: flex;
+  justify-content: center;
+  margin-top: 150px;
+  margin-bottom: 150px;
+}
+
+.wrap_pagination {
+  padding-left: 0px;
+  display: flex;
+  margin-bottom: 0px;
+  border: 1px solid rgb(213, 213, 213);
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.wrap_pagination li {
+  /* border: 1px solid rgb(213, 213, 213); */
+  /* padding: 8px 15px; */
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.wrap_pagination li:not(:last-child) {
+  border-right: 1px solid rgb(213, 213, 213);
+}
+
+.wrap_pagination a {
+  padding: 8px 15px;
+  color: #68ae6d;
+  display: inline-block;
+}
+
+.wrap_pagination li:hover {
+  background-color: rgb(227, 227, 227);
+}
+
+.wrap_pagination li:active {
+  /* background-color: rgb(227, 227, 227); */
+  background-color: rgb(227, 227, 227);
+}
+
+.wrap_pagination li a.active {
+  color: #fff;
+  background-color: #68ae6d;
+}
+
+/* 위시리스트 모달 */
+.modal {
+  /*모달창 전체(뒷 배경 포함)*/
+  display: none;
+  position: fixed;
+  padding-top: 100px;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  overflow: auto;
+  z-index: 1;
+  background-color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.modal_Content {
+  /*메인 모달칭*/
+  margin: 80px auto 0 auto;
+  padding: 15px 35px 20px 35px;
+  width: 35%;
+  position: relative;
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  background-color: #ffffff;
+}
+
+.modal_content_people {
+  margin: 80px auto 0 auto;
+  padding: 15px 35px 20px 35px;
+  width: 20%;
+  position: relative;
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  background-color: #ffffff;
+}
+
+.wish_btn,
+.person_apply_btn {
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+  margin-bottom: 16px;
+}
+
+.okBtn {
+  /* 확인 버튼(원래 페이지로 돌아가는 용도) */
+  font-size: 16px;
+  line-height: 35px;
+  /* width: 65px; */
+  width: 150px;
+  height: 35px;
+  color: #ffffff;
+  background: #6dcc76;
+  border-radius: 20px;
+  text-align: center;
+  margin-left: 20px;
+  cursor: pointer;
+
+  /* margin: 18px auto 16px auto; */
+}
+
+/* 위시리스트 확인버튼 */
+/* 인원 취소 */
+.check_wishlist,
+.cancel_btn {
+  font-size: 16px;
+  line-height: 35px;
+  width: 150px;
+  height: 35px;
+  color: #666;
+  background: #e2e2e2;
+  border-radius: 20px;
+  text-align: center;
+}
+.check_wishlist:hover {
+  color: #666;
+}
+
+.modal_Content h3,
+.modal_content_people h3 {
+  /* 제목 */
+  margin: 18px 0;
+}
+.modal_Content i,
+.modal_content_people i {
+  /* 체크 아이콘 */
+  color: #68ae6d;
+  padding-right: 10px;
+}
+.modal_Content p,
+.modal_content_people p {
+  /* 본문 폰트 */
+  word-break: break-all;
+  margin: 20px 0;
+}
+.center {
+  /* 중앙 정렬 */
+  text-align: center;
+  margin: 0 auto;
+}
+.center.simpleTextSpaceAdd {
+  /* 스타일3 모달창 위아래 추가 여백으로 height 조정 */
+  margin: 70px 0 50px 0;
+  text-align: center;
+}
+
+/* 여행지선택 모달 */
+.location_list {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  overflow: hidden;
+  margin: 30px 0;
+}
+
+.location_list li {
+  margin-bottom: 15px;
+}
+
+.location_select_wrap {
+  display: flex;
+  justify-content: center;
+}
+
+.location_list button {
+  width: 130px;
+  height: 46px;
+  border-radius: 20px;
+  border: none;
+  font-size: 16px;
+}
+
+.location_list button.act {
+  background-color: #68ae6d;
+  color: white;
+  font-weight: 500;
+}
+
+.location_select {
+  font-size: 16px;
+  line-height: 35px;
+  /* width: 65px; */
+  width: 100px;
+  height: 35px;
+  color: #ffffff;
+  background: #6dcc76;
+  border-radius: 20px;
+  text-align: center;
+  cursor: pointer;
+  margin-left: 25px;
+}
+.location_cancel {
+  font-size: 16px;
+  line-height: 35px;
+  /* width: 65px; */
+  width: 100px;
+  height: 35px;
+  background: #e2e2e2;
+  color: #999;
+  border-radius: 20px;
+  text-align: center;
+  cursor: pointer;
+}
+
+/* 인원선택모달 */
+
+.person_btn_wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 30px;
+  font-size: 18px;
+}
+
+.person_apply_btn {
+  margin-top: 30px;
+}
+
+.adult_btn {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.child_btn {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.minus {
+  width: 40px;
+  height: 40px;
+  margin-left: 20px;
+  border: none;
+}
+.plus {
+  width: 40px;
+  height: 40px;
+  border: none;
+}
+
+.setting_number {
+  text-align: center;
+  border: 1px solid #999;
+  width: 100px;
+  height: 40px;
+  padding-top: 5px;
+}
+

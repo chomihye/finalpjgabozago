@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace 명명법은 경로구분자로 .를 사용하고, 마지막 이름은 Mapper파일명으로 지어주는것이관레임 -->
+<mapper namespace="com.pj.gabozago.mapper.AccomMapper">
+    
+     <!-- <select id="getList" resultMap="mapping_main">
+        SELECT idx, accom_name, large_area_idx
+        FROM tbl_accom
+	</select>  -->
+
+
+    <select id="getList" resultMap="AccomVO" >
+      SELECT 
+        r.idx,
+        r.accom_name,
+        r.large_area_idx,
+        a.large_area_name,  
+        (select max(price) from tbl_accom_room where accom_idx = r.idx) as max_price,
+        (select min(price) from tbl_accom_room where accom_idx = r.idx) as min_price,
+        (select ai.file_name from tbl_accom_images ai where r.idx = ai.idx) as file_name
+        FROM tbl_accom r ,tbl_large_area a
+        WHERE r.large_area_idx = a.idx
+        ORDER BY r.idx asc
+	</select>
+
+
+    <resultMap type="com.pj.gabozago.domain.AccomVO" id="AccomVO">
+        <result property="idx" column="IDX"/>
+        <result property="accomName" column="ACCOM_NAME"/>
+        <result property="largeAreaIdx" column="LARGE_AREA_IDX"/>
+
+        <!-- property: travelPlanVO 클래스에 선언한 travelPlanDetailVO의 변수명, resultMap에는 travelPlanDetailVO의 resultmap id 넣기  -->
+        <collection property="travellargeVO" resultMap="trVO"></collection>
+        <collection property="accomroomVO" resultMap="arVO"></collection>
+        <collection property="accomimagesVO" resultMap="aiVO"></collection>
+
+    </resultMap>
+
+    <resultMap type="com.pj.gabozago.domain.TravelLargeVO" id="trVO">
+        <result property="idx" column="IDX" />
+        <result property="largeAreaName" column="LARGE_AREA_NAME" />
+    </resultMap>
+
+    <resultMap type="com.pj.gabozago.domain.AccomRoomVO" id="arVO">
+        <result property="idx" column="IDX"/>
+        <result property="accomIdx" column="ACCOM_IDX" />
+        <result property="roomName" column="ROOM_NAME" />
+        <result property="roomDesc" column="ROOM_DESC" />
+        <result property="checkIn" column="CHECK_IN" />
+        <result property="checkOut" column="CHECK_OUT" />
+        <result property="defaultCount" column="DEFAULT_COUNT" />
+        <result property="maxCount" column="MAX_COUNT" />
+        <result property="roomArea" column="ROOM_AREA" />
+        <result property="roomOption" column="ROOM_OPTION" />
+        <result property="price" column="PRICE"/>
+        <result property="maxPrice" column="MAX_PRICE" />
+        <result property="minPrice" column="MIN_PRICE" />
+    </resultMap>  
+
+    <resultMap type="com.pj.gabozago.domain.AccomImagesVO" id="aiVO">
+        <result property="idx" column="IDX" />
+        <result property="fileName" column="FILE_NAME" />
+        <result property="accomRoomIdx" column="ACCOM_ROOM_IDX" />
+    </resultMap>
+
+    
+
+
+    <!-- <resultMap type="com.pj.gabozago.mapper.MainMapper" id="mapping_accom">
+        <result property="idx" column="IDX"/>
+        <result property="accom_name" column="ACCOM_NAME"/>
+        <result property="large_area_idx" column="LARGE_AREA_IDX"/>
+     <result property="large_area_name" column="LARGE_AREA_NAME"/>
+        <result property="max_price" column="MAX_PRICE"/>
+        <result property="min_price" column="MIN_PRICE"/>
+    </resultMap>  -->
+
+
+   
+    
+
+</mapper>

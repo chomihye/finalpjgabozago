@@ -1,0 +1,145 @@
+@charset "utf-8";
+
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css");
+@import url('https://fonts.googleapis.com/css2?family=Kanit&family=Mulish:wght@500&family=Nanum+Myeongjo&family=Noto+Sans+KR:wght@100;300;400;500;700;900&family=Orbitron:wght@500&display=swap');
+
+
+
+.slideContainer {
+
+    margin: 0;
+    padding: 0;
+    font-family: 'Noto Sans KR', sans-serif;
+    box-sizing: border-box;
+}
+
+.slideContainer ul, ol {
+    list-style: none;
+    margin: 0;
+}
+.slideContainer a {
+    text-decoration: none;
+    outline: 0;
+    color: #333333;
+}
+.slideContainer .carousel {
+    
+    /* =================== 슬라이드 너비 조절 ==================== */
+    width: 350px;
+    height: 600px;
+
+    background-color: #ffffff;
+
+    border: 1px solid #68AE6D;
+    border-radius: 20px;
+
+    position: relative;
+}
+
+
+
+/* 유저 정보 */
+.slideContainer .userInfo {
+    display: flex;
+    justify-content: space-between;
+
+    padding: 16px 27px;
+}
+.slideContainer .userInfo {
+    font-size: 20px;
+}
+.slideContainer .userInfo .title {
+    font-size: 25px;
+    font-weight: 500;
+
+    margin-bottom: 5px;
+}
+.slideContainer .userInfo i {
+    color: #f30101;
+}
+.slideContainer .userInfo ul {
+    padding-top: 0;
+}
+/* =========================슬라이드 영역=========================== */
+
+.slideContainer .dayList {
+    display: flex;
+    flex-direction: column;
+
+    /* 슬라이드 위,아래 border 길이 조정 및 컨텐츠 부분 사이즈 조정*/
+    width: 90%;
+
+    border-top: 1px solid #68AE6D;
+    border-bottom: 1px solid #68AE6D;
+
+    margin: 0 auto;
+    padding: 19px 10px;
+
+
+}
+.slideContainer ul {
+    padding: 0;
+}
+.slideContainer .dayList h1 {
+    /* DAY 글씨체 사이즈 조절 */
+    color: #68AE6D;
+   font-size: 21px;
+}
+.slideContainer .areaList {
+    display: flex;
+    align-items: flex-start;
+
+    /* 장소 아이콘+ 장소 부분 왼쪽 마진 조정 */
+    margin-left: 10px;
+}
+.slideContainer .areaList img {
+    /* 장소 아이콘 조정 */
+    width: 30px;
+    height: 370px;
+}
+.slideContainer .areaList li {
+    font-size: 20px;
+    font-weight: 500;
+    /* 장소 아이콘 조정했을 시에 아이콘에 맞춰 글씨 간격 조정  */
+    line-height: 27px;
+ 
+    color: #333333;
+    margin-left: 15px;
+    margin-bottom: 30px;
+}
+.slideContainer .areaList li:last-child {
+    margin-bottom: 0;
+}
+/* =========버튼========== */
+
+.slideContainer button> span:first-child {
+    color: #68AE6D;
+    font-size: 25px;
+}
+.slideContainer .arrows{
+    top:541px;
+    opacity: 100%;
+    
+}
+.slideContainer .carousel-control-prev{
+    left: 10px;
+}
+.slideContainer .carousel-control-next {
+    left: 40px;
+}
+.slideContainer .planAdd {
+    width: 110px;
+    height: 36px;
+    
+    color: #68AE6D;
+    background-color: #ffffff;
+
+    text-align: center;
+
+    border: 2px solid #68AE6D;
+    border-radius: 30px;
+
+    position: absolute;
+    top:553px;
+    right: 23px;
+}

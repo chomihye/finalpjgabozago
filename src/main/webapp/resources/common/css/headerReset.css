@@ -1,0 +1,12 @@
+header .container {
+    max-width: none !important;
+    padding: 0px !important;
+    margin: 0px !important;
+}
+#rightMenu button {
+    line-height: normal !important;
+}
+
+.btn-check:focus+ .btn-secondary, .btn-secondary:focus {
+	box-shadow: none !important;
+}

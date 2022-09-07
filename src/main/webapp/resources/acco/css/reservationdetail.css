@@ -1,0 +1,701 @@
+@charset "UTF-8";
+
+/* 부트스트랩아이콘 */
+@import url('https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css');
+
+body {
+  margin: 0px;
+  padding: 0px;
+}
+
+ul li {
+  list-style: none;
+}
+
+button {
+  cursor: pointer;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  font-family: 'Noto Sans KR', sans-serif;
+  box-sizing: border-box;
+  color: #333;
+}
+
+/* =================================== */
+
+.header_box {
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  height: 450px;
+}
+
+.header_box img {
+  width: 100%;
+}
+
+.select_box {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 50px;
+  /* border-bottom: 1px solid #999; */
+}
+
+.person_btn {
+  border: none;
+  border-bottom: 1px solid black;
+  background-color: #fff;
+  color: #333;
+  font-weight: 300;
+  width: 200px;
+  height: 30px;
+  text-align: left;
+}
+
+.small_search_box li i {
+  color: black;
+  font-size: 33px;
+  margin-right: 15px;
+}
+
+.acco_name {
+  font-size: 35px;
+  font-weight: 700;
+}
+
+.acco_name:after {
+  content: '';
+  display: block;
+  width: 150%;
+  border-bottom: 1px solid #999;
+  margin-top: 10px;
+}
+
+/* .small_select_box {
+  background-color: burlywood;
+  position: relative;
+  top: -80px;
+  display: flex;
+  align-items: center;
+} */
+
+.small_search_box {
+  position: relative;
+  display: flex;
+  padding: 12px;
+
+  /* margin: 0 auto; */
+}
+
+.small_search_box .datepicker_input {
+  border: none;
+  border-bottom: 1px solid black;
+  height: 30px;
+  outline: none;
+}
+
+.small_search_box ul {
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+}
+
+.small_search_box li {
+  display: flex;
+  margin-right: 12px;
+}
+
+.small_search_box > button:nth-last-child(1) {
+  border: none;
+}
+
+.small_search_box i:nth-last-child(1) {
+  font-size: 30px;
+  border: 1px solid #68ae6d;
+  padding: 8px 10px;
+  border-radius: 10px;
+  background-color: #68ae6d;
+  color: white;
+}
+
+/* 위시리스트 모달 */
+.modal {
+  /*모달창 전체(뒷 배경 포함)*/
+  display: none;
+  position: fixed;
+  padding-top: 100px;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  overflow: auto;
+  z-index: 1;
+  background-color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.modal_Content {
+  /*메인 모달칭*/
+  margin: 80px auto 0 auto;
+  padding: 15px 35px 20px 35px;
+  width: 35%;
+  position: relative;
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  background-color: #ffffff;
+}
+
+.modal_content_people {
+  margin: 80px auto 0 auto;
+  padding: 15px 35px 20px 35px;
+  width: 20%;
+  position: relative;
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  background-color: #ffffff;
+}
+
+.wish_btn,
+.person_apply_btn {
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+  margin-bottom: 16px;
+}
+
+.okBtn {
+  /* 확인 버튼(원래 페이지로 돌아가는 용도) */
+  font-size: 16px;
+  line-height: 35px;
+  /* width: 65px; */
+  width: 150px;
+  height: 35px;
+  color: #ffffff;
+  background: #6dcc76;
+  border-radius: 20px;
+  text-align: center;
+  margin-left: 20px;
+  cursor: pointer;
+
+  /* margin: 18px auto 16px auto; */
+}
+
+/* 위시리스트 확인버튼 */
+/* 인원 취소 */
+.check_wishlist,
+.cancel_btn {
+  font-size: 16px;
+  line-height: 35px;
+  width: 150px;
+  height: 35px;
+  color: #666;
+  background: #e2e2e2;
+  border-radius: 20px;
+  text-align: center;
+}
+.check_wishlist:hover {
+  color: #666;
+}
+
+.modal_Content h3,
+.modal_content_people h3 {
+  /* 제목 */
+  margin: 18px 0;
+}
+.modal_Content i,
+.modal_content_people i {
+  /* 체크 아이콘 */
+  color: #68ae6d;
+  padding-right: 10px;
+}
+.modal_Content p,
+.modal_content_people p {
+  /* 본문 폰트 */
+  word-break: break-all;
+  margin: 20px 0;
+}
+.center {
+  /* 중앙 정렬 */
+  text-align: center;
+  margin: 0 auto;
+}
+.center.simpleTextSpaceAdd {
+  /* 스타일3 모달창 위아래 추가 여백으로 height 조정 */
+  margin: 70px 0 50px 0;
+  text-align: center;
+}
+
+/* 인원선택모달 */
+.person_btn_wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 30px;
+  font-size: 18px;
+}
+
+.person_apply_btn {
+  margin-top: 30px;
+}
+
+.adult_btn {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.child_btn {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.minus {
+  width: 40px;
+  height: 40px;
+  margin-left: 20px;
+  border: none;
+}
+.plus {
+  width: 40px;
+  height: 40px;
+  border: none;
+}
+
+.setting_number {
+  text-align: center;
+  border: 1px solid #999;
+  width: 100px;
+  height: 40px;
+  padding-top: 5px;
+}
+
+.green_box {
+  width: 100%;
+  height: 550px;
+  /* background-color: rgba(104, 174, 109, 0.15); */
+  /* #E8F3E9 */
+  background-color: #e8f3e9;
+  /* opacity: 0.15; */
+}
+
+.acco_rooms {
+  top: 20px;
+  margin-top: 56px;
+  padding-top: 30px;
+  font-size: 35px;
+  font-weight: 700;
+}
+
+.acco_rooms:after {
+  content: '';
+  display: block;
+  border-bottom: 1px solid #999;
+  margin-top: 10px;
+  width: 17%;
+}
+
+.room_card_box {
+  display: flex;
+  justify-content: end;
+  margin-top: 10px;
+}
+
+/* .room_card {
+  width: 350px;
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 15px;
+  margin-left: 50px;
+} */
+
+.room_card_warp {
+  width: 350px;
+  border-radius: 10px;
+  padding: 15px;
+  background-color: white;
+}
+
+.room_card_warp .img_box {
+  width: 100%;
+  height: 220px;
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.img_box img {
+  width: 100%;
+}
+
+.room_card_warp .room_type {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+.room_card_warp .room_price {
+  font-size: 20px;
+  display: flex;
+  justify-content: end;
+  margin-bottom: 10px;
+}
+
+.room_card_warp .book_btn {
+  display: block;
+  /* justify-content: center;
+  align-items: center; */
+  width: 100%;
+  padding: 12px 0;
+  background-color: #68ae6d;
+  font-size: 15px;
+  color: white;
+  border-radius: 10px;
+  border: none;
+  text-align: center;
+  text-decoration: none;
+  font-size: 18px;
+}
+
+/* 룸 슬라이드 css */
+.swiper {
+  width: 850px;
+  position: relative;
+  left: 180px;
+}
+
+.swiper .swiper-slide {
+  height: 390px;
+  background-color: #e8f3e9;
+  /* background-color: red; */
+  display: flex;
+  justify-content: center;
+
+  align-items: center;
+  margin-bottom: 100px;
+}
+
+.material-icons {
+  font-size: 30px;
+  color: white;
+}
+
+.swiper-button-prev::after,
+.swiper-button-next::after {
+  content: '';
+  display: none;
+}
+
+.swiper-pagination {
+  color: white;
+  position: relative;
+  top: 400px;
+}
+
+.swiper-button-prev,
+.swiper-button-next {
+  font-size: 30px;
+  position: absolute;
+  top: 40% !important;
+  z-index: 1;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.swiper-button-prev {
+  left: -7px !important;
+}
+
+.swiper-button-next {
+  right: -7px !important;
+}
+
+/* .arrow_icon {
+  font-size: 40px;
+  position: relative;
+  bottom: 60px;
+  color: #333;
+} */
+
+.info_detail {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 50px;
+}
+
+.info_exp {
+  /* border: 1px solid red; */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.info_exp i {
+  color: #666;
+}
+
+.info_exp h4 {
+  font-size: 30px;
+  font-weight: 400;
+  margin-bottom: 50px;
+}
+
+.info_exp span {
+  line-height: 1.7;
+}
+
+.info_exp_left {
+  width: 80%;
+}
+
+/* .info_img {
+  width: 85%;
+  height: 500px;
+  border-radius: 5px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+} */
+
+.info_img img {
+  width: 100%;
+}
+
+/* 부트스트랩 슬라이드 */
+/* .container {
+  width: 810px;
+  height: 400px;
+  margin-bottom: 150px;
+  position: relative;
+  right: -10px;
+}
+
+.carousel-inner {
+  border-radius: 10px;
+} */
+
+/* 지도 */
+
+.map_area {
+  position: relative;
+}
+
+.map {
+  /* position: relative; */
+  margin-top: 50px;
+}
+
+.map_location {
+  background-color: #fff;
+  padding: 20px;
+  position: absolute;
+  left: 330px;
+  top: 200px;
+  opacity: 0.9;
+  width: 20%;
+  border-radius: 10px;
+}
+
+.map_location i {
+  font-size: 30px;
+  color: #68ae6d;
+}
+
+.location_info {
+  display: flex;
+  flex-direction: column;
+}
+
+.location_info > span {
+  font-size: 25px;
+  font-weight: 500;
+}
+
+/* 후기  */
+
+.avg_box i {
+  color: #fbbf24;
+}
+.star_box_wrap i {
+  color: #fbbf24;
+  font-size: 18px;
+}
+
+.acco_review {
+  top: 20px;
+  margin-top: 56px;
+  padding-top: 30px;
+  font-size: 35px;
+  font-weight: 700;
+}
+
+.acco_review:after {
+  content: '';
+  display: block;
+  border-bottom: 1px solid #999;
+  margin-top: 10px;
+  width: 17%;
+}
+
+.gray_box {
+  margin-top: 50px;
+  margin-bottom: 50px;
+  padding-bottom: 50px;
+  background-color: #e9e9e9;
+}
+
+.avg_box {
+  display: flex;
+  margin: 0 auto;
+  padding: 20px;
+  position: relative;
+  top: 50px;
+  justify-content: space-around;
+  background-color: #fff;
+  width: 600px;
+  border-radius: 10px;
+}
+
+.avg_box span {
+  font-size: 40px;
+}
+
+.top_review {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-right: 1px solid #666;
+  padding-right: 20px;
+  margin-right: 10px;
+}
+
+.avg_star_bar {
+  display: flex;
+  align-items: center;
+}
+
+/* test */
+
+.progress_box {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.progress_bar {
+  position: relative;
+  width: 300px;
+  height: 5px;
+  background-color: gray;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.progress_bar span {
+  position: absolute;
+  top: 0;
+  display: inline-block;
+  width: 80%;
+  height: 100%;
+  background-color: #68ae6d;
+}
+
+.reviews {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+
+  margin-top: 100px;
+}
+
+/* 후기 슬라이드 */
+.second-swiper {
+  width: 1200px;
+  /* height: 300px; */
+  position: relative;
+  margin: 0 auto;
+  left: -10px;
+  bottom: -100px;
+  margin-bottom: 20px;
+}
+
+.second-swiper .swiper-slide {
+  height: 130px;
+  background-color: #e9e9e9;
+  /* background-color: red; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.second-swiper .swiper-pagination {
+  top: 140px;
+}
+
+.material-icons {
+  font-size: 30px;
+  color: white;
+}
+
+.second-swiper .swiper-button-prev::after,
+.second-swiper .swiper-button-next::after {
+  content: '';
+  display: none;
+}
+
+.swiper-pagination {
+  color: white;
+}
+
+.second-swiper .swiper-button-prev,
+.second-swiper .swiper-button-next {
+  position: absolute;
+  top: 26% !important;
+  z-index: 1;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.second-swiper .swiper-button-prev {
+  left: 120px;
+}
+
+.second-swiper .swiper-button-next {
+  right: 120px;
+}
+
+.star_box_wrap {
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 350px;
+  height: 100px;
+  border-radius: 10px;
+  padding-left: 20px;
+}
+
+.star_name {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+/* 전체 wrap */
+.wrap {
+  width: 1240px;
+  margin: 0 auto;
+}

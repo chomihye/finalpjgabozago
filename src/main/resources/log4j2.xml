@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Configuration status="WARN" monitorInterval="30">
+    <Properties>
+        <Property name="LOG_PATTERN">%d{HH:mm:ss.SSS} %5p --- [%10.50t] %-1.50c{1.}.%-1.50M:%L - %m%n%ex</Property>
+    </Properties>
+    
+    <Appenders>
+        <Console name="ConsoleAppender" target="SYSTEM_OUT" follow="true">
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+        </Console>
+    </Appenders>
+    <!-- 로거의 설정파일 -->
+    <Loggers>
+        <!-- 패키지 이름 레벨지정 -->
+        <Logger name="com.pj.gabozago" level="info" />
+        <Logger name="org.springframework" level="info"/>
+        <Logger name="com.zaxxer.hikari" level="info" />
+        <Logger name="org.apache.ibatis" level="info" />
+        
+        
+        
+
+        <!-- 드라이버스파이 -->
+        <logger name="log4jdbc.log4j2" level="info" additivity="false">
+  			<MarkerFilter marker="LOG4JDBC_JDBC" onMatch="DENY" onMismatch="NEUTRAL"/>
+ 		 	<appender-ref ref="ConsoleAppender"/>
+		</logger>
+
+        <Root level="warn">
+            <AppenderRef ref="ConsoleAppender" />
+        </Root>        
+    </Loggers>
+</Configuration>
