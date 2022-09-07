@@ -15,15 +15,15 @@ public class AccomDTO {
 	private Integer idx;
 	private String accomName;
 	private Integer largeAreaIdx;
-//	private String address;
-//	private String latitude;
-//	private String longitude;
-//	private Date insertTs;
-//	private Date updateTs;
-	
-	private TravelLargeDTO travellarge;
+	private String address;
+	private String latitude;
+	private String longitude;
+	private Date insertTs;
+	private Date updateTs;
 	
 	
-	
+	private TravelLargeDTO travellargeDTO;
+	private AccomRoomDTO accomroomDTO;
+	private AccomImagesDTO accomimagesDTO;
 	
 }

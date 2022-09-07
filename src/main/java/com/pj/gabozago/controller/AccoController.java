@@ -1,6 +1,7 @@
 package com.pj.gabozago.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.pj.gabozago.domain.AccomDTO;
+import com.pj.gabozago.domain.AccomReservationDTO;
 import com.pj.gabozago.domain.AccomRoomDTO;
 import com.pj.gabozago.domain.AccomRoomVO;
 import com.pj.gabozago.domain.AccomVO;
@@ -31,38 +33,36 @@ public class AccoController {
 	
 
 	@Setter(onMethod_= {@Autowired})
-	//private AccomService mainService;
 	private AccomService accomService;
 
 	@RequestMapping(path = {"", "/main"}) 
 	public String list(Model model) throws ControllerException, ServiceException {
 		
-		List<AccomVO> list = this.accomService.getList();
-		//list.forEach(log::trace);
-		//log.info(list);
-		
+		List<AccomDTO> list = this.accomService.getList();
 		model.addAttribute("_ACCOM_",list);
 		
 		return "acco/reservation_mainpage";
 
 	}
 	
-	
-//	@GetMapping("/datail")
-//	public String reservationDetail(@ModelAttribute("AccomVO") AccomVO accomVO, Model model) {
-//
-//		return "acco/reservation_datail";
-//	}
-	
-	
-	
-	
-	
 	@GetMapping("/datail")
-	public String reservationDetail() {
-
+	public String reservationDetail(@ModelAttribute("accom_idx") Integer accom_idx, AccomDTO accom, Model model) throws ControllerException {
+		
+		accom.setIdx(accom_idx);
+		
+		try {
+			Map<String, Object> map = this.accomService.getOneAccomDetail(accom);
+			log.info(map);
+			model.addAttribute("accom", map);
+		} catch (ServiceException e) {
+			throw new ControllerException(e);
+		} // try-catch
+		
 		return "acco/reservation_datail";
 	}
+	
+	
+	
 	
 	
 	@GetMapping("/room")

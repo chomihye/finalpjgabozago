@@ -1,9 +1,11 @@
 package com.pj.gabozago.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import com.pj.gabozago.domain.AccomDTO;
 import com.pj.gabozago.domain.AccomRoomDTO;
@@ -31,7 +33,7 @@ public class AccomServiceImpl
 	// 핵심비지니스로직: DB 게시판 테이블을 조회하여,
 	// 게시글 전체목록을 얻어내고, 이 목록데이터를 호출자에 반환
 	@Override
-	public List<AccomVO> getList() throws ServiceException {
+	public List<AccomDTO> getList() throws ServiceException {
 		log.trace("getList() invoked.");
 			
 		try {
@@ -39,7 +41,18 @@ public class AccomServiceImpl
 			return mapper.getList();	
 		}
 		catch (DAOException e) { throw new ServiceException(e); } // try-catch
-	}//getList
+	}
+
+	@Override
+	public Map<String, Object> getOneAccomDetail(AccomDTO accom) throws ServiceException {
+		try {
+			return mapper.getOneAccomDetail(accom);
+		}
+		catch (DAOException e) { 
+			throw new ServiceException(e); 
+		} // try-catch
+	}
+
 
 
 

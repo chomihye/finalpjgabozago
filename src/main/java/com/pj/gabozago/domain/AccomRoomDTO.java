@@ -22,9 +22,11 @@ public class AccomRoomDTO {
 	private Integer roomArea;
 	private String roomOption;
 	private Integer price;
+	private Integer maxPrice;
+	private Integer minPrice;
 	
 	
-	//private AccomDTO accomDTO;
+	
 	
 	
 }

@@ -1,13 +1,9 @@
 package com.pj.gabozago.domain;
 
-import java.util.Date;
-
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Value;
 
 
-@Data
+@Value
 public class AccomRoomVO {
 	
 	private Integer idx;

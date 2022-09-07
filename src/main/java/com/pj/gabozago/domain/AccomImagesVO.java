@@ -1,8 +1,9 @@
 package com.pj.gabozago.domain;
 
 import lombok.Data;
+import lombok.Value;
 
-@Data
+@Value
 public class AccomImagesVO {
 	
 	private Integer idx;

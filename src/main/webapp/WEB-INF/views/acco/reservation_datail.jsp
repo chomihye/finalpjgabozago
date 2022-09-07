@@ -110,7 +110,7 @@
 
   <div class="wrap">
     <div class="select_box">
-      <div class="acco_name">날짜 선택</div>
+      <div class="acco_name">${accom.ACCOM_NAME}</div>
       <div class="small_search_box">
         <ul class="np-box">
           <li>

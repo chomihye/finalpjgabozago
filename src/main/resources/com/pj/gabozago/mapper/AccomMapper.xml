@@ -6,14 +6,9 @@
 
 <!-- namespace 명명법은 경로구분자로 .를 사용하고, 마지막 이름은 Mapper파일명으로 지어주는것이관레임 -->
 <mapper namespace="com.pj.gabozago.mapper.AccomMapper">
-    
-     <!-- <select id="getList" resultMap="mapping_main">
-        SELECT idx, accom_name, large_area_idx
-        FROM tbl_accom
-	</select>  -->
+ 
 
-
-    <select id="getList" resultMap="AccomVO" >
+    <select id="getList" resultMap="AccomDTO" >
       SELECT 
         r.idx,
         r.accom_name,
@@ -27,25 +22,38 @@
         ORDER BY r.idx asc
 	</select>
 
-
-    <resultMap type="com.pj.gabozago.domain.AccomVO" id="AccomVO">
+	 
+    <resultMap type="com.pj.gabozago.domain.AccomDTO" id="AccomDTO">
         <result property="idx" column="IDX"/>
         <result property="accomName" column="ACCOM_NAME"/>
         <result property="largeAreaIdx" column="LARGE_AREA_IDX"/>
 
         <!-- property: travelPlanVO 클래스에 선언한 travelPlanDetailVO의 변수명, resultMap에는 travelPlanDetailVO의 resultmap id 넣기  -->
-        <collection property="travellargeVO" resultMap="trVO"></collection>
-        <collection property="accomroomVO" resultMap="arVO"></collection>
-        <collection property="accomimagesVO" resultMap="aiVO"></collection>
+        <collection property="travellargeDTO" resultMap="trDTO"></collection>
+        <collection property="accomroomDTO" resultMap="arDTO"></collection>
+        <collection property="accomimagesDTO" resultMap="aiDTO"></collection>
 
     </resultMap>
+    
+  	<select id="getOneAccomDetail" resultType="java.util.Map">
+		SELECT
+			idx,
+			accom_name
+		FROM tbl_accom
+		WHERE idx = #{idx}
+	</select>
+    
+    <resultMap type="java.util.Map" id="AccomDetailVO">
+        <result property="idx" column="IDX"/>
+        <result property="accomName" column="ACCOM_NAME"/>
+    </resultMap>
 
-    <resultMap type="com.pj.gabozago.domain.TravelLargeVO" id="trVO">
+    <resultMap type="com.pj.gabozago.domain.TravelLargeDTO" id="trDTO">
         <result property="idx" column="IDX" />
         <result property="largeAreaName" column="LARGE_AREA_NAME" />
     </resultMap>
 
-    <resultMap type="com.pj.gabozago.domain.AccomRoomVO" id="arVO">
+    <resultMap type="com.pj.gabozago.domain.AccomRoomDTO" id="arDTO">
         <result property="idx" column="IDX"/>
         <result property="accomIdx" column="ACCOM_IDX" />
         <result property="roomName" column="ROOM_NAME" />
@@ -61,24 +69,13 @@
         <result property="minPrice" column="MIN_PRICE" />
     </resultMap>  
 
-    <resultMap type="com.pj.gabozago.domain.AccomImagesVO" id="aiVO">
+    <resultMap type="com.pj.gabozago.domain.AccomImagesDTO" id="aiDTO">
         <result property="idx" column="IDX" />
         <result property="fileName" column="FILE_NAME" />
         <result property="accomRoomIdx" column="ACCOM_ROOM_IDX" />
     </resultMap>
 
     
-
-
-    <!-- <resultMap type="com.pj.gabozago.mapper.MainMapper" id="mapping_accom">
-        <result property="idx" column="IDX"/>
-        <result property="accom_name" column="ACCOM_NAME"/>
-        <result property="large_area_idx" column="LARGE_AREA_IDX"/>
-     <result property="large_area_name" column="LARGE_AREA_NAME"/>
-        <result property="max_price" column="MAX_PRICE"/>
-        <result property="min_price" column="MIN_PRICE"/>
-    </resultMap>  -->
-
 
    
     
