@@ -1,0 +1,42 @@
+@charset "utf-8";
+
+/* 한국어 : font-family: 'Noto Sans KR', sans-serif; */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+/* 영어(다국어) : font-family: 'Noto Sans', sans-serif; */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap');
+
+
+/* 마이페이지 > 여행일정의 slide_plan 만을 위한 CSS 적용 */
+.userInfo{
+    height: 102px;
+}
+.firstLine{
+    width: 300px;
+    display: flex;
+}
+.title{
+    width: 230px !important;
+    margin-bottom: 0 !important;
+}
+.modifyBtn{
+    margin: 3px 0 0 11px;
+}
+.travelDays{
+    width: 300px !important;
+    font-size: 16px;
+    margin-top: 10px;
+}
+i.bi.bi-lock, i.bi.bi-pencil, i.bi.bi-trash3{
+    color: #333333;
+}
+i.bi.bi-trash3{
+    margin-left: 10px;
+}
+.lastModify{
+    margin-top: 15px;
+    margin-left: 153px;
+}
+.lastModify, .lastModify>span{
+    color: #999999;
+    font-size: 14px;
+}

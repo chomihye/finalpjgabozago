@@ -1,0 +1,127 @@
+@charset "utf-8";
+
+/* 한국어 : font-family: 'Noto Sans KR', sans-serif; */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+/* 영어(다국어) : font-family: 'Noto Sans', sans-serif; */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+
+    box-sizing: border-box;
+
+    font-family: 'Noto Sans KR', sans-serif;
+    color: #333333;
+}
+ul, ol{
+    list-style: none;
+}
+a{
+    text-decoration: none;
+}
+
+div.wrap{
+    display: flex;
+    justify-content: center;
+    margin: 50px 0;
+}
+
+section.myWrite{
+    /* width 고정 940px, 콘텐츠는 80%인 752px 안으로 */
+    width: 940px;
+    display: inline-block;
+}
+section .header{
+    width: 752px;
+    /* 화면크기를 줄였을때 nav와 일정 margin을 유지하려면 left에 94px을 준다. */
+    margin: 0 auto 50px 94px;
+    display: flex;
+}
+section .header h1{
+    font-size: 22px;
+    display: inline-block;
+}
+section .header div{
+    margin-left: auto;
+}
+section .header div label{
+    font-size: 16px;
+    display: inline-block;
+    margin-right: 10px;
+}
+section .header #write_type{
+    width: 150px;
+    height: 35px;
+    font-size: 16px;
+    text-align: center;
+    display: inline-block;
+    border-radius: 50px;
+    border: 1px solid #68AE6D;
+}
+
+article.write_context{
+    width: 752px;
+    /* 화면크기를 줄였을때 nav와 일정 margin을 유지하려면 left에 94px을 준다. */
+    margin: 0 auto 50px 94px;
+}
+.writeBox{
+    width: 100%;
+    height: 100px;
+    border: 1px solid #68AE6D;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    /* 가로정렬 */
+    /* justify-content: center; */
+    /* 세로정렬 */
+    align-items: center; 
+}
+.write_context img{
+    width: 80px;
+    height: 80px;
+    border-radius: 10px;
+    margin: auto 30px;
+}
+.write_info, .comment_info{
+    width: 50%;
+}
+.comment_info{
+    width: 450px;
+    margin-left: 80px;
+}
+.write_info h3, .write_info p, .comment_info h3, .comment_info p{
+    /* 글자가 너무 길때, ... 표시하려면 아래 코드 */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.write_info h3{
+    font-size: 18px !important;
+    font-weight: bold !important;
+}
+.comment_info h3{
+    font-size: 18px;
+}
+.comment_info p{
+    color: #999999;
+}
+.write_info h3:hover, .write_info p:hover, .comment_info h3:hover, .comment_info p:hover{
+    text-decoration: underline;
+}
+.write_date{
+    color: #999999;
+    font-size: 14px;
+    margin: 10px 30px auto auto;
+}
+
+div.btnPage{
+    width: 280px;
+    height: 45px;
+    background-color: #68AE6D;
+    /* 330px은 임시 위치고정용, 추후 수정 */
+    margin: 0 auto 0 330px;
+    text-align: center;
+    line-height: 45px;
+}

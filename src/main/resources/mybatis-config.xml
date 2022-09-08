@@ -8,7 +8,9 @@
 <configuration>
 
 
-
+	<mappers>
+	  <package name="com.pj.gabozago.mapper" />
+ 	</mappers>
 
     
 </configuration> 

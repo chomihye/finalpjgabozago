@@ -6,20 +6,19 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class AccomReservationDTO {
-	
-	private Long idx;
+public class AccomReviewDTO {
+
+	private Integer idx;
+	private Long reservationIdx;
 	private Integer memberIdx;
 	private Integer accomRoomIdx;
-	private Integer largeAreaIdx;
-	private String checkInDate;
-	private String checkOutDate;
-	private Integer adultCount;
-	private Integer childCount;
-	private String status;	
+	private Integer grade1;
+	private Integer grade2;
+	private Integer grade3;
 	private Date insertTs;
-	private Date updateTs;
-}
+	
+} // end class

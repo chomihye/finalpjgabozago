@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<!-- Mapper.xml 파일의 FQCN(상세경로 포함 정확한 이름) -->
+<mapper namespace="com.pj.gabozago.mapper.MypageReserMapper">
+
+    <!-- id : 메소드명 -->
+    <!-- parameterType="java.util.Map" 은 생략이 가능함 -->
+    <select 
+        id="selectUserReserList" 
+        resultType="java.util.LinkedHashMap">
+        
+        SELECT 
+            r.idx, 
+            <!-- r.member_idx,  -->
+            a.accom_name,
+            ar.room_name, 
+            la.large_area_name, 
+            r.check_in_date, 
+            r.check_out_date, 
+            r.adult_count,
+            r.child_count,
+            r.status
+        FROM 
+            tbl_reservation r,
+            tbl_accom a,
+            tbl_accom_room ar,
+            tbl_large_area la
+        WHERE 
+            r.accom_room_idx = ar.idx 
+            AND ar.accom_idx = a.idx
+            AND a.large_area_idx = la.idx
+            AND member_idx = #{member.idx}
+        ORDER BY 
+            r.check_in_date DESC
+        OFFSET (#{cri.currPage} -1) * #{cri.amount} ROWS
+        FETCH NEXT #{cri.amount} ROWS ONLY
+
+    </select>
+
+    <update id="updateStatusCaToUcrn">
+        UPDATE 
+            tbl_reservation 
+        SET 
+            status='UCRN' 
+        WHERE 
+            member_idx = #{idx} 
+            AND status='CA'
+            AND check_in_date <![CDATA[ < ]]> current_date
+    </update>
+
+    <update id="updateStatusUcrnToUcry">
+        UPDATE 
+            tbl_reservation 
+        SET 
+            status='UCRY' 
+        WHERE 
+            member_idx = #{idx}
+            AND status='UCRN'
+            AND check_out_date <![CDATA[ < ]]>  (current_date - (INTERVAL '1' YEAR))
+    </update>
+
+    <select 
+        id="selectOneReserDetail"
+        resultType="java.util.Map">
+        SELECT
+            r.idx,
+            a.accom_name,
+            ar.room_name,
+            r.check_in_date,
+            r.check_out_date,
+            r.adult_count,
+            r.child_count,
+            m.name,
+            m.phone,
+            m.email,
+            p.order_price,
+            p.use_point,
+            p.payment_price,
+            p.insert_ts,
+            r.status
+        FROM 
+            tbl_reservation r,
+            tbl_accom a,
+            tbl_accom_room ar,
+            tbl_member m,
+            tbl_payment p
+        WHERE
+            r.accom_room_idx = ar.idx
+            AND ar.accom_idx = a.idx
+            AND r.member_idx = m.idx
+            AND r.idx = p.reservation_idx
+            AND r.idx = #{idx}
+    </select>
+
+    <update id="updateMemberPoint">
+        UPDATE tbl_member 
+        SET point = 
+            ((SELECT sum(point_amount) 
+            FROM tbl_point_history 
+            WHERE member_idx = #{memberIdx} 
+            AND is_plus = 'Y')
+            -(SELECT sum(point_amount) 
+            FROM tbl_point_history 
+            WHERE member_idx = #{memberIdx} 
+            AND is_plus = 'N')) 
+        WHERE idx = #{memberIdx}
+    </update>
+
+    <select 
+        id="selectRefundInfo"
+        resultType="com.pj.gabozago.domain.RefundVO">
+        SELECT 
+            rf.idx, 
+            rf.payment_idx, 
+            rf.refund_price, 
+            rf.refund_point, 
+            rf.insert_ts 
+        FROM 
+            tbl_reservation rv,
+            tbl_payment p,
+            tbl_refund rf
+        WHERE 
+            rv.idx = p.reservation_idx
+            AND p.idx = rf.payment_idx
+            AND rv.idx = #{idx}
+    </select>
+
+    <select 
+        id="selectAccomInfo"
+        resultType="java.util.Map">
+        SELECT 
+            r.idx,
+            r.member_idx,
+            r.accom_room_idx,
+            a.accom_name,
+            ar.room_name
+        FROM 
+            tbl_reservation r,
+            tbl_accom a,
+            tbl_accom_room ar
+        WHERE 
+            r.accom_room_idx = ar.idx
+            AND ar.accom_idx = a.idx
+            AND r.idx = #{idx}
+    </select>
+
+    <insert id="insertNewReview">
+        INSERT INTO tbl_accom_review (reservation_idx, member_idx, accom_room_idx, grade1, grade2, grade3) 
+        VALUES (#{reservationIdx}, #{memberIdx}, #{accomRoomIdx}, #{grade1}, #{grade2}, #{grade3})
+    </insert>
+
+    <select 
+        id="selectDuplicationReview"
+        resultType="com.pj.gabozago.domain.AccomReviewVO">
+        SELECT 
+            idx, 
+            reservation_idx, 
+            member_idx, 
+            accom_room_idx, 
+            grade1, grade2, grade3, 
+            insert_ts
+        FROM tbl_accom_review 
+        WHERE reservation_idx = #{reservationIdx}
+    </select>
+
+</mapper>

@@ -1,0 +1,87 @@
+@charset "utf-8";
+
+/* 한국어 : font-family: 'Noto Sans KR', sans-serif; */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+/* 영어(다국어) : font-family: 'Noto Sans', sans-serif; */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+
+    box-sizing: border-box;
+
+    font-family: 'Noto Sans KR', sans-serif;
+    color: #333333;
+}
+ul, ol{
+    list-style: none;
+}
+a{
+    text-decoration: none;
+}
+
+div.wrap{
+    display: flex;
+    justify-content: center;
+    margin: 50px 0;
+}
+
+section.point{
+    width: 940px;
+    /* background-color: beige; */
+    display: inline-block;
+}
+.point .pointHeader{
+    width: 752px;
+    /* 화면크기를 줄였을때 nav와 일정 margin을 유지하려면 left에 94px을 준다. */
+    margin: 0 auto 50px 94px;
+    display: flex;
+}
+.point h1{
+    font-size: 22px;
+    display: inline-block;
+}
+.pointHeader p{
+    font-size: 18px;
+    display: inline-block;
+    margin-left: auto;
+    color: #68AE6D;
+    font-weight: bold;
+    /* 단어사이 간격조정 */
+    word-spacing: 3px;
+}
+.pointHeader i, .pointHeader span{
+    color: #68AE6D;
+}
+.point .pointBody{
+    width: 752px;
+    /* 화면크기를 줄였을때 nav와 일정 margin을 유지하려면 left에 94px을 준다. */
+    margin: 0 auto 50px 94px;
+    border-top: 1px solid #999999;
+    border-collapse: collapse;
+    margin-bottom: 50px;
+    table-layout: fixed
+}
+.point .pointBody th, .point .pointBody td{
+    border-bottom: 1px solid #999999;
+    padding: 10px;
+    width: 250px;
+    text-align: center;
+}
+/* td.pointAmount{
+    text-align: right !important;
+    padding-right: 84px !important;
+} */
+.pointBody td:nth-of-type(2){
+    /* 글자가 너무 길때, ... 표시하려면 아래 코드 */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* #pagination{
+    margin: 0 auto 0 330px;
+    text-align: center;
+    line-height: 45px;
+} */
