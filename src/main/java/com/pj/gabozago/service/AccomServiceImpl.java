@@ -43,15 +43,26 @@ public class AccomServiceImpl
 		catch (DAOException e) { throw new ServiceException(e); } // try-catch
 	}
 
+//	@Override
+//	public Map<String, Object> getOneAccomDetail(AccomDTO accom) throws ServiceException {
+//		try {
+//			return mapper.getOneAccomDetail(accom);
+//		}
+//		catch (DAOException e) { 
+//			throw new ServiceException(e); 
+//		} // try-catch
+//	}
+	
 	@Override
-	public Map<String, Object> getOneAccomDetail(AccomDTO accom) throws ServiceException {
+	public List<AccomDTO> getdetailList(AccomDTO accom) throws ServiceException {
 		try {
-			return mapper.getOneAccomDetail(accom);
+			
+			return mapper.getdetailList(accom);	
 		}
-		catch (DAOException e) { 
-			throw new ServiceException(e); 
-		} // try-catch
+		catch (DAOException e) { throw new ServiceException(e); } // try-catch
 	}
+	
+	
 
 
 

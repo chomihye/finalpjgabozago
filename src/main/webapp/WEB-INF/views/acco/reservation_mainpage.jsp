@@ -150,16 +150,16 @@
          <c:forEach items= "${_ACCOM_}" var="list">
                 <div class="acco_container">
                     <div class="list">
-                        <a href="/reservation/datail?accom_idx=${list.idx}" class="list_main_name">${list.accomName}</a>
+                        <a href="/reservation/datail?accom_idx=${list.idx}&accom_name=${list.accomName}" class="list_main_name">${list.accomName}</a>
 
                         <p>
                             <br />${list.travellargeDTO.largeAreaName}<br />기준인원 2명 <br />${list.accomroomDTO.minPrice} ~ ${list.accomroomDTO.maxPrice}
                             <br />
                         </p>
-                        <a href="/reservation/datail" class="list_reserve">예약하기</a>
+                        <a href="/reservation/datail?accom_idx=${list.idx}&accom_name=${list.accomName}" class="list_reserve">예약하기</a>
                     </div>
                     <div class="hotel_picture">
-                        <a href="/reservation/datail"><img src="/resources/acco/img/himg/${list.accomimagesDTO.fileName}" alt="" /></a>
+                        <a href="/reservation/datail?accom_idx=${list.idx}&accom_name=${list.accomName}"><img src="/resources/acco/img/himg/${list.accomimagesDTO.fileName}" alt="" /></a>
 
                         <div class="heart_icon"><i class="bi bi-heart-fill"></i></div>
                     </div>

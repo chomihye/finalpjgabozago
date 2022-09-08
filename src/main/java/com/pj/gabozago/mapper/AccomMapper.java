@@ -20,8 +20,11 @@ public interface AccomMapper {
 	// 전체 목록을 반환
 	public abstract List<AccomDTO> getList() throws DAOException;
 	
-	// 숙소 단일 정보 반환
-	public abstract Map<String, Object> getOneAccomDetail(AccomDTO accom) throws DAOException;
+	// 숙소 상세 정보 반환
+	public abstract List<AccomDTO> getdetailList(AccomDTO accom) throws DAOException;
+	
+	// 숙소 상세 정보 반환
+	//public abstract Map<String, Object> getOneAccomDetail(AccomDTO accom) throws DAOException;
 	
 
 	

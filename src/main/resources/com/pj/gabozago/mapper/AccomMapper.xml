@@ -6,28 +6,45 @@
 
 <!-- namespace 명명법은 경로구분자로 .를 사용하고, 마지막 이름은 Mapper파일명으로 지어주는것이관레임 -->
 <mapper namespace="com.pj.gabozago.mapper.AccomMapper">
- 
 
-    <select id="getList" resultMap="AccomDTO" >
-      SELECT 
-        r.idx,
-        r.accom_name,
-        r.large_area_idx,
-        a.large_area_name,  
-        (select max(price) from tbl_accom_room where accom_idx = r.idx) as max_price,
-        (select min(price) from tbl_accom_room where accom_idx = r.idx) as min_price,
-        (select ai.file_name from tbl_accom_images ai where r.idx = ai.idx) as file_name
+	 <select id="getList" resultMap="AccomDTO" >
+        SELECT 
+            r.idx,
+            r.accom_name,
+            r.large_area_idx,
+            a.large_area_name,  
+            (select max(price) from tbl_accom_room where accom_idx = r.idx) as max_price,
+            (select min(price) from tbl_accom_room where accom_idx = r.idx) as min_price,
+            (select ai.file_name from tbl_accom_images ai where r.idx = ai.idx) as file_name
         FROM tbl_accom r ,tbl_large_area a
         WHERE r.large_area_idx = a.idx
         ORDER BY r.idx asc
 	</select>
+	
+	
+	<select id="getdetailList" resultMap="AccomDTO">
+	    SELECT 
+		    r.idx,
+		    r.accom_name,
+		    ar.room_name,
+		    ar.price
+		FROM tbl_accom r, tbl_accom_room ar
+		WHERE r.idx = ar.accom_idx AND r.idx = #{idx}
+	</select>
 
-	 
+
+
+ 
     <resultMap type="com.pj.gabozago.domain.AccomDTO" id="AccomDTO">
         <result property="idx" column="IDX"/>
         <result property="accomName" column="ACCOM_NAME"/>
         <result property="largeAreaIdx" column="LARGE_AREA_IDX"/>
-
+        <result property="address" column="ADDRESS"/>
+        <result property="latitude" column="LATITUDE"/>
+        <result property="longitude" column="LONGITUDE"/>
+        <result property="insertTs" column="INSERTTS"/>
+        <result property="updateTs" column="UPDATETS"/>
+        
         <!-- property: travelPlanVO 클래스에 선언한 travelPlanDetailVO의 변수명, resultMap에는 travelPlanDetailVO의 resultmap id 넣기  -->
         <collection property="travellargeDTO" resultMap="trDTO"></collection>
         <collection property="accomroomDTO" resultMap="arDTO"></collection>
@@ -35,18 +52,19 @@
 
     </resultMap>
     
-  	<select id="getOneAccomDetail" resultType="java.util.Map">
+ 
+	<!-- <select id="getOneAccomDetail" resultType="java.util.Map">
 		SELECT
 			idx,
 			accom_name
 		FROM tbl_accom
 		WHERE idx = #{idx}
-	</select>
-    
-    <resultMap type="java.util.Map" id="AccomDetailVO">
+	</select> -->
+	
+    <!-- <resultMap type="java.util.Map" id="AccomDetailVO">
         <result property="idx" column="IDX"/>
         <result property="accomName" column="ACCOM_NAME"/>
-    </resultMap>
+    </resultMap> -->
 
     <resultMap type="com.pj.gabozago.domain.TravelLargeDTO" id="trDTO">
         <result property="idx" column="IDX" />
@@ -74,6 +92,10 @@
         <result property="fileName" column="FILE_NAME" />
         <result property="accomRoomIdx" column="ACCOM_ROOM_IDX" />
     </resultMap>
+    
+
+
+   
 
     
 
