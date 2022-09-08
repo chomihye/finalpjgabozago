@@ -13,6 +13,7 @@
     <!-- 로거의 설정파일 -->
     <Loggers>
         <!-- 패키지 이름 레벨지정 -->
+
         <Logger name="com.pj.gabozago" level="warn" />
         <Logger name="org.springframework" level="info"/>
         <Logger name="com.zaxxer.hikari" level="info" />

@@ -1,0 +1,131 @@
+@charset "utf-8";
+
+/* 한국어 : font-family: 'Noto Sans KR', sans-serif; */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+/* 영어(다국어) : font-family: 'Noto Sans', sans-serif; */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+
+    box-sizing: border-box;
+
+    font-family: 'Noto Sans KR', sans-serif;
+    color: #333333;
+}
+ul, ol{
+    list-style: none;
+}
+a{
+    text-decoration: none;
+}
+
+div.wrap{
+    display: flex;
+    justify-content: center;
+    margin: 50px 0;
+}
+
+section.accom_review{
+    /* width 고정 940px, 콘텐츠는 80%인 752px 안으로 */
+    width: 940px;
+    display: inline-block;
+}
+section .header{
+    width: 752px;
+    /* 화면크기를 줄였을때 nav와 일정 margin을 유지하려면 left에 94px을 준다. */
+    margin: 0 auto 20px 59px;
+    display: flex;
+}
+section .header h1{
+    font-size: 22px;
+    display: inline-block;
+}
+section .header i{
+    font-size: 30px;
+    display: inline-block;
+    color: #68AE6D;
+    margin: 3px 20px 0 0;
+}
+
+.reviewBox{
+    width: 752px;
+    /* 화면크기를 줄였을때 nav와 일정 margin을 유지하려면 left에 94px을 준다. */
+    margin: 0 auto 0 94px;
+    border-top: 1px solid #68AE6D;
+}
+.withOutBtn{
+    display: flex;
+    align-items: center;
+    padding: 80px 0;
+}
+
+.review_check li{
+    margin: 30px 0;
+}
+.review_check h3{
+    font-size: 20px !important;
+    margin-bottom: 10px;
+}
+.review_check i{
+    color: gold;
+}
+
+.accom_info{
+    margin: 0 0 0 auto;
+    width: 300px;
+}
+.accom_info img{
+    width: 100%;
+    height: 200px;
+    border-radius: 10px;
+}
+.accom_info_letter{
+    margin-top: 10px;
+}
+.accom_info_letter h2, .accom_info_letter p{
+    /* 글자가 너무 길때, ... 표시하려면 아래 코드 */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.accom_info_letter h2{
+    font-size: 20px;
+}
+
+.btnReview{
+    width: 752px;
+    display: flex;
+    justify-content: center;
+}
+.btnCancel{
+    width: 100px;
+    height: 35px;
+    font-size: 14px;
+    background-color: #e2e2e2;
+    border-radius: 20px;
+    border: none;
+    margin-right: 10px;
+}
+.btnWrite{
+    width: 100px;
+    height: 35px;
+    font-size: 14px;
+    color: white;
+    background-color: #68AE6D;
+    border-radius: 20px;
+    border: none;
+    margin-left: 10px;
+}
+
+/* 모달 - 부트스트랩 때문에 추가로 넣은 것 */
+h3.center{
+    word-break: break-all;
+    margin: 45px 0;
+    width: 480px;
+    display: inline-block;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 400;
+}

@@ -1,0 +1,143 @@
+@charset "utf-8";
+
+/* 한국어 : font-family: 'Noto Sans KR', sans-serif; */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+/* 영어(다국어) : font-family: 'Noto Sans', sans-serif; */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+
+    box-sizing: border-box;
+
+    font-family: 'Noto Sans KR', sans-serif;
+    color: #333333;
+}
+ul, ol{
+    list-style: none;
+}
+a{
+    text-decoration: none;
+}
+
+div.wrap{
+    /* height 값은 페이지마다 다르고, 그 값을 구해 css에선 고정값을 줘야함 */
+    height: 670px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+section.main{
+    /* width 고정 940px, 콘텐츠는 80%인 752px 안으로 */
+    width: 940px;
+    /* background-color: beige; */
+    display: inline-block;
+}
+section.main .menuBox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+    margin: 0 170px 100px;
+}
+section.main ul.menu{
+    display: inline-flex;
+}
+section.main .menu li{
+    width: 150px;
+    text-align: center;
+}
+.menu a{
+    color: #333333 !important;
+}
+section.main .menu li:hover{
+    text-decoration: underline;
+}
+section.main .menu li i{
+    font-size: 50px;
+}
+section.main .menu li span{
+    display: block;
+    margin-top: 10px;
+}
+
+article.reservation{
+    /* background-color: burlywood; */
+    width:752px;
+    margin: 0 auto 0 94px;
+}
+.reservation div.header{
+    display: flex;
+}
+.reservation h1{
+    display: inline-block;
+    margin-left: 10px;
+    font-size: 20px !important;
+}
+.reservation div.more{
+    display: inline-block;
+    font-size: 14px;
+    margin-left: auto;
+    margin-right: 15px;
+    padding-top: 5px;
+}
+.reservation .more span{
+    color: #68AE6D;
+}
+.reservation .more span:hover{
+    text-decoration: underline;
+}
+.reservation .more a i{
+    color: #999999;
+}
+.reservation ul.accom{
+    margin: 10px auto;
+}
+.reservation ul.accom li{
+    width: 48%;
+    height: 100px;
+    display: inline-block;
+    border-radius: 10px;
+    border: 1px solid #68AE6D;
+    background-color: white;
+    margin: 5px;
+}
+.accomInfoBox{
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+}
+.reservation ul.accom li img{
+   border-radius: 10px;
+   display: inline-block;
+   height: 80%;
+   margin: 10px 20px;
+}
+.reservation ul.accom li div.accom_info{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+}
+.reservation ul.accom li div.accom_info h3{
+    font-size: 16px;
+}
+.accom_name{
+    display: block;
+    width: 180px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.reser_date{
+    display:block;
+}
+.reser_date i, .reser_date span{
+    color: #999999;
+    font-size: 14px;
+}
+.accom_name:hover, .reser_date span:hover{
+    text-decoration: underline;
+}

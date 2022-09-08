@@ -1,0 +1,212 @@
+@charset "utf-8";
+
+/* 한국어 : font-family: 'Noto Sans KR', sans-serif; */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+/* 영어(다국어) : font-family: 'Noto Sans', sans-serif; */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+
+    box-sizing: border-box;
+
+    font-family: 'Noto Sans KR', sans-serif;
+    color: #333333;
+}
+ul, ol{
+    list-style: none;
+}
+a{
+    text-decoration: none;
+}
+
+div.wrap{
+    display: flex;
+    justify-content: center;
+    margin: 50px 0;
+}
+
+section.wishlist{
+    /* width 고정 940px, 콘텐츠는 80%인 752px 안으로 */
+    width: 940px;
+    display: inline-block;
+}
+section .header{
+    width: 799px;
+    /* 화면크기를 줄였을때 nav와 일정 margin을 유지하려면 left에 94px을 준다. */
+    margin: 0 auto 50px 94px;
+    display: flex;
+}
+section .header h1{
+    font-size: 22px;
+    display: inline-block;
+}
+section .header div{
+    margin-left: auto;
+}
+section .header div label{
+    font-size: 16px;
+    display: inline-block;
+    margin-right: 10px;
+}
+section .header #wishlist_type{
+    width: 150px;
+    height: 35px;
+    font-size: 16px;
+    text-align: center;
+    display: inline-block;
+    border-radius: 50px;
+    border: 1px solid #68AE6D;
+}
+
+/* 숙소 선택 영역(default) */
+article.wishlist_accom, article.wishlist_plan{
+    width: 799px;
+    /* 화면크기를 줄였을때 nav와 일정 margin을 유지하려면 left에 94px을 준다. */
+    margin: 0 auto 50px 94px;
+}
+.wishlist div.select{
+    border-bottom: 1px solid #999999;
+    padding-bottom: 15px;
+    display: flex;
+}
+input[type="checkbox"]{
+    display: none;
+}
+input[type="checkbox"] + label{
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #999999;
+    position: relative;
+    box-sizing: content-box;
+    border-radius: 5px;
+}
+input[type="checkbox"]:checked + label::after{
+    content: '✔';
+    font-size: 18px;
+    color: #68AE6D;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    position: absolute;
+    left: 0px;
+    top: -4px;
+    font-weight: bold;
+    box-sizing: border-box;
+}
+.select .selectAll{
+    margin-left: 10px;
+}
+.select .selectDelete{
+    color: #68AE6D;
+    margin-left: auto;
+}
+
+.wishlist_accom ul{
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 30px;
+}
+.wishlist_accom li{
+    width: 50%;
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+/* .wishlist_accom li:nth-child(odd){
+    왼쪽 콘텐츠
+} */
+.wishlist_accom li:nth-child(even){
+    /* 오른쪽 콘텐츠 */
+    justify-content: right;
+}
+.accomBox{
+    width: 345px;
+    height: 100px;
+    border: 1px solid #999999;
+    border-radius: 10px;
+    margin: 0 0 0 10px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+.accomBox img{
+    width: 70px;
+    height: 70px;
+    border-radius: 10px;
+    margin: 0 15px;
+}
+.accom_info{
+    width: 120px;
+}
+.accom_info h3{
+    font-size: 16px;
+    /* 글자가 너무 길때, ... 표시하려면 아래 코드 */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.accom_info h3:hover{
+    text-decoration: underline;
+}
+.accom_info p{
+    font-size: 14px;
+    /* 글자가 너무 길때, ... 표시하려면 아래 코드 */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.payment{
+    width: 80px;
+    /* height, line-height 높이 같아야함*/
+    height: 30px;
+    line-height: 30px;
+    font-size: 12px;
+    color: white;
+    background-color: #68AE6D;
+    border: none;
+    border-radius: 30px;
+    margin: 0 10px 0 auto;
+}
+
+div.btnPage{
+    width: 280px;
+    height: 45px;
+    background-color: #68AE6D;
+    /* 330px은 임시 위치고정용, 추후 수정 */
+    margin: 0 auto 0 360px;
+    text-align: center;
+    line-height: 45px;
+}
+
+/* 일정영역 */
+.planBoxWrap{
+    display: flex;
+    flex-wrap: wrap;
+}
+.planBox{
+    display: flex;
+    align-items: center;
+    margin-top: 40px;
+}
+.planBox input[type="checkbox"] + label{
+    margin-right: 10px;
+}
+.planBox:nth-of-type(2), .planBox:nth-of-type(4){
+    margin-left: 30px;
+}
+
+/* slide_plan.css의 코드인데 혹시몰라 넣어둠 */
+.slideContainer li{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.userInfo li{
+    width: 200px;
+}
+.carousel-inner li{
+    width: 250px;
+}

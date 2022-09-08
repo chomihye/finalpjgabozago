@@ -1,0 +1,156 @@
+@charset "utf8";
+
+/* font-family: 'Noto Sans KR', sans-serif; */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+
+/* CSS RESET */
+*{
+    margin: 0px;
+    padding: 0px;
+    color: #333;
+
+    box-sizing: border-box;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+ul, ol{
+    list-style: none;
+}
+a{
+    color: #333;
+    text-decoration: none;
+}
+input, button {
+    border:0; 
+    padding:0; 
+    /* background:transparent;  */
+    overflow:visible;
+}
+/* header 값 따로 지정 */
+#header input[type=text] {
+	border: 1px solid #999999;
+	border-radius: 12px;
+}
+#header input[type=text]:focus {
+	outline-color: #68AE6D;
+}
+#wrapper{
+    width: 100%;
+}
+body #body{
+    width: 1240px;
+    margin: 80px auto 150px auto;
+}
+#body #introSection{
+    margin-bottom: 80px;
+    text-align: center;
+}
+#body #introSection>p{
+    color: #333;
+}
+#body #questionMarkImg{
+    width: 100px;
+}
+#body #mainBox button{
+    font-size: 18px;
+    font-weight: 500;
+    text-align: center;
+    line-height: 50px;
+    width: 620px;
+    height: 50px;
+    background-color: rgba(0, 0, 0, 0.1);
+}
+#body #mainBox button:nth-of-type(1){
+    float: left;
+    border-radius: 10px 0px 0px 0px;
+}
+#body #mainBox button:nth-of-type(2){
+    float: right;
+    color: #FFFFFF;
+    background-color: #68AE6D;
+    border-radius: 0px 10px 0px 0px;
+}
+#body #mainBox button:nth-of-type(2)::after{
+    content: "";
+    display: block;
+    clear: both;
+}
+#body .mainForm{
+    text-align: center;
+    margin: auto;
+    padding-top: 140px;
+    padding-bottom: 80px;
+    width: 1240px;
+    /* height: 500px; */
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 10px;
+}
+#body .mainForm #pwfindId{
+    margin-left: -40px;
+}
+#body .mainForm #kakaoNoticeText{
+    font-size: 14px;
+    color: #888;
+    padding-left: 270px;
+}
+#body .mainForm .leftSorting{
+    margin-left: -100px;
+}
+#body .mainForm p{
+    margin: 10px 0;
+}
+#body input[type=text]{
+    font-size: 18px;
+    padding-left: 20px;
+    width: 250px;
+    height: 40px;
+    border-radius: 12px;
+    margin-top: 5px;
+    margin-left: 80px;
+    color: #111111;
+    border: 1px solid #999999;
+}
+#body input[type=radio]{
+    margin-right: 15px;
+    width: 15px;
+    height: 15px;
+    accent-color: #1fac2b;
+    vertical-align: middle;
+}
+#body input::placeholder{
+    font-size: 18px;
+    color: #999999;
+}
+#body input:focus{
+    outline-color: #68AE6D;
+}
+#body input[type=submit]{
+    margin-top: 60px;
+    background-color: #68AE6D;
+    color: #FFFFFF;
+    border: none;
+    width: 250px;
+    height: 45px;
+    border-radius: 20px;
+}
+/* #body #pwfindDefault{ */
+/*     display: block; */
+/* } */
+/* #body #pwfindResultSucceed{ 비밀번호 찾기 결과 - 성공 */
+/*     display: none; */
+/* } */
+/* #body #pwfindResultFailed{ 비밀번호 찾기 결과 - 실패 */
+/*     display: block; */
+/* } */
+#body input[type=button]{
+    margin-top: 30px;
+    background: #e2e2e2;
+    color: #333;
+    width: 250px;
+    height: 45px;
+    border-radius: 20px;
+}
+#body #pwfindResultFailed input[type=button]:nth-of-type(2){
+    margin-left: 10px;
+    background-color: #68AE6D;
+    color: #FFFFFF;
+}

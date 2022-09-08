@@ -1,0 +1,218 @@
+@charset "utf-8";
+
+/* 한국어 : font-family: 'Noto Sans KR', sans-serif; */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+/* 영어(다국어) : font-family: 'Noto Sans', sans-serif; */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+
+    box-sizing: border-box;
+
+    font-family: 'Noto Sans KR', sans-serif;
+    color: #333333;
+}
+ul, ol{
+    list-style: none;
+}
+a{
+    text-decoration: none;
+}
+
+div.wrap{
+    display: flex;
+    justify-content: center;
+    margin: 50px 0;
+}
+
+section.memberInfoUpdate{
+    /* width 고정 940px, 콘텐츠는 80%인 752px 안으로 */
+    width: 940px;
+    display: inline-block;
+}
+body #body{
+    width: 600px;
+    margin: 0 170px;
+}
+
+body .midHr{
+    display: flex;
+    flex-basis: 100%;
+    align-items: center;
+    font-size: 26px;
+    font-weight: bold;
+}
+.midHr::before,
+.midHr::after {
+    content: "";
+    flex-grow: 1;
+    background: #999999;
+    height: 1px;
+}
+.guide_text, .sections, .btnBox{
+    width: 600px;
+    margin-top: 80px;
+}
+.guide_text{
+    text-align: center;
+}
+.sections{
+    padding: 0 50px;
+}
+body input[type=text], input[type=password], input[type=date]{
+    font-size: 18px;
+    padding-left: 20px;
+    width: 500px;
+    height: 40px;
+    border-radius: 12px;
+    border: 1px solid #999999;
+}
+body input::placeholder{
+    font-size: 18px;
+    color: #999999;
+}
+body input:focus{
+    outline-color: #68AE6D;
+}
+.btnBox{
+    display: flex;
+    justify-content: center;
+}
+body input[type=button]{
+    width: 150px;
+    height: 45px;
+    background-color: #e2e2e2;
+    border-radius: 30px;
+    border: none;
+    margin-right: 10px;
+}
+body input[type=submit]{
+    width: 150px;
+    height: 45px;
+    background-color: #68AE6D;
+    color: #FFFFFF;
+    border-radius: 30px;
+    border: none;
+    margin-left: 10px;
+}
+body input[type=submit]::after{
+    content: "";
+    display: block;
+    clear: both;
+}
+
+body .sections h4{
+    font-size: 18px;
+}
+body .ruleTexts{
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+body .ruleTexts::after{
+    content: "";
+    display: block;
+    clear: both;
+}
+body .sections #pwcheckError{
+    color: red;
+    /* display: none; */
+    font-size: 14px;
+}
+
+/* -------------- 모달창 -------------- */
+.modal { /*모달창 전체(뒷 배경 포함)*/
+    display: none;
+    position: fixed;
+    padding-top: 100px;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    overflow: auto;
+    z-index: 1;
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.5);
+}
+.modal_Content { /*메인 모달칭*/
+    margin: 80px auto 0 auto;
+    padding: 15px 35px 20px 35px;
+    width: 35%;
+    position: relative;
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+    background-color: #fff;
+}
+.okBtn{ /* 확인 버튼(원래 페이지로 돌아가는 용도) */
+    font-size: 16px;
+    line-height: 35px;
+    width: 65px;
+    height: 35px;
+    color: #ffffff;
+    background: #6DCC76;
+    border-radius: 20px;
+    text-align: center;
+    margin: 18px auto 16px auto;
+}
+.okBtn:hover,
+.okBtn:focus { /* 확인 버튼 호버링 혹은 선택 시*/
+    color: black;
+    cursor: pointer;
+}
+.modal_Content h3{ /* 제목 */
+    margin: 18px 0;
+}
+.modal_Content i{ /* 체크 아이콘 */
+    color: #68AE6D;
+    padding-right: 10px;
+}
+.modal_Content p{ /* 본문 폰트 */
+    word-break: break-all;
+    margin: 20px 0;
+}
+.modal_Content h2{ /* 시간 */
+    text-align: center;
+    margin-bottom: 20px;
+}
+.updateModalTexts{ /* 회원수정창 위아래 추가 여백 */
+    margin: 40px;
+}
+.center.simpleTextSpaceAdd{ /* 본문만 있는 모달창 위아래 추가 여백 */
+    margin: 70px 0 50px 0;
+}
+.modal_Content #resendLink{
+    font-size: 14px;
+    color: #444;
+    margin: 14px;
+    text-align: center;
+}
+#resendLink a{
+    text-decoration: underline;
+}
+#phoneValidation{
+    margin: 0 auto;
+    text-align: center;
+}
+#phoneValidationNumInput{
+    width: 60%;
+    margin-top: 0;
+}
+#phoneValidationNumBtn{
+    width: 30%;
+    color: #111111;
+    background: #FFFFFF;
+    border: 1px solid #27AE60;
+    border-radius: 12px;
+    width: 50px;
+    height: 40px;
+    margin: 0 0 0 10px;
+}
+
+/* 공통 속성 */
+/* 중앙 정렬 */
+.center {
+    text-align: center;
+    margin: 0 auto;
+}

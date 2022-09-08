@@ -1,0 +1,318 @@
+@charset "utf8";
+
+/* font-family: 'Noto Sans KR', sans-serif; */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+
+/* CSS RESET */
+*{
+    margin: 0;
+    padding: 0;
+    color: #333;
+
+    box-sizing: border-box;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+ul, ol{
+    list-style: none;
+}
+a{
+    color: #333;
+    text-decoration: none;
+}
+input, button {
+    border:0; 
+    padding:0; 
+    background:transparent; 
+    overflow:visible;
+}
+
+#wrapper{
+    width: 100%
+}
+body #body{
+    width: 600px;
+    margin: 80px auto 150px auto;
+}
+
+#body .midHr{
+    display: flex;
+    flex-basis: 100%;
+    align-items: center;
+    font-size: 26px;
+    font-weight: bold;
+}
+.midHr::before,
+.midHr::after {
+    content: "";
+    flex-grow: 1;
+    background: #999999;
+    height: 1px;
+}
+#body .sections:first-child{
+    margin-top: 30px;
+}
+#body .sections{
+    margin-bottom: 5px;
+}
+#body input[type=text], input[type=password], input[type=date], input[type=email]{
+    font-size: 18px;
+    padding-left: 20px;
+    width: 500px;
+    height: 40px;
+    border-radius: 12px;
+    /* margin-top: 5px; */
+    border: 1px solid #999999;
+}
+#body input:invalid{
+    outline-color: red;
+}
+#body input::placeholder{
+    font-size: 18px;
+    color: #999999;
+}
+#body input:focus{
+    outline-color: #68AE6D;
+}
+#body input[type=radio]{
+    margin-left: 110px;
+    margin-right: 5px;
+    width: auto;
+    height: auto;
+    accent-color: #1fac2b;
+}
+#body #profileImgSample{
+    width: 70px;
+    height: 70px;
+    margin: 10px 10px;
+    float: left;
+    border-radius: 50%;
+}
+#body input[type=button]{
+    float: left;
+    clear: both;
+    margin-top: 30px;
+    background: #e2e2e2;
+    color: #333;
+    width: 250px;
+    height: 45px;
+    border-radius: 20px;
+}
+#body input[type=submit]{
+    margin-top: 30px;
+
+    background-color: #68AE6D;
+    color: #FFFFFF;
+    border: none;
+    float: right;
+    width: 250px;
+    height: 45px;
+    border-radius: 20px;
+}
+#body input[type=submit]::after{
+    content: "";
+    display: block;
+    clear: both;
+}
+#body .formCheckBox{
+    width: 80px;
+    height: 40px;
+    background: #FFFFFF;
+    border: 1px solid #27AE60;
+    border-radius: 12px;
+    margin-left: 3px;
+}
+#body textarea{
+    width: 600px;
+    margin-top: 8px;
+    margin-bottom: 5px;
+    padding: 15px;
+    border: 1px solid #999999;
+    border-radius: 5px;
+}
+#body #profileImgSection .uploadName {
+    display: inline-block;
+    height: 40px;
+    margin-left: 10px;
+    padding: 0 10px 0 10px;
+    vertical-align: middle;
+    border: 1px solid #999999;
+    width: 67%;
+    color: #999999;
+    border-radius: 12px;
+}
+
+#body .sections{
+    margin-bottom: 20px;
+}
+#body .sections h4{
+    font-size: 18px;
+}
+#body .ruleTexts{
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+#body .ruleTexts::after{
+    content: "";
+    display: block;
+    clear: both;
+}
+#body .sections .redStar{
+    color: red;
+}
+#body .sections #pwcheckError{
+    color: red;
+    display: none;
+    font-size: 14px;
+}
+#body input[type="date"]{
+    font-size: 18px;
+}
+#body input[type="date"]::before {
+    content:attr(data-placeholder);
+    font-size: 18px;
+    color: #999999;
+    width:100%
+}
+#body input[type="date"]:focus::before,
+#body input[type="date"]:valid::before {
+    display:none;
+}
+#body #imageUpload{
+    margin-top: 30px;
+}
+#body .sections #imageUploadPlaceHolder{ /* 이미지를 업로드하세요 창 */
+    width: 410px;
+    height: 40px;
+} 
+#body .sections label { /* 파일 선택 버튼 */
+    display: inline-block;
+    padding: 8px;
+    margin-left: 4px;
+    cursor: pointer;
+    font-size: 15px;
+    width: 80px;
+    height: 40px;
+    background: #FFFFFF;
+    border: 1px solid #27AE60;
+    border-radius: 12px;
+}
+#body .sections input[type="file"] {
+    position: absolute;
+    width: 0;
+    height: 0;
+    padding: 0;
+    overflow: hidden;
+    border: 0;
+  }
+
+
+/* -------------- 모달창 -------------- */
+.modal { /*모달창 전체(뒷 배경 포함)*/
+    display: none;
+    position: fixed;
+    padding-top: 100px;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    overflow: auto;
+    z-index: 1;
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.5);
+}
+.modal_Content { /*메인 모달칭*/
+    margin: 80px auto 0 auto;
+    padding: 15px 35px 20px 35px;
+    width: 35%;
+    position: relative;
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+    background-color: #fff;
+}
+.okBtn{ /* 확인 버튼(원래 페이지로 돌아가는 용도) */
+    font-size: 16px;
+    line-height: 35px;
+    width: 65px;
+    height: 35px;
+    color: #ffffff;
+    background: #6DCC76;
+    border-radius: 20px;
+    text-align: center;
+    margin: 18px auto 16px auto;
+}
+#joinSucceed{ /* 회원가입 완료 시 확인 버튼 */
+	font-size: 16px;
+    line-height: 35px;
+    width: 65px;
+    height: 35px;
+    color: #ffffff;
+    background: #6DCC76;
+    border-radius: 20px;
+    text-align: center;
+    margin: 18px auto 16px auto;
+}
+.modal_Content h3{ /* 제목 */
+    margin: 18px 0;
+}
+.modal_Content i{ /* 체크 아이콘 */
+    color: #68AE6D;
+    padding-right: 10px;
+}
+.modal_Content p{ /* 본문 폰트 */
+    word-break: break-all;
+    margin: 20px 0;
+}
+.modal_Content h2{ /* 시간 */
+    margin-bottom: 20px;
+}
+.modal_Content input[type=text] {
+    height: 38px;
+	border: 1px solid #999999;
+	border-radius: 12px;
+    font-size: 18px;
+    padding-left: 20px;
+}
+.modal_Content input[type=text]:focus {
+	outline-color: #68AE6D;
+}
+.joinModalTexts{ /* 회원가입창 위아래 추가 여백 */
+    margin: 40px;
+}
+.center.simpleTextSpaceAdd{ /* 본문만 있는 모달창 위아래 추가 여백 */
+    margin: 70px 0 50px 0;
+}
+.modal_Content #resendLink{
+    font-size: 14px;
+    color: #444;
+    margin: 14px;
+    text-align: center;
+}
+#resendLink a{
+    text-decoration: underline;
+}
+#phoneValidation{
+    margin: 0 auto;
+    text-align: center;
+}
+#phoneValidationNumInput{
+    width: 60%;
+    margin-top: 0;
+}
+#phoneValidationNumBtn{
+    width: 30%;
+    color: #111111;
+    background: #FFFFFF;
+    border: 1px solid #27AE60;
+    border-radius: 12px;
+    width: 50px;
+    height: 40px;
+    margin: 0 0 0 10px;
+}
+
+/* 공통 속성 */
+/* 중앙 정렬 */
+.center {
+    text-align: center;
+    margin: 0 auto;
+}

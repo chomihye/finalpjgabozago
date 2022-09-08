@@ -1,0 +1,208 @@
+@charset "utf-8";
+
+/* 한국어 : font-family: 'Noto Sans KR', sans-serif; */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+/* 영어(다국어) : font-family: 'Noto Sans', sans-serif; */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+
+    box-sizing: border-box;
+
+    font-family: 'Noto Sans KR', sans-serif;
+    color: #333333;
+}
+ul, ol{
+    list-style: none;
+}
+a{
+    text-decoration: none;
+}
+
+div.wrap{
+    display: flex;
+    justify-content: center;
+    margin: 50px 0;
+}
+
+section.memberInfoUpdate{
+    /* width 고정 940px, 콘텐츠는 80%인 752px 안으로 */
+    width: 940px;
+    display: inline-block;
+}
+body #body{
+    width: 600px;
+    margin: 0 170px;
+}
+
+body .midHr{
+    display: flex;
+    flex-basis: 100%;
+    align-items: center;
+    font-size: 26px;
+    font-weight: bold;
+}
+.midHr::before,
+.midHr::after {
+    content: "";
+    flex-grow: 1;
+    background: #999999;
+    height: 1px;
+}
+body .sections:first-child{
+    margin-top: 30px;
+}
+body .sections{
+    margin-bottom: 5px;
+}
+body input[type=text], input[type=password], input[type=date]{
+    font-size: 18px;
+    padding-left: 20px;
+    width: 500px;
+    height: 40px;
+    border-radius: 12px;
+    /* margin-top: 5px; */
+    border: 1px solid #999999;
+}
+body input::placeholder{
+    font-size: 18px;
+    color: #999999;
+}
+body input:focus{
+    outline-color: #68AE6D;
+}
+body input[type=radio]{
+    margin-left: 110px;
+    margin-right: 5px;
+    width: auto;
+    height: auto;
+    accent-color: #1fac2b;
+}
+body #profileImgSample{
+    width: 70px;
+    height: 70px;
+    margin: 10px 10px;
+    float: left;
+}
+.btnBox{
+    margin: 70px 0 0 0;
+    display: flex;
+    justify-content: center;
+}
+body input[type=button]{
+    width: 150px;
+    height: 45px;
+    background-color: #e2e2e2;
+    border-radius: 30px;
+    border: none;
+    margin-right: 10px;
+}
+body input[type=submit]{
+    width: 150px;
+    height: 45px;
+    background-color: #68AE6D;
+    color: #FFFFFF;
+    border-radius: 30px;
+    border: none;
+    margin-left: 10px;
+}
+body input[type=submit]::after{
+    content: "";
+    display: block;
+    clear: both;
+}
+body .formCheckBox{
+    width: 80px;
+    height: 40px;
+    background: #FFFFFF;
+    border: 1px solid #27AE60;
+    border-radius: 12px;
+    margin-left: 3px;
+}
+body textarea{
+    width: 600px;
+    margin-top: 8px;
+    margin-bottom: 5px;
+    padding: 15px;
+    border: 1px solid #999999;
+    border-radius: 5px;
+}
+body #profileImgSection .uploadName {
+    display: inline-block;
+    height: 40px;
+    margin-left: 10px;
+    padding: 0 10px 0 10px;
+    vertical-align: middle;
+    border: 1px solid #999999;
+    width: 67%;
+    color: #999999;
+    border-radius: 12px;
+}
+
+body .sections{
+    margin-bottom: 20px;
+}
+body .sections h4{
+    font-size: 18px;
+}
+body .sections .no_update{
+    color : #999999;
+}
+body .ruleTexts{
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+body .ruleTexts::after{
+    content: "";
+    display: block;
+    clear: both;
+}
+body .sections #pwcheckError{
+    color: red;
+    /* display: none; */
+    font-size: 14px;
+}
+input[type="date"]{
+    font-size: 18px;
+}
+input[type="date"]::before {
+    content:attr(data-placeholder);
+    font-size: 18px;
+    color: #999999;
+    width:100%
+}
+input[type="date"]:focus::before,
+input[type="date"]:valid::before {
+    display:none;
+}
+body #imageUpload{
+    margin-top: 30px;
+}
+body .sections #imageUploadPlaceHolder{ /* 이미지를 업로드하세요 창 */
+    width: 410px;
+    height: 40px;
+} 
+body .sections label { /* 파일 선택 버튼 */
+    display: inline-block;
+    padding: 8px;
+    margin-left: 4px;
+    cursor: pointer;
+    font-size: 15px;
+    width: 80px;
+    height: 40px;
+    background: #FFFFFF;
+    border: 1px solid #27AE60;
+    border-radius: 12px;
+}
+body .sections input[type="file"] {
+    position: absolute;
+    width: 0;
+    height: 0;
+    padding: 0;
+    overflow: hidden;
+    border: 0;
+  }
+

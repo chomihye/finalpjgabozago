@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.pj.gabozago.mapper.MemberMapper">
+
+    <insert id="insert">
+        <selectKey keyProperty="idx" order="BEFORE" resultType="int">
+            SELECT MAX(idx)+1 FROM tbl_member
+        </selectKey>
+
+        INSERT INTO tbl_member( idx, email, password, name, nickname, phone, birthday, provider, uid_num, profile_img, point, insert_ts, update_ts, is_secession )
+        VALUES( #{idx}, #{email}, #{password}, #{name}, #{nickname}, #{phone}, #{birthday}, 'gabozago', null, null, 3000, CURRENT_DATE, null, 'N' )
+    </insert>
+
+<!--  	<select id="selectUserByEmail" resultType="com.pj.gabozago.domain.LoginVO"> -->
+<!--         <![CDATA[  -->
+<!--             SELECT email, password -->
+<!--             FROM tbl_member -->
+<!--             WHERE email = #{email} -->
+<!--         ]]> -->
+<!--     </select> -->
+	
+    <select id="selectUser" resultType="com.pj.gabozago.domain.MemberVO">
+        <![CDATA[ 
+            SELECT idx, email, password, name, nickname, phone, birthday, provider, uid_num, profile_img, point, rememberme, rememberage, insert_ts, update_ts, is_secession
+            FROM tbl_member
+            WHERE email = #{email}
+        ]]>
+    </select>
+    
+    <select id="selectUserByRememberMe" resultType="com.pj.gabozago.domain.MemberVO">
+        SELECT idx, email, password, name, nickname, phone, birthday, provider, uid_num, profile_img, point, rememberme, rememberage, insert_ts, update_ts, is_secession
+        FROM tbl_member
+        WHERE rememberme = #{rememberMe} AND rememberage > current_date
+    </select>
+
+
+	<select id="selectUserIdByPhone" resultType="string">
+        <![CDATA[ 
+            SELECT email
+            FROM tbl_member
+            WHERE phone = #{phone}
+        ]]>
+    </select>
+    
+    <select id="selectUserIdByEmail" resultType="string">
+        <![CDATA[ 
+            SELECT email
+            FROM tbl_member
+            WHERE email = #{email}
+        ]]>
+    </select>
+    
+    <select id="selectUserPhoneByPhone" resultType="string">
+        <![CDATA[ 
+            SELECT phone
+            FROM tbl_member
+            WHERE phone = #{phone}
+        ]]>
+    </select>
+    
+    <update id="updateUserWithRememberMe">
+        UPDATE 
+            tbl_member
+        SET 
+            rememberme = #{rememberMe}, 
+            rememberage = #{rememberAge, jdbcType=DATE}
+        WHERE 
+            idx = #{idx}
+    </update>
+
+</mapper>

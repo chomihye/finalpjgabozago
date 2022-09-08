@@ -1,0 +1,154 @@
+@charset "utf-8";
+
+/* 한국어 : font-family: 'Noto Sans KR', sans-serif; */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+/* 영어(다국어) : font-family: 'Noto Sans', sans-serif; */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap');
+
+/* -------------- 모달창 -------------- */
+.modal { /*모달창 전체(뒷 배경 포함)*/
+    display: none;
+    position: fixed;
+    padding-top: 100px;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    overflow: auto;
+    z-index: 1;
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.5);
+}
+.modal_Content { /*메인 모달창*/
+    margin: 250px auto 0 auto;
+    padding: 20px 35px;
+    width: 550px;
+    height: 200px;
+    position: relative;
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+    background-color: #fff;
+}
+/* 리뷰창에 있는 확인 모달 넓이 키움 */
+#reviewCheckModal .modal_Content{
+    height: 247px !important;
+}
+.cancelBtn, .okBtn{ /* 버튼 공통 */
+    font-size: 16px;
+    line-height: 35px;
+    width: 100px;
+    height: 35px;
+    border-radius: 20px;
+    text-align: center;
+    margin: 0 10px;
+    border: none;
+}
+.cancelBtn{ /* 취소 버튼 */
+    color: #333333;
+    background-color: #e2e2e2;
+}
+.okBtn{ /* 확인 버튼 */
+    color: #ffffff;
+    background: #6DCC76;
+}
+.onlyOk{
+    margin: 0 auto;
+    display:block;
+}
+
+/* 본문 폰트 */
+.modal_Content p{ 
+    word-break: break-all;
+    margin: 45px 0;
+    width: 480px !important;
+    display: inline-block !important;
+    text-align: center !important;
+}
+#pwdFormCheckModal .modal_Content p{
+    margin: 34px 0 !important;
+}
+.btnWrap{
+    display: flex;
+    justify-content: center;
+}
+
+/* 폰인증 모달 관련 */
+#phoneModal .modal_Content{
+    height: 405px !important;
+    margin-top: 130px !important;
+}
+#phoneValidation{
+    margin: 0 auto;
+    text-align: center;
+}
+#phoneValidationNumInput{
+    width: 60%;
+    margin-top: 0;
+}
+#phoneValidationNumBtn{
+    width: 30%;
+    color: #111111;
+    background: #FFFFFF;
+    border: 1px solid #27AE60;
+    border-radius: 12px;
+    width: 50px;
+    height: 40px;
+    margin: 0 0 0 10px;
+}
+.modal_Content h3{ /* 제목 */
+    margin: 18px 0;
+}
+.modal_Content i{ /* 체크 아이콘 */
+    color: #68AE6D;
+    padding-right: 10px;
+}
+#phoneModal .modal_Content p{ /* 본문 폰트 */
+    word-break: break-all;
+    margin: 20px 0;
+}
+#phoneModal .modal_Content h2{ /* 시간 */
+    text-align: center;
+    margin-bottom: 20px;
+}
+#phoneModal .modal_Content #resendLink{
+    font-size: 14px;
+    color: #444;
+    margin: 14px;
+    text-align: center;
+}
+#phoneModal #resendLink a{
+    text-decoration: underline;
+}
+
+/* 공통 속성 */
+/* 중앙 정렬 */
+.center, #resendLink, .modal_Content h2{
+    text-align: center;
+    margin: 0 auto;
+}
+
+/* 모달 - 부트스트랩 때문에 추가로 넣은 것 */
+h3.center{
+    font-size: 16px !important;
+    font-weight: 400 !important;
+}
+
+/* 확인 버튼 호버링 혹은 선택 시*/
+/* .okBtn:hover,
+.okBtn:focus { 
+    color: black;
+    cursor: pointer;
+} */
+
+/* review.jsp */
+#reviewCheckModal .modal_Content h3,  #reviewFailedModal .modal_Content h3{
+    margin: 47px 0 !important;
+}
+
+/* reservation.jsp */
+#reviewSuccessModal .modal_Content h3{
+    margin: 53px 0 !important;
+}
+#reviewDoneModal .modal_Content h3{
+    margin: 43px 0 !important;
+}

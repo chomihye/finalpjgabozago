@@ -1,0 +1,199 @@
+@charset "utf8";
+
+/* font-family: 'Noto Sans KR', sans-serif; */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+/* font-family: 'Playfair Display', serif; */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&display=swap');
+/* font-family: 'East Sea Dokdo', cursive; */
+@import url('https://fonts.googleapis.com/css2?family=East+Sea+Dokdo&display=swap');
+
+
+/* CSS RESET */
+*{
+    margin: 0px;
+    padding: 0px;
+    color: #333;
+
+    box-sizing: border-box;
+    font-family: 'Noto Sans KR', sans-serif;
+    text-decoration: none ;
+}
+ul, ol{
+    list-style: none;
+}
+a{
+}
+input, button {
+    border:0; 
+    padding:0; 
+    background:transparent; 
+    overflow:visible;
+}
+#wrapper{
+    width: 100%;
+}
+body #imgSection{
+    position: relative;
+}
+body #imgSection img{
+    width: 100%;
+    overflow: hidden;
+}
+body #imgSection .gradient{
+    width: 100%;
+    height: 60%;
+    position: absolute;
+    top: 40%;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, #ffffff 100%);
+}
+body #imgSection #imgSection_text{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    line-height: 45px;
+    transform: translate(-50%, -50%);
+}
+body #imgSection #imgSection_text p{
+    font-family: 'East Sea Dokdo', cxursive;
+    color: #ffffff;
+}
+body #imgSection #imgSection_text p:nth-of-type(1){
+    font-size: 22px;
+    font-style: italic;
+    letter-spacing: 4px;
+    word-spacing: 10px;
+}
+body #imgSection #imgSection_text p:nth-of-type(2){
+    font-size: 100px;
+    font-weight: 700;
+    letter-spacing: 6px;
+    text-shadow: 0px 5px 3px rgba(0, 0, 0, 0.25);
+}
+body #body{
+    width: 600px;
+    margin: 80px auto 150px auto;
+}
+#body .midHr{
+    display: flex;
+    flex-basis: 100%;
+    align-items: center;
+    margin: 15px 0;
+    font-weight: 600;
+}
+#body .midHr:nth-of-type(1){ /* - 로그인 - */
+    font-size: 26px;
+}
+#body .midHr:nth-of-type(5){ /* - 소셜 로그인 - */
+    font-size: 20px;
+}
+.midHr::before,
+.midHr::after {
+    content: "";
+    flex-grow: 1;
+    background: #999999;
+    height: 1px;
+}
+#body #loginBox #idpwError{
+    display: none;
+    color: red;
+    margin: 20px 0;
+}
+#body #loginBox>label{
+    font-size: 24px;
+    font-weight: 600;
+}
+#body #loginBox #loginTitle{
+    display: inline;
+}
+#body #loginBox #checkboxes{
+    float: left;
+    accent-color: #1fac2b;
+}
+#body #loginBox #findInfoLink{
+    float: right;
+    text-decoration: underline;
+}
+#body #loginBox #findInfoLink i{
+    color: #68AE6D;
+    margin-right: 5px;
+}
+#body #loginBox input[type=text], input[type=password]{
+    border: 1px solid #999999;
+    width: 600px;
+    height: 40px;
+    border-radius: 12px;
+    margin: 10px 0;
+}
+#body input:focus{
+    outline-color: #68AE6D;
+}
+#body #loginBox input[type=text]{
+    background-image: url(../../../resources/member/img/loginIn.png);
+    background-repeat: no-repeat;
+    background-size: 20px;
+    background-position: 15px center;
+    padding-left: 50px;
+}
+#body #loginBox input[type=password]{
+    background-image: url(../../../resources/member/img/loginPw.png);
+    background-repeat: no-repeat;
+    background-size: 28px;
+    background-position: 10px center;
+    padding-left: 50px;
+}
+#body #loginBox input[type=submit]{
+    color: #ffffff;
+}
+#body #loginBox label{
+    font-size: 20px;
+}
+#body #loginBox input::placeholder{
+    font-size: 18px;
+}
+#body #autoLogin::after{
+    content: "";
+    display: block;
+    clear: both;
+}
+#body #loginBtn{
+    color: #FFFFFF;
+    background-color: #68AE6D;
+    border-radius: 20px;
+    height: 45px;
+    line-height: 45px;
+    width: 600px;
+    margin: 20px 0 10px 0;
+}
+
+#body #loginBox .socialLoginBtn{
+    border: 1px solid #999999;
+    border-radius: 20px;
+    height: 45px;
+    line-height: 45px;
+    margin: 10px;
+}
+#body #loginBox .socialLoginBtn img{
+    margin-top: -5px;
+    margin-left: 210px;
+    vertical-align: middle;
+    width: 30px;
+    margin-right: 8px;
+    border-radius: 5px;
+}
+#body #loginBox hr{
+    color: #999999;
+    background-color: #999999;
+    height: 1px;
+    border: 0 none;
+    width: 600px;
+    margin: 20px 0;
+}
+#body #loginBox #joinText{
+    color: #68AE6D;
+}
+
+/* 공통 속성 */
+.center{
+    text-align: center;
+    margin: 0 auto;
+}

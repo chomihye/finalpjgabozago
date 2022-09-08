@@ -1,0 +1,86 @@
+@charset "utf-8";
+
+/* 한국어 : font-family: 'Noto Sans KR', sans-serif; */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+/* 영어(다국어) : font-family: 'Noto Sans', sans-serif; */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+
+    box-sizing: border-box;
+
+    font-family: 'Noto Sans KR', sans-serif;
+    color: #333333;
+}
+ul, ol{
+    list-style: none;
+}
+a{
+    text-decoration: none;
+}
+
+div.wrap{
+    display: flex;
+    justify-content: center;
+    margin: 50px 0;
+}
+
+section.myPlan{
+    /* width 고정 940px, 콘텐츠는 80%인 752px 안으로 */
+    width: 940px;
+    display: inline-block;
+}
+section .plan_header{
+    width: 752px;
+    /* 화면크기를 줄였을때 nav와 일정 margin을 유지하려면 left에 94px을 준다. */
+    margin: 0 auto 10px 94px;
+    display: flex;
+}
+section .plan_header h1{
+    font-size: 22px;
+    display: inline-block;
+}
+
+/* 일정박스 */
+.planBoxWrap{
+    width: 752px;
+    /* 화면크기를 줄였을때 nav와 일정 margin을 유지하려면 left에 94px을 준다. */
+    margin: 0 auto 50px 94px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.planBox{
+    display: flex;
+    align-items: center;
+    margin-top: 40px;
+}
+.planBox:nth-of-type(2), .planBox:nth-of-type(4){
+    margin-left: 40px;
+}
+
+/* 버튼 */
+div.btnPage{
+    width: 280px;
+    height: 45px;
+    background-color: #68AE6D;
+    /* 330px은 임시 위치고정용, 추후 수정 */
+    margin: 0 auto 0 330px;
+    text-align: center;
+    line-height: 45px;
+}
+
+/* slide_plan.css의 코드인데 혹시몰라 넣어둠 */
+.slideContainer li{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.userInfo li{
+    width: 200px;
+}
+.carousel-inner li{
+    width: 250px;
+}

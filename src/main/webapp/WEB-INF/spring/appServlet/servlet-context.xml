@@ -21,14 +21,38 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean> -->
 	
-		<!-- jsp 이름 설정방식 정하기 -->
+	<!-- jsp 이름 설정방식 정하기 -->
 	<view-resolvers>
 		<jsp prefix="/WEB-INF/views/" suffix=".jsp"/>
 	</view-resolvers>
 	
+	<beans:bean id="loginInterceptor" class="com.pj.gabozago.interceptor.LoginInterceptor" />
+	<beans:bean id="logoutInterceptor" class="com.pj.gabozago.interceptor.LogoutInterceptor" />
+	<beans:bean id="authInterceptor" class="com.pj.gabozago.interceptor.AuthInterceptor" />
+
+	<interceptors>
+		<interceptor>
+			<mapping path="/login/loginProcess" /> 
+
+			<beans:ref bean="loginInterceptor"/> 
+		</interceptor>
 	
-	<context:component-scan base-package="com.pj.gabozago" />
+		<interceptor>
+				<mapping path="/login/logoutProcess" />
 	
+				<beans:ref bean="logoutInterceptor"/>
+		</interceptor>
+
+		<interceptor>
+			<mapping path="/mypage" />
+			<mapping path="/mypage/**" /> <!-- 로그인 필요한 서비스 -->
+
+			<beans:ref bean="authInterceptor"/>
+	</interceptor>
+	</interceptors>
 	
+	<context:component-scan base-package="com.pj.gabozago.controller" />
+	<context:component-scan base-package="com.pj.gabozago.interceptor" />
+	<context:component-scan base-package="com.pj.gabozago.exception" />	
 	
 </beans:beans>

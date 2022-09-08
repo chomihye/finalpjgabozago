@@ -1,0 +1,118 @@
+@charset "utf-8";
+
+/* 한국어 : font-family: 'Noto Sans KR', sans-serif; */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+/* 영어(다국어) : font-family: 'Noto Sans', sans-serif; */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+
+    box-sizing: border-box;
+
+    font-family: 'Noto Sans KR', sans-serif;
+
+    color: #333333;
+}
+ul, ol{
+    list-style: none;
+    padding-left: 0;
+}
+a{
+    text-decoration: none;
+}
+
+.navBox{
+    width:300px;
+}
+nav.profileAndMenu{
+    height:569px;
+    width: 300px;
+    padding: 25px;
+    border-radius: 15px;
+    border: 4px solid #68AE6D;
+    background-color: white;
+    box-shadow: 10px 10px 30px rgba(0, 0, 0, .1);
+    float: left;
+}
+.profileAndMenu .profile{
+    width: 100%;
+    text-align: center;
+    border-radius: 50%;    
+}
+.profileAndMenu .profile img{
+    width: 75px;
+    height: 75px;
+    border-radius: 50%;
+    margin: 20px 0;
+    box-shadow: 5px 15px 30px rgba(0, 0, 0, .1);
+}
+.profileAndMenu .profile h2{
+    font-weight: normal;
+    font-size: 16px;
+    text-shadow: 0px 3px 5px rgba(0, 0, 0, 0.3);
+    margin-bottom: 20px;
+}
+.profileAndMenu .profile a.btnEdit{
+    display: block;
+    width: 180px;
+    height: 32px;
+    margin: 0 auto;
+
+    font-size: 12px;
+    font-weight: bold;
+    /* height 값이랑 동일한 px을 주면 높이 중앙 */
+    line-height: 32px;
+    text-align: center;
+
+    color: white;
+    border-radius: 16px;
+
+    background:#68AE6D;
+    box-shadow: 5px 8px 20px rgba(0, 0, 0, .1);
+}
+.profileAndMenu .profile a.btnEdit:hover{
+    box-shadow: 200px 0 0 0 rgba(0,0,0,0.25) inset, 
+               -200px 0 0 0 rgba(0,0,0,0.25) inset;
+}
+.profileAndMenu h3{
+    color: #999999;
+    margin-top: 50px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #999999;
+    padding-bottom: 15px;
+    font-size: 19px;
+}
+.profileAndMenu h3:hover{
+    text-decoration: underline;
+}
+.profileAndMenu .menu li{
+    width: 100%;
+    padding: 5px 0;
+    display: block;
+}
+.profileAndMenu .menu li:hover{
+    text-decoration: underline;
+}
+.profileAndMenu .menu li a{
+    color : #333333 !important;
+}
+
+div.drop{
+    text-align: right;
+    font-size: 12px;
+    margin-top: 30px;
+}
+/* .drop:hover{
+    text-decoration: underline;
+} */
+.drop span{
+    color: #68AE6D;
+}
+.drop span:hover{
+    text-decoration: underline;
+}
+.drop i{
+    color: #999999;
+}

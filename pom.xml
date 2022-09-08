@@ -8,14 +8,14 @@
 
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>org.zerock</groupId>
-	<artifactId>Test</artifactId>
+	<groupId>com.pj</groupId>
+	<artifactId>finalpjgabozago</artifactId>
 	<version>1.0.0-BUILD-SNAPSHOT</version>
 
 	<packaging>war</packaging>
 
-	<name>Test</name>
-	<url>http://Test.example.com</url>
+	<name>finalpjgabozago</name>
+	<url>http://finalpjgabozago.example.com</url>
 	<description>Spring MVC project</description>
 
 
@@ -126,7 +126,12 @@
 			<version>${org.springframework-version}</version>
 		</dependency>
 
-
+		<!-- spring 비밀번호 해쉬처리 관련 코어 -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-core</artifactId>
+			<version>5.7.3</version>
+		</dependency>
 
 
         <!-- =============== 5.JDBC =============== -->
@@ -178,7 +183,7 @@
 		</dependency>
 
 
-		  <!-- ===============6. Testing =============== -->
+		<!-- ===============6. Testing =============== -->
 		<!-- 제이유닛5버전 -->
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
@@ -188,12 +193,12 @@
 		</dependency>
 
 		<!-- 4버전 -->
-		<dependency>
+		<!-- <dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.13.2</version>
 			<scope>test</scope>
-		</dependency>
+		</dependency> -->
 
 
 		<!-- ================7. dataSource -hikariCP ================= -->
