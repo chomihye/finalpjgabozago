@@ -27,7 +27,7 @@
 	</view-resolvers>
 	
 	
-	<context:component-scan base-package="com.pj.gabozago" />
+	<context:component-scan base-package="com.pj.gabozago.controller" />
 	
 	
 	
