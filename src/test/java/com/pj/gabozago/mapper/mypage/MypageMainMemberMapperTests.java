@@ -1,7 +1,8 @@
-package com.pj.gabozago.service.mypage;
+package com.pj.gabozago.mapper.mypage;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
@@ -23,7 +24,8 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import com.pj.gabozago.domain.Criteria;
 import com.pj.gabozago.domain.MemberVO;
 import com.pj.gabozago.domain.PointHistoryVO;
-import com.pj.gabozago.exception.ServiceException;
+import com.pj.gabozago.exception.DAOException;
+import com.pj.gabozago.mapper.MypageMainMemberMapper;
 
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -38,55 +40,36 @@ import lombok.extern.log4j.Log4j2;
 
 @TestInstance(Lifecycle.PER_CLASS)
 @TestMethodOrder(OrderAnnotation.class)
-public class MypagePointWriteServiceTests {
+public class MypageMainMemberMapperTests {
 	
 	
 	@Setter(onMethod_ = {@Autowired})
-	private MypagePointWriteService service;
+	private MypageMainMemberMapper mapper;
 	
 	
 	@BeforeAll
 	void beforeAll() {
 		log.trace("BeforeAll() invoked.");
 		
-		assertNotNull(this.service);
-		log.info("\t+ this.service : {}", this.service);
+		assertNotNull(this.mapper);
+		log.info("\t+ this.mapper : {}", this.mapper);
 	} // beforeAll
 	
 	
 	@Test
 	@Order(1)
-	@DisplayName("1. testGetUserPointList")
+	@DisplayName("1. testSelectReserOrderOfUseDate")
 	@Timeout(value = 10, unit = TimeUnit.SECONDS)
-	void testGetUserPointList() throws ServiceException {
-		log.trace("testGetUserPointList() invoked.");
-		
-		Criteria cri = new Criteria();
-		cri.setAmount(10);
+	void testSelectReserOrderOfUseDate() throws DAOException {
+		log.trace("testSelectReserOrderOfUseDate() invoked.");
 		
 		MemberVO member = new MemberVO(53, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 		
-		List<PointHistoryVO> list = this.service.getUserPointList(cri, member);
+		List<LinkedHashMap<String, Object>> list = this.mapper.selectReserOrderOfUseDate(member);
 		
 		Objects.requireNonNull(list);
 		list.forEach(log::info);
-	} // testGetUserPointList
-	
-	
-	@Test
-	@Order(2)
-	@DisplayName("2. testGetUserCurrentPoint")
-	@Timeout(value = 10, unit = TimeUnit.SECONDS)
-	void testGetUserCurrentPoint() throws ServiceException {
-		log.trace("testGetUserCurrentPoint() invoked.");
-		
-		MemberVO member = new MemberVO(61, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-		
-		int point = this.service.getUserCurrentPoint(member);
-		
-		Objects.requireNonNull(point);
-		log.info("\t+ current point : {}", point);
-	} // testGetUserCurrentPoint
+	} // testSelectReserOrderOfUseDate
 
 	
 } // end class

@@ -115,24 +115,20 @@ article.reservation{
    height: 80%;
    margin: 10px 20px;
 }
-.reservation ul.accom li div.accom_info{
+.reservation .accom .accom_info{
     display: flex;
     align-items: center;
     flex-direction: column;
     justify-content: center;
 }
-.reservation ul.accom li div.accom_info h3{
+/* .reservation .accom .accom_info h3{
     font-size: 16px;
-}
+} */
 .accom_name{
-    display: block;
     width: 180px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-}
-.reser_date{
-    display:block;
 }
 .reser_date i, .reser_date span{
     color: #999999;
@@ -140,4 +136,12 @@ article.reservation{
 }
 .accom_name:hover, .reser_date span:hover{
     text-decoration: underline;
+}
+
+/* 내역이 없는 사람을 위한 용도 */
+#no_get{
+    border-top: none;
+    text-align: center;
+    height: 100px;
+    line-height: 100px;
 }

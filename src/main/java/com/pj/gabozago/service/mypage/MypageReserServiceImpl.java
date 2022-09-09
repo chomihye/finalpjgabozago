@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,7 +13,7 @@ import com.pj.gabozago.domain.AccomReservationDTO;
 import com.pj.gabozago.domain.AccomReviewDTO;
 import com.pj.gabozago.domain.AccomReviewVO;
 import com.pj.gabozago.domain.Criteria;
-import com.pj.gabozago.domain.MemberDTO;
+import com.pj.gabozago.domain.MemberVO;
 import com.pj.gabozago.domain.RefundVO;
 import com.pj.gabozago.exception.DAOException;
 import com.pj.gabozago.exception.ServiceException;
@@ -39,7 +38,7 @@ public class MypageReserServiceImpl implements MypageReserService {
 	
 	// 총 레코드 건수를 반환하는 메소드(페이징 처리에 필요)
 	@Override
-	public int getTotal(Criteria cri, MemberDTO member) throws ServiceException {
+	public int getTotal(Criteria cri, MemberVO member) throws ServiceException {
 		log.trace("getTotal() invoked.");
 		
 		try { return this.mapper.countTotalAmount(cri, member); } 
@@ -49,7 +48,7 @@ public class MypageReserServiceImpl implements MypageReserService {
 	
 	// 특정 회원의 숙소예약내역 리스트를 가져오는 메소드
 	@Override
-	public List<LinkedHashMap<String, Object>> getUserReserList(Criteria cri, MemberDTO member) throws ServiceException {
+	public List<LinkedHashMap<String, Object>> getUserReserList(Criteria cri, MemberVO member) throws ServiceException {
 		log.trace("getUserReserList() invoked.");
 		
 		try { return this.mapper.selectUserReserList(cri, member); } 
@@ -59,7 +58,7 @@ public class MypageReserServiceImpl implements MypageReserService {
 
 	// 예약내역 불러올 때, 예약상태 체크(트랜잭션 필요하지 않음)
 	@Override
-	public void modifyReserStatus(MemberDTO member) throws ServiceException {
+	public void modifyReserStatus(MemberVO member) throws ServiceException {
 		try { 
 			this.mapper.updateStatusCaToUcrn(member); 
 			this.mapper.updateStatusUcrnToUcry(member);
@@ -71,8 +70,8 @@ public class MypageReserServiceImpl implements MypageReserService {
 
 	// 특정 숙소예약내역 detail 페이지 정보 불러오는 메소드
 	@Override
-	public Map<String, Object> getOneReserDetail(AccomReservationDTO reser) throws ServiceException {
-		try { return this.mapper.selectOneReserDetail(reser); } 
+	public Map<String, Object> getOneReserDetail(AccomReservationDTO reser, MemberVO member) throws ServiceException {
+		try { return this.mapper.selectOneReserDetail(reser, member); } 
 		catch (DAOException e) { throw new ServiceException(e); }
 	} // getOneReserDetail
 
@@ -104,8 +103,8 @@ public class MypageReserServiceImpl implements MypageReserService {
 
 	// 화면에 보여줄 용도의 리뷰페이지 숙소정보만 가져오는 메소드(사진, 숙소이름, 룸타입)
 	@Override
-	public Map<String, Object> getAccomInfo(AccomReservationDTO reser) throws ServiceException {
-		try { return this.mapper.selectAccomInfo(reser); } 
+	public Map<String, Object> getAccomInfo(AccomReservationDTO reser, MemberVO member) throws ServiceException {
+		try { return this.mapper.selectAccomInfo(reser, member); } 
 		catch (DAOException e) { throw new ServiceException(e); }
 	} // getAccomInfo
 

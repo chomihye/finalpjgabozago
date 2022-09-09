@@ -85,3 +85,11 @@ section.point{
     text-align: center;
     line-height: 45px;
 } */
+
+/* 내역이 없는 사람을 위한 용도 */
+#no_get{
+    border-top: none;
+    text-align: center;
+    height: 400px;
+    line-height: 400px;
+}

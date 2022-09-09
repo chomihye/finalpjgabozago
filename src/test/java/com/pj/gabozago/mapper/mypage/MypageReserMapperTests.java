@@ -2,12 +2,9 @@ package com.pj.gabozago.mapper.mypage;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
@@ -30,7 +27,7 @@ import com.pj.gabozago.domain.AccomReservationDTO;
 import com.pj.gabozago.domain.AccomReviewDTO;
 import com.pj.gabozago.domain.AccomReviewVO;
 import com.pj.gabozago.domain.Criteria;
-import com.pj.gabozago.domain.MemberDTO;
+import com.pj.gabozago.domain.MemberVO;
 import com.pj.gabozago.domain.RefundVO;
 import com.pj.gabozago.exception.DAOException;
 import com.pj.gabozago.mapper.MypageReserMapper;
@@ -74,8 +71,7 @@ public class MypageReserMapperTests {
 		Criteria cri = new Criteria();
 		cri.setAmount(10);
 		
-		MemberDTO member = new MemberDTO();
-		member.setIdx(53);
+		MemberVO member = new MemberVO(53, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 
 		List<LinkedHashMap<String, Object>> list = this.mapper.selectUserReserList(cri, member);
 		
@@ -91,8 +87,7 @@ public class MypageReserMapperTests {
 	void testUpdateStatusCaToUcrn() throws DAOException {
 		log.trace("testUpdateStatusCaToUcrn() invoked.");
 		
-		MemberDTO member = new MemberDTO();
-		member.setIdx(53);
+		MemberVO member = new MemberVO(53, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 
 		this.mapper.updateStatusCaToUcrn(member);
 	} // testUpdateStatusCaToUcrn
@@ -107,8 +102,10 @@ public class MypageReserMapperTests {
 		
 		AccomReservationDTO reser = new AccomReservationDTO();
 		reser.setIdx(202203060001l);
+		
+		MemberVO member = new MemberVO(53, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 
-		this.mapper.selectOneReserDetail(reser);
+		this.mapper.selectOneReserDetail(reser, member);
 	} // testSelectOneReserDetail
 	
 	
@@ -213,8 +210,10 @@ public class MypageReserMapperTests {
 		
 		AccomReservationDTO reser = new AccomReservationDTO();
 		reser.setIdx(202207300001l);
+		
+		MemberVO member = new MemberVO(53, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 
-		Map<String, Object> map = this.mapper.selectAccomInfo(reser);
+		Map<String, Object> map = this.mapper.selectAccomInfo(reser, member);
 		log.info(">>>>>>>>>>>>>>>>>>>>>>>> map : {}", map);
 	} // testSelectAccomInfo
 	
@@ -292,8 +291,7 @@ public class MypageReserMapperTests {
 	void testUpdateStatusUcrnToUcrn() throws DAOException {
 		log.trace("testUpdateStatusUcrnToUcrn() invoked.");
 		
-		MemberDTO member = new MemberDTO();
-		member.setIdx(53);
+		MemberVO member = new MemberVO(53, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 
 		this.mapper.updateStatusUcrnToUcry(member);
 	} // testUpdateStatusUcrnToUcrn

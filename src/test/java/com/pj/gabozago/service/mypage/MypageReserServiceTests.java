@@ -2,9 +2,7 @@ package com.pj.gabozago.service.mypage;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.jupiter.api.BeforeAll;
@@ -24,9 +22,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import com.pj.gabozago.domain.AccomReservationDTO;
 import com.pj.gabozago.domain.AccomReviewDTO;
 import com.pj.gabozago.domain.AccomReviewVO;
-import com.pj.gabozago.domain.Criteria;
-import com.pj.gabozago.domain.MemberDTO;
-import com.pj.gabozago.domain.PointHistoryVO;
+import com.pj.gabozago.domain.MemberVO;
 import com.pj.gabozago.domain.RefundVO;
 import com.pj.gabozago.exception.ServiceException;
 
@@ -66,8 +62,7 @@ public class MypageReserServiceTests {
 	void testModifyReserStatus() throws ServiceException {
 		log.trace("testModifyReserStatus() invoked.");
 		
-		MemberDTO member = new MemberDTO();
-		member.setIdx(53);
+		MemberVO member = new MemberVO(53, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 		
 		this.service.modifyReserStatus(member);
 	} // testModifyReserStatus
@@ -82,8 +77,9 @@ public class MypageReserServiceTests {
 		
 		AccomReservationDTO dto = new AccomReservationDTO();
 		dto.setIdx(202203060001l);
+		MemberVO member = new MemberVO(53, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 		
-		Map<String, Object> map = this.service.getOneReserDetail(dto);
+		Map<String, Object> map = this.service.getOneReserDetail(dto, member);
 		log.info(">>>>>>>>>>>>>>>>>>>>>>> map : {}", map);
 	} // testGetOneReserDetail
 	

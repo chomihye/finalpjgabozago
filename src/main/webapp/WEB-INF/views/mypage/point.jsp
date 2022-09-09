@@ -61,72 +61,80 @@
                 <p><i class="bi bi-p-circle"></i> 현재 포인트 : <fmt:formatNumber pattern="#,###,###" value="${__RESULT__}" /> P</p>
             </div>
 
-            <table class="pointBody">
-                <thead>
-                    <tr>
-                        <th>일자</th>
-                        <th>내용</th>
-                        <th>포인트</th>
-                    </tr>
-                </thead>
-        
-                <tbody>
-                    <!-- var : 임시 EL 변수명, items : 공유속성 이름 -->
-                    <c:forEach var="point" items="${__LIST__}">
-                        <tr>
-                            <td><fmt:formatDate pattern="yyyy.MM.dd" value="${point.insertTs}" /></td>
-                            <td>${point.pointReason}</td>
-                            <td class="pointAmount">
-                                <fmt:formatNumber pattern="##,###" value="${point.pointAmount}" /> P ${point.isPlus}
-                            </td>
-                        </tr>
-                    </c:forEach>
-                </tbody>
-            </table>
+            <c:choose>
+                <c:when test="${__PAGINATION__.totalAmount != 0}"> 
+                    <table class="pointBody">
+                        <thead>
+                            <tr>
+                                <th>일자</th>
+                                <th>내용</th>
+                                <th>포인트</th>
+                            </tr>
+                        </thead>
+                
+                        <tbody>
+                            <!-- var : 임시 EL 변수명, items : 공유속성 이름 -->
+                            <c:forEach var="point" items="${__LIST__}">
+                                <tr>
+                                    <td><fmt:formatDate pattern="yyyy.MM.dd" value="${point.insertTs}" /></td>
+                                    <td>${point.pointReason}</td>
+                                    <td class="pointAmount">
+                                        <fmt:formatNumber pattern="##,###" value="${point.pointAmount}" /> P ${point.isPlus}
+                                    </td>
+                                </tr>
+                            </c:forEach>
+                        </tbody>
+                    </table>
 
-            <div id="pagination">
-                <form action="#" id="paginationForm">
-                    <!-- 1. 3가지 기준정보(criteria)는 hidden 정보로 제공 -->
-                    <input type="hidden" name="currPage">
-    
-                    <!-- 2. PageDTO 객체의 정보를 이용해서, Pagenation 출력 -->
-                    <ul>
-                        <!-- Prev 처리 -->
-                        <li class="frontPage"><a href="/mypage/point?currPage=1"><i class="bi bi-chevron-double-left"></i></a></li>
+                    <div id="pagination">
+                        <form action="#" id="paginationForm">
+                            <!-- 1. 3가지 기준정보(criteria)는 hidden 정보로 제공 -->
+                            <input type="hidden" name="currPage">
+            
+                            <!-- 2. PageDTO 객체의 정보를 이용해서, Pagenation 출력 -->
+                            <ul>
+                                <!-- Prev 처리 -->
+                                <li class="frontPage"><a href="/mypage/point?currPage=1"><i class="bi bi-chevron-double-left"></i></a></li>
 
-                        <c:choose>
-                            <c:when test="${__PAGINATION__.prev}">
-                                <li class="prev"><a href="/mypage/point?currPage=${__PAGINATION__.startPage - 1}"><i class="bi bi-chevron-left"></i></a></li>
-                            </c:when>
-                            <c:otherwise>
-                                <li class="prev"><a href="#"><i class="bi bi-chevron-left"></i></a></li>
-                            </c:otherwise>
-                        </c:choose>
+                                <c:choose>
+                                    <c:when test="${__PAGINATION__.prev}">
+                                        <li class="prev"><a href="/mypage/point?currPage=${__PAGINATION__.startPage - 1}"><i class="bi bi-chevron-left"></i></a></li>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <li class="prev"><a href="#"><i class="bi bi-chevron-left"></i></a></li>
+                                    </c:otherwise>
+                                </c:choose>
 
-                        <!-- 현재 Pagination 범위에 속한 페이지 번호 목록 출력 -->
-                        <!-- begin부터 end까지 forEach(반복문) -->
-                        <c:forEach var="pageNum" begin="${__PAGINATION__.startPage}" end="${__PAGINATION__.endPage}">
-                            <li class="${pageNum == __PAGINATION__.cri.currPage ? 'currPage' : ''}">
-                                <a href="/mypage/point?currPage=${pageNum}">
-                                    <strong>${pageNum}</strong>
-                                </a>
-                            </li>
-                        </c:forEach>
-    
-                        <!-- Next 처리 -->
-                        <c:choose>
-                            <c:when test="${__PAGINATION__.next}">
-                                <li class="next"><a href="/mypage/point?currPage=${__PAGINATION__.endPage + 1}"><i class="bi bi-chevron-right"></i></a></li>
-                            </c:when>
-                            <c:otherwise>
-                                <li class="next"><a href="#"><i class="bi bi-chevron-right"></i></a></li>
-                            </c:otherwise>
-                        </c:choose>
+                                <!-- 현재 Pagination 범위에 속한 페이지 번호 목록 출력 -->
+                                <!-- begin부터 end까지 forEach(반복문) -->
+                                <c:forEach var="pageNum" begin="${__PAGINATION__.startPage}" end="${__PAGINATION__.endPage}">
+                                    <li class="${pageNum == __PAGINATION__.cri.currPage ? 'currPage' : ''}">
+                                        <a href="/mypage/point?currPage=${pageNum}">
+                                            <strong>${pageNum}</strong>
+                                        </a>
+                                    </li>
+                                </c:forEach>
+            
+                                <!-- Next 처리 -->
+                                <c:choose>
+                                    <c:when test="${__PAGINATION__.next}">
+                                        <li class="next"><a href="/mypage/point?currPage=${__PAGINATION__.endPage + 1}"><i class="bi bi-chevron-right"></i></a></li>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <li class="next"><a href="#"><i class="bi bi-chevron-right"></i></a></li>
+                                    </c:otherwise>
+                                </c:choose>
 
-                        <li class="backPage"><a href="/mypage/point?currPage=${__PAGINATION__.realEndPage}"><i class="bi bi-chevron-double-right"></i></a></li>
-                    </ul>
-                </form>
-            </div>
+                                <li class="backPage"><a href="/mypage/point?currPage=${__PAGINATION__.realEndPage}"><i class="bi bi-chevron-double-right"></i></a></li>
+                            </ul>
+                        </form>
+                    </div>
+                </c:when> 
+
+                <c:otherwise>
+                    <div id="no_get">포인트 내역이 없습니다.</div>
+                </c:otherwise>
+            </c:choose>
         </section>
     </div>
 

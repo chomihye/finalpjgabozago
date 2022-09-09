@@ -21,7 +21,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.pj.gabozago.domain.Criteria;
-import com.pj.gabozago.domain.MemberDTO;
+import com.pj.gabozago.domain.MemberVO;
 import com.pj.gabozago.domain.PointHistoryVO;
 import com.pj.gabozago.exception.DAOException;
 import com.pj.gabozago.mapper.MypagePointWriteMapper;
@@ -67,8 +67,7 @@ public class MypagePointWriteMapperTests {
 //		cri.setCurrPage(1);
 //		cri.setMemberIdx(53);
 		
-		MemberDTO member = new MemberDTO();
-		member.setIdx(53);
+		MemberVO member = new MemberVO(53, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 		
 		List<PointHistoryVO> list = this.mapper.selectUserPointList(cri, member);
 		
@@ -84,8 +83,7 @@ public class MypagePointWriteMapperTests {
 	void testSelectUserCurrentPoint() throws DAOException {
 		log.trace("testSelectUserCurrentPoint() invoked.");
 		
-		MemberDTO member = new MemberDTO();
-		member.setIdx(53);
+		MemberVO member = new MemberVO(53, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 		
 		Integer point = this.mapper.selectUserCurrentPoint(member);
 		
@@ -103,14 +101,26 @@ public class MypagePointWriteMapperTests {
 		
 		Criteria cri = new Criteria();
 		
-		MemberDTO member = new MemberDTO();
-		member.setIdx(53);
+		MemberVO member = new MemberVO(53, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 		
 		Integer num = this.mapper.countTotalAmount(cri, member);
 		
 		Objects.requireNonNull(num);
 		log.info("\t+ 총 레코드 건수 : {}", num);
 	} // testCountTotalAmount
+	
+	
+	@Test
+	@Order(4)
+	@DisplayName("4. testUpdateMemberPoint")
+	@Timeout(value = 10, unit = TimeUnit.SECONDS)
+	void testUpdateMemberPoint() throws DAOException {
+		log.trace("testUpdateMemberPoint() invoked.");
+		
+		MemberVO member = new MemberVO(61, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+		
+		this.mapper.updateMemberPoint(member);
+	} // testUpdateMemberPoint
 	
 	
 } // end class

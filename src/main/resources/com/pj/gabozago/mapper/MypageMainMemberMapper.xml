@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<!-- Mapper.xml 파일의 FQCN(상세경로 포함 정확한 이름) -->
+<mapper namespace="com.pj.gabozago.mapper.MypageMainMemberMapper">
+
+    <!-- id : 메소드명 -->
+    <!-- parameterType="java.util.Map" 은 생략이 가능함 -->
+    
+    <select 
+        id="selectReserOrderOfUseDate"
+        resultType="java.util.LinkedHashMap">
+        SELECT
+            r.idx,
+            r.status,
+            a.accom_name,
+            ar.room_name,
+            r.check_in_date,
+            r.check_out_date
+        FROM
+            tbl_reservation r,
+            tbl_accom_room ar,
+            tbl_accom a
+        WHERE
+            r.accom_room_idx = ar.idx
+            AND ar.accom_idx = a.idx
+            AND r.status = 'CA'
+            AND r.member_idx = #{idx}
+        ORDER BY
+            r.check_in_date
+        FETCH FIRST 2 ROWS ONLY
+    </select>
+
+</mapper>

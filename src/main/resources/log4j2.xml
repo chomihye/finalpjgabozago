@@ -14,7 +14,7 @@
     <Loggers>
         <!-- 패키지 이름 레벨지정 -->
 
-        <Logger name="com.pj.gabozago" level="warn" />
+        <Logger name="com.pj.gabozago" level="info" />
         <Logger name="org.springframework" level="info"/>
         <Logger name="com.zaxxer.hikari" level="info" />
         <Logger name="org.apache.ibatis" level="info" />

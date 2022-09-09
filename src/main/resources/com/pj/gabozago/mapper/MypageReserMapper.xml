@@ -94,7 +94,8 @@
             AND ar.accom_idx = a.idx
             AND r.member_idx = m.idx
             AND r.idx = p.reservation_idx
-            AND r.idx = #{idx}
+            AND r.idx = #{reser.idx}
+            AND r.member_idx = #{member.idx}
     </select>
 
     <update id="updateMemberPoint">
@@ -146,7 +147,8 @@
         WHERE 
             r.accom_room_idx = ar.idx
             AND ar.accom_idx = a.idx
-            AND r.idx = #{idx}
+            AND r.idx = #{reser.idx}
+            AND r.member_idx = #{member.idx}
     </select>
 
     <insert id="insertNewReview">

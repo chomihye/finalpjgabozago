@@ -2,6 +2,7 @@ package com.pj.gabozago.service.mypage;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
@@ -38,11 +39,11 @@ import lombok.extern.log4j.Log4j2;
 
 @TestInstance(Lifecycle.PER_CLASS)
 @TestMethodOrder(OrderAnnotation.class)
-public class MypagePointWriteServiceTests {
+public class MypageMainMenberServiceTests {
 	
 	
 	@Setter(onMethod_ = {@Autowired})
-	private MypagePointWriteService service;
+	private MypageMainMemberService service;
 	
 	
 	@BeforeAll
@@ -56,37 +57,18 @@ public class MypagePointWriteServiceTests {
 	
 	@Test
 	@Order(1)
-	@DisplayName("1. testGetUserPointList")
+	@DisplayName("1. testGetReserOrderOfUseDate")
 	@Timeout(value = 10, unit = TimeUnit.SECONDS)
-	void testGetUserPointList() throws ServiceException {
-		log.trace("testGetUserPointList() invoked.");
-		
-		Criteria cri = new Criteria();
-		cri.setAmount(10);
+	void testGetReserOrderOfUseDate() throws ServiceException {
+		log.trace("testGetReserOrderOfUseDate() invoked.");
 		
 		MemberVO member = new MemberVO(53, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 		
-		List<PointHistoryVO> list = this.service.getUserPointList(cri, member);
+		List<LinkedHashMap<String, Object>> list = this.service.getReserOrderOfUseDate(member);
 		
 		Objects.requireNonNull(list);
 		list.forEach(log::info);
-	} // testGetUserPointList
+	} // testGetReserOrderOfUseDate
 	
-	
-	@Test
-	@Order(2)
-	@DisplayName("2. testGetUserCurrentPoint")
-	@Timeout(value = 10, unit = TimeUnit.SECONDS)
-	void testGetUserCurrentPoint() throws ServiceException {
-		log.trace("testGetUserCurrentPoint() invoked.");
-		
-		MemberVO member = new MemberVO(61, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-		
-		int point = this.service.getUserCurrentPoint(member);
-		
-		Objects.requireNonNull(point);
-		log.info("\t+ current point : {}", point);
-	} // testGetUserCurrentPoint
-
 	
 } // end class

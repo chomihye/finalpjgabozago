@@ -72,28 +72,28 @@
                     </div>
                 </div>
 
-                <ul class="accom">
-                    <li>
-                        <a href="/mypage/reservation/detail" class="accomInfoBox">
-                            <img src="https://picsum.photos/id/684/80/80" alt="accom image">
-                            <div class="accom_info">
-                                <span class="accom_name">숙소이름</span>
-                                <span class="accom_name">(Room타입)</span>
-                                <span class="reser_date"><i class="bi bi-calendar"></i> <span>20XX.XX.XX ~ 20XX.XX.XX</span></span>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/mypage/reservation/detail" class="accomInfoBox">
-                            <img src="https://picsum.photos/id/684/80/80" alt="accom image">
-                            <div class="accom_info">
-                                <span class="accom_name">숙소이름</span>
-                                <span class="accom_name">(Room타입)</span>
-                                <span class="reser_date"><i class="bi bi-calendar"></i> <span>20XX.XX.XX ~ 20XX.XX.XX</span></span>
-                            </div>
-                        </a>
-                    </li>
-                </ul>
+                <c:choose>
+                    <c:when test="${__PAGINATION__.totalAmount != 0}"> 
+                        <ul class="accom">
+                            <c:forEach var="item" items="${result.model}">
+                                <li>
+                                    <a href="/mypage/reservation/detail?status=${item.STATUS}&idx=${item.IDX}" class="accomInfoBox">
+                                        <img src="https://picsum.photos/id/684/80/80" alt="accom image">
+                                        <div class="accom_info">
+                                            <div class="accom_name">${item.ACCOM_NAME}</div>
+                                            <div class="accom_name">(${item.ROOM_NAME})</div>
+                                            <div class="reser_date"><i class="bi bi-calendar"></i> <span>${item.CHECK_IN_DATE} ~ ${item.CHECK_OUT_DATE}</span></div>
+                                        </div>
+                                    </a>
+                                </li>
+                            </c:forEach>
+                        </ul>
+                    </c:when> 
+
+                    <c:otherwise>
+                        <div id="no_get">숙소예약내역이 없습니다.</div>
+                    </c:otherwise>
+                </c:choose>
             </article>
         </section>
     </div>

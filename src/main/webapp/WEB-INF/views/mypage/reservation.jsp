@@ -54,7 +54,7 @@
     <script>
         $(function(){
             // 포인트 적립 완료
-            let prevStepResult = "${param.__RESULT__}";
+            let prevStepResult = "${__RESULT__}";
 
             if(prevStepResult == "Success"){        // 포인트 적립 완료창
                 $("#reviewSuccessModal").css({display: "block"});
@@ -86,80 +86,87 @@
                 <h1>숙소예약내역</h1>
             </div>
 
-            <article class="reser_context">
-                <ul>
-                    <!-- var : 임시 EL 변수명, items : 공유속성 이름 -->
-                    <c:forEach var="item" items="${result.model}">
-                        <li>
-                            <a href="/mypage/reservation/detail?status=${item.STATUS}&idx=${item.IDX}">
-                                <img src="https://picsum.photos/id/231/600/400" alt="accom image">
-                                <div class="accom_info">
-                                    <div class="accom_name">${item.ACCOM_NAME}(${item.ROOM_NAME})</div>
-                                    <div class="accom_num">
-                                        <i class="bi bi-person"></i>&nbsp; 
-                                        성인 ${item.ADULT_COUNT}인
-                                        <c:if test="${item.CHILD_COUNT != 0}">
-                                            , 유아 ${item.CHILD_COUNT}인
-                                        </c:if>
-                                    </div>
-                                    <div class="accom_date"><i class="bi bi-calendar"></i>&nbsp; ${item.CHECK_IN_DATE} ~ ${item.CHECK_OUT_DATE}</div>
-                                    <div class="accom_location"><i class="bi bi-geo-alt"></i>&nbsp; ${item.LARGE_AREA_NAME}</div>
-                                </div>
-                                <form action="/mypage/reservation/review" method="get" class="btn">
-                                    <input type="hidden" value="${item.STATUS}" class="status">
-                                    <input type="hidden" name="currPage" value="${__PAGINATION__.cri.currPage}">
-                                    <input type="hidden" name="idx" value="${item.IDX}">
-                                </form>
-                            </a>
-                        </li>
-                    </c:forEach>
-                </ul>
-            </article>
+            <c:choose>
+                <c:when test="${__PAGINATION__.totalAmount != 0}"> 
+                    <article class="reser_context">
+                        <ul>
+                            <c:forEach var="item" items="${result.model}">
+                                <li>
+                                    <a href="/mypage/reservation/detail?status=${item.STATUS}&idx=${item.IDX}">
+                                        <img src="https://picsum.photos/id/231/600/400" alt="accom image">
+                                        <div class="accom_info">
+                                            <div class="accom_name">${item.ACCOM_NAME}(${item.ROOM_NAME})</div>
+                                            <div class="accom_num">
+                                                <i class="bi bi-person"></i>&nbsp; 
+                                                성인 ${item.ADULT_COUNT}인
+                                                <c:if test="${item.CHILD_COUNT != 0}">
+                                                    , 유아 ${item.CHILD_COUNT}인
+                                                </c:if>
+                                            </div>
+                                            <div class="accom_date"><i class="bi bi-calendar"></i>&nbsp; ${item.CHECK_IN_DATE} ~ ${item.CHECK_OUT_DATE}</div>
+                                            <div class="accom_location"><i class="bi bi-geo-alt"></i>&nbsp; ${item.LARGE_AREA_NAME}</div>
+                                        </div>
+                                        <form action="/mypage/reservation/review" method="get" class="btn">
+                                            <input type="hidden" value="${item.STATUS}" class="status">
+                                            <input type="hidden" name="currPage" value="${__PAGINATION__.cri.currPage}">
+                                            <input type="hidden" name="idx" value="${item.IDX}">
+                                        </form>
+                                    </a>
+                                </li>
+                            </c:forEach>
+                        </ul>
+                    </article>
 
-            <!-- 페이지버튼 -->
-            <div id="pagination">
-                <form action="#" id="paginationForm">
-                    <!-- 1. 3가지 기준정보(criteria)는 hidden 정보로 제공 -->
-                    <input type="hidden" name="currPage">
-    
-                    <!-- 2. PageDTO 객체의 정보를 이용해서, Pagenation 출력 -->
-                    <ul>
-                        <!-- Prev 처리 -->
-                        <li class="frontPage"><a href="/mypage/reservation?currPage=1"><i class="bi bi-chevron-double-left"></i></a></li>
+                    <!-- 페이지버튼 -->
+                    <div id="pagination">
+                        <form action="#" id="paginationForm">
+                            <!-- 1. 3가지 기준정보(criteria)는 hidden 정보로 제공 -->
+                            <input type="hidden" name="currPage">
+            
+                            <!-- 2. PageDTO 객체의 정보를 이용해서, Pagenation 출력 -->
+                            <ul>
+                                <!-- Prev 처리 -->
+                                <li class="frontPage"><a href="/mypage/reservation?currPage=1"><i class="bi bi-chevron-double-left"></i></a></li>
 
-                        <c:choose>
-                            <c:when test="${__PAGINATION__.prev}">
-                                <li class="prev"><a href="/mypage/reservation?currPage=${__PAGINATION__.startPage - 1}"><i class="bi bi-chevron-left"></i></a></li>
-                            </c:when>
-                            <c:otherwise>
-                                <li class="prev"><a href="#"><i class="bi bi-chevron-left"></i></a></li>
-                            </c:otherwise>
-                        </c:choose>
+                                <c:choose>
+                                    <c:when test="${__PAGINATION__.prev}">
+                                        <li class="prev"><a href="/mypage/reservation?currPage=${__PAGINATION__.startPage - 1}"><i class="bi bi-chevron-left"></i></a></li>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <li class="prev"><a href="#"><i class="bi bi-chevron-left"></i></a></li>
+                                    </c:otherwise>
+                                </c:choose>
 
-                        <!-- 현재 Pagination 범위에 속한 페이지 번호 목록 출력 -->
-                        <!-- begin부터 end까지 forEach(반복문) -->
-                        <c:forEach var="pageNum" begin="${__PAGINATION__.startPage}" end="${__PAGINATION__.endPage}">
-                            <li class="${pageNum == __PAGINATION__.cri.currPage ? 'currPage' : ''}">
-                                <a href="/mypage/reservation?currPage=${pageNum}">
-                                    <strong>${pageNum}</strong>
-                                </a>
-                            </li>
-                        </c:forEach>
-    
-                        <!-- Next 처리 -->
-                        <c:choose>
-                            <c:when test="${__PAGINATION__.next}">
-                                <li class="next"><a href="/mypage/reservation?currPage=${__PAGINATION__.endPage + 1}"><i class="bi bi-chevron-right"></i></a></li>
-                            </c:when>
-                            <c:otherwise>
-                                <li class="next"><a href="#"><i class="bi bi-chevron-right"></i></a></li>
-                            </c:otherwise>
-                        </c:choose>
+                                <!-- 현재 Pagination 범위에 속한 페이지 번호 목록 출력 -->
+                                <!-- begin부터 end까지 forEach(반복문) -->
+                                <c:forEach var="pageNum" begin="${__PAGINATION__.startPage}" end="${__PAGINATION__.endPage}">
+                                    <li class="${pageNum == __PAGINATION__.cri.currPage ? 'currPage' : ''}">
+                                        <a href="/mypage/reservation?currPage=${pageNum}">
+                                            <strong>${pageNum}</strong>
+                                        </a>
+                                    </li>
+                                </c:forEach>
+            
+                                <!-- Next 처리 -->
+                                <c:choose>
+                                    <c:when test="${__PAGINATION__.next}">
+                                        <li class="next"><a href="/mypage/reservation?currPage=${__PAGINATION__.endPage + 1}"><i class="bi bi-chevron-right"></i></a></li>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <li class="next"><a href="#"><i class="bi bi-chevron-right"></i></a></li>
+                                    </c:otherwise>
+                                </c:choose>
 
-                        <li class="backPage"><a href="/mypage/reservation?currPage=${__PAGINATION__.realEndPage}"><i class="bi bi-chevron-double-right"></i></a></li>
-                    </ul>
-                </form>
-            </div>
+                                <li class="backPage"><a href="/mypage/reservation?currPage=${__PAGINATION__.realEndPage}"><i class="bi bi-chevron-double-right"></i></a></li>
+                            </ul>
+                        </form>
+                    </div>
+                </c:when> 
+
+                <c:otherwise>
+                    <div id="no_get">숙소예약내역이 없습니다.</div>
+                </c:otherwise>
+            </c:choose>
         </section>
     </div>
 
