@@ -52,13 +52,14 @@ public class MypageController {
 	
 
 	@RequestMapping(path = {"", "/main"})
-	public String getMyPageMain(
+	public String loadMyPageMain(
 			@SessionAttribute(SharedScopeKeys.USER_KEY) MemberVO member, Criteria cri, Model model) throws ControllerException {		
-		log.trace(">>>>>>>>>>>>>>>>>>>> getMyPageMain() invoked.");
+		log.trace(">>>>>>>>>>>>>>>>>>>> loadMyPageMain() invoked.");
 		
 		try {
 			// 메인페이지 로드시
-			this.reserService.modifyReserStatus(member);		// 예약상태 체크(날짜에 따라 상태 업데이트 필요하면 수정)
+			this.reserService.modifyReserStatus(member);			// 예약상태 체크(날짜에 따라 상태 업데이트 필요하면 수정)
+			this.pointWriteService.getUserCurrentPoint(member);		// 회원의 현재 포인트 업데이트
 			
 			// 회원의 사용일 임박순 숙소예약내역 2건을 가져오는 메소드
 			List<LinkedHashMap<String, Object>> list = this.memberService.getReserOrderOfUseDate(member);
@@ -75,7 +76,7 @@ public class MypageController {
 		} // try-catch
 		
 		return "mypage/main";
-	} // getMyPageMain
+	} // loadMyPageMain
 	
 	
 	@GetMapping(path = "/myInfo/pwdCheck")
