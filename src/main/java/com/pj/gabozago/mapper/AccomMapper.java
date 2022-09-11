@@ -1,5 +1,6 @@
 package com.pj.gabozago.mapper;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -21,10 +22,15 @@ public interface AccomMapper {
 	public abstract List<AccomDTO> getList() throws DAOException;
 	
 	// 숙소 상세 정보 반환
-	public abstract List<AccomDTO> getdetailList(AccomDTO accom) throws DAOException;
+	//public abstract List<AccomDTO> getDetailList(AccomDTO accom) throws DAOException;
+
+	
 	
 	// 숙소 상세 정보 반환
-	//public abstract Map<String, Object> getOneAccomDetail(AccomDTO accom) throws DAOException;
+	public abstract Map<String, Object> getOneAccomDetail(AccomDTO accom) throws DAOException;
+
+	//숙소의 방 리스트...
+	public abstract List<AccomRoomDTO> getRoomList() throws DAOException;;
 	
 
 	

@@ -112,7 +112,8 @@
 
   <div class="wrap">
     <div class="select_box">
-      <div class="acco_name">${param.accom_name}</div>
+      
+      <div class="acco_name">${accom.ACCOM_NAME}</div>
       
       <div class="small_search_box">
         <ul class="np-box">
@@ -121,7 +122,7 @@
             <div>
               <p class="title">체크인</p>
               <input type="text" id="dateSelector" class="datepicker_input" name="spot" placeholder="체크인 날짜를 선택하세요" />
-            </div>
+            </div> 
           </li>
           <li>
             <i class="bi bi-calendar-check"></i>
@@ -164,7 +165,7 @@
                   <img src="/resources/acco/img/room1.jpg" alt="" class="room_img_first">
                 </a>
               </div>
-              <div class="room_type">fnnnn</div>
+              <div class="room_type">asdf</div>
               <div class="room_price">₩200,000</div>
               <a href="/reservation/payment" class="book_btn">예약하기</a>
             </div>

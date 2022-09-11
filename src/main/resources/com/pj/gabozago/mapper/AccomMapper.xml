@@ -22,7 +22,7 @@
 	</select>
 	
 	
-	<select id="getdetailList" resultMap="AccomDTO">
+	<!-- <select id="getDetailList" resultMap="AccomDTO">
 	    SELECT 
 		    r.idx,
 		    r.accom_name,
@@ -30,7 +30,25 @@
 		    ar.price
 		FROM tbl_accom r, tbl_accom_room ar
 		WHERE r.idx = ar.accom_idx AND r.idx = #{idx}
+	</select> -->
+
+    <select id="getOneAccomDetail" resultType="java.util.Map">
+	    SELECT 
+            r.idx,
+            r.accom_name,
+            r.address,
+            r.latitude,
+            r.longitude
+		FROM tbl_accom r
+		WHERE r.idx = #{idx}
 	</select>
+	
+    <select id="getRoomList" resultMap="arDTO">
+        select *
+        FROM tbl_accom_room
+        WHERE accom_idx = #{idx}
+
+    </select>
 
 
 
@@ -53,13 +71,7 @@
     </resultMap>
     
  
-	<!-- <select id="getOneAccomDetail" resultType="java.util.Map">
-		SELECT
-			idx,
-			accom_name
-		FROM tbl_accom
-		WHERE idx = #{idx}
-	</select> -->
+
 	
     <!-- <resultMap type="java.util.Map" id="AccomDetailVO">
         <result property="idx" column="IDX"/>

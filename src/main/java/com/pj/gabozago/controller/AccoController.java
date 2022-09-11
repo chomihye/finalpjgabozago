@@ -1,5 +1,7 @@
 package com.pj.gabozago.controller;
 
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -16,6 +18,7 @@ import com.pj.gabozago.domain.AccomReservationDTO;
 import com.pj.gabozago.domain.AccomRoomDTO;
 import com.pj.gabozago.domain.AccomRoomVO;
 import com.pj.gabozago.domain.AccomVO;
+import com.pj.gabozago.domain.PointHistoryVO;
 import com.pj.gabozago.exception.ControllerException;
 import com.pj.gabozago.exception.ServiceException;
 import com.pj.gabozago.service.AccomService;
@@ -44,20 +47,20 @@ public class AccoController {
 
 	}
 
+	// @RequestParam사용....
 	@GetMapping("/datail")
-	public String list1(
-			@RequestParam("accom_idx") Integer accom_idx,
-			@RequestParam("accom_name") String accom_name, AccomDTO accom, Model model)
-	
+	public String list1(@RequestParam("accom_idx") Integer accom_idx, AccomDTO accom, Model model)
+
 			throws ControllerException, ServiceException {
 
+		accom.setIdx(accom_idx);
 		try {
-			accom.setIdx(accom_idx);
-			accom.setAccomName(accom_name);
-			
-			List<AccomDTO> list = this.accomService.getdetailList(accom);
-			model.addAttribute("accom", list);
-		
+
+			Map<String, Object> map = this.accomService.getOneAccomDetail(accom);
+			List<AccomRoomDTO> list = this.accomService.getRoomList(accom_idx);
+
+			map.put("model", list);
+			model.addAttribute("accom", map);
 
 		} catch (ServiceException e) {
 			throw new ControllerException(e);
@@ -65,6 +68,23 @@ public class AccoController {
 
 		return "acco/reservation_datail";
 	}
+
+//	@GetMapping("/datail")
+//	public String list1(@ModelAttribute("accom") AccomDTO accom, Model model)
+//
+//			throws ControllerException, ServiceException {
+//
+//		try {
+//			
+//			List<AccomDTO> list = this.accomService.getDetailList(accom);
+//			model.addAttribute("accom", list);
+//
+//		} catch (ServiceException e) {
+//			throw new ControllerException(e);
+//		} // try-catch
+//
+//		return "acco/reservation_datail";
+//	}
 
 //	@GetMapping("/datail")
 //	public String reservationDetail(@ModelAttribute("accom_idx") Integer accom_idx, AccomDTO accom, Model model) throws ControllerException {

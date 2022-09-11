@@ -1,5 +1,6 @@
 package com.pj.gabozago.service;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -18,9 +19,13 @@ public interface AccomService {
 	public abstract List<AccomDTO> getList() throws ServiceException;
 	
 	//숙소 이름 상세 페이지에 반영
-	//public abstract Map<String, Object> getOneAccomDetail(AccomDTO accom) throws ServiceException;
+	public abstract Map<String, Object> getOneAccomDetail(AccomDTO accom) throws ServiceException;
+
+	//public abstract List<AccomRoomDTO> getRoomList() throws ServiceException;
+
+	public abstract List<AccomRoomDTO> getRoomList(Integer accom_idx) throws ServiceException;
 	
-	public abstract List<AccomDTO> getdetailList(AccomDTO accom) throws ServiceException;
+	//public abstract List<AccomDTO> getDetailList(AccomDTO accom) throws ServiceException;
 
 	
 
