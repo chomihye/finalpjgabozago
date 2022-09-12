@@ -113,7 +113,7 @@
   <div class="wrap">
     <div class="select_box">
       
-      <div class="acco_name">${accom.ACCOM_NAME}</div>
+      <div class="acco_name">${_ACCOM_.ACCOM_NAME}</div>
       
       <div class="small_search_box">
         <ul class="np-box">
@@ -158,42 +158,21 @@
       <!-- 룸선택 슬라이드  -->
       <div class="swiper first-swiper">
         <div class="swiper-wrapper">
-          <div class="swiper-slide room_card">
-            <div class="room_card_warp">
-              <div class="img_box">
-                <a href="/reservation/room">
-                  <img src="/resources/acco/img/room1.jpg" alt="" class="room_img_first">
-                </a>
-              </div>
-              <div class="room_type">asdf</div>
-              <div class="room_price">₩200,000</div>
-              <a href="/reservation/payment" class="book_btn">예약하기</a>
-            </div>
-          </div>
-          <div class="swiper-slide room_card">
-            <div class="room_card_warp">
-              <div class="img_box">
-                <a href="/reservation/room">
-                  <img src="/resources/acco/img/room2.jpg" alt="" class="room_img_second">
-                </a>
-              </div>
-              <div class="room_type">룸타입</div>
-              <div class="room_price">₩220,000</div>
-              <a href="/reservation/payment" class="book_btn">예약하기</a>
-            </div>
-          </div>
-          <!-- <div class="swiper-slide room_card">
-            <div class="room_card_warp">
-              <div class="img_box">
-                <a href="/reservation/room">
-                  <img src="/resources/acco/img/room5.jpg" alt="" class="room_img_first">
-                </a>
-              </div>
-              <div class="room_type">디럭스 더블</div>
-              <div class="room_price">₩230,000</div>
-              <a href="/reservation/payment" class="book_btn">예약하기</a>
-            </div>
-          </div> -->
+          <c:forEach items= "${_ACCOM_.room_list}" var="list">
+	          <div class="swiper-slide room_card">
+	            <div class="room_card_warp">
+	              <div class="img_box">
+	                <a href="/reservation/room?room_idx=${list.IDX}">
+	                  <img src="/resources/acco/img/himg/${list.FILE_NAME}" alt="${list.ROOM_NAME} 이미지" class="room_img_first">
+	                </a>
+	              </div>
+	              <div class="room_type">${list.ROOM_NAME}</div>
+	              <div class="room_price">₩${list.PRICE}</div>
+	              <a href="/reservation/payment" class="book_btn">예약하기</a>
+	            </div>
+	          </div>
+          </c:forEach>
+
        
         </div>
 
@@ -212,7 +191,7 @@
   <div class="map_area">
     <div class="map">
       <iframe
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d101182.64197414236!2d126.83696531640624!3d37.57961700000001!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357ca2c74aeddea1%3A0x8b3046532cc715f6!2z6rK967O16raB!5e0!3m2!1sko!2skr!4v1658074137356!5m2!1sko!2skr"
+        src="https://map.google.com/maps?q=${_ACCOM_.LATITUDE},${_ACCOM_.LONGITUDE}&hl=kr&z=14&amp;output=embed"
         width="100%" height="500" style="border:0;" allowfullscreen="" loading="lazy"
         referrerpolicy="no-referrer-when-downgrade">
       </iframe>
@@ -224,7 +203,7 @@
       </div>
       <div class="location_info">
         <span>위치안내</span>
-        <div>서울특별시 종로구 사직로 161</div>
+        <div>${_ACCOM_.ADDRESS}</div>
       </div>
     </div>
   </div>

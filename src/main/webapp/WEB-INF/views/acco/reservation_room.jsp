@@ -97,17 +97,17 @@
             <div class="info_exp">
                 <div class="info_exp_left">
                     <i>ROOM INFORMATION</i>
-                    <h4>저지맨션</h4>
-                    <span>저지맨션은 거실과 다이닝룸 그리고 침실과 화장실, 야외 테라스로 구성되어 있습니다.</span>
+                    <h4>${_ACCOM_.ROOM_NAME}</h4>
+                    <span>${_ACCOM_.ROOM_DESC}</span>
                 </div>
                 <div class="np-box">
                     <a href="/reservation/payment">
                         <button type="button" class="detail_reserve_btn">예약하기</button>
                     </a>
-                    <p>체크인 16:00 / 체크아웃 11:00</p>
-                    <p>기준 인원 2명 (최대 인원 2명)</p>
-                    <p>객실면적 82㎡</p>
-                    <p>킹 침대 1</p>
+                    <p>체크인 ${_ACCOM_.CHECK_IN} / 체크아웃 ${_ACCOM_.CHECK_OUT}</p>
+                    <p>기준 인원 ${_ACCOM_.DEFAULT_COUNT}명 (최대 인원 ${_ACCOM_.MAX_COUNT}명)</p>
+                    <p>객실면적 ${_ACCOM_.ROOM_AREA}㎡</p>
+                    <p>${_ACCOM_.ROOM_OPTION}</p>
                 </div>
 
 
@@ -127,7 +127,7 @@
 
                     <div class="carousel-inner">
                         <div class="carousel-item active">
-                            <img src="/resources/acco/img/room1.jpg" class="d-block w-100" alt="...">
+                            <img src="/resources/acco/img/himg/${_ACCOM_.FILE_NAME}" class="d-block w-100" alt="...">
                         </div>
                         <div class="carousel-item">
                             <img src="/resources/acco/img/room4.jpg" class="d-block w-100" alt="...">

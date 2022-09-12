@@ -11,7 +11,7 @@ import org.springframework.ui.Model;
 import com.pj.gabozago.domain.AccomDTO;
 import com.pj.gabozago.domain.AccomRoomDTO;
 import com.pj.gabozago.domain.AccomRoomVO;
-import com.pj.gabozago.domain.AccomVO;
+import com.pj.gabozago.domain.MemberVO;
 import com.pj.gabozago.exception.DAOException;
 import com.pj.gabozago.exception.ServiceException;
 import com.pj.gabozago.mapper.AccomMapper;
@@ -27,8 +27,7 @@ public class AccomServiceImpl implements AccomService {
 	@Setter(onMethod_ = @Autowired)
 	private AccomMapper mapper;
 
-	// 핵심비지니스로직: DB 게시판 테이블을 조회하여,
-	// 게시글 전체목록을 얻어내고, 이 목록데이터를 호출자에 반환
+	//숙소 전체목록보기
 	@Override
 	public List<AccomDTO> getList() throws ServiceException {
 		log.trace("getList() invoked.");
@@ -40,7 +39,8 @@ public class AccomServiceImpl implements AccomService {
 			throw new ServiceException(e);
 		} // try-catch
 	}
-
+	
+	//숙소 이름 상세 페이지에 반영
 	@Override
 	public Map<String, Object> getOneAccomDetail(AccomDTO accom) throws ServiceException {
 		try {
@@ -50,33 +50,36 @@ public class AccomServiceImpl implements AccomService {
 		} // try-catch
 	}
 
-//	@Override
-//	public List<AccomRoomDTO> getRoomList() throws ServiceException {
-//		try {
-//
-//			return mapper.getRoomList();
-//		} catch (DAOException e) {
-//			throw new ServiceException(e);
-//		} // try-catch
-//	}
-
+	//숙소 하위 방 목록 조회
 	@Override
-	public List<AccomRoomDTO> getRoomList(Integer accom_idx) throws ServiceException {
+	public List<LinkedHashMap<String, Object>> getRoomList(AccomDTO accom) throws ServiceException {
 		try {
-
-			return mapper.getRoomList();
+			return this.mapper.selectRoomList(accom);
 		} catch (DAOException e) {
 			throw new ServiceException(e);
-		} // try-catch
-	}
+		}
+	}//getRoomList
+	
+	//숙소 방 한개당 상세 정보 조회
+	@Override
+	public Map<String, Object> getOneRoomDetail(AccomDTO accom) throws ServiceException {
+		try {
+			return this.mapper.selectRoomDetail(accom);
+		} catch (DAOException e) {
+			throw new ServiceException(e);
+		}
+	}//getOneRoomDetail
 
-//	@Override
-//	public List<AccomDTO> getDetailList(AccomDTO accom) throws ServiceException {
-//		try {
-//			
-//			return mapper.getDetailList(accom);	
-//		}
-//		catch (DAOException e) { throw new ServiceException(e); } // try-catch
-//	}
+	//숙소 검색 결과 조회
+	@Override
+	public List<AccomDTO> getSearchedList(AccomDTO accom) throws ServiceException {
+		try {
+			return this.mapper.selectSearchedAccomList(accom);
+		} catch (DAOException e) {
+			throw new ServiceException(e);
+		}
+	} // getOneRoomDetail
+
+
 
 } // end class

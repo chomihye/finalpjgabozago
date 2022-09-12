@@ -20,17 +20,26 @@
         WHERE r.large_area_idx = a.idx
         ORDER BY r.idx asc
 	</select>
+
+    <select id="selectSearchedAccomList" resultMap="AccomDTO">
+        SELECT 
+            r.idx,
+            r.accom_name,
+            r.large_area_idx,
+            a.large_area_name,  
+            (select max(price) from tbl_accom_room where accom_idx = r.idx) as max_price,
+            (select min(price) from tbl_accom_room where accom_idx = r.idx) as min_price,
+            (select ai.file_name from tbl_accom_images ai where r.idx = ai.idx) as file_name
+        FROM tbl_accom r ,tbl_large_area a
+        <where>
+            r.large_area_idx = a.idx
+            <if test="largeAreaIdx != null">AND r.large_area_idx = #{largeAreaIdx}</if>
+        </where>
+        ORDER BY r.idx asc
+	</select>
+
+
 	
-	
-	<!-- <select id="getDetailList" resultMap="AccomDTO">
-	    SELECT 
-		    r.idx,
-		    r.accom_name,
-		    ar.room_name,
-		    ar.price
-		FROM tbl_accom r, tbl_accom_room ar
-		WHERE r.idx = ar.accom_idx AND r.idx = #{idx}
-	</select> -->
 
     <select id="getOneAccomDetail" resultType="java.util.Map">
 	    SELECT 
@@ -43,11 +52,46 @@
 		WHERE r.idx = #{idx}
 	</select>
 	
-    <select id="getRoomList" resultMap="arDTO">
-        select *
-        FROM tbl_accom_room
-        WHERE accom_idx = #{idx}
 
+    <select 
+        id="selectRoomList"
+        resultType="java.util.LinkedHashMap">
+		 SELECT 
+            r.idx,
+            r.accom_idx,
+            r.room_name,
+            r.room_desc,
+            r.check_in,
+            r.check_out,
+            r.default_count,
+            r.max_count,
+            r.room_area,
+            r.room_option,
+            r.price,
+            img.file_name
+        FROM tbl_accom_room r,
+        	tbl_accom_images img
+        WHERE r.accom_idx = #{idx}
+        	AND r.idx = img.accom_room_idx
+    </select>
+
+
+    <select id="selectRoomDetail" resultType="java.util.Map">
+        SELECT 
+            ar.idx,
+            ar.accom_idx,
+            ar.room_name,
+            ar.room_desc,
+            ar.check_in,
+            ar.check_out,
+            ar.default_count,
+            ar.max_count,
+            ar.room_area,
+            ar.room_option,
+            ar.price,
+            img.file_name
+        FROM tbl_accom_room ar ,tbl_accom_images img
+        WHERE ar.idx = #{idx} AND ar.accom_idx =  img.accom_room_idx 
     </select>
 
 

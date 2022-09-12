@@ -146,7 +146,7 @@
         <!-- 컨테이너-숙소부분 -->
         <div class="acco">추천숙소</div>
 
-        <div class="large_container">
+        <div class="large_container" id="accom_list_container">
          <c:forEach items= "${_ACCOM_}" var="list">
                 <div class="acco_container">
                     <div class="list">
@@ -156,10 +156,10 @@
                             <br />${list.travellargeDTO.largeAreaName}<br />기준인원 2명 <br />${list.accomroomDTO.minPrice} ~ ${list.accomroomDTO.maxPrice}
                             <br />
                         </p>
-                        <a href="/reservation/datail?accom_idx=${list.idx}&accom_name=${list.accomName}" class="list_reserve">예약하기</a>
+                        <a href="/reservation/datail?accom_idx=${list.idx}" class="list_reserve">예약하기</a>
                     </div>
                     <div class="hotel_picture">
-                        <a href="/reservation/datail?accom_idx=${list.idx}&accom_name=${list.accomName}"><img src="/resources/acco/img/himg/${list.accomimagesDTO.fileName}" alt="" /></a>
+                        <a href="/reservation/datail?accom_idx=${list.idx}"><img src="/resources/acco/img/himg/${list.accomimagesDTO.fileName}" alt="" /></a>
 
                         <div class="heart_icon"><i class="bi bi-heart-fill"></i></div>
                     </div>
@@ -197,7 +197,7 @@
             <!-- <div class="location_list"> -->
             <ul class="location_list" id="location_list">
                 <li>
-                    <button type="button" value="11">서울</button>
+                    <button type="button" value="1">서울</button>
                 </li>
                 <li>
                     <button type="button">인천</button>
@@ -218,7 +218,7 @@
                     <button type="button">울산</button>
                 </li>
                 <li>
-                    <button type="button">경기</button>
+                    <button type="button" value="31">경기</button>
                 </li>
                 <li>
                     <button type="button">강원</button>

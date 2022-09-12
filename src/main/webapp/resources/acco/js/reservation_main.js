@@ -92,7 +92,46 @@ $(function () {
   // 검색결과 조회
   $("#search_btn").on("click", function () {
     let locationIdx = $('#travel_btn').val();
+    console.log(locationIdx);
+    
+    $.ajax({
+      type: "POST",
+      url: "/reservation/search",
+      data: { location_idx: locationIdx },
+      dataType: "json",
+      success: function (response) {
+        console.log(response);
+        
+        let htmlText = "";
+       	const accom_list = response._ACCOM_;
+       	
+       	for(let i = 0; i < accom_list.length; i++) {
+			let accom = accom_list[i];
+			htmlText += `
+                <div class="acco_container">
+                    <div class="list">
+                        <a href="/reservation/datail?accom_idx=${accom.idx}" class="list_main_name">${accom.accomName}</a>
+                        <p>
+                            <br />${accom.travellargeDTO.largeAreaName}<br />기준인원 2명 <br />${accom.accomroomDTO.minPrice} ~ ${accom.accomroomDTO.maxPrice}
+                            <br />
+                        </p>
+                        <a href="/reservation/datail?accom_idx=${accom.idx}" class="list_reserve">예약하기</a>
+                    </div>
+                    <div class="hotel_picture">
+                        <a href="/reservation/datail?accom_idx=${accom.idx}"><img src="/resources/acco/img/himg/${accom.accomimagesDTO.fileName}" alt="" /></a>
 
+                        <div class="heart_icon"><i class="bi bi-heart-fill"></i></div>
+                    </div>
+                </div>
+			`;
+		}
+		$("#accom_list_container").html(htmlText);
+       	
+      },
+      error: function (error) {
+        console.log(error);
+      }
+    });
     
   });
 });

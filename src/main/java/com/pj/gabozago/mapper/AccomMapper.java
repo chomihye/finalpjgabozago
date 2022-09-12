@@ -5,12 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.pj.gabozago.domain.AccomDTO;
-import com.pj.gabozago.domain.AccomRoomDTO;
-import com.pj.gabozago.domain.AccomRoomVO;
-import com.pj.gabozago.domain.AccomVO;
-import com.pj.gabozago.domain.TravelLargeDTO;
 import com.pj.gabozago.exception.DAOException;
-import com.pj.gabozago.exception.ServiceException;
 
 
 // 이 자바 인터페이스가 영속성 계층의 DAO 역할을 할,
@@ -22,15 +17,16 @@ public interface AccomMapper {
 	public abstract List<AccomDTO> getList() throws DAOException;
 	
 	// 숙소 상세 정보 반환
-	//public abstract List<AccomDTO> getDetailList(AccomDTO accom) throws DAOException;
-
-	
-	
-	// 숙소 상세 정보 반환
 	public abstract Map<String, Object> getOneAccomDetail(AccomDTO accom) throws DAOException;
 
-	//숙소의 방 리스트...
-	public abstract List<AccomRoomDTO> getRoomList() throws DAOException;;
+	//숙소의 방 리스트
+	public abstract List<LinkedHashMap<String, Object>> selectRoomList(AccomDTO accom) throws DAOException;
+
+	//숙소 방의 상세 정보 
+	public abstract Map<String, Object> selectRoomDetail(AccomDTO accom) throws DAOException;
+
+	//숙소 검색 결과 조회
+	public abstract List<AccomDTO> selectSearchedAccomList(AccomDTO accom) throws DAOException;
 	
 
 	
