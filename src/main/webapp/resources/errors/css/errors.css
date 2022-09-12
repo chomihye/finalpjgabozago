@@ -1,0 +1,70 @@
+@charset "utf-8";
+
+/* 한국어 : font-family: 'Noto Sans KR', sans-serif; */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+/* 영어(다국어) : font-family: 'Noto Sans', sans-serif; */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+
+    box-sizing: border-box;
+
+    font-family: 'Noto Sans KR', sans-serif;
+    color: #333333;
+}
+ul, ol{
+    list-style: none;
+}
+a{
+    text-decoration: none;
+}
+
+/* 둘중에 뭘로 높이를 맞출지 나중에 결정해야겠음 */
+/* html, body, .wrap {
+    height: 100%;
+} */
+.wrap {
+    height: 600px;
+}
+/* ============================================== */
+
+div.wrap{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 50px 0;
+}
+section.withdrawal{
+    /* width 고정 940px, 콘텐츠는 80%인 752px 안으로 */
+    width: 940px;
+    display: inline-block;
+}
+body #body{
+    width: 600px;
+    margin: 0 170px;
+}
+
+body .midHr{
+    display: flex;
+    flex-basis: 100%;
+    align-items: center;
+    font-size: 26px;
+    font-weight: bold;
+}
+.midHr::before,
+.midHr::after {
+    content: "";
+    flex-grow: 1;
+    background: #999999;
+    height: 1px;
+}
+.guide_text{
+    width: 500px;
+    margin: 150px auto;
+    text-align: center;
+}
+.error_title{
+    font-weight: bold;
+}
