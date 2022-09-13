@@ -1,21 +1,24 @@
 package com.pj.gabozago.mapper;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Select;
 
-import com.pj.gabozago.domain.PointHistoryVO;
-import com.pj.gabozago.domain.WishlistAccomVO;
-import com.pj.gabozago.domain.WishlistPlanVO;
+import com.pj.gabozago.domain.Criteria;
+import com.pj.gabozago.domain.MemberVO;
 import com.pj.gabozago.exception.DAOException;
 
 
 public interface MypageWishlistMapper {		// 위시리스트 페이지 관련 mapper
 
-	@Select("SELECT * FROM tbl_wishlist_accom WHERE idx = 94")
-	public abstract List<WishlistAccomVO> selectOneWishlistAccom() throws DAOException;
 	
-	@Select("SELECT * FROM tbl_wishlist_plan WHERE idx = 53")
-	public abstract List<WishlistPlanVO> selectOneWishlistPlan() throws DAOException;
+	// 숙소 위시리스트의 총 레코드 건수를 반환하는 메소드(페이징 처리에 필요)
+	@Select("SELECT count(idx) FROM tbl_wishlist_accom WHERE member_idx = #{member.idx}")
+	public abstract Integer countTotalAmountOfAccom(Criteria cri, MemberVO member) throws DAOException;
+	
+	// 해당 회원의 숙소 위시리스트 내역을 가져오는 메소드
+	public abstract List<LinkedHashMap<String, Object>> selectAccomWishlist(Criteria cri, MemberVO member) throws DAOException;
+	
 	
 } // end interface

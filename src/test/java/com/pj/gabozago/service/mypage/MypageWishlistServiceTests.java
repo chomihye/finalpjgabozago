@@ -1,10 +1,8 @@
-package com.pj.gabozago.mapper.mypage;
+package com.pj.gabozago.service.mypage;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Objects;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.jupiter.api.BeforeAll;
@@ -21,10 +19,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import com.pj.gabozago.domain.AccomReservationDTO;
+import com.pj.gabozago.domain.AccomReviewDTO;
+import com.pj.gabozago.domain.AccomReviewVO;
 import com.pj.gabozago.domain.Criteria;
 import com.pj.gabozago.domain.MemberVO;
-import com.pj.gabozago.exception.DAOException;
-import com.pj.gabozago.mapper.MypageWishlistMapper;
+import com.pj.gabozago.domain.RefundVO;
+import com.pj.gabozago.exception.ServiceException;
 
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -39,28 +40,28 @@ import lombok.extern.log4j.Log4j2;
 
 @TestInstance(Lifecycle.PER_CLASS)
 @TestMethodOrder(OrderAnnotation.class)
-public class MypageWishlistMapperTests {
+public class MypageWishlistServiceTests {
 	
 	
 	@Setter(onMethod_ = {@Autowired})
-	private MypageWishlistMapper mapper;
+	private MypageWishlistService service;
 	
 	
 	@BeforeAll
 	void beforeAll() {
 		log.trace("BeforeAll() invoked.");
 		
-		assertNotNull(this.mapper);
-		log.info("\t+ this.mapper : {}", this.mapper);
+		assertNotNull(this.service);
+		log.info("\t+ this.service : {}", this.service);
 	} // beforeAll
 	
 	
 	@Test
 	@Order(1)
-	@DisplayName("1. testSelectAccomWishlist")
+	@DisplayName("1. testGetAccomWishlist")
 	@Timeout(value = 10, unit = TimeUnit.SECONDS)
-	void testSelectAccomWishlist() throws DAOException {
-		log.trace("testSelectAccomWishlist() invoked.");
+	void testGetAccomWishlist() throws ServiceException {
+		log.trace("testGetAccomWishlist() invoked.");
 		
 		Criteria cri = new Criteria();
 		cri.setAmount(10);
@@ -68,30 +69,25 @@ public class MypageWishlistMapperTests {
 		
 		MemberVO member = new MemberVO(53, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 		
-		List<LinkedHashMap<String, Object>> list = this.mapper.selectAccomWishlist(cri, member);
-		
-		Objects.requireNonNull(list);
-		list.forEach(log::info);
-	} // testSelectAccomWishlist
+		this.service.getAccomWishlist(cri, member);
+	} // testGetAccomWishlist
 	
 	
 	@Test
 	@Order(2)
-	@DisplayName("1. testCountTotalAmountOfAccom")
+	@DisplayName("2. testGetTotalOfAccom")
 	@Timeout(value = 10, unit = TimeUnit.SECONDS)
-	void testCountTotalAmountOfAccom() throws DAOException {
-		log.trace("testCountTotalAmountOfAccom() invoked.");
+	void testGetTotalOfAccom() throws ServiceException {
+		log.trace("testGetTotalOfAccom() invoked.");
 		
 		Criteria cri = new Criteria();
 		cri.setAmount(10);
-//		cri.setCurrPage(2);
+//		cri.setCurrPage(1);
 		
 		MemberVO member = new MemberVO(53, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 		
-		Integer num = this.mapper.countTotalAmountOfAccom(cri, member);
-		
-		log.info(">>>>>>>>>>>>>>>> 총 레코드 갯수 : {}", num);
-	} // testCountTotalAmountOfAccom
+		this.service.getTotalOfAccom(cri, member);
+	} // testGetTotalOfAccom
 
 	
 } // end class

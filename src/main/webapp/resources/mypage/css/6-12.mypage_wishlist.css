@@ -61,7 +61,7 @@ section .header #wishlist_type{
 }
 
 /* 숙소 선택 영역(default) */
-article.wishlist_accom, article.wishlist_plan{
+article.wishlist_accom{
     width: 799px;
     /* 화면크기를 줄였을때 nav와 일정 margin을 유지하려면 left에 94px을 준다. */
     margin: 0 auto 50px 94px;
@@ -139,7 +139,7 @@ input[type="checkbox"]:checked + label::after{
     margin: 0 15px;
 }
 .accom_info{
-    width: 120px;
+    width: 150px;
 }
 .accom_info h3{
     font-size: 16px;
@@ -171,17 +171,16 @@ input[type="checkbox"]:checked + label::after{
     margin: 0 10px 0 auto;
 }
 
-div.btnPage{
-    width: 280px;
-    height: 45px;
-    background-color: #68AE6D;
-    /* 330px은 임시 위치고정용, 추후 수정 */
-    margin: 0 auto 0 360px;
-    text-align: center;
-    line-height: 45px;
+.accomPage{
+    margin-left: 60px;
 }
 
 /* 일정영역 */
+article.wishlist_plan{
+    width: 799px;
+    /* 화면크기를 줄였을때 nav와 일정 margin을 유지하려면 left에 94px을 준다. */
+    margin: 0 auto 50px 94px;
+}
 .planBoxWrap{
     display: flex;
     flex-wrap: wrap;

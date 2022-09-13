@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<!-- Mapper.xml 파일의 FQCN(상세경로 포함 정확한 이름) -->
+<mapper namespace="com.pj.gabozago.mapper.MypageWishlistMapper">
+
+    <!-- id : 메소드명 -->
+    <!-- parameterType="java.util.Map" 은 생략이 가능함 -->
+    <select 
+        id="selectAccomWishlist" 
+        resultType="java.util.LinkedHashMap">
+        
+        SELECT 
+            wa.idx,
+            ai.file_name,
+            a.accom_name,
+            la.large_area_name
+        FROM 
+            tbl_wishlist_accom wa,
+            tbl_accom_images ai,
+            tbl_accom a,
+            tbl_large_area la
+        WHERE 
+            wa.accom_idx = a.idx 
+            AND ai.accom_idx = a.idx
+            AND a.large_area_idx = la.idx
+            AND wa.member_idx = #{member.idx}
+        ORDER BY
+            wa.idx DESC
+        OFFSET (#{cri.currPage} -1) * #{cri.amount} ROWS
+        FETCH NEXT #{cri.amount} ROWS ONLY
+
+    </select>
+
+</mapper>

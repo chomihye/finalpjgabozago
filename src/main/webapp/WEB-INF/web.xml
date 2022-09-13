@@ -45,7 +45,7 @@
 
   <error-page>
     <error-code>405</error-code>
-    <location>/WEB-INF/views/errors/default.jsp</location>
+    <location>/WEB-INF/views/errors/404.jsp</location>
   </error-page>
 
   <error-page>
