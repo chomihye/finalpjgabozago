@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<%@page import="com.pj.gabozago.domain.MemberVO"%>
 <html lang="ko">
 
 <head>
@@ -69,7 +70,15 @@
                 </div>
 
                 <button class="myPage" onclick="location.href ='/mypage'"><i class="bi bi-person"></i></button>
-                <button class="loginBtn" onclick="location.href ='/login'">LOGIN</button>
+                <% 
+                	MemberVO vo = (MemberVO) session.getAttribute("__MEMBER__");
+
+					if(vo == null){
+				%>
+                <button class="loginBtn" onclick="location.href ='/login'" id="loginBtn">LOGIN</button>
+                <% } else { %>
+                <button class="loginBtn" onclick="location.href ='/login/logoutProcess'" id="logoutBtn">LOGOUT</button>
+            	<% } %>
             </div>
         </div>
     </header>

@@ -17,9 +17,6 @@ public interface MemberMapper {
 	
 	public abstract MemberVO selectUser(LoginDTO dto) throws MemberException;
 	
-	// ** 테스트 중
-	// public abstract LoginVO selectUserByEmail(LoginDTO dto) throws MemberException;
-	
 	public abstract Integer updateUserWithRememberMe(@Param("idx")Integer idx, @Param("rememberMe") String rememberMe, @Param("rememberAge")Timestamp rememberAge) throws MemberException;
 	
 	public abstract MemberVO selectUserByRememberMe(String rememberMe) throws MemberException;

@@ -29,6 +29,16 @@
 	<beans:bean id="loginInterceptor" class="com.pj.gabozago.interceptor.LoginInterceptor" />
 	<beans:bean id="logoutInterceptor" class="com.pj.gabozago.interceptor.LogoutInterceptor" />
 	<beans:bean id="authInterceptor" class="com.pj.gabozago.interceptor.AuthInterceptor" />
+	
+	<!-- Multipart Request 위한 빈 등록 -->
+	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<beans:property name="defaultEncoding" value="UTF8"/> 
+		<beans:property name="maxInMemorySize" value="1048576"/> <!-- 최대 1MB -->
+		<beans:property name="maxUploadSize" value="1048576"/> <!-- 최대 1MB -->
+		<beans:property name="maxUploadSizePerFile" value="1048576"/> <!-- 파일당 업로드 사이즈 1MB-->
+		<beans:property name="preserveFilename" value="true"/> <!-- 원본 파일명 유지 여부 -->
+		<beans:property name="uploadTempDir" value="file:///C:/temp/finalpjgabozago"/> <!-- URL 임시 폴더 경로 지정 -->
+	</beans:bean>
 
 	<interceptors>
 		<interceptor>

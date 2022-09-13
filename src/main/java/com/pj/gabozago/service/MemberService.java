@@ -17,8 +17,6 @@ public interface MemberService {
 	// 로그인
 	public abstract MemberVO login(LoginDTO dto) throws ServiceException;
 	
-	// public abstract LoginVO findUserByEmail(LoginDTO dto) throws ServiceException;
-
 	public abstract boolean modifyUserWithRememberMe(Integer idx, String rememberMe, Timestamp rememberAge) throws ServiceException;
 	
 	public abstract MemberVO findUserByRememberMe(String rememberMe) throws ServiceException;

@@ -64,7 +64,7 @@
                 local: 'ko',
                 minDate: minDate,
                 maxDate: maxDate,
-                dateFormat: "Y-m-d",
+                dateFormat: 'Y-m-d',
                 
                 allowInput: true,
                 onOpen: function(selectedDates, dateStr, instance) {
@@ -80,51 +80,50 @@
         $(function(){
             function printEmail()  {
             	const email = document.querySelector('#email').value;
-            	document.querySelector("#printEmail").innerText = email;
+            	document.querySelector('#printEmail').innerText = email;
             }// printEmail
 
-            $("#emailValidationBtn").click(function(){
-            	if(document.querySelector('#email').value == "" || document.querySelector('#email').value == null){
-            		alert("이메일을 입력하세요.");
+            $('#emailValidationBtn').click(function(){
+            	if(document.querySelector('#email').value == '' || document.querySelector('#email').value == null){
+            		alert('이메일을 입력하세요.');
             	} else {
-                	$("#emailModal").css({display: "block"});
+                	$('#emailModal').css({display: 'block'});
                 	printEmail();            		
             	}// if-else
             }); // 이메일 인증 버튼 클릭
             
             function printPhone()  {
           	  	const phone = document.querySelector('#phone').value;
-          	  	document.querySelector("#printPhone").innerText = phone;
+          	  	document.querySelector('#printPhone').innerText = phone;
           	}// printPhone
           
-            $("#phoneValidationBtn").click(function(){
-            	if(document.querySelector('#phone').value == "" || document.querySelector('#phone').value == null){
-            		alert("휴대폰 번호를 입력하세요.");
+            $('#phoneValidationBtn').click(function(){
+            	if(document.querySelector('#phone').value == '' || document.querySelector('#phone').value == null){
+            		alert('휴대폰 번호를 입력하세요.');
             	} else {
-            		$("#phoneModal").css({display: "block"});
+            		$('#phoneModal').css({display: 'block'});
             		printPhone();         
             		
 		            var time = 180; // 180초
-		        	var min = ""; // 분
-		        	var sec = ""; // 초
+		        	var min = ''; // 분
+		        	var sec = ''; // 초
 		
 		        	//setInterval(함수, 시간): 주기적인 실행
 		        	var timer = setInterval(function() {
 		        		min = parseInt(time / 60); //몫(정수) 계산
 		        		sec = time % 60; //나머지 계산
 		
-		        		document.querySelector("#timer").innerHTML = + min + "분 " + sec + "초";
+		        		document.querySelector('#timer').innerHTML = + min + '분 ' + sec + '초';
 		        		time--;
 		
 		        		//타임아웃 or 모달창 이탈한 경우
-		        		if (time < 0 || $("#phoneModal").css("display") != "block") {
+		        		if (time < 0 || $('#phoneModal').css('display') != 'block') {
 		        			clearInterval(timer); //setInterval() 실행 종료
-                            $("#phoneValidationNumBtn").attr('disabled', true);
-		        			document.querySelector("#timer").innerHTML = "시간 초과";
+                            $('#phoneValidationNumBtn').attr('disabled', true);
+		        			document.querySelector('#timer').innerHTML = '시간 초과';
 		        		}// if
 
-                        // 재전송 버튼을 클릭하는 경우 리셋
-
+                        // 재전송 버튼을 클릭하는 경우 리셋 - 구현 예정
                         ;;
 
 		        	}, 1000);// timer
@@ -132,26 +131,26 @@
             	}// if-else
             }); // 폰 인증 버튼 클릭
 
-            $("#doubleCheckBtn").click(function(){
-                $("#doubleCheckSucceedModal").css({display: "block"}); // 성공한 경우
+            $('#doubleCheckBtn').click(function(){
+                $('#doubleCheckSucceedModal').css({display: 'block'}); // 성공한 경우
             }); // 중복확인 버튼 클릭
             
-            $(".okBtn").click(function(){
-                $("#emailModal").css({display: "none"});
-                $("#phoneModal").css({display: "none"});
-                $("#joinFailedModal").css({display: "none"});
-                $("#doubleCheckSucceedModal").css({display: "none"});
+            $('.okBtn').click(function(){
+                $('#emailModal').css({display: 'none'});
+                $('#phoneModal').css({display: 'none'});
+                $('#joinFailedModal').css({display: 'none'});
+                $('#doubleCheckSucceedModal').css({display: 'none'});
             }); // 확인 혹은 취소 버튼 클릭
             
             $('#joinSucceed').click(function(){
-            	self.location = "/main";
+            	self.location = '/main';
             }); // 회원가입 완료 모달 확인 버튼 클릭 시 메인페이지 이동
             
             window.onclick = function(event) {
                 if(event.target == emailModal || event.target == phoneModal || event.target == doubleCheckSucceedModal) {
-                    $("#emailModal").css({display: "none"});
-                    $("#phoneModal").css({display: "none"});
-                    $("#doubleCheckSucceedModal").css({display: "none"});
+                    $('#emailModal').css({display: 'none'});
+                    $('#phoneModal').css({display: 'none'});
+                    $('#doubleCheckSucceedModal').css({display: 'none'});
                 }// if
             }; // 배경 누르면 취소되는 경우 구현
             
@@ -166,22 +165,22 @@
     	        }// if
     		}// readImage
             
-            $("#uploadFile").on('change',function(e){
-                var filePath = $("#uploadFile").val();
+            $('#uploadFile').on('change',function(e){
+                var filePath = $('#uploadFile').val();
                 
-                if(filePath != ""){
+                if(filePath != ''){
                 var ext = filePath.split('.').pop().toLowerCase(); // 파일 업로드 확장자 체크
 
                 if($.inArray( ext, ['png','jpg','jpeg'] ) == -1) {
                     alert('업로드할 수 없는 파일 확장자입니다. png, 혹은 jpg 파일을 선택해주세요.');
-                    $("#imageUploadPlaceHolder").attr('placeholder', '이미지를 업로드하세요.');  // input 파일명 지우기
+                    $('#imageUploadPlaceHolder').attr('placeholder', '이미지를 업로드하세요.');  // input 파일명 지우기
                     $('#profileImgSample').attr('src', '/resources/member/img/userprofile.jpg'); // input 파일 썸네일 지우기
                     return;
                 } else{
                     var lastIndex = filePath.lastIndexOf('\\');
                     var fileName = filePath.substring(lastIndex + 1, filePath.length);
             
-                    $("#imageUploadPlaceHolder").attr('placeholder', fileName); 
+                    $('#imageUploadPlaceHolder').attr('placeholder', fileName); 
                     readImage(e.target); 
                 }// if-else
                 }// if
@@ -194,9 +193,9 @@
 
                 if (pw != '' || pwcheck == ''){
                     if(pw == pwcheck){ // 비밀번호 일치
-                    	$('#pwcheckError').css({display: "none"});
+                    	$('#pwcheckError').css({display: 'none'});
                     } else { // 비밀번호 불일치
-                    	$('#pwcheckError').css({display: "block"});
+                    	$('#pwcheckError').css({display: 'block'});
                     } // if-else
                 }// if
             });// 비밀번호 일치 확인
@@ -231,10 +230,10 @@
             // });
             
             
-            // $("#personalTextAgree", "#usageTextAgree").rules("add", {
+            // $('#personalTextAgree', '#usageTextAgree').rules('add', {
         	// 	required: true,
         	// 	messages: {
-        	// 		required: "필수 동의 항목입니다."
+        	// 		required: '필수 동의 항목입니다.'
         	// 	}
          	// });            
             
@@ -248,9 +247,9 @@
             //     	// 3. 휴대폰 번호 인증 완료 확인
             //     	// 4. 개인정보수집/이용약관 동의 확인
                 	
-            // 		$("#joinSucceedModal").css({display: "block"}); // 성공한 경우
+            // 		$('#joinSucceedModal').css({display: 'block'}); // 성공한 경우
             // 	} else {
-            // 		$("#joinFailedModal").css({display: "block"}); // 실패한 경우
+            // 		$('#joinFailedModal').css({display: 'block'}); // 실패한 경우
             // 	}
        
             // 	let formObj = $('#joinForm');
@@ -260,21 +259,20 @@
             //     formObj.submit();
             // });
             
-// 			if ( $('input:radio[name="usageTextAgree"]').is(":checked") == true) { // 만약 usageTextAgree가 체크되어잇다면
-// 			    var usageTextAgreeValue = $('input:radio[name="usageTextAgree"]:checked').val();
+// 			if ( $('input:radio[name='usageTextAgree']').is(':checked') == true) { // 만약 usageTextAgree가 체크되어잇다면
+// 			    var usageTextAgreeValue = $('input:radio[name='usageTextAgree']:checked').val();
 			
 // 				if( usageTextAgreeValue == 'disagree' ){
 // 					alert('개인정보 수집 및 이용 동의는 필수 동의 항목입니다.');
-// 				    $('input[name="usageTextAgree"]').focus();
+// 				    $('input[name='usageTextAgree']').focus();
 // 				    return false;
 // 				} // if
 				
 // 			}// if
 
-			// document.getElementsByName("personalTextAgree")[0].required = true;
-			// document.getElementsByName("usageTextAgree")[0].required = true;
+			// document.getElementsByName('personalTextAgree')[0].required = true;
+			// document.getElementsByName('usageTextAgree')[0].required = true;
 
-			
         });
 
     </script>
@@ -288,7 +286,11 @@
         <div id="body">        
             <div class="midHr">&nbsp;회원가입&nbsp;</div>
 
-            <form action="join/joinProcess" method="POST" id="joinForm">
+            <!-- action="http://localhost:5050/join/joinProcess" --> 
+            <form 
+            action="join/joinProcess"
+            
+            method="POST" id="joinForm" enctype="multipart/form-data">
                 <div class="sections">
                     <h4>이름<span class="redStar">*</span></h4>
                     <input type="text" name="name" id="name" placeholder="예: 홍길동" minlength="2" maxlength="10"required><br>

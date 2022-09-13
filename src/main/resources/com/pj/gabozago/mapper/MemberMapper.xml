@@ -7,22 +7,14 @@
 <mapper namespace="com.pj.gabozago.mapper.MemberMapper">
 
     <insert id="insert">
-        <selectKey keyProperty="idx" order="BEFORE" resultType="int">
+        <selectKey keyProperty="idx" order="BEFORE" resultType="int" >
             SELECT MAX(idx)+1 FROM tbl_member
         </selectKey>
 
         INSERT INTO tbl_member( idx, email, password, name, nickname, phone, birthday, provider, uid_num, profile_img, point, insert_ts, update_ts, is_secession )
-        VALUES( #{idx}, #{email}, #{password}, #{name}, #{nickname}, #{phone}, #{birthday}, 'gabozago', null, null, 3000, CURRENT_DATE, null, 'N' )
+        VALUES( #{idx}, #{email}, #{password}, #{name}, #{nickname}, #{phone}, #{birthday}, 'gabozago', null, #{profilePath}, 3000, CURRENT_DATE, null, 'N' )
     </insert>
 
-<!--  	<select id="selectUserByEmail" resultType="com.pj.gabozago.domain.LoginVO"> -->
-<!--         <![CDATA[  -->
-<!--             SELECT email, password -->
-<!--             FROM tbl_member -->
-<!--             WHERE email = #{email} -->
-<!--         ]]> -->
-<!--     </select> -->
-	
     <select id="selectUser" resultType="com.pj.gabozago.domain.MemberVO">
         <![CDATA[ 
             SELECT idx, email, password, name, nickname, phone, birthday, provider, uid_num, profile_img, point, rememberme, rememberage, insert_ts, update_ts, is_secession

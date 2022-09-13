@@ -34,13 +34,17 @@ public class MemberServiceImpl implements MemberService, InitializingBean, Dispo
 	public boolean create(JoinDTO dto) throws ServiceException {
 		log.trace("create() invoked.");
 		
+		
 		try {
+			// 비밀번호 해시처리
 			String pw = dto.getPassword() + "__SALT__";
 			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 			
 			String cipherPw = encoder.encode(pw);
 			
 			dto.setPassword(cipherPw);
+			
+			// 프로필 사진 업로드			
 			
 			return this.mapper.insert(dto) == 1;
 		} catch (MemberException e) {
