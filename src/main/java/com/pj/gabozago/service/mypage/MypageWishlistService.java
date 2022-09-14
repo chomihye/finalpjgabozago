@@ -8,7 +8,7 @@ import com.pj.gabozago.domain.MemberVO;
 import com.pj.gabozago.exception.ServiceException;
 
 
-public interface MypageWishlistService {		// 위시리스트 페이지를 위한 서비스
+public interface MypageWishlistService {		// 위시리스트 페이지를 위한 서비스 처리
 
 	
 	// 숙소 위시리스트의 총 레코드 건수를 반환하는 메소드(페이징 처리에 필요)

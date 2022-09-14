@@ -2,22 +2,14 @@ package com.pj.gabozago.service.mypage;
 
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import com.pj.gabozago.domain.AccomPaymentVO;
-import com.pj.gabozago.domain.AccomReservationDTO;
-import com.pj.gabozago.domain.AccomReviewDTO;
-import com.pj.gabozago.domain.AccomReviewVO;
 import com.pj.gabozago.domain.Criteria;
 import com.pj.gabozago.domain.MemberVO;
-import com.pj.gabozago.domain.RefundVO;
 import com.pj.gabozago.exception.DAOException;
 import com.pj.gabozago.exception.ServiceException;
-import com.pj.gabozago.mapper.MypageReserMapper;
 import com.pj.gabozago.mapper.MypageWishlistMapper;
 
 import lombok.NoArgsConstructor;
@@ -29,7 +21,7 @@ import lombok.extern.log4j.Log4j2;
 @NoArgsConstructor
 
 @Service
-//위시리스트 페이지를 위한 서비스
+//위시리스트 페이지를 위한 서비스 처리
 public class MypageWishlistServiceImpl implements MypageWishlistService {
 
 	
