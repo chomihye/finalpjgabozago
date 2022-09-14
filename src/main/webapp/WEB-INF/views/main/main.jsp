@@ -45,12 +45,30 @@
     <script src="https://kit.fontawesome.com/39d2c0da6a.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
 
-
+    <script>
+      	$(function(){
+			var resultMsg = '${__RESULT__}'
+			
+			if(resultMsg != null && resultMsg.length > 0){
+				alert(resultMsg);
+			}// if
+        });
+    </script>
 
 </head>
 
 <body>
 
+    <% 
+    String msg = null; // if session scope이 null 아닌지 뭐가 있는지 확인 후 수행
+    if( ( msg = (String) session.getAttribute("__RESULT__")) != null ){
+        if(msg.equals("로그아웃 되었습니다.") || msg.equals("회원 전용 서비스입니다. 먼저 로그인을 해주세요.")){ // 로그아웃 성공한 경우 or 로그인이 안됐는데 회원서비스 접근한 경우 Session Scope 삭제
+            session.removeAttribute("__RESULT__");
+            System.out.println("세션 삭제");
+        }// if
+    }// if
+    %>
+    
     <jsp:include page="../common/header.jsp" flush="true" />
     <div class="mainContainer">
 
