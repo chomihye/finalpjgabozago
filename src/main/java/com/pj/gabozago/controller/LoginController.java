@@ -46,16 +46,13 @@ public class LoginController {
 		try { 
 			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 			
-			// LoginVO loginVo = this.service.findUserByEmail(dto); // 아이디 일치 확인
 			MemberVO vo = this.service.login(dto); // MemberVO 얻기
 			
 			log.info("vo: {}", vo);
 			
-			// loginVo != null && 
 			if(vo != null) { // 입력한 아이디값이 일치하는 회원이 있다면
 				String cipherPw = vo.getPassword(); // DB 비밀번호값(해시처리) 얻기
 
-				// String cipherPw = loginVo.getPassword(); // DB 비밀번호값(해시처리) 얻기
 				log.info(">>>>>>>>>>>>>> dto.getPassword(): {}, cipherPw: {}", dto.getPassword(), cipherPw);
 				
 				boolean isHashed = encoder.matches(dto.getPassword() + "__SALT__", cipherPw);

@@ -49,7 +49,7 @@ public class JoinController {
 		return "/join/join";
 	}// join
 
-	// ================ 회원가입
+	// 회원가입
 	@PostMapping("/joinProcess")
 	public String joinProcess(
 			JoinDTO dto, // 사용자 정보 일반 전송 파라미터
@@ -63,7 +63,8 @@ public class JoinController {
 		
 		// 프로필 사진을 업로드한 경우
 		if(profileImg.getSize() != 0) {
-			String targetDir = req.getServletContext().getRealPath("/resources/member/img/profile/"); // 상대 경로 지정
+			// String targetDir = req.getServletContext().getRealPath("/resources/member/img/profile/"); // 상대 경로 지정
+			String targetDir = req.getServletContext().getRealPath("/finalpjgabozago/profile/");
 			
 			Date today = new Date();
 			SimpleDateFormat changer = new SimpleDateFormat("yyyyMMdd");

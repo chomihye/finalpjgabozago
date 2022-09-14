@@ -17,8 +17,6 @@ public class UUIDGenerator {
 
     private static final char[] hexArray = "0123456789ABCDEF".toCharArray();
     
-    
-
     /***************************************************************
      * Type 1 UUID Generation
      * *************************************************************/
