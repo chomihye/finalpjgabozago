@@ -17,6 +17,7 @@
         SELECT
             r.idx,
             r.status,
+            ai.file_name,
             a.accom_name,
             ar.room_name,
             r.check_in_date,
@@ -24,10 +25,12 @@
         FROM
             tbl_reservation r,
             tbl_accom_room ar,
-            tbl_accom a
+            tbl_accom a,
+            tbl_accom_images ai
         WHERE
             r.accom_room_idx = ar.idx
             AND ar.accom_idx = a.idx
+            AND ai.accom_idx = a.idx
             AND r.status = 'CA'
             AND r.member_idx = #{idx}
         ORDER BY

@@ -72,131 +72,10 @@
                     <input type="checkbox" id="selectAll" name="selectAll">
                     <label for="selectAll"></label>
                     <label for="selectAll" class="selectAll">전체선택</label>
-                    <a href="#" class="selectDelete">선택삭제</a>
+                    <a href="javascript:void(0);" class="selectDelete">선택삭제</a>
                 </div>
 
-                <ul id="accom_list">
-                    <li id="item1">
-                        <input type="checkbox" id="select1" name="selectParticle">
-                        <label for="select1"></label>
-                        <a href="/reservation/datail" class="accomBox">
-                            <img src="https://picsum.photos/id/231/600/400" alt="accom image">
-                            <div class="accom_info">
-                                <h3>숙소이름</h3>
-                                <p><i class="fas fa-location-dot"></i>&nbsp;<span>숙소위치(시군구)</span></p>
-                            </div>
-                            <button type="button" class="payment">결제하기</button>
-                        </a>
-                    </li>
-                    <li id="item2">
-                        <input type="checkbox" id="select2" name="selectParticle">
-                        <label for="select2"></label>
-                        <a href="/reservation/datail" class="accomBox">
-                            <img src="https://picsum.photos/id/231/600/400" alt="accom image">
-                            <div class="accom_info">
-                                <h3>숙소이름</h3>
-                                <p><i class="fas fa-location-dot"></i>&nbsp;<span>숙소위치(시군구)</span></p>
-                            </div>
-                            <button type="button" class="payment">결제하기</button>
-                        </a>
-                    </li>
-                    <li id="item3">
-                        <input type="checkbox" id="select3" name="selectParticle">
-                        <label for="select3"></label>
-                        <a href="/reservation/datail" class="accomBox">
-                            <img src="https://picsum.photos/id/231/600/400" alt="accom image">
-                            <div class="accom_info">
-                                <h3>숙소이름</h3>
-                                <p><i class="fas fa-location-dot"></i>&nbsp;<span>숙소위치(시군구)</span></p>
-                            </div>
-                            <button type="button" class="payment">결제하기</button>
-                        </a>
-                    </li>
-                    <li id="item4">
-                        <input type="checkbox" id="select4" name="selectParticle">
-                        <label for="select4"></label>
-                        <a href="/reservation/datail" class="accomBox">
-                            <img src="https://picsum.photos/id/231/600/400" alt="accom image">
-                            <div class="accom_info">
-                                <h3>숙소이름</h3>
-                                <p><i class="fas fa-location-dot"></i>&nbsp;<span>숙소위치(시군구)</span></p>
-                            </div>
-                            <button type="button" class="payment">결제하기</button>
-                        </a>
-                    </li>
-                    <li id="item5">
-                        <input type="checkbox" id="select5" name="selectParticle">
-                        <label for="select5"></label>
-                        <a href="/reservation/datail" class="accomBox">
-                            <img src="https://picsum.photos/id/231/600/400" alt="accom image">
-                            <div class="accom_info">
-                                <h3>숙소이름</h3>
-                                <p><i class="fas fa-location-dot"></i>&nbsp;<span>숙소위치(시군구)</span></p>
-                            </div>
-                            <button type="button" class="payment">결제하기</button>
-                        </a>
-                    </li>
-                    <li id="item6">
-                        <input type="checkbox" id="select6" name="selectParticle">
-                        <label for="select6"></label>
-                        <a href="/reservation/datail" class="accomBox">
-                            <img src="https://picsum.photos/id/231/600/400" alt="accom image">
-                            <div class="accom_info">
-                                <h3>숙소이름</h3>
-                                <p><i class="fas fa-location-dot"></i>&nbsp;<span>숙소위치(시군구)</span></p>
-                            </div>
-                            <button type="button" class="payment">결제하기</button>
-                        </a>
-                    </li>
-                    <li id="item7">
-                        <input type="checkbox" id="select7" name="selectParticle">
-                        <label for="select7"></label>
-                        <a href="/reservation/datail" class="accomBox">
-                            <img src="https://picsum.photos/id/231/600/400" alt="accom image">
-                            <div class="accom_info">
-                                <h3>숙소이름</h3>
-                                <p><i class="fas fa-location-dot"></i>&nbsp;<span>숙소위치(시군구)</span></p>
-                            </div>
-                            <button type="button" class="payment">결제하기</button>
-                        </a>
-                    </li>
-                    <li id="item8">
-                        <input type="checkbox" id="select8" name="selectParticle">
-                        <label for="select8"></label>
-                        <a href="/reservation/datail" class="accomBox">
-                            <img src="https://picsum.photos/id/231/600/400" alt="accom image">
-                            <div class="accom_info">
-                                <h3>숙소이름</h3>
-                                <p><i class="fas fa-location-dot"></i>&nbsp;<span>숙소위치(시군구)</span></p>
-                            </div>
-                            <button type="button" class="payment">결제하기</button>
-                        </a>
-                    </li>
-                    <li id="item9">
-                        <input type="checkbox" id="select9" name="selectParticle">
-                        <label for="select9"></label>
-                        <a href="/reservation/datail" class="accomBox">
-                            <img src="https://picsum.photos/id/231/600/400" alt="accom image">
-                            <div class="accom_info">
-                                <h3>숙소이름</h3>
-                                <p><i class="fas fa-location-dot"></i>&nbsp;<span>숙소위치(시군구)</span></p>
-                            </div>
-                            <button type="button" class="payment">결제하기</button>
-                        </a>
-                    </li>
-                    <li id="item10">
-                        <input type="checkbox" id="select10" name="selectParticle">
-                        <label for="select10"></label>
-                        <a href="/reservation/datail" class="accomBox">
-                            <img src="https://picsum.photos/id/231/600/400" alt="accom image">
-                            <div class="accom_info">
-                                <h3>숙소이름</h3>
-                                <p><i class="fas fa-location-dot"></i>&nbsp;<span>숙소위치(시군구)</span></p>
-                            </div>
-                            <button type="button" class="payment">결제하기</button>
-                        </a>
-                    </li>
-                </ul>
+                <ul id="accom_list"></ul>
             </article>
 
             <!-- 페이지버튼 -->
@@ -206,40 +85,16 @@
                     <input type="hidden" name="currPage">
     
                     <!-- 2. PageDTO 객체의 정보를 이용해서, Pagenation 출력 -->
-                    <ul>
+                    <ul id="pagingBtn">
                         <!-- Prev 처리 -->
-                        <li class="frontPage"><a href="/mypage/reservation?currPage=1"><i class="bi bi-chevron-double-left"></i></a></li>
+                        <li class="frontPage"><a href="javascript:void(0);" onclick="getAccomWishlist('1')"><i class="bi bi-chevron-double-left"></i></a></li>
+                        <li class="prev yesPrev"><a href="javascript:void(0);"><i class="bi bi-chevron-left"></i></a></li>
 
-                        <c:choose>
-                            <c:when test="${__PAGINATION__.prev}">
-                                <li class="prev"><a href="/mypage/reservation?currPage=${__PAGINATION__.startPage - 1}"><i class="bi bi-chevron-left"></i></a></li>
-                            </c:when>
-                            <c:otherwise>
-                                <li class="prev"><a href="#"><i class="bi bi-chevron-left"></i></a></li>
-                            </c:otherwise>
-                        </c:choose>
+                        <div class="pageNumber"></div>
 
-                        <!-- 현재 Pagination 범위에 속한 페이지 번호 목록 출력 -->
-                        <!-- begin부터 end까지 forEach(반복문) -->
-                        <!-- <c:forEach var="pageNum" begin="${__PAGINATION__.startPage}" end="${__PAGINATION__.endPage}"> -->
-                        <li class="${pageNum == __PAGINATION__.cri.currPage ? 'currPage' : ''}" id="pageNumber">
-                            <a href="/mypage/wishlist?currPage=${pageNum}">
-                                <strong>${pageNum}</strong>
-                            </a>
-                        </li>
-                        <!-- </c:forEach> -->
-    
                         <!-- Next 처리 -->
-                        <c:choose>
-                            <c:when test="${__PAGINATION__.next}">
-                                <li class="next"><a href="/mypage/reservation?currPage=${__PAGINATION__.endPage + 1}"><i class="bi bi-chevron-right"></i></a></li>
-                            </c:when>
-                            <c:otherwise>
-                                <li class="next"><a href="#"><i class="bi bi-chevron-right"></i></a></li>
-                            </c:otherwise>
-                        </c:choose>
-
-                        <li class="backPage"><a href="/mypage/reservation?currPage=${__PAGINATION__.realEndPage}"><i class="bi bi-chevron-double-right"></i></a></li>
+                        <li class="next yesNext"><a href="javascript:void(0);"><i class="bi bi-chevron-right"></i></a></li>
+                        <li class="backPage"><a href="javascript:void(0);"><i class="bi bi-chevron-double-right"></i></a></li>
                     </ul>
                 </form>
             </div>

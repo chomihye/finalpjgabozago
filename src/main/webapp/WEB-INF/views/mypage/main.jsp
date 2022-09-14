@@ -78,7 +78,7 @@
                             <c:forEach var="item" items="${result.model}">
                                 <li>
                                     <a href="/mypage/reservation/detail?status=${item.STATUS}&idx=${item.IDX}" class="accomInfoBox">
-                                        <img src="https://picsum.photos/id/684/80/80" alt="accom image">
+                                        <img src="/resources/acco/img/himg/${item.FILE_NAME}" alt="accom image">
                                         <div class="accom_info">
                                             <div class="accom_name">${item.ACCOM_NAME}</div>
                                             <div class="accom_name">(${item.ROOM_NAME})</div>

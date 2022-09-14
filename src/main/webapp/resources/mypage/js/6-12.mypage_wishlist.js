@@ -14,8 +14,9 @@ $(function(){
 
    	$(".wishlist_plan").remove();   // 초기 실행시 일정부분 삭제
 
-    getAccomWishlist();     // 숙소 위시리스트 불러오는 ajax
-    getPageForAccomWishlist();
+    getAccomWishlist('1');     // 숙소 위시리스트 불러오는 ajax
+    // getPageForAccomWishlist(); // 숙소 위시리스트 페이징 관련
+    // clickPageBtn();             // 페이지 버튼 클릭시
 
     selectAllCheckBox();    // 체크박스 관련 메소드
     changeOption();     // 옵션 선택시 메소드 호출
@@ -53,7 +54,7 @@ function selectAllCheckBox(){
 
         if(optionValue == "accom"){
             $(".wishlist_plan").replaceWith(wishlistAccom);
-            getAccomWishlist();
+            // getAccomWishlist();
             selectAllCheckBox();
         }else if(optionValue == "plan"){
             $(".wishlist_accom").replaceWith(wishlistPlan);
@@ -66,10 +67,14 @@ function selectAllCheckBox(){
 /**
  * @desc 숙소 위시리스트 불러오기
  */
- function getAccomWishlist(){
+function getAccomWishlist(currPage){
+	debugger;
     $.ajax({
         type: "POST",
         url: "wishlist/accom",
+        data:{
+            "currPage" : currPage
+        },
         cache : false,
         error : function(error) {
             console.log("error");
@@ -77,79 +82,124 @@ function selectAllCheckBox(){
         success : function(resp) {
             console.log("success");
 
-            var list = JSON.parse(resp);
-            // console.log(list);
+            const map = JSON.parse(resp);
+            const list = map.list;
+            const pageDTO = map.pageDTO;
 
-            let itemCount = list.length;
-            $("#item" + itemCount).nextAll().remove();
+            $("#accom_list").empty();
 
             for(var i = 0 ; i < list.length ; i++){
                 console.log(list[i]);
 
                 file_name = list[i].FILE_NAME;
-                // console.log(file_name);
                 accom_name = list[i].ACCOM_NAME;
-                // console.log(accom_name);
                 large_area_name = list[i].LARGE_AREA_NAME;
-                // console.log(large_area_name);
 
                 let num = i + 1;
-                $("#item" + num + " img").attr('src', '/resources/acco/img/himg/' + file_name);
-                $("#item" + num + " .accom_info h3").text(accom_name);
-                $("#item" + num + " .accom_info p span").text(large_area_name);
-            }
+
+                let particleStr = "";
+                particleStr += '<li id="item' + num + '">';
+                particleStr += '<input type="checkbox" id="select' + num + '" name="selectParticle">';
+                particleStr += '<label for="select' + num + '"></label>';
+                particleStr += '<a href="/reservation/datail" class="accomBox">';
+                particleStr += '<img src="/resources/acco/img/himg/' + file_name + '" alt="accom image">';
+                particleStr += '<div class="accom_info">';
+                particleStr += '<h3>' + accom_name + '</h3>';
+                particleStr += '<p><i class="fas fa-location-dot"></i>&nbsp;' + large_area_name + '</p>';
+                particleStr += '</div>';
+                particleStr += '<button type="button" class="payment">결제하기</button>';
+                particleStr += '</a>';
+                particleStr += '</li>';
+
+                $("#accom_list").append(particleStr);
+            } // for
 
             cnt = $("#accom_list li").length;           // 숙소의 체크박스 갯수
             console.log("cnt : " + cnt);
-        }
-    });
- }
 
- /**
- * @desc 숙소 위시리스트 페이징 처리 관련 ajax
- */
-  function getPageForAccomWishlist(){
-    $.ajax({
-        type: "POST",
-        url: "wishlist/accom/page",
-        cache : false,
-        error : function(error) {
-            console.log("error");
-        },
-        success : function(resp) {
-            console.log("success");
+            $(".yesPrev > a").off().on('click', function(){
+                getAccomWishlist(pageDTO.startPage - 1);
+            });            
 
-            var pageDTO = JSON.parse(resp);
-            console.log(pageDTO);
+            $(".pageNumber").empty();
 
-            var cri = pageDTO.cri;
-            console.log(cri);
+            for(let i = pageDTO.startPage ; i <= pageDTO.endPage ; i++){
+                let pageStr = "";
 
-            for(var i = pageDTO.startPage ; i <= pageDTO.endPage ; i++){
-                $("#item" + num + " img").attr('src', '/resources/acco/img/himg/' + file_name);
-            } // if
+                if (pageDTO.cri.currPage == i) {
+                    pageStr += '<li class="currPage" onclick="getAccomWishlist(' + i + ')">';
+                } else{
+                    pageStr += '<li class="" onclick="getAccomWishlist(' + i + ')">';
+                } // if-else
 
-            // let itemCount = pageDTO.length;
-            // $("#item" + itemCount).nextAll().remove();
+                pageStr += '<a href="javascript:void(0);">';
+                pageStr += '<strong>' + i + '</strong>';
+                pageStr += '</a>';
+                pageStr += '</li>';
 
-            // for(var i = 0 ; i < list.length ; i++){
-            //     console.log(list[i]);
+                $(".pageNumber").append(pageStr);
+            } // for
+            
+            $(".yesNext > a").off().on('click', function(){
+                getAccomWishlist(pageDTO.endPage + 1);
+            });     
 
-            //     file_name = list[i].FILE_NAME;
-            //     console.log(file_name);
-            //     accom_name = list[i].ACCOM_NAME;
-            //     console.log(accom_name);
-            //     large_area_name = list[i].LARGE_AREA_NAME;
-            //     console.log(large_area_name);
+            $(".backPage > a").off().on('click', function(){
+                getAccomWishlist(pageDTO.realEndPage);
+            });     
 
-            //     let num = i + 1;
-            //     $("#item" + num + " img").attr('src', '/resources/acco/img/himg/' + file_name);
-            //     $("#item" + num + " .accom_info h3").text(accom_name);
-            //     $("#item" + num + " .accom_info p span").text(large_area_name);
-            // }
+        } // success
+    }); // ajax
+} // end function
 
-            // cnt = $("#accom_list li").length;           // 숙소의 체크박스 갯수
-            // console.log("cnt : " + cnt);
-        }
-    });
- }
+// /**
+//  * @desc 숙소 위시리스트 페이징 처리 관련 ajax
+//  */
+// function getPageForAccomWishlist(){
+//     $.ajax({
+//         type: "POST",
+//         url: "wishlist/accom/page",
+//         cache : false,
+//         error : function(error) {
+//             console.log("error");
+//         },
+//         success : function(resp) {
+//             console.log("success");
+
+//             var pageDTO = JSON.parse(resp);
+//             console.log(pageDTO);
+
+//             var cri = pageDTO.cri;
+//             console.log(cri);
+
+//             // 현재 Pagination 범위에 속한 페이지 번호 목록 출력
+//             for(let i = pageDTO.startPage ; i <= pageDTO.endPage ; i++){
+//                 let num = 3;
+
+//                 if(i == pageDTO.startPage){
+//                     let testStr = "";
+//                     testStr += '<li class="pageNumber">';
+//                     testStr += '<a href="/mypage/wishlist?currPage=' + i + '">';
+//                     testStr += '<strong>' + i + '</strong>';
+                    
+
+//                     $("#pageNumber").replaceWith('<li class="pageNumber"><a href="/mypage/wishlist?currPage=' + i + '"><strong>' + i + '</strong></a></li>');
+//                 } else{
+//                     $("#pagination ul li:nth-child(" + num + ")").after('<li class="pageNumber"><a href="/mypage/wishlist?currPage=' + i + '"><strong>' + i + '</strong></a></li>');
+//                 }// if-else
+                
+//                 num++;
+//             } // for
+//         } // success
+//     }); // ajax
+// } // end function
+
+// /**
+//  * @desc 페이지 버튼 클릭시
+//  */
+// function clickPageBtn(){
+//     $(".pageNumber").on("click", function(){
+//         console.log(this);
+//         $(this).attr('class', 'currPage');
+//     });
+// } // end function

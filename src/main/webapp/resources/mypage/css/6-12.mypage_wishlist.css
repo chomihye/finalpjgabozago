@@ -172,7 +172,7 @@ input[type="checkbox"]:checked + label::after{
 }
 
 .accomPage{
-    margin-left: 60px;
+    margin-left: 50px;
 }
 
 /* 일정영역 */

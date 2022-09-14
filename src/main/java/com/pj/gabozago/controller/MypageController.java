@@ -1,7 +1,7 @@
 package com.pj.gabozago.controller;
 
-import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,15 +13,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 import com.pj.gabozago.common.SharedScopeKeys;
 import com.pj.gabozago.domain.AccomReservationDTO;
 import com.pj.gabozago.domain.AccomReviewDTO;
@@ -245,13 +242,21 @@ public class MypageController {
 			
 			List<LinkedHashMap<String, Object>> list = this.wishlistService.getAccomWishlist(cri, member);
 			
+			// 총 레코드 건수를 반환
+			int total = this.wishlistService.getTotalOfAccom(cri, member);
+			PageDTO pageDTO = new PageDTO(cri, total);
+						
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("list", list);
+			map.put("pageDTO", pageDTO);
+			
 			Gson gson = new Gson();
-			String json = gson.toJson(list);
-			log.info(json);
+			String mapToJson = gson.toJson(map);
+			log.info(mapToJson);
 			
 			@Cleanup
 		    PrintWriter out = res.getWriter();
-		    out.print(json);	// Ajax는 출력된 데이터를 전송하므로 데이터를 출력해줘야 한다.
+		    out.print(mapToJson);	// Ajax는 출력된 데이터를 전송하므로 데이터를 출력해줘야 한다.
 		} catch (Exception e) {
 			throw new ControllerException(e);
 		} // try-catch
@@ -262,7 +267,7 @@ public class MypageController {
 	@ResponseBody
 	public void getPageForAccomWishlist(Criteria cri, @SessionAttribute(SharedScopeKeys.USER_KEY) MemberVO member, 
 			HttpServletResponse res) throws ControllerException {
-		log.info(">>>>>>>>>>>>>>>>>>>> getAccomWishlist() invoked.");
+		log.info(">>>>>>>>>>>>>>>>>>>> getPageForAccomWishlist() invoked.");
 		
 		try {
 			cri.setAmount(10);
@@ -281,7 +286,7 @@ public class MypageController {
 		} catch (Exception e) {
 			throw new ControllerException(e);
 		} // try-catch
-	} // getAccomWishlist
+	} // getPageForAccomWishlist
 //	
 //	
 //	@GetMapping(value = "/wishlist/plan")
@@ -292,30 +297,30 @@ public class MypageController {
 //	} // getWishlistPlan
 //	
 //	
-//	@GetMapping(path = "/point")
-//	public String getMyPointList(Criteria cri, @SessionAttribute(SharedScopeKeys.USER_KEY) MemberVO member, Model model) throws ControllerException {
-//		try {
-//			cri.setAmount(10);
-//			
-//			List<PointHistoryVO> list = this.pointWriteService.getUserPointList(cri, member);
-//			list.forEach(log::trace);
-//			
-//			int userCurrentPoint = this.pointWriteService.getUserCurrentPoint(member);		// 회원의 현재 총 포인트
-//			
-//			model.addAttribute(SharedScopeKeys.LIST_KEY, list);
-//			model.addAttribute(SharedScopeKeys.RESULT_KEY, userCurrentPoint);
-//			
-//			// 총 레코드 건수를 반환
-//			int total = this.pointWriteService.getTotal(cri, member);
-//			PageDTO pageDTO = new PageDTO(cri, total);
-//			model.addAttribute(SharedScopeKeys.PAGINATION_KEY, pageDTO);
-//			
-//		} catch (Exception e) {
-//			throw new ControllerException(e);
-//		} // try-catch
-//		
-//		return "mypage/point";
-//	} // getMyPointList
+	@GetMapping(path = "/point")
+	public String getMyPointList(Criteria cri, @SessionAttribute(SharedScopeKeys.USER_KEY) MemberVO member, Model model) throws ControllerException {
+		try {
+			cri.setAmount(10);
+			
+			List<PointHistoryVO> list = this.pointWriteService.getUserPointList(cri, member);
+			list.forEach(log::trace);
+			
+			int userCurrentPoint = this.pointWriteService.getUserCurrentPoint(member);		// 회원의 현재 총 포인트
+			
+			model.addAttribute(SharedScopeKeys.LIST_KEY, list);
+			model.addAttribute(SharedScopeKeys.RESULT_KEY, userCurrentPoint);
+			
+			// 총 레코드 건수를 반환
+			int total = this.pointWriteService.getTotal(cri, member);
+			PageDTO pageDTO = new PageDTO(cri, total);
+			model.addAttribute(SharedScopeKeys.PAGINATION_KEY, pageDTO);
+			
+		} catch (Exception e) {
+			throw new ControllerException(e);
+		} // try-catch
+		
+		return "mypage/point";
+	} // getMyPointList
 	
 	
 	@GetMapping(path = "/write")
