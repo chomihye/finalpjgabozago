@@ -47,6 +47,11 @@
 
     <!-- script -->
     <script src="/resources/mypage/js/6-13.mypage_point.js"></script>
+    <script>
+        $(function(){
+            $(".profileAndMenu .profile h2").append('${sessionScope.__MEMBER__.nickname}');
+        });
+    </script>
 </head>
 
 <body>

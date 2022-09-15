@@ -42,9 +42,6 @@
  
     <!-- CSS -->
     <link rel="stylesheet" href="/resources/mypage/css/6-1.mypage_main.css">
-
-    <!-- script -->
-    <script src="/resources/mypage/js/6-1.mypage_main.js"></script>
 </head>
 
 <body>

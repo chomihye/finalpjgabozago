@@ -53,6 +53,8 @@
     <script src="/resources/mypage/js/6-6.mypage_reservation.js"></script>
     <script>
         $(function(){
+            $(".profileAndMenu .profile h2").append('${sessionScope.__MEMBER__.nickname}');
+
             // 포인트 적립 완료
             let prevStepResult = "${__RESULT__}";
 
@@ -93,7 +95,7 @@
                             <c:forEach var="item" items="${result.model}">
                                 <li>
                                     <a href="/mypage/reservation/detail?status=${item.STATUS}&idx=${item.IDX}">
-                                        <img src="https://picsum.photos/id/231/600/400" alt="accom image">
+                                        <img src="/resources/acco/img/himg/${item.FILE_NAME}" alt="accom image">
                                         <div class="accom_info">
                                             <div class="accom_name">${item.ACCOM_NAME}(${item.ROOM_NAME})</div>
                                             <div class="accom_num">

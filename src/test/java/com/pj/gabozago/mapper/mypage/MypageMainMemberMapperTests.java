@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
@@ -84,6 +85,21 @@ public class MypageMainMemberMapperTests {
 		Boolean isDelete = this.mapper.deleteMember(member);
 		log.info("================================== : {}", isDelete);
 	} // testDeleteMember
+	
+	
+	@Test
+	@Order(3)
+	@DisplayName("3. testSelectMemberProfile")
+	@Timeout(value = 10, unit = TimeUnit.SECONDS)
+	void testSelectMemberProfile() throws DAOException {
+		log.info("testSelectMemberProfile() invoked.");
+		
+		MemberVO member = new MemberVO(53, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+		
+		Map<String, String> map = this.mapper.selectMemberProfile(member);
+		
+		log.info(">>>>>>>>>>>> map : {}", map);
+	} // testSelectMemberProfile
 
 	
 } // end class

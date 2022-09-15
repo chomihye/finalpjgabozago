@@ -26,7 +26,7 @@ public interface MypageReserMapper {		// 숙박예약내역 페이지 관련 map
 	@Select("SELECT count(idx) FROM tbl_reservation WHERE member_idx = #{member.idx}")
 	public abstract Integer countTotalAmount(@Param("cri") Criteria cri, @Param("member") MemberVO member) throws DAOException;
 	
-	// 해당 회원의 숙소예약내역을 가져오는 메소드
+	// 해당 회원의 숙소예약 리스트를 가져오는 메소드
 	public abstract List<LinkedHashMap<String, Object>> selectUserReserList(@Param("cri") Criteria cri, @Param("member") MemberVO member) throws DAOException;
 	
 	// 예약내역 불러올 때, 체크인날짜가 지났으면 DB에 예약상태를 CA -> UCRN로 변경하는 메소드

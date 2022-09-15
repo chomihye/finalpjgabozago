@@ -2,8 +2,6 @@
  * @desc 초기 수행
  */
 $(function(){
-	console.log("6-6.mypage_reservation.js invoked.");
-	
     $("#reservation").css("font-weight", "bold");
     
     changePersonIcon();         // 인원수에 따라 바뀌는 사람모양 아이콘

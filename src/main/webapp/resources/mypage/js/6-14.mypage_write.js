@@ -7,7 +7,6 @@ let writeComment;
  */
 $(function(){
 	console.log("6-14.mypage_write.js invoked.");
-	
 	$("#write").css("font-weight", "bold");
 	
     writeBoard = $("#write_board").clone();

@@ -42,12 +42,15 @@
 
     <!-- CSS -->
     <link rel="stylesheet" href="/resources/mypage/css/6-3.mypage_myInfo_modify.css">
+    <link rel="stylesheet" href="/resources/mypage/css/modal.css">
 
     <!-- script -->
     <script src="/resources/mypage/js/6-3.mypage_myInfo_modify.js"></script>
-
-    <!-- 모달 관련 -->
-    <link rel="stylesheet" href="/resources/mypage/css/modal.css">
+    <script>
+        $(function(){
+            $(".profileAndMenu .profile h2").append('${sessionScope.__MEMBER__.nickname}');
+        });
+    </script>
 </head>
 
 <body>

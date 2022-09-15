@@ -3,7 +3,6 @@
  */
 $(function(){
 	console.log("6-13.mypage_point.js invoked.");
-	
 	$("#point").css("font-weight", "bold");
 
 	checkIsPlus();

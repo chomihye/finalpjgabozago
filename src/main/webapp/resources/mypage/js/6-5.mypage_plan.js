@@ -3,6 +3,5 @@
  */
 $(function(){
 	console.log("6-5.mypage_plan.js invoked.");
-	
 	$("#plan").css("font-weight", "bold");
 });

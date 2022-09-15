@@ -42,19 +42,20 @@
  
     <!-- CSS -->
     <link rel="stylesheet" href="/resources/mypage/css/6-5.mypage_plan.css">
+    <link rel="stylesheet" href="/resources/mypage/css/modal.css">
 
     <!-- script -->
     <script src="/resources/mypage/js/6-5.mypage_plan.js"></script>
-
-    <!-- 모달 관련 -->
-    <link rel="stylesheet" href="/resources/mypage/css/modal.css">
     <script src="/resources/mypage/js/modal.js"></script>
+    <script>
+        $(function(){
+            $(".profileAndMenu .profile h2").append('${sessionScope.__MEMBER__.nickname}');
+        });
+    </script>
 </head>
 
 <body>
-    <!-- 잠시 오류로 막아둠 -->
     <jsp:include page="/WEB-INF/views/common/header.jsp" flush="false" />
-    <%-- <jsp:include page="/WEB-INF/views/common/header.jsp" flush="false" /> --%>
 
     <div class="wrap">
         <jsp:include page="/WEB-INF/views/mypage/ProfileAndMenu.jsp" flush="false" />

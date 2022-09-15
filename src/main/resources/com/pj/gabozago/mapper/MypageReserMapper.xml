@@ -24,16 +24,19 @@
             r.check_out_date, 
             r.adult_count,
             r.child_count,
-            r.status
+            r.status,
+            ai.file_name
         FROM 
             tbl_reservation r,
             tbl_accom a,
             tbl_accom_room ar,
-            tbl_large_area la
+            tbl_large_area la,
+            tbl_accom_images ai
         WHERE 
             r.accom_room_idx = ar.idx 
             AND ar.accom_idx = a.idx
             AND a.large_area_idx = la.idx
+            AND a.idx = ai.accom_idx
             AND member_idx = #{member.idx}
         ORDER BY 
             r.check_in_date DESC
@@ -82,18 +85,21 @@
             p.use_point,
             p.payment_price,
             p.insert_ts,
-            r.status
+            r.status,
+            ai.file_name
         FROM 
             tbl_reservation r,
             tbl_accom a,
             tbl_accom_room ar,
             tbl_member m,
-            tbl_payment p
+            tbl_payment p,
+            tbl_accom_images ai
         WHERE
             r.accom_room_idx = ar.idx
             AND ar.accom_idx = a.idx
             AND r.member_idx = m.idx
             AND r.idx = p.reservation_idx
+            AND a.idx = ai.accom_idx
             AND r.idx = #{reser.idx}
             AND r.member_idx = #{member.idx}
     </select>
@@ -139,14 +145,17 @@
             r.member_idx,
             r.accom_room_idx,
             a.accom_name,
-            ar.room_name
+            ar.room_name,
+            ai.file_name
         FROM 
             tbl_reservation r,
             tbl_accom a,
-            tbl_accom_room ar
+            tbl_accom_room ar,
+            tbl_accom_images ai
         WHERE 
             r.accom_room_idx = ar.idx
             AND ar.accom_idx = a.idx
+            AND a.idx = ai.accom_idx
             AND r.idx = #{reser.idx}
             AND r.member_idx = #{member.idx}
     </select>

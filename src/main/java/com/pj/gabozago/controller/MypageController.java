@@ -75,11 +75,26 @@ public class MypageController {
 			this.reserService.modifyReserStatus(member);			// 예약상태 체크(날짜에 따라 상태 업데이트 필요하면 수정)
 			this.pointWriteService.getUserCurrentPoint(member);		// 회원의 현재 포인트 업데이트
 			
+			// 프로필 사이드바에 회원정보(이미지, 닉네임) 불러오는 메소드
+			Map<String, String> profileMap = this.memberService.getMemberProfile(member);
+			
+			String hasProfileImg;
+			
+			if(profileMap.get("PROFILE_IMG") != null) hasProfileImg = "Y";
+			else hasProfileImg = "N";			 // if-else
+			
+			profileMap.remove("PROFILE_IMG");
+			profileMap.put("PROFILE_IMG", hasProfileImg);
+			
+			log.info("================================== 프로필 이미지 존재여부 : {}", hasProfileImg);
+			
+			model.addAttribute("profileMap", profileMap);
+			
 			// 회원의 사용일 임박순 숙소예약내역 2건을 가져오는 메소드
-			List<LinkedHashMap<String, Object>> list = this.memberService.getReserOrderOfUseDate(member);
-			LinkedHashMap<String, Object> map = new LinkedHashMap<String, Object>();
-			map.put("model", list);
-			model.addAttribute("result", map);
+			List<LinkedHashMap<String, Object>> accomList = this.memberService.getReserOrderOfUseDate(member);
+			LinkedHashMap<String, Object> accomMap = new LinkedHashMap<String, Object>();
+			accomMap.put("model", accomList);
+			model.addAttribute("result", accomMap);
 			
 			// 총 레코드 건수를 반환
 			int total = this.reserService.getTotal(cri, member);
@@ -103,7 +118,7 @@ public class MypageController {
 	
 	// 회원수정 페이지 비밀번호 체크
 	@PostMapping(path = "/myInfo/modify")
-	public String checkPwdForMyInfo(Model model, String pw) {
+	public String checkPwdForMyInfo() {
 		log.trace(">>>>>>>>>>>>>>>>>>>> checkPwdForMyInfo() invoked.");
 
 		return "/mypage/myInfo/modify";

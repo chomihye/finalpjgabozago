@@ -2,6 +2,7 @@ package com.pj.gabozago.service.mypage;
 
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,6 +27,13 @@ public class MypageMainMemberServiceImpl implements MypageMainMemberService {
 	private MypageMainMemberMapper mapper;
 	
 	
+	// 프로필 사이드바에 회원정보(이미지, 닉네임) 불러오기
+	@Override
+	public Map<String, String> getMemberProfile(MemberVO member) throws ServiceException {
+		try { return this.mapper.selectMemberProfile(member); } 
+		catch (DAOException e) { throw new ServiceException(e); }
+	} // getMemberProfile
+	
 	// 회원의 사용일 임박순 숙소예약내역 2건을 가져오는 메소드
 	@Override
 	public List<LinkedHashMap<String, Object>> getReserOrderOfUseDate(MemberVO member) throws ServiceException {
@@ -39,5 +47,6 @@ public class MypageMainMemberServiceImpl implements MypageMainMemberService {
 		try { return this.mapper.deleteMember(member); } 
 		catch (DAOException e) { throw new ServiceException(e); }
 	} // withdrawFromSite
+
 
 } // end class

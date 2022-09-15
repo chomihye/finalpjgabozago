@@ -55,6 +55,7 @@
     <script>
         $(function(){       
             $("#reservation").css("font-weight", "bold");
+            $(".profileAndMenu .profile h2").append('${sessionScope.__MEMBER__.nickname}');
 
             window.history.forward();
 
@@ -140,7 +141,7 @@
                         </li>
                     </ul>
                     <div class="accom_info">
-                        <img src="https://picsum.photos/id/684/600/400" alt="">
+                        <img src="/resources/acco/img/himg/${__MAP__.FILE_NAME}" alt="">
                         <div class="accom_info_letter">
                             <h2>${__MAP__.ACCOM_NAME}</h2>
                             <p>${__MAP__.ROOM_NAME}</p>

@@ -44,10 +44,11 @@
     <link rel="stylesheet" href="/resources/mypage/css/6-16.mypage_withdrawal_pwdCheck.css">
 
     <!-- script -->
-    <script src="/resources/mypage/js/6-16.mypage_withdrawal_pwdCheck.js"></script>
-
-    <!-- 모달 관련 -->
-    <link rel="stylesheet" href="/resources/mypage/css/modal.css">
+    <script>
+        $(function(){
+            $(".profileAndMenu .profile h2").append('${sessionScope.__MEMBER__.nickname}');
+        });
+    </script>
 </head>
 
 <body>
