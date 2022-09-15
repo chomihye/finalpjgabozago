@@ -6,9 +6,12 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -226,8 +229,7 @@ public class MypageController {
 	public String loadWishlistPage() throws ControllerException {
 		log.trace(">>>>>>>>>>>>>>>>>>>> loadWishlistPage() invoked.");
 		
-//		return "mypage/wishlist";
-		return "mypage/test";
+		return "mypage/wishlist";
 	} // loadWishlistPage
 	
 	
@@ -340,37 +342,26 @@ public class MypageController {
 	
 	
 	// 회원탈퇴 페이지 비밀번호 체크
-	@PostMapping(path = "/withdrawal/pwdCheck")
-	public String checkPwdForWithdrawal(Model model, String pw) {
+	@PostMapping(path = "/withdrawal.do")
+	public String checkPwdForWithdrawal(@SessionAttribute(SharedScopeKeys.USER_KEY) MemberVO member, String pw, 
+			RedirectAttributes rttrs) 
+			throws ControllerException {
 		log.trace(">>>>>>>>>>>>>>>>>>>> checkPwdForWithdrawal() invoked.");
-		
-//		임시 비밀번호
-		String password = "1234";
-		
-		log.info("\t+ pw : {}", pw);
-		
-		if(pw.equals(password)) {
-			return "/mypage/withdrawal/confirm";
-		}else {
-			model.addAttribute("match", "NO");
-			return "mypage/withdrawal/pwdCheck";
-		} // if-else
-		
-		// 회원번호 53, 배은정의 비밀번호는 이거다.
-		// *abc920324
 
-//		
-//		// pom.xml에서 관련 코어 추가, 빈등록 필요(추후)
-//		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		try {
+			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
-		// DB에서 사용자의 비밀번호를 가져오는 로직이 올 자리
-//		
-		// 비밀번호 비교하는 코드
-//		if(encoder.matches(password, DB에서 가져온 비밀번호 data)) {		
-//			log.info("Pass!");
-//		}else {
-//			log.info("No!");
-//		} // if-else
+			// 비밀번호 비교
+			if(encoder.matches(pw + "__SALT__", member.getPassword())) {	
+				return "/mypage/withdrawal/confirm";
+			}else {
+				rttrs.addFlashAttribute("match", "NO");
+				return "redirect:/mypage/withdrawal/pwdCheck";
+			} // if-else
+			
+		} catch(Exception e) {
+			throw new ControllerException(e);
+		} // try-catch
 		
 	} // checkPwdForWithdrawal
 	
@@ -384,11 +375,30 @@ public class MypageController {
 	
 	
 	@PostMapping(path = "/withdrawal/completed")
-	public String getWithdrawalCompletedPage() {
-		log.trace(">>>>>>>>>>>>>>>>>>>> getWithdrawalCompletedPage() invoked.");
+	public String withdrawFromSite(@SessionAttribute(SharedScopeKeys.USER_KEY) MemberVO member, Model model, 
+			HttpServletRequest req) 
+			throws ControllerException {
+		log.trace(">>>>>>>>>>>>>>>>>>>> withdrawFromSite() invoked.");
 
-		return "mypage/withdrawal/completed";
-	} // getWithdrawalCompletedPage
+		try {
+			boolean isDelete = this.memberService.withdrawFromSite(member);
+			
+			HttpSession session = req.getSession();
+			
+			if(!isDelete) {
+				session.setAttribute(SharedScopeKeys.RESULT_KEY, "Failed");
+				model.addAttribute(SharedScopeKeys.RESULT_KEY, "Failed");
+				return "mypage/withdrawal/confirm";
+			}else {
+				session.setAttribute(SharedScopeKeys.RESULT_KEY, "Success");
+				return "mypage/withdrawal/completed";
+			} // if-else
+			
+		} catch (Exception e) {
+			throw new ControllerException(e);
+		} // try-catch
+		
+	} // withdrawFromSite
 
 	
 }// end class

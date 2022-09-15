@@ -70,6 +70,20 @@ public class MypageMainMemberMapperTests {
 		Objects.requireNonNull(list);
 		list.forEach(log::info);
 	} // testSelectReserOrderOfUseDate
+	
+	
+	@Test
+	@Order(2)
+	@DisplayName("2. testDeleteMember")
+	@Timeout(value = 10, unit = TimeUnit.SECONDS)
+	void testDeleteMember() throws DAOException {
+		log.trace("testDeleteMember() invoked.");
+		
+		MemberVO member = new MemberVO(69, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+		
+		Boolean isDelete = this.mapper.deleteMember(member);
+		log.info("================================== : {}", isDelete);
+	} // testDeleteMember
 
 	
 } // end class

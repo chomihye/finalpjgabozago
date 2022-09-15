@@ -10,7 +10,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>MyPage</title>
+    <title>Error</title>
 
     <!-- 파비콘 -->
     <link rel="shortcut icon" href="/resources/common/ico/favicon.ico">
@@ -37,49 +37,31 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
  
     <!-- 폰트어썸 -->
-    <script src="https://kit.fontawesome.com/648bb0142f.js" crossorigin="anonymous"></script>
+    <!-- <script src="https://kit.fontawesome.com/648bb0142f.js" crossorigin="anonymous"></script> -->
 
     <!-- 제이쿼리 -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-migrate/3.4.0/jquery-migrate.min.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-migrate/3.4.0/jquery-migrate.min.js"></script> -->
  
     <!-- CSS -->
-    <link rel="stylesheet" href="/resources/mypage/css/6-17.mypage_withdrawal_confirm.css">
-
-    <!-- script -->
-    <script>
-        $(function(){
-            let result = "${__RESULT__}";
-            console.log(result);
-
-            if(result == "Failed"){
-                alert("오류가 발생하였습니다. 다시 시도해주십시오. 계속해서 오류가 발생하는 경우 고객센터로 문의해주시기 바랍니다.");
-            } // if
-        });
-    </script>
+    <link rel="stylesheet" href="/resources/errors/css/errors.css">
 </head>
 
 <body>
     <jsp:include page="/WEB-INF/views/common/header.jsp" flush="false" />
 
-    <div class="wrap">
-        <jsp:include page="/WEB-INF/views/mypage/ProfileAndMenu.jsp" flush="false" />
-        
+    <div class="wrap"> 
+
         <section class="withdrawal">
             
             <div id="body">        
-                <div class="midHr">&nbsp;&nbsp;&nbsp;회원탈퇴&nbsp;&nbsp;&nbsp;</div>
-    
-                <form action="/mypage/withdrawal/completed" method="POST">
-                    
-                    <div class="guide_text">회원탈퇴 후에는 삭제된 정보를 복구할 수 없습니다.<br>그래도 탈퇴하시겠습니까?</div>
-                    
-                    <div class="btnBox">
-                        <input type="button" value="취소" onclick="location.href='/mypage/main'">
-                        <input type="submit" value="확인" id="confirmBtn">
-                    </div>
-                </form>
-    
+                <div class="midHr">&nbsp;&nbsp;&nbsp;ERROR&nbsp;&nbsp;&nbsp;</div>
+                <div class="guide_text">
+                    <span class="error_title">잘못된 요청입니다.</span><br><br>
+                    정상적인 경로로 다시 시도하여 주시기 바랍니다.<br> 
+                    감사합니다.
+                </div>
+                <div class="midHr"></div>
             </div>
     
         </section>

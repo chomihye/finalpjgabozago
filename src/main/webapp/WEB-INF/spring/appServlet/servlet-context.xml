@@ -29,6 +29,7 @@
 	<beans:bean id="loginInterceptor" class="com.pj.gabozago.interceptor.LoginInterceptor" />
 	<beans:bean id="logoutInterceptor" class="com.pj.gabozago.interceptor.LogoutInterceptor" />
 	<beans:bean id="authInterceptor" class="com.pj.gabozago.interceptor.AuthInterceptor" />
+	<beans:bean id="withdrawInterceptor" class="com.pj.gabozago.interceptor.WithdrawInterceptor" />
 	
 	<!-- Multipart Request 위한 빈 등록 -->
 	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
@@ -49,7 +50,7 @@
 	
 		<interceptor>
 				<mapping path="/login/logoutProcess" />
-	
+
 				<beans:ref bean="logoutInterceptor"/>
 		</interceptor>
 
@@ -58,7 +59,14 @@
 			<mapping path="/mypage/**" /> <!-- 로그인 필요한 서비스 -->
 
 			<beans:ref bean="authInterceptor"/>
-	</interceptor>
+		</interceptor>
+
+		<!-- 회원탈퇴시 필요한 인터셉터 -->
+		<interceptor>
+			<mapping path="/mypage/withdrawal/completed" />
+			
+			<beans:ref bean="withdrawInterceptor"/>
+		</interceptor>
 	</interceptors>
 	
 	<context:component-scan base-package="com.pj.gabozago.controller" />

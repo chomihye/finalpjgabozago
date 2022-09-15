@@ -61,7 +61,7 @@
             <div id="body">        
                 <div class="midHr">&nbsp;&nbsp;&nbsp;회원탈퇴&nbsp;&nbsp;&nbsp;</div>
 
-                <form action="pwdCheck" method="POST">
+                <form action="/mypage/withdrawal.do" method="POST">
                     
                     <div class="guide_text">정보 보호를 위해 현재 비밀번호를 입력하여 주시기 바랍니다.</div>
                     

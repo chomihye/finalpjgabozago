@@ -47,7 +47,15 @@
     <link rel="stylesheet" href="/resources/mypage/css/6-18.mypage_withdrawal_completed.css">
 
     <!-- script -->
-    <script src="/resources/mypage/js/6-18.mypage_withdrawal_completed.js"></script>
+    <script>
+        $(function(){
+            setTimeout('movePage()', 2000); // 2초 후에 movePage() 함수 실행
+        });
+
+        function movePage(){
+            location.replace("/main");
+        } // movePage
+    </script>
 </head>
 
 <body>

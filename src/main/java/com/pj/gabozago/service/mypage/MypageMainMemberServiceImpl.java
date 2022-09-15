@@ -33,4 +33,11 @@ public class MypageMainMemberServiceImpl implements MypageMainMemberService {
 		catch (DAOException e) { throw new ServiceException(e); }
 	} // getReserOrderOfUseDate
 
+	// 회원 탈퇴 처리
+	@Override
+	public Boolean withdrawFromSite(MemberVO member) throws ServiceException {
+		try { return this.mapper.deleteMember(member); } 
+		catch (DAOException e) { throw new ServiceException(e); }
+	} // withdrawFromSite
+
 } // end class

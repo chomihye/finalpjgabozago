@@ -42,28 +42,10 @@
  
     <!-- CSS -->
     <link rel="stylesheet" href="/resources/mypage/css/6-12.mypage_wishlist.css">
+    <link rel="stylesheet" href="/resources/common/css/pagination.css">
 
     <!-- script -->
     <script src="/resources/mypage/js/6-12.mypage_wishlist.js"></script>
-    <!-- 페이지가 로딩되자마자 호출되는 함수 -->
-    <script>
-        $(function() {
-            console.log("wishlist script invoked!");
-
-            $.ajax({
-                type: "GET",
-                url: "wishlist/accom",
-                cache : false,
-                error : function(error) {
-                    console.log("error");
-                },
-                success : function(data) {
-                    console.log("success");
-                    console.log(data);
-                }
-            })
-        });
-    </script>
 </head>
 
 <body>
@@ -87,174 +69,35 @@
             <!-- 숙소 선택 영역(default) -->
             <article class="wishlist_accom">
                 <div class="select">
-                    <input type="checkbox" id="selectAll" name="selectAll" onclick="fncAllCheck();">
+                    <input type="checkbox" id="selectAll" name="selectAll">
                     <label for="selectAll"></label>
                     <label for="selectAll" class="selectAll">전체선택</label>
-                    <a href="#" class="selectDelete">선택삭제</a>
+                    <a href="javascript:void(0);" class="selectDelete">선택삭제</a>
                 </div>
 
-                <ul>
-                    <li>
-                        <input type="checkbox" id="select1" name="selectParticle">
-                        <label for="select1"></label>
-                        <a href="/reservation/datail" class="accomBox">
-                            <img src="https://picsum.photos/id/231/600/400" alt="accom image">
-                            <div class="accom_info">
-                                <h3>숙소이름</h3>
-                                <p><i class="fas fa-location-dot"></i>&nbsp;숙소위치(시군구)</p>
-                            </div>
-                            <button type="button" class="payment">결제하기</button>
-                        </a>
-                    </li>
-                    <li>
-                        <input type="checkbox" id="select2" name="selectParticle">
-                        <label for="select2"></label>
-                        <a href="/reservation/datail" class="accomBox">
-                            <img src="https://picsum.photos/id/231/600/400" alt="accom image">
-                            <div class="accom_info">
-                                <h3>숙소이름</h3>
-                                <p><i class="fas fa-location-dot"></i>&nbsp;숙소위치(시군구)</p>
-                            </div>
-                            <button type="button" class="payment">결제하기</button>
-                        </a>
-                    </li>
-                    <li>
-                        <input type="checkbox" id="select3" name="selectParticle">
-                        <label for="select3"></label>
-                        <a href="/reservation/datail" class="accomBox">
-                            <img src="https://picsum.photos/id/231/600/400" alt="accom image">
-                            <div class="accom_info">
-                                <h3>숙소이름</h3>
-                                <p><i class="fas fa-location-dot"></i>&nbsp;숙소위치(시군구)</p>
-                            </div>
-                            <button type="button" class="payment">결제하기</button>
-                        </a>
-                    </li>
-                    <li>
-                        <input type="checkbox" id="select4" name="selectParticle">
-                        <label for="select4"></label>
-                        <a href="/reservation/datail" class="accomBox">
-                            <img src="https://picsum.photos/id/231/600/400" alt="accom image">
-                            <div class="accom_info">
-                                <h3>숙소이름</h3>
-                                <p><i class="fas fa-location-dot"></i>&nbsp;숙소위치(시군구)</p>
-                            </div>
-                            <button type="button" class="payment">결제하기</button>
-                        </a>
-                    </li>
-                    <li>
-                        <input type="checkbox" id="select5" name="selectParticle">
-                        <label for="select5"></label>
-                        <a href="/reservation/datail" class="accomBox">
-                            <img src="https://picsum.photos/id/231/600/400" alt="accom image">
-                            <div class="accom_info">
-                                <h3>숙소이름</h3>
-                                <p><i class="fas fa-location-dot"></i>&nbsp;숙소위치(시군구)</p>
-                            </div>
-                            <button type="button" class="payment">결제하기</button>
-                        </a>
-                    </li>
-                    <li>
-                        <input type="checkbox" id="select6" name="selectParticle">
-                        <label for="select6"></label>
-                        <a href="/reservation/datail" class="accomBox">
-                            <img src="https://picsum.photos/id/231/600/400" alt="accom image">
-                            <div class="accom_info">
-                                <h3>숙소이름</h3>
-                                <p><i class="fas fa-location-dot"></i>&nbsp;숙소위치(시군구)</p>
-                            </div>
-                            <button type="button" class="payment">결제하기</button>
-                        </a>
-                    </li>
-                    <li>
-                        <input type="checkbox" id="select7" name="selectParticle">
-                        <label for="select7"></label>
-                        <a href="/reservation/datail" class="accomBox">
-                            <img src="https://picsum.photos/id/231/600/400" alt="accom image">
-                            <div class="accom_info">
-                                <h3>숙소이름</h3>
-                                <p><i class="fas fa-location-dot"></i>&nbsp;숙소위치(시군구)</p>
-                            </div>
-                            <button type="button" class="payment">결제하기</button>
-                        </a>
-                    </li>
-                    <li>
-                        <input type="checkbox" id="select8" name="selectParticle">
-                        <label for="select8"></label>
-                        <a href="/reservation/datail" class="accomBox">
-                            <img src="https://picsum.photos/id/231/600/400" alt="accom image">
-                            <div class="accom_info">
-                                <h3>숙소이름</h3>
-                                <p><i class="fas fa-location-dot"></i>&nbsp;숙소위치(시군구)</p>
-                            </div>
-                            <button type="button" class="payment">결제하기</button>
-                        </a>
-                    </li>
-                    <li>
-                        <input type="checkbox" id="select9" name="selectParticle">
-                        <label for="select9"></label>
-                        <a href="/reservation/datail" class="accomBox">
-                            <img src="https://picsum.photos/id/231/600/400" alt="accom image">
-                            <div class="accom_info">
-                                <h3>숙소이름</h3>
-                                <p><i class="fas fa-location-dot"></i>&nbsp;숙소위치(시군구)</p>
-                            </div>
-                            <button type="button" class="payment">결제하기</button>
-                        </a>
-                    </li>
-                    <li>
-                        <input type="checkbox" id="select10" name="selectParticle">
-                        <label for="select10"></label>
-                        <a href="/reservation/datail" class="accomBox">
-                            <img src="https://picsum.photos/id/231/600/400" alt="accom image">
-                            <div class="accom_info">
-                                <h3>숙소이름</h3>
-                                <p><i class="fas fa-location-dot"></i>&nbsp;숙소위치(시군구)</p>
-                            </div>
-                            <button type="button" class="payment">결제하기</button>
-                        </a>
-                    </li>
-                </ul>
+                <ul id="accom_list"></ul>
             </article>
 
-            <!-- 일정 선택 영역 -->
-            <article class="wishlist_plan">
-                <div class="select">
-                    <input type="checkbox" id="selectAll" name="selectAll" onclick="fncAllCheck();">
-                    <label for="selectAll"></label>
-                    <label for="selectAll" class="selectAll">전체선택</label>
-                    <a href="#" class="selectDelete">선택삭제</a>
-                </div>
+            <!-- 페이지버튼 -->
+            <div id="pagination" class="accomPage">
+                <form action="#" id="paginationForm">
+                    <!-- 1. 3가지 기준정보(criteria)는 hidden 정보로 제공 -->
+                    <input type="hidden" name="currPage">
+    
+                    <!-- 2. PageDTO 객체의 정보를 이용해서, Pagenation 출력 -->
+                    <ul id="pagingBtn">
+                        <!-- Prev 처리 -->
+                        <li class="frontPage"><a href="javascript:void(0);" onclick="getAccomWishlist('1')"><i class="bi bi-chevron-double-left"></i></a></li>
+                        <li class="prev yesPrev"><a href="javascript:void(0);"><i class="bi bi-chevron-left"></i></a></li>
 
-                <div class="planBoxWrap">
-                    <div class="planBox">
-                        <input type="checkbox" id="select1" name="selectParticle">
-                        <label for="select1"></label>
-                        <jsp:include page="/WEB-INF/views/mypage/wishlist/slide_plan1.jsp" flush="false"/>
-                    </div>
-                    
-                    <div class="planBox">
-                        <input type="checkbox" id="select2" name="selectParticle">
-                        <label for="select2"></label>
-                        <jsp:include page="/WEB-INF/views/mypage/wishlist/slide_plan2.jsp" flush="false"/>
-                    </div>
-                    
-                    <div class="planBox">
-                        <input type="checkbox" id="select3" name="selectParticle">
-                        <label for="select3"></label>
-                        <jsp:include page="/WEB-INF/views/mypage/wishlist/slide_plan3.jsp" flush="false"/>
-                    </div>
-                    
-                    <div class="planBox">
-                        <input type="checkbox" id="select4" name="selectParticle">
-                        <label for="select4"></label>
-                        <jsp:include page="/WEB-INF/views/mypage/wishlist/slide_plan4.jsp" flush="false"/>
-                    </div>
-                </div>
-            </article>
+                        <div class="pageNumber"></div>
 
-            <!-- 페이지버튼 임시 -->
-            <div class="btnPage">페이지버튼</div>
+                        <!-- Next 처리 -->
+                        <li class="next yesNext"><a href="javascript:void(0);"><i class="bi bi-chevron-right"></i></a></li>
+                        <li class="backPage"><a href="javascript:void(0);"><i class="bi bi-chevron-double-right"></i></a></li>
+                    </ul>
+                </form>
+            </div>
         </section>
     </div>
 
