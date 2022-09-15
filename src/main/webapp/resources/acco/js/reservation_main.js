@@ -20,9 +20,25 @@ function increase(element_id) {
 
 // 위시리스트
 document.addEventListener('DOMContentLoaded', () => {
+  addEventToHeartIcon();
+});
+
+function addEventToHeartIcon() { 
   const icons = document.querySelectorAll('.heart_icon');
 
   function handleClick(event) {
+    const currentIdx = event.target.closest(".heart_icon").dataset.idx;
+  
+    $.ajax({
+      type: 'POST',
+      url: '/reservation/main/wishlist/' + currentIdx ,
+      success: function (response) {
+        console.log(response);
+      },
+      error: function (error) {
+        console.log(error);
+      },
+    });
     if (event.target.closest('.heart_icon').classList.contains('act')) {
       event.target.closest('.heart_icon').classList.remove('act');
     } else {
@@ -35,7 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let icon = icons[i];
     icon.addEventListener('click', handleClick);
   }
-});
+}
 
 $(function () {
   // $('.header').load('header.html');
@@ -106,32 +122,35 @@ $(function () {
        	const accom_list = response._ACCOM_;
        	
        	for(let i = 0; i < accom_list.length; i++) {
-			let accom = accom_list[i];
-			htmlText += `
-                <div class="acco_container">
-                    <div class="list">
-                        <a href="/reservation/datail?accom_idx=${accom.idx}" class="list_main_name">${accom.accomName}</a>
-                        <p>
-                            <br />${accom.travellargeDTO.largeAreaName}<br />기준인원 2명 <br />${accom.accomroomDTO.minPrice} ~ ${accom.accomroomDTO.maxPrice}
-                            <br />
-                        </p>
-                        <a href="/reservation/datail?accom_idx=${accom.idx}" class="list_reserve">예약하기</a>
-                    </div>
-                    <div class="hotel_picture">
-                        <a href="/reservation/datail?accom_idx=${accom.idx}"><img src="/resources/acco/img/himg/${accom.accomimagesDTO.fileName}" alt="" /></a>
+          let accom = accom_list[i];
+          htmlText += `
+                    <div class="acco_container">
+                        <div class="list">
+                            <a href="/reservation/datail?accom_idx=${accom.idx}" class="list_main_name">${accom.accomName}</a>
+                            <p>
+                                <br />${accom.travellargeDTO.largeAreaName}<br />기준인원 2명 <br />${accom.accomroomDTO.minPrice} ~ ${accom.accomroomDTO.maxPrice}
+                                <br />
+                            </p>
+                            <a href="/reservation/datail?accom_idx=${accom.idx}" class="list_reserve">예약하기</a>
+                        </div>
+                        <div class="hotel_picture">
+                            <a href="/reservation/datail?accom_idx=${accom.idx}"><img src="/resources/acco/img/himg/${accom.accomimagesDTO.fileName}" alt="" /></a>
 
-                        <div class="heart_icon"><i class="bi bi-heart-fill"></i></div>
+                            <div class="heart_icon"><i class="bi bi-heart-fill"></i></div>
+                        </div>
                     </div>
-                </div>
-			`;
-		}
-		$("#accom_list_container").html(htmlText);
-       	
+          `;
+        }
+        $("#accom_list_container").html(htmlText);
+        addEventToHeartIcon();
+
+            
+            
       },
       error: function (error) {
         console.log(error);
       }
-    });
+    });//ajax
     
   });
 });

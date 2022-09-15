@@ -14,6 +14,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -31,6 +33,7 @@ import com.pj.gabozago.domain.Criteria;
 import com.pj.gabozago.domain.MemberDTO;
 import com.pj.gabozago.domain.MemberVO;
 import com.pj.gabozago.domain.PointHistoryVO;
+import com.pj.gabozago.domain.WishlistAccomDTO;
 import com.pj.gabozago.exception.ControllerException;
 import com.pj.gabozago.exception.ServiceException;
 import com.pj.gabozago.service.AccomService;
@@ -50,10 +53,16 @@ public class AccoController {
 	private AccomService accomService;
 
 	// 숙소 전체 목록 가져오기
-	@RequestMapping(path = { "", "/main" })
-	public String getHotelList(Model model) throws ControllerException, ServiceException {
+	@RequestMapping(path = { "", "/main" })//로그인 여부 확인 
+	public String getHotelList(@SessionAttribute(name=SharedScopeKeys.USER_KEY,required=false) MemberVO member, Model model) throws ControllerException, ServiceException {
 
-		List<AccomDTO> list = this.accomService.getList();
+		List<AccomDTO> list;
+		
+		if (member == null) {			//member -> null -> getList출력
+			list = this.accomService.getList();
+		} else {
+			list = this.accomService.getListWithMember(member);			
+		}
 		model.addAttribute("_ACCOM_", list);
 
 		return "acco/reservation_mainpage";
@@ -114,10 +123,10 @@ public class AccoController {
 
 	// 결제를 위한 정보 넘기기
 	@GetMapping("/payment")
-	public String loadUser(@SessionAttribute(SharedScopeKeys.USER_KEY) MemberVO member, @RequestParam("room_idx") Integer room_idx, AccomRoomDTO room, Model model)
+	public String loadUser(@SessionAttribute(SharedScopeKeys.USER_KEY) MemberVO member,
+			@RequestParam("room_idx") Integer room_idx, AccomRoomDTO room, Model model)
 			throws ControllerException, ServiceException {
-		log.trace(">>>>>>>>>>>>>>>>>>>> loadUser() invoked.");
-		
+
 		room.setIdx(room_idx);
 		Map<String, Object> accomMap = this.accomService.getOneRoomInfo(room);
 		model.addAttribute("accom", accomMap);
@@ -127,13 +136,30 @@ public class AccoController {
 
 		return "acco/reservation_payment";
 	} // loadUser
-	
-	//
-	
 
-	
-	
-	
+
+	// 위시리스트 추가/삭제
+	@PostMapping("/main/wishlist/{idx}")
+	@ResponseBody
+	public ResponseEntity<String> hotelWishList(@SessionAttribute(SharedScopeKeys.USER_KEY) MemberVO member, @PathVariable("idx") Integer idx, WishlistAccomDTO wishaccom,
+			Model model) throws ControllerException, ServiceException {
+
+		ResponseEntity<String> entity = null;
+		wishaccom.setMemberIdx(member.getIdx());
+		wishaccom.setAccomIdx(idx);
+		
+
+		try {
+			accomService.setHotelLike(wishaccom);
+			entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+
+		return entity;
+	}
+
 	// 결제 ..
 //	@GetMapping("/payment")
 //	public String getMemberInfo(@RequestParam("member_idx") Integer member_idx, MemberDTO member, Model model)

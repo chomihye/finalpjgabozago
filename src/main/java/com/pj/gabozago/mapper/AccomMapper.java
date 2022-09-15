@@ -8,6 +8,7 @@ import com.pj.gabozago.domain.AccomDTO;
 import com.pj.gabozago.domain.AccomRoomDTO;
 import com.pj.gabozago.domain.MemberDTO;
 import com.pj.gabozago.domain.MemberVO;
+import com.pj.gabozago.domain.WishlistAccomDTO;
 import com.pj.gabozago.exception.DAOException;
 
 
@@ -18,6 +19,7 @@ public interface AccomMapper {
 
 	// 전체 목록을 반환
 	public abstract List<AccomDTO> getList() throws DAOException;
+	public abstract List<AccomDTO> getListWithMember(MemberVO member) throws DAOException;
 	
 	// 숙소 상세 정보 반환
 	public abstract Map<String, Object> getOneAccomDetail(AccomDTO accom) throws DAOException;
@@ -36,6 +38,9 @@ public interface AccomMapper {
 
 	//결제 페이지에 선택한 숙소 정보 가져오기
 	public abstract Map<String, Object> selectOneRoomInfo(AccomRoomDTO room) throws DAOException;
+
+	//위시리스트
+	public abstract Object insertHotelLike(WishlistAccomDTO wishaccom) throws DAOException;
 	
 
 	

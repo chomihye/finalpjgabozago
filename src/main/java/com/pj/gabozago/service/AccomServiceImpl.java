@@ -13,6 +13,7 @@ import com.pj.gabozago.domain.AccomRoomDTO;
 import com.pj.gabozago.domain.AccomRoomVO;
 import com.pj.gabozago.domain.MemberDTO;
 import com.pj.gabozago.domain.MemberVO;
+import com.pj.gabozago.domain.WishlistAccomDTO;
 import com.pj.gabozago.exception.DAOException;
 import com.pj.gabozago.exception.ServiceException;
 import com.pj.gabozago.mapper.AccomMapper;
@@ -31,11 +32,20 @@ public class AccomServiceImpl implements AccomService {
 	//숙소 전체목록보기
 	@Override
 	public List<AccomDTO> getList() throws ServiceException {
-		log.trace("getList() invoked.");
 
 		try {
-			log.info(mapper.getList());
 			return mapper.getList();
+		} catch (DAOException e) {
+			throw new ServiceException(e);
+		} // try-catch
+	}
+	
+	//숙소 전체목록보기 (로그인 되었을 때)
+	@Override
+	public List<AccomDTO> getListWithMember(MemberVO member) throws ServiceException {
+		
+		try {
+			return mapper.getListWithMember(member);
 		} catch (DAOException e) {
 			throw new ServiceException(e);
 		} // try-catch
@@ -99,6 +109,14 @@ public class AccomServiceImpl implements AccomService {
 		} catch (DAOException e) {
 			throw new ServiceException(e);
 		}
+	}//getOneRoomInfo
+	
+	//위시리스트
+	@Override
+	public void setHotelLike(WishlistAccomDTO wishaccom) throws ServiceException, DAOException {
+		
+		mapper.insertHotelLike(wishaccom);
+		
 	} // getOneRoomInfo
 
 

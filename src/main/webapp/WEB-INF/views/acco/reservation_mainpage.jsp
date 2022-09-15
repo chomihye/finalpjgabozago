@@ -163,7 +163,7 @@
                     <div class="hotel_picture">
                         <a href="/reservation/datail?accom_idx=${list.idx}"><img src="/resources/acco/img/himg/${list.accomimagesDTO.fileName}" alt="" /></a>
 
-                        <div class="heart_icon"><i class="bi bi-heart-fill"></i></div>
+                        <div class="heart_icon ${list.wishlistIdx > 0 ? 'act' : ''}" data-idx="${list.idx}"><i class="bi bi-heart-fill"></i></div>
                     </div>
                 </div>
             </c:forEach> 

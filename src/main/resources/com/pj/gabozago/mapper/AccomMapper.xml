@@ -8,7 +8,8 @@
 <mapper namespace="com.pj.gabozago.mapper.AccomMapper">
 
 	 <select id="getList" resultMap="AccomDTO" >
-        SELECT 
+        SELECT
+        	-1 wishlist_idx,
             r.idx,
             r.accom_name,
             r.large_area_idx,
@@ -18,6 +19,22 @@
             (select ai.file_name from tbl_accom_images ai where r.idx = ai.idx) as file_name
         FROM tbl_accom r ,tbl_large_area a
         WHERE r.large_area_idx = a.idx
+        ORDER BY r.idx asc
+	</select>
+	
+	 <select id="getListWithMember" resultMap="AccomDTO">      
+        SELECT 
+            NVL(wa.idx, -1) wishlist_idx,
+            r.idx,
+            r.accom_name,
+            r.large_area_idx,
+            a.large_area_name,  
+            (select max(price) from tbl_accom_room where accom_idx = r.idx) as max_price,
+            (select min(price) from tbl_accom_room where accom_idx = r.idx) as min_price,
+            (select ai.file_name from tbl_accom_images ai where r.idx = ai.idx) as file_name
+        FROM tbl_accom r
+            INNER JOIN tbl_large_area a ON a.idx = r.large_area_idx
+            LEFT OUTER JOIN (select * from tbl_wishlist_accom where member_idx = #{idx}) wa ON wa.accom_idx = r.idx
         ORDER BY r.idx asc
 	</select>
 
@@ -115,12 +132,23 @@
         WHERE ar.idx = #{idx}
     </select>
 
+
+
+
+
+    <insert id="insertHotelLike">
+        INSERT INTO 
+            tbl_wishlist_accom(member_idx,accom_idx)
+        VALUES(#{memberIdx},#{accomIdx});
+    </insert>
+
     
 
 
 
  
     <resultMap type="com.pj.gabozago.domain.AccomDTO" id="AccomDTO">
+        <result property="wishlistIdx" column="WISHLIST_IDX"/>
         <result property="idx" column="IDX"/>
         <result property="accomName" column="ACCOM_NAME"/>
         <result property="largeAreaIdx" column="LARGE_AREA_IDX"/>

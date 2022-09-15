@@ -26,5 +26,5 @@ public class AccomDTO {
 	private AccomRoomDTO accomroomDTO;
 	private AccomImagesDTO accomimagesDTO;
 	
-	
+	private Integer wishlistIdx;
 }

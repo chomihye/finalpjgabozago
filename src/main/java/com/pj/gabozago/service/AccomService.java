@@ -8,6 +8,8 @@ import com.pj.gabozago.domain.AccomDTO;
 import com.pj.gabozago.domain.AccomRoomDTO;
 import com.pj.gabozago.domain.MemberDTO;
 import com.pj.gabozago.domain.MemberVO;
+import com.pj.gabozago.domain.WishlistAccomDTO;
+import com.pj.gabozago.exception.DAOException;
 import com.pj.gabozago.exception.ServiceException;
 
 
@@ -16,6 +18,7 @@ public interface AccomService {
 
 	//숙소 전체목록 조회
 	public abstract List<AccomDTO> getList() throws ServiceException;
+	public abstract List<AccomDTO> getListWithMember(MemberVO member) throws ServiceException;
 	
 	//숙소 이름 상세 페이지에 반영
 	public abstract Map<String, Object> getOneAccomDetail(AccomDTO accom) throws ServiceException;
@@ -33,7 +36,10 @@ public interface AccomService {
 	public abstract Map<String, Object> getOneMemberInfo(MemberVO member) throws ServiceException;
 	
 	//결제 페이지에 선택한 숙소 정보 가져오기
-	public abstract Map<String, Object> getOneRoomInfo(AccomRoomDTO room)  throws ServiceException;
+	public abstract Map<String, Object> getOneRoomInfo(AccomRoomDTO room) throws ServiceException;
+
+	//위시리스트
+	public abstract void setHotelLike(WishlistAccomDTO wishaccom) throws ServiceException, DAOException;
 	
 
 
