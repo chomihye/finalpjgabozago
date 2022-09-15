@@ -19,12 +19,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
+import com.pj.gabozago.common.SharedScopeKeys;
 import com.pj.gabozago.domain.AccomDTO;
 import com.pj.gabozago.domain.AccomReservationDTO;
 import com.pj.gabozago.domain.AccomRoomDTO;
 import com.pj.gabozago.domain.AccomRoomVO;
 import com.pj.gabozago.domain.AccomVO;
+import com.pj.gabozago.domain.Criteria;
+import com.pj.gabozago.domain.MemberDTO;
+import com.pj.gabozago.domain.MemberVO;
 import com.pj.gabozago.domain.PointHistoryVO;
 import com.pj.gabozago.exception.ControllerException;
 import com.pj.gabozago.exception.ServiceException;
@@ -43,8 +48,8 @@ public class AccoController {
 
 	@Setter(onMethod_ = { @Autowired })
 	private AccomService accomService;
-	
-	//숙소 전체 목록 가져오기
+
+	// 숙소 전체 목록 가져오기
 	@RequestMapping(path = { "", "/main" })
 	public String getHotelList(Model model) throws ControllerException, ServiceException {
 
@@ -55,10 +60,10 @@ public class AccoController {
 
 	}
 
-	//숙소 방 리스트, 위치 가져오기
-	// @RequestParam사용....
+	// 숙소 방 리스트, 위치 가져오기
 	@GetMapping("/datail")
-	public String getRoominfo(@RequestParam("accom_idx") Integer accom_idx, AccomDTO accom, Model model) throws ControllerException, ServiceException {
+	public String getRoominfo(@RequestParam("accom_idx") Integer accom_idx, AccomDTO accom, Model model)
+			throws ControllerException, ServiceException {
 
 		accom.setIdx(accom_idx);
 		try {
@@ -75,36 +80,72 @@ public class AccoController {
 
 		return "acco/reservation_datail";
 	}
-	
-	//숙소 상세 정보
+
+	// 숙소 상세 정보
 	@GetMapping("/room")
-	public String getRoomDetail(@RequestParam("room_idx") Integer room_idx, AccomDTO accom, Model model) throws ControllerException, ServiceException {
+	public String getRoomDetail(@RequestParam("room_idx") Integer room_idx, AccomDTO accom, Model model)
+			throws ControllerException, ServiceException {
 
 		accom.setIdx(room_idx);
 		Map<String, Object> map = this.accomService.getOneRoomDetail(accom);
-		
+
 		model.addAttribute("_ACCOM_", map);
 
 		return "acco/reservation_room";
 	}
-	
-	//호텔정보 필터링하여 조회
+
+	// 호텔정보 필터링하여 조회
 	@RequestMapping(value = "search", method = RequestMethod.POST)
 	@ResponseBody
-	public HashMap <String, Object> searchHotelList(HttpServletRequest request, AccomDTO accom) throws ControllerException, ServiceException {
-		HashMap<String, Object> result = new HashMap <String, Object>();
-		
+	public HashMap<String, Object> searchHotelList(HttpServletRequest request, AccomDTO accom)
+			throws ControllerException, ServiceException {
+		HashMap<String, Object> result = new HashMap<String, Object>();
+
 		String locationIdx = request.getParameter("location_idx");
-		
+
 		if (locationIdx != "") {
 			accom.setLargeAreaIdx(Integer.parseInt(locationIdx));
 		}
-		
+
 		List<AccomDTO> list = this.accomService.getSearchedList(accom);
 		result.put("_ACCOM_", list);
 		return result;
-	}	
+	} // searchHotelList
+
+	// 결제를 위한 정보 넘기기
+	@GetMapping("/payment")
+	public String loadUser(@SessionAttribute(SharedScopeKeys.USER_KEY) MemberVO member, @RequestParam("room_idx") Integer room_idx, AccomRoomDTO room, Model model)
+			throws ControllerException, ServiceException {
+		log.trace(">>>>>>>>>>>>>>>>>>>> loadUser() invoked.");
+		
+		room.setIdx(room_idx);
+		Map<String, Object> accomMap = this.accomService.getOneRoomInfo(room);
+		model.addAttribute("accom", accomMap);
+
+		Map<String, Object> memberMap = this.accomService.getOneMemberInfo(member);
+		model.addAttribute("member", memberMap);
+
+		return "acco/reservation_payment";
+	} // loadUser
 	
+	//
+	
+
+	
+	
+	
+	// 결제 ..
+//	@GetMapping("/payment")
+//	public String getMemberInfo(@RequestParam("member_idx") Integer member_idx, MemberDTO member, Model model)
+//			throws ControllerException, ServiceException {
+//
+//		member.setIdx(member_idx);
+//		Map<String, Object> map = this.accomService.getOneMemberInfo(member);
+//
+//		model.addAttribute("_MEMBER_", map);
+//
+//		return "acco/reservation_room";
+//	}
 
 //	@GetMapping("/datail")
 //	public String list1(@ModelAttribute("accom") AccomDTO accom, Model model)
@@ -145,10 +186,10 @@ public class AccoController {
 //		return "acco/reservation_room";
 //	}
 
-	@GetMapping("/payment")
-	public String reservationPayment() {
-
-		return "acco/reservation_payment";
-	}
+//	@GetMapping("/payment")
+//	public String reservationPayment() {
+//
+//		return "acco/reservation_payment";
+//	}
 
 }// end class

@@ -118,8 +118,10 @@
                         <i class="bi bi-calendar-check"></i>
                         <div>
                             <p class="title">체크인</p>
+                            
                             <input type="text" id="dateSelector" class="datepicker_input" name="spot"
                                 placeholder="체크인 날짜를 선택하세요" />
+                            
                         </div>
                     </li>
                     <li>
@@ -212,7 +214,7 @@
                     <button type="button">광주</button>
                 </li>
                 <li>
-                    <button type="button" value="21">부산</button>
+                    <button type="button" value="6">부산</button>
                 </li>
                 <li>
                     <button type="button">울산</button>

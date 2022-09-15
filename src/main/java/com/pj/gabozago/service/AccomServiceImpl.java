@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import com.pj.gabozago.domain.AccomDTO;
 import com.pj.gabozago.domain.AccomRoomDTO;
 import com.pj.gabozago.domain.AccomRoomVO;
+import com.pj.gabozago.domain.MemberDTO;
 import com.pj.gabozago.domain.MemberVO;
 import com.pj.gabozago.exception.DAOException;
 import com.pj.gabozago.exception.ServiceException;
@@ -78,7 +79,27 @@ public class AccomServiceImpl implements AccomService {
 		} catch (DAOException e) {
 			throw new ServiceException(e);
 		}
-	} // getOneRoomDetail
+	}
+	
+	//로그인한 회원 정보 결제 페이지에 출력
+	@Override
+	public Map<String, Object> getOneMemberInfo(MemberVO member) throws ServiceException {
+		try {
+			return this.mapper.selectOneMemberInfo(member);
+		} catch (DAOException e) {
+			throw new ServiceException(e);
+		}
+	}
+	
+	//결제 페이지에 선택한 숙소 정보 가져오기
+	@Override
+	public Map<String, Object> getOneRoomInfo(AccomRoomDTO room) throws ServiceException {
+		try {
+			return this.mapper.selectOneRoomInfo(room);
+		} catch (DAOException e) {
+			throw new ServiceException(e);
+		}
+	} // getOneRoomInfo
 
 
 

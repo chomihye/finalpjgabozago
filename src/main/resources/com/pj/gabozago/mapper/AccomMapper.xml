@@ -39,8 +39,6 @@
 	</select>
 
 
-	
-
     <select id="getOneAccomDetail" resultType="java.util.Map">
 	    SELECT 
             r.idx,
@@ -69,10 +67,9 @@
             r.room_option,
             r.price,
             img.file_name
-        FROM tbl_accom_room r,
-        	tbl_accom_images img
+        FROM tbl_accom_room r
+        	LEFT OUTER JOIN tbl_accom_room_images img ON r.idx = img.accom_room_idx
         WHERE r.accom_idx = #{idx}
-        	AND r.idx = img.accom_room_idx
     </select>
 
 
@@ -90,9 +87,35 @@
             ar.room_option,
             ar.price,
             img.file_name
-        FROM tbl_accom_room ar ,tbl_accom_images img
-        WHERE ar.idx = #{idx} AND ar.accom_idx =  img.accom_room_idx 
+        FROM tbl_accom_room ar
+        	LEFT OUTER JOIN tbl_accom_room_images img ON ar.idx = img.accom_room_idx
+        WHERE ar.idx = #{idx}
     </select>
+
+    <select id="selectOneMemberInfo" resultType="java.util.Map">
+        SELECT 
+            m.idx,
+            m.email,
+            m.name,
+            m.phone,
+            m.point
+        FROM tbl_member m
+        WHERE m.idx = #{idx}
+    </select>
+
+    <select id="selectOneRoomInfo" resultType="java.util.Map">   
+        SELECT 
+            r.idx AS accom_idx,
+            r.accom_name,
+            ar.idx AS accom_room_idx,
+            ar.price,
+            ar.room_name
+        FROM tbl_accom_room ar
+            INNER JOIN tbl_accom r ON r.idx = ar.accom_idx
+        WHERE ar.idx = #{idx}
+    </select>
+
+    
 
 
 
@@ -146,7 +169,7 @@
     <resultMap type="com.pj.gabozago.domain.AccomImagesDTO" id="aiDTO">
         <result property="idx" column="IDX" />
         <result property="fileName" column="FILE_NAME" />
-        <result property="accomRoomIdx" column="ACCOM_ROOM_IDX" />
+        <result property="accomIdx" column="ACCOM_IDX" />
     </resultMap>
     
 

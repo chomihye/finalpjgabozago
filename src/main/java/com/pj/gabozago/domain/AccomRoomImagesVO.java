@@ -4,10 +4,10 @@ import lombok.Data;
 import lombok.Value;
 
 @Value
-public class AccomImagesVO {
+public class AccomRoomImagesVO {
 	
 	private Integer idx;
 	private String fileName;
-	private Integer accomIdx;
+	private Integer accomRoomIdx;
 	
 }

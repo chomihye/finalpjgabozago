@@ -135,11 +135,11 @@
 
                 <div class="select_room">
                     <div class="room_thum">
-                        <img src="/resources/acco/img/room2.jpg" alt="">
+                        <img src="/resources/acco/img/rimg/${accom.FILE_NAME}" alt="">
                     </div>
 
                     <div class="room_detail">
-                        <div class="room_name">숙소 이름</div>
+                        <div class="room_name">${accom.ACCOM_NAME}</div>
                         <span class="book_date">2022년 7월 21일 (금)~ <br>
                             2022년 7월 22일 (토)</span>
                     </div>
@@ -147,10 +147,10 @@
 
                 <div class="room_type_box">
                     <span class="room_type">
-                        스탠다드 트윈
+                        ${accom.ROOM_NAME}
                     </span>
                     <span class="room_price">
-                        231,000원
+                        ${accom.PRICE}원
                     </span>
                 </div>
 
@@ -165,7 +165,7 @@
                 </div>
                 <div class="use_point">
                     사용가능한 포인트
-                    <div class="point_number">3000P</div>
+                    <div class="point_number">${member.POINT}P</div>
                 </div>
 
                 <h2 class="book_info">예약자 정보</h2>
@@ -173,15 +173,15 @@
                 <div class="book_person">
                     <div class="book_name">
                         <span>예약자 이름</span>
-                        <span>조미혜</span>
+                        <span>${member.NAME}</span>
                     </div>
                     <div class="book_email">
                         <span>이메일 주소</span>
-                        <span>abc123@naver.com</span>
+                        <span>${member.EMAIL}</span>
                     </div>
                     <div class="book_phone">
                         <span>휴대전화 번호</span>
-                        <span>010-1234-5678</span>
+                        <span>${member.PHONE}</span>
                     </div>
                 </div>
 

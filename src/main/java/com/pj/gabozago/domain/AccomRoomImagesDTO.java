@@ -9,10 +9,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class AccomImagesDTO {
+public class AccomRoomImagesDTO {
 	
 	private Integer idx;
 	private String fileName;
-	private Integer accomIdx;
+	private Integer accomRoomIdx;
 	
 }

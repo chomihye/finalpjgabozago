@@ -158,17 +158,17 @@
       <!-- 룸선택 슬라이드  -->
       <div class="swiper first-swiper">
         <div class="swiper-wrapper">
-          <c:forEach items= "${_ACCOM_.room_list}" var="list">
+          <c:forEach items="${_ACCOM_.room_list}" var="list">
 	          <div class="swiper-slide room_card">
 	            <div class="room_card_warp">
 	              <div class="img_box">
 	                <a href="/reservation/room?room_idx=${list.IDX}">
-	                  <img src="/resources/acco/img/himg/${list.FILE_NAME}" alt="${list.ROOM_NAME} 이미지" class="room_img_first">
+	                  <img src="/resources/acco/img/rimg/${list.FILE_NAME}" alt="${list.ROOM_NAME} 이미지" class="room_img_first">
 	                </a>
 	              </div>
 	              <div class="room_type">${list.ROOM_NAME}</div>
 	              <div class="room_price">₩${list.PRICE}</div>
-	              <a href="/reservation/payment" class="book_btn">예약하기</a>
+	              <a href="/reservation/payment?room_idx=${list.IDX}" class="book_btn">예약하기</a>
 	            </div>
 	          </div>
           </c:forEach>

@@ -101,7 +101,7 @@
                     <span>${_ACCOM_.ROOM_DESC}</span>
                 </div>
                 <div class="np-box">
-                    <a href="/reservation/payment">
+                    <a href="/reservation/payment?room_idx=${list.IDX}">
                         <button type="button" class="detail_reserve_btn">예약하기</button>
                     </a>
                     <p>체크인 ${_ACCOM_.CHECK_IN} / 체크아웃 ${_ACCOM_.CHECK_OUT}</p>
@@ -127,7 +127,7 @@
 
                     <div class="carousel-inner">
                         <div class="carousel-item active">
-                            <img src="/resources/acco/img/himg/${_ACCOM_.FILE_NAME}" class="d-block w-100" alt="...">
+                            <img src="/resources/acco/img/rimg/${_ACCOM_.FILE_NAME}" class="d-block w-100" alt="...">
                         </div>
                         <div class="carousel-item">
                             <img src="/resources/acco/img/room4.jpg" class="d-block w-100" alt="...">

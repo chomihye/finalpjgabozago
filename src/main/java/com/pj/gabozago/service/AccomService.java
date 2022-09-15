@@ -5,6 +5,9 @@ import java.util.List;
 import java.util.Map;
 
 import com.pj.gabozago.domain.AccomDTO;
+import com.pj.gabozago.domain.AccomRoomDTO;
+import com.pj.gabozago.domain.MemberDTO;
+import com.pj.gabozago.domain.MemberVO;
 import com.pj.gabozago.exception.ServiceException;
 
 
@@ -25,6 +28,12 @@ public interface AccomService {
 
 	//숙소 검색결과 목록 조회
 	public abstract List<AccomDTO> getSearchedList(AccomDTO accom) throws ServiceException;
+
+	//로그인한 회원 정보 결제 페이지에 출력
+	public abstract Map<String, Object> getOneMemberInfo(MemberVO member) throws ServiceException;
+	
+	//결제 페이지에 선택한 숙소 정보 가져오기
+	public abstract Map<String, Object> getOneRoomInfo(AccomRoomDTO room)  throws ServiceException;
 	
 
 
