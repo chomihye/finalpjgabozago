@@ -1,4 +1,8 @@
 <!DOCTYPE html>
+<%@ page import="java.net.URLEncoder" %>
+<%@ page import="java.security.SecureRandom" %>
+<%@ page import="java.math.BigInteger" %>
+
 <html lang="ko">
 
 <head>
@@ -40,50 +44,111 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-migrate/3.4.0/jquery-migrate.min.js"></script>
     
     <!-- 네이버 로그인 -->
-    <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
+    <!-- <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script> -->
+	  <script src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.2.js" charset="utf-8"></script>
 
-	<!-- 카카오 로그인 -->
-	<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+    <!-- 카카오 로그인 -->
+    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 
     <script type="text/javascript">
+      // 1. 카카오 로그인
 	    Kakao.init('38c41b61e80cae65961a9ddb0441a69c');
-		console.log(Kakao.isInitialized());
+		  console.log(Kakao.isInitialized());
 		
      	function kakaoLogin() {
-     	    Kakao.Auth.login({
-     	      success: function (response) {
-     	        Kakao.API.request({
-     	          url: '/v2/user/me',
-     	          success: function (response) {
-     	        	  console.log(response);
-     	          },
-     	          fail: function (error) {
-     	            console.log(error);
-     	          },
-     	        })
-     	      },
-     	      fail: function (error) {
-     	        console.log(error);
-     	      },
-     	    })
-     	  }// 카카오 로그인
+        Kakao.Auth.login({
+          success: function (response) {
+            Kakao.API.request({
+              url: '/v2/user/me',
+              success: function (response) {
+                console.log(response);
+              },
+              fail: function (error) {
+                console.log(error);
+              },
+            })
+          },
+          fail: function (error) {
+            console.log(error);
+          },
+        })
+      }// kakaoLogin
      	
      	 
      	function kakaoLogout() {
-     	    if (Kakao.Auth.getAccessToken()) {
-     	      Kakao.API.request({
-     	        url: '/v1/user/unlink',
-     	        success: function (response) {
-     	        	console.log(response);
-     	        },
-     	        fail: function (error) {
-     	          console.log(error);
-     	        },
-     	      })
-     	      Kakao.Auth.setAccessToken(undefined);
-     	    }
-     	  } // 카카오 로그아웃 
-	
+        if (Kakao.Auth.getAccessToken()) {
+          Kakao.API.request({
+            url: '/v1/user/unlink',
+            success: function (response) {
+              console.log(response);
+            },
+            fail: function (error) {
+              console.log(error);
+            },
+          })
+          Kakao.Auth.setAccessToken(undefined);
+        }//if
+      } // kakaoLogout
+     	  
+      // 2. 네이버 로그인
+//       var naverLogin = new naver.LoginWithNaverId({
+//             clientId: "ogYcfVAWiOHE79qtuGQH",
+//             callbackUrl: "http://localhost:8080/login/naver/auth",
+//             isPopup: false
+//       });	// 
+
+//       naverLogin.init();
+
+//       window.addEventListener('load', function () {
+//         naverLogin.getLoginStatus(function (status) {
+        	
+//           if (status) { // 필수 설정 항목 조건문 작성
+//             const name = naverLogin.user.getName();
+//             const email = naverLogin.user.getEmail();
+//             const nickname = naverLogin.user.getNickName();
+//             const birthday = naverLogin.user.getBirthday();
+//             const profile_image = naverLogin.user.getProfileImage(); 
+//             const birthyear = naverLogin.user.getBirthyear(); // MM-DD
+//             const mobile = naverLogin.user.getMobile();
+
+//             console.log(naverLogin.user); 
+              
+//             if( name == undefined || name == null 
+//             		|| email == undefined || email == null 
+//             		|| nickname == undefined || nickname == null 
+//             		|| birthday == undefined || birthday == null 
+//             		|| profile_image == undefined || profile_image == null 
+//             		|| birthyear == undefined || birthyear == null 
+//             		|| mobile == undefined || mobile == null) {
+//               alert("필수 정보 제공에 동의해주세요.");
+//               naverLogin.reprompt();
+//               return;
+//             }// if
+
+//           } else {
+//             console.log("callback 처리에 실패하였습니다.");
+//           }//if-else
+//         });// getLoginStatus
+//       });
+
+//       var testPopUp;
+
+//       function openPopUp() {
+//           testPopUp= window.open("https://nid.naver.com/nidlogin.logout", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,width=1,height=1");
+//       }// openPopUp
+
+//       function closePopUp(){
+//           testPopUp.close();
+//       }// closePopUp
+
+//       function naverLogout() {
+//         openPopUp();
+
+//         setTimeout(function() {
+//           closePopUp();
+//           }, 1000);
+//       }// naverLogout
+
       $(function(){
         var resultMsg = '${__RESULT__}'
         
@@ -163,6 +228,16 @@
 				System.out.println(">>> 세션 삭제 <<< ");
 			}// if
 		}// if
+		
+	    String clientId = "ogYcfVAWiOHE79qtuGQH";//애플리케이션 클라이언트 아이디값";
+	    String redirectURI = URLEncoder.encode("http://localhost:8080/login/naver/auth", "UTF-8");
+	    SecureRandom random = new SecureRandom();
+	    String state = new BigInteger(130, random).toString();
+	    String apiURL = "https://nid.naver.com/oauth2.0/authorize?response_type=code";
+	    apiURL += "&client_id=" + clientId;
+	    apiURL += "&redirect_uri=" + redirectURI;
+	    apiURL += "&state=" + state;
+	    session.setAttribute("state", state);
 	%>
 	
     <div id="wrapper">
@@ -209,7 +284,7 @@
                 </form>
                 <div class="midHr">&nbsp;소셜 로그인&nbsp;</div>
 
-                <div class="socialLoginBtn"><img src="/resources/member/img/naver_loginBtn/btnG_아이콘사각.png" alt="naverLogo"><a href="#" id="naverIdLogin">네이버 로그인</a></div>
+                <div class="socialLoginBtn"><img src="/resources/member/img/naver_loginBtn/btnG_아이콘사각.png" alt="naverLogo"><a href="<%=apiURL%>" id="naverIdLogin">네이버 로그인</a></div>
                 <div class="socialLoginBtn"><img src="/resources/member/img/kakao_loginBtn/kakaotalk_sharing_btn_small/kakaotalk_sharing_btn_small.png" alt="kakaoLogo"><a href="#" onclick="kakaoLogin();">카카오 로그인</a></div>
                 <div class="socialLoginBtn"><img src="/resources/member/img/google_loginBtn/google_test.png" alt="GoogleLogo" style="border: 1px solid rgb(220, 220, 220);"><a href="#">&nbsp;구글 로그인</a></div>
         
@@ -218,6 +293,7 @@
                     <p>계정이 없으신가요?</p>
                     <a href="/join" id="joinText">회원가입</a>
                     <br><button onclick="kakaoLogout();" style="background-color: yellow;">★카카오 로그아웃용 임시 버튼★</button>
+                    <br><button onclick="naverLogout();" style="background-color: green;">★네이버 로그아웃용 임시 버튼★</button>
                 </div>
             </section>
 

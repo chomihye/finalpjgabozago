@@ -242,23 +242,23 @@
 			<version>1.4</version>
 		</dependency>
 
-
-        <!-- ================ 10.Misc ================= -->
-
+		<!-- ================ 10.이메일 발송 ================= -->
+		<!-- Mail Library -->
 		<dependency>
-			<groupId>javax.inject</groupId>
-			<artifactId>javax.inject</artifactId>
-			<version>1</version>
-		</dependency>
-	
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<version>1.18.24</version>
-			<scope>provided</scope>
+			<groupId>javax.mail</groupId>
+			<artifactId>mail</artifactId>
+			<version>1.4.7</version>
 		</dependency>
 		
-		<!-- ================ 10.JSON ================= -->
+		<!-- Mail Support -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+			<version>${org.springframework-version}</version>
+		</dependency>
+
+		
+		<!-- ================ 11.JSON ================= -->
 		
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
@@ -276,6 +276,29 @@
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>
 			<version>2.9.1</version>
+		</dependency>
+		
+		
+        <!-- ================ 12.Misc ================= -->
+
+		<dependency>
+			<groupId>javax.inject</groupId>
+			<artifactId>javax.inject</artifactId>
+			<version>1</version>
+		</dependency>
+	
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.18.24</version>
+			<scope>provided</scope>
+		</dependency>
+		
+		<!-- base64 -->
+		<dependency>
+		    <groupId>commons-codec</groupId>
+		    <artifactId>commons-codec</artifactId>
+		    <version>1.15</version>
 		</dependency>
 		
 	</dependencies>

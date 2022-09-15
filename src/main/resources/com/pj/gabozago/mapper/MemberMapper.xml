@@ -63,5 +63,14 @@
         WHERE 
             idx = #{idx}
     </update>
+    
+    <update id="updateUserforFindPw">
+        UPDATE 
+            tbl_member
+        SET 
+            password = #{password}
+        WHERE
+            email = #{email}
+    </update>
 
 </mapper>
