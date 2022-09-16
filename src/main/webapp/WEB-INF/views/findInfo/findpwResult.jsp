@@ -62,7 +62,7 @@
                 <button type="button" onclick="location.href='/findInfo/pw'">비밀번호 찾기</button>
                                
                                
-                <% String userInfo = (String) request.getAttribute("__PW_INFO__"); 
+                <% String userInfo = (String) session.getAttribute("__PW_INFO__"); 
                 
                 	if(userInfo == null || userInfo.length() == 0){
                 %>
@@ -77,7 +77,7 @@
 	                    임시 비밀번호로 로그인 후 비밀번호를 변경해주시기 바랍니다.</p>
 	                <input type="button" value="로그인하러 가기" onClick="location.href='/login'">
                 </div>
-                <% } %>
+                <% session.removeAttribute("__PW_INFO__"); } %>
                                
             </section>
         </div>

@@ -24,10 +24,15 @@ public interface MemberMapper {
 	// 아이디 찾기
 	public abstract String selectUserIdByPhone(String phone) throws MemberException;
 	
-	// 비밀번호 찾기
+	// 비밀번호 찾기(이메일)
 	public abstract String selectUserIdByEmail(String email) throws MemberException;
 	
+	// 비밀번호 찾기(휴대폰)
 	public abstract String selectUserPhoneByPhone(String phone) throws MemberException;
 
+	// 비밀번호 찾기(이메일) - 임시비밀번호 업데이트
+	public abstract Integer updateUserforFindPwWithEmail(String email, String password) throws MemberException;
 	
+	// 비밀번호 찾기(휴대폰) - 임시비밀번호 업데이트
+	public abstract Integer updateUserforFindPwWithPhone(String phone, String password) throws MemberException;
 }// end interface

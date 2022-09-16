@@ -42,31 +42,32 @@
     <script>
         $(function(){
         	
-        	$('#pwfindBtn').on('click', function(){
-        		
-        		console.log("#pwfindBtn clicked.");
-        		
-        		var checkValue = $("input:radio[name=pwfindCase]:checked").val();
-        		var emailInputValLength = $("#email").val().length;
-        		var phoneInputValLength = $("#phone").val().length;
-
-        		        		
-             	if(checkValue == "email" && emailInputValLength == 0){ // 이메일 체크돼있는데 입력값 없는 경우
-             		alert('가입 시 사용한 아이디(이메일)를 입력하세요.');
-    			    $("#email").focus();
-    			    return false;
-             	} if else (checkValue == "phone" && phoneInputValLength == 0){ // 휴대폰 체크돼있는데 입력값 없는 경우
-             		alert('가입 시 사용한 휴대폰 번호를 입력하세요.');
-    			    $("#phone").focus();
-    			    return false;
-             	} else {
-	             	let formObj = $('#pwfindForm');
-   		            formObj.submit();     		
-             	}// if-else
-       
-             });
+        
 
         });
+        
+    	$('#pwfindBtn').on('click', function(){
+    		
+    		console.log("#pwfindBtn clicked.");
+    		
+    		var checkValue = $("input:radio[name=pwfindCase]:checked").val();
+    		var emailInputValLength = $("#email").val().length;
+    		var phoneInputValLength = $("#phone").val().length;
+    		        		
+         	if(checkValue == "email" && emailInputValLength == 0){ // 이메일 체크돼있는데 입력값 없는 경우
+         		alert('가입 시 사용한 아이디(이메일)를 입력하세요.');
+			    $("#email").focus();
+			    return false;
+         	} if else (checkValue == "phone" && phoneInputValLength == 0){ // 휴대폰 체크돼있는데 입력값 없는 경우
+         		alert('가입 시 사용한 휴대폰 번호를 입력하세요.');
+			    $("#phone").focus();
+			    return false;
+         	} else {
+             	let formObj = $('#pwfindForm');
+		            formObj.submit();     		
+         	}// if-else
+   
+         });
     </script>
 </head>
 

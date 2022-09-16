@@ -29,5 +29,10 @@ public interface MemberService {
 	
 	// 휴대폰 번호로 비밀번호 찾기(유효 회원 확인)
 	public abstract String findUserPwByPhone(String phone) throws ServiceException;
-
+	
+	// 이메일로 비밀번호 찾기 후 임시비밀번호 업데이트
+	public abstract boolean modifyUserforFindPwWithEmail(String email, String uid, String password) throws ServiceException;
+	
+	// 휴대폰 번호로 비밀번호 찾기 후 임시비밀번호 업데이트
+	public abstract boolean modifyUserforFindPwWithPhone(String phone, String uid, String password) throws ServiceException;
 }// end interface

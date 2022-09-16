@@ -1,7 +1,9 @@
 package com.pj.gabozago.controller;
 
+import java.awt.image.BufferedImage;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -10,15 +12,19 @@ import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.pj.gabozago.common.SharedScopeKeys;
@@ -41,7 +47,7 @@ public class JoinController {
 	
 	@Setter(onMethod_ = @Autowired)
 	private MemberService service;
-
+	
 	@GetMapping("")
 	public String join() {
 		log.trace("join() invoked.");
@@ -64,10 +70,22 @@ public class JoinController {
 		// 프로필 사진을 업로드한 경우
 		if(profileImg.getSize() != 0) {
 			// String targetDir = req.getServletContext().getRealPath("/resources/member/img/profile/"); // 상대 경로 지정
-			String targetDir = System.getProperty("user.dir") + "/src/main/resources/static/profile/";
-			String targetDir2 = System.getProperty("user.home");
-					
-			log.info(">>>>>>>>>>>>>>>> 1. targetDir: {}, 2. targetDir2: {}", targetDir, targetDir2);
+			// String targetDir = req.getServletContext().getRealPath("/upload/"); // 상대 경로 지정
+			// String targetDir = "/resources/member/img/profile";
+			// String targetDir = req.getSession().getServletContext().getRealPath("/");
+			// String targetDir = System.getProperty("user.dir") + "/src/main/resources/static/profile/";
+			 String targetDir = System.getProperty("user.home") + "/finalgabozago/profile/";
+			
+//			String targetDir = this.savePath; // 임시 보관장소로 이용해보기
+
+			try {
+				String base64 = convertBinary(profileImg);
+				log.info(">>>>>>>>>>>> base64: ", base64);
+			} catch (Exception e) {
+				throw new ControllerException(e);
+			}// try-catch
+
+			log.info(">>>>>>>>>>>>>>>> 1. targetDir: {}", targetDir);
 			
 			Date today = new Date();
 			SimpleDateFormat changer = new SimpleDateFormat("yyyyMMdd");
@@ -76,7 +94,7 @@ public class JoinController {
 			log.info(">>>>> file 원본 이름: {}", profileImg.getOriginalFilename());
 			log.info(">>>>> file 사이즈: {}", profileImg.getSize());
 
-			targetDir += dateName + "\\";
+			targetDir += dateName + "/";
 
 			File dir = new File(targetDir);
 			
@@ -93,7 +111,9 @@ public class JoinController {
 				log.info(">>>>> targetFile: {}", targetFile);
 
 				profilePath = targetFile;
-				
+					
+				// profileImg.transferTo(new File(targetDir));
+								
 				InputStream is = profileImg.getInputStream();
 				BufferedInputStream bis = new BufferedInputStream(is);
 				
@@ -109,13 +129,14 @@ public class JoinController {
 						bos.write(buf, 0, readBytes);
 					}// while
 					
-					log.info(">>>>> 파일 업로드 완료");
 					bos.flush();
+					log.info(">>>>> 파일 업로드 완료");
 				}// try-with-resources
 				
 			} catch (NoSuchAlgorithmException | IOException e) {
 				throw new ControllerException(e);
 			}// try-catch
+			
 		}// if
 		
 		dto.setProfilePath(profilePath);
@@ -139,5 +160,48 @@ public class JoinController {
 		
 	}// joinProcess
 	
+
+	 public String convertBinary(MultipartFile files) throws Exception{
+	        String fileName = StringUtils.cleanPath(files.getOriginalFilename()) ;
+	        BufferedImage image = ImageIO.read(files.getInputStream());
+	        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+	        ImageIO.write(image, fileName.substring(fileName.lastIndexOf(".") + 1), baos);
+	        
+	        return new String(Base64.encodeBase64(baos.toByteArray()));
+	}// convertBinary
+	 
+//	public String fileToString(File file) {
+//		
+//          String fileString = new String();
+//          FileInputStream inputStream = null;
+//          ByteArrayOutputStream byteOutStream = null;
+//          
+//          try {
+//              inputStream = new FileInputStream(file);
+//              int len = 0;
+//              byte[] buf = new byte[1024];
+//              while ((len = inputStream.read(buf)) != -1) {
+//            	  byteOutStream.write(buf, 0, len);
+//              }
+//              byte[] fileArray = byteOutStream.toByteArray();
+//              fileString = new String(Base64.encodeBase64(fileArray));
+//          } catch (IOException e) {
+//              e.printStackTrace();
+//          } finally {
+//              try {
+//            	  inputStream.close();
+//              } catch (IOException e) {
+//                  e.printStackTrace();
+//              }
+//              try {
+//            	  byteOutStream.close();
+//              } catch (IOException e) {
+//                  e.printStackTrace();
+//              }
+//          }
+//
+//          return fileString;
+//          
+//      }	
 	
 }// end class

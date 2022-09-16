@@ -1,6 +1,9 @@
 package com.pj.gabozago.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,8 +11,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.pj.gabozago.common.SharedScopeKeys;
+import com.pj.gabozago.common.UUIDGenerator;
 import com.pj.gabozago.exception.ControllerException;
-import com.pj.gabozago.exception.ServiceException;
 import com.pj.gabozago.service.MemberService;
 
 import lombok.NoArgsConstructor;
@@ -40,7 +43,6 @@ public class FindInfoController {
 		log.trace("findidProcess() invoked.");
 		
 		try {
-			
 			String email = this.service.findUserIdByPhone(phone);
 			model.addAttribute(SharedScopeKeys.EMAIL_KEY, email);
 			
@@ -58,40 +60,57 @@ public class FindInfoController {
 		return "/findInfo/findpw";
 	}// findpw
 	
-	@GetMapping("/pw/result")
+//	@GetMapping("/pw/result")
+//	public String findpwResult() {
+//		log.trace("findpw() invoked.");
+//		
+//		return "/findInfo/findpwResult";
+//	}// findpwResult
+
+	@PostMapping("/findpwProcess")
+	public String findpwProcess(String email, String phone, String pwfindCase, HttpSession session) throws ControllerException {
+		log.trace("findpwProcess({}, {}, {}) invoked.", email, phone, pwfindCase);
+
+		try {
+			String uid = UUIDGenerator.generateUniqueKeysWithUUIDAndMessageDigest().substring(0, 8);
+			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+			
+			String tempPw = encoder.encode(uid + "__SALT__"); // uid 암호화
+
+			if(pwfindCase.equals("email")) { // 이메일로 비밀번호 찾기 선택한 경우
+				String userEmail = this.service.findUserPwByEmail(email);
+				
+				if(userEmail != null) {				
+					boolean isPwChanged = this.service.modifyUserforFindPwWithEmail(email, uid, tempPw); // 임시 비밀번호로 DB 업데이트
+					log.info("isPwChanged: {}", isPwChanged);
+
+					session.setAttribute(SharedScopeKeys.PASSWORD_SENT_KEY, userEmail);
+				}// if
+				
+			} else if(pwfindCase.equals("phone")) { // 휴대폰 번호로 비밀번호 찾기 선택한 경우
+				String userPhone = this.service.findUserPwByPhone(phone);
+				
+				if(userPhone != null) {				
+					// 유효회원 DB 임시 비밀번호 변경(+문자로 비밀번호 발송 -> 구현 예정)										
+					boolean isPwChanged = this.service.modifyUserforFindPwWithPhone(phone, uid, tempPw); // 임시 비밀번호로 DB 업데이트
+					log.info("isPwChanged: {}", isPwChanged);
+
+					session.setAttribute(SharedScopeKeys.PASSWORD_SENT_KEY, userPhone);
+				}// if
+				
+			}// if-else
+
+			return "redirect:/findInfo/findpwResult";
+		}catch(Exception e) {
+			throw new ControllerException(e);
+		}// try-catch
+	}// findpwProcess
+	
+	@GetMapping("/findpwResult")
 	public String findpwResult() {
 		log.trace("findpw() invoked.");
 		
 		return "/findInfo/findpwResult";
 	}// findpwResult
-
-	@PostMapping("/findpwProcess") // POST
-	public String findpwProcess(String email, String phone, String pwfindCase, Model model) throws ControllerException {
-		log.trace("findpwProcess() invoked.");
-		log.trace("어떤 게 들어오나 봐봅시다., {}, {}, {}", email, phone, pwfindCase);
-
-		try {
-
-			if(pwfindCase.equals("email")) { // 이메일로 비밀번호 찾기
-				String userEmail = this.service.findUserPwByEmail(email);
-				
-				// 해당 이메일로 임시 비밀번호 발송 + DB 비밀번호 변경 로직
-				
-				model.addAttribute(SharedScopeKeys.PASSWORD_SENT_KEY, userEmail);
-
-			} else if(pwfindCase.equals("phone")) { // 휴대폰 번호로 비밀번호 찾기
-				
-				String userPhone = this.service.findUserPwByPhone(phone);
-				
-				// 해당 휴대폰 번호로 임시 비밀번호 발송 + DB 비밀번호 변경 로직
-
-				model.addAttribute(SharedScopeKeys.PASSWORD_SENT_KEY, userPhone);
-			}// if-else
-			
-			
-			return "/findInfo/findpwResult";
-		}catch(Exception e) {
-			throw new ControllerException(e);
-		}// try-catch
-	}// findpwProcess
+	
 }// end class

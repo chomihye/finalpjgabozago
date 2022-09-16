@@ -25,4 +25,5 @@ public class MemberVO {
 	private Date updateTs;
 	private String isSecession;
 	
+	
 }// end class

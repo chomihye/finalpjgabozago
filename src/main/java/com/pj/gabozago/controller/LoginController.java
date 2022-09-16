@@ -1,5 +1,7 @@
 package com.pj.gabozago.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -87,5 +89,11 @@ public class LoginController {
 		
 		return "/login/logoutProcess";
 	}// logout
+	
+	@GetMapping("/naver/auth")
+    public String loginPOSTNaver(HttpSession session) {
+        log.info("loginPOSTNaver() invoked.");
+        return "/login/naverLogin";
+    }// loginPOSTNaver
 
 }// end class

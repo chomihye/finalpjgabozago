@@ -64,13 +64,22 @@
             idx = #{idx}
     </update>
     
-    <update id="updateUserforFindPw">
+    <update id="updateUserforFindPwWithEmail">
         UPDATE 
             tbl_member
         SET 
             password = #{password}
         WHERE
             email = #{email}
+    </update>
+    
+     <update id="updateUserforFindPwWithPhone">
+        UPDATE 
+            tbl_member
+        SET 
+            password = #{password}
+        WHERE
+            phone = #{phone}
     </update>
 
 </mapper>

@@ -242,7 +242,7 @@
 			<version>1.4</version>
 		</dependency>
 
-		<!-- ================ 10.이메일 발송 ================= -->
+		<!-- ================ 10.이메일 및 SMS 발송 ================= -->
 		<!-- Mail Library -->
 		<dependency>
 			<groupId>javax.mail</groupId>
@@ -257,7 +257,12 @@
 			<version>${org.springframework-version}</version>
 		</dependency>
 
-		
+		<!-- coolSMS -->
+		<dependency>
+		    <groupId>net.nurigo</groupId>
+		    <artifactId>javaSDK</artifactId>
+		    <version>2.2</version>
+		</dependency>
 		<!-- ================ 11.JSON ================= -->
 		
 		<dependency>
