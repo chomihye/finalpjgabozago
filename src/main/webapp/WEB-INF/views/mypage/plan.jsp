@@ -47,11 +47,11 @@
     <!-- script -->
     <script src="/resources/mypage/js/6-5.mypage_plan.js"></script>
     <script src="/resources/mypage/js/modal.js"></script>
-    <script>
+    <!-- <script>
         $(function(){
             $(".profileAndMenu .profile h2").append('${sessionScope.__MEMBER__.nickname}');
         });
-    </script>
+    </script> -->
 </head>
 
 <body>

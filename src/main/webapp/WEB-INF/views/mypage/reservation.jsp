@@ -53,7 +53,7 @@
     <script src="/resources/mypage/js/6-6.mypage_reservation.js"></script>
     <script>
         $(function(){
-            $(".profileAndMenu .profile h2").append('${sessionScope.__MEMBER__.nickname}');
+            // $(".profileAndMenu .profile h2").append('${sessionScope.__MEMBER__.nickname}');
 
             // 포인트 적립 완료
             let prevStepResult = "${__RESULT__}";

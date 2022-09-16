@@ -17,6 +17,7 @@
         SELECT 
             wa.idx,
             ai.file_name,
+            a.idx AS accom_idx,
             a.accom_name,
             la.large_area_name
         FROM 

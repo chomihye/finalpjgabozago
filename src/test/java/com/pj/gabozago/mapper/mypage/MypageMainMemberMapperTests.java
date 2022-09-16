@@ -23,6 +23,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.pj.gabozago.domain.Criteria;
+import com.pj.gabozago.domain.MemberDTO;
 import com.pj.gabozago.domain.MemberVO;
 import com.pj.gabozago.domain.PointHistoryVO;
 import com.pj.gabozago.exception.DAOException;
@@ -96,9 +97,31 @@ public class MypageMainMemberMapperTests {
 		
 		MemberVO member = new MemberVO(53, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 		
-		Map<String, String> map = this.mapper.selectMemberProfile(member);
+		MemberVO member2 = this.mapper.selectMemberInfo(member);
 		
-		log.info(">>>>>>>>>>>> map : {}", map);
+		log.info(">>>>>>>>>>>> member2 : {}", member2);
+	} // testSelectMemberProfile
+	
+	
+	@Test
+	@Order(4)
+	@DisplayName("4. testSelectMemberProfile")
+	@Timeout(value = 10, unit = TimeUnit.SECONDS)
+	void testUpdateMemberInfo() throws DAOException {
+		log.info("testSelectMemberProfile() invoked.");
+		
+		MemberDTO member = new MemberDTO();
+		member.setIdx(53);
+		member.setName("배은정");
+		member.setPassword("$2a$10$vENgpT/Av13G6Kfoo393sOJUqe/iIgWsidAwJtT3ZQFIqNn78Qt3O");
+		member.setNickname("Baen");
+		member.setPhone("010-8904-0777");
+		member.setProfileImg("");
+		
+		this.mapper.updateMemberInfo(member);
+		MemberVO vo = this.mapper.selectMemberInfo(new MemberVO(53, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null));
+		
+		log.info(">>>>>>>>>>>> vo : {}", vo);
 	} // testSelectMemberProfile
 
 	

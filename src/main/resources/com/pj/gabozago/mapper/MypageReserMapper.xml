@@ -86,7 +86,9 @@
             p.payment_price,
             p.insert_ts,
             r.status,
-            ai.file_name
+            ai.file_name,
+            a.idx AS accom_idx,
+            ar.idx AS accom_room_idx
         FROM 
             tbl_reservation r,
             tbl_accom a,

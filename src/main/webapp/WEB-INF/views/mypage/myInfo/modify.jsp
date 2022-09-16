@@ -46,11 +46,6 @@
 
     <!-- script -->
     <script src="/resources/mypage/js/6-3.mypage_myInfo_modify.js"></script>
-    <script>
-        $(function(){
-            $(".profileAndMenu .profile h2").append('${sessionScope.__MEMBER__.nickname}');
-        });
-    </script>
 </head>
 
 <body>
@@ -64,45 +59,48 @@
             <div id="body">        
                 <div class="midHr">회원정보수정</div>
     
-                <form action="/mypage/main" method="POST" id="form">
+                <form action="modify.do" method="POST" id="form">
                     <div class="sections">
                         <h4>이름</h4>
-                        <input type="text" name="name" id="name" placeholder="${map.userName}"><br>
+                        <input type="text" name="name" id="name" placeholder="${__MEMBER__.name}" onchange="checkName()"><br>
+                        <div id="nameExplain">실명이 아닌 경우 서비스 이용에 제한이 있을 수 있으니 참고 바랍니다.</div>
+                        <div id="nameError">최대 10자 이내, 공백과 특수문자가 없어야 합니다.</div>
                     </div >
                     
                     <div class="sections">
                         <h4>아이디(이메일)</h4>
-                        <div class="no_update"><span>${map.email}</span> (변경불가)</div>
+                        <div class="no_update"><span>${__MEMBER__.email}</span> (변경불가)</div>
                     </div class="sections">
                     
                     <div class="sections">
                         <h4>비밀번호</h4>
                         <p class="ruleTexts">영문 대소문자, 숫자, 특수문자 포함 8자 이상 12자 이하</p>
-                        <input type="password" name="pw" id="pw" placeholder="●●●●●●●●" min="8" maxlength="12">
+                        <input type="password" name="pw" id="pw" placeholder="●●●●●●●●" min="8" maxlength="12" onchange="checkPwd()">
+                        <div id="pwError">비밀번호 양식 불일치</div>
                     </div class="sections">
                     
                     <div class="sections">
                         <h4>비밀번호 확인</h4>
-                        <input type="password" name="pwcheck" id="pwcheck" placeholder="●●●●●●●●" maxlength="12">
-                        <!-- <div id="pwcheckError">비밀번호가 일치하지 않습니다.</div> -->
+                        <input type="password" name="pwcheck" id="pwcheck" placeholder="●●●●●●●●" maxlength="12" onchange="reCheckPwd()">
+                        <div id="pwcheckError">비밀번호가 일치하지 않습니다.</div>
                     </div class="sections">
                     
                     <div class="sections">
                         <h4>닉네임</h4>
                         <p class="ruleTexts">한문, 특수문자, 공백 제외 8자 이내</p>
-                        <input type="text" name="nickname" id="nickname" placeholder="${map.nickName}" maxlength="8">
+                        <input type="text" name="nickname" id="nickname" placeholder="${__MEMBER__.nickname}" maxlength="8">
                         <button class="formCheckBox" id="doubleCheckBtn">중복 확인</button>
                     </div>
                     
                     <div class="sections">
                         <h4>휴대폰 번호</h4>
-                        <input type="text" name="phone" id="phone" pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}" placeholder="${map.phoneNum}">
+                        <input type="text" name="phone" id="phone" pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}" placeholder="${__MEMBER__.phone}">
                         <button class="formCheckBox" id="phoneValidationBtn">인증</button>
                     </div>
                     
                     <div class="sections">
                         <h4>생년월일</h4>
-                        <div class="no_update"><span>${map.birth}</span> (변경불가)</div>
+                        <div class="no_update"><span>${__MEMBER__.birthday}</span> (변경불가)</div>
                     </div class="sections">
                     
                     <div class="sections">
@@ -131,8 +129,32 @@
 
     <jsp:include page="/WEB-INF/views/common/footer.jsp" flush="false" />
 
+    <!-- 이름 실패 모달 -->
+    <div class="modal" id="nameCheckFailedModal">
+        <div class="modal_Content">
+            <p class="center simpleTextSpaceAdd">이름이 양식과 일치하지 않습니다.</p>
+            <div class="okBtn onlyOk continue">확인</div>
+        </div>
+    </div>
+
+    <!-- 비밀번호 양식 오류 모달 -->
+    <div class="modal" id="pwdFormCheckModal">
+        <div class="modal_Content">
+            <p class="center simpleTextSpaceAdd">비밀번호는 영문 대소문자, 숫자, 특수문자 포함<br>8자 이상 12자 이하로 입력해주세요.</p>
+            <div class="okBtn onlyOk continue">확인</div>
+        </div>
+    </div>
+
+    <!-- 비밀번호 확인 불일치 -->
+    <div class="modal" id="pwdMismatchModal">
+        <div class="modal_Content">
+            <p class="center simpleTextSpaceAdd">비밀번호 확인이 일치하지 않습니다.</p>
+            <div class="okBtn onlyOk continue">확인</div>
+        </div>
+    </div>
+
     <!-- 휴대폰 번호 인증 모달 -->
-    <div class="modal" id="phoneModal">
+    <!-- <div class="modal" id="phoneModal">
         <div class="modal_Content">
             <h3><i class="fas fa-check"></i>휴대폰 번호 인증</h3>
             <p>010-1111-1111으로 SMS 인증 번호를 발송하였습니다.<br>
@@ -145,71 +167,55 @@
             <div id="resendLink"><a href="">재전송</a></div>
             <div class="okBtn onlyOk continue" id="closeBtn">취소</div>
         </div>
-    </div>
+    </div> -->
 
     <!-- 휴대폰 번호 인증 성공 모달 -->
-    <div class="modal" id="phoneValidationSucceedModal">
+    <!-- <div class="modal" id="phoneValidationSucceedModal">
         <div class="modal_Content">
             <p class="center simpleTextSpaceAdd">휴대폰 인증이 완료되었습니다.</p>
             <div class="okBtn onlyOk continue">확인</div>
         </div>
-    </div>
+    </div> -->
 
     <!-- 휴대폰 번호 인증 실패 모달 -->
-    <div class="modal" id="phoneValidationFailedModal">
+    <!-- <div class="modal" id="phoneValidationFailedModal">
         <div class="modal_Content">
             <p class="center simpleTextSpaceAdd">휴대폰 인증이 실패하였습니다.</p>
             <div class="okBtn onlyOk continue">확인</div>
         </div>
-    </div>
+    </div> -->
 
     <!-- 닉네임 중복 확인 성공 모달 -->
-    <div class="modal" id="doubleCheckSucceedModal">
+    <!-- <div class="modal" id="doubleCheckSucceedModal">
         <div class="modal_Content">
             <p class="center simpleTextSpaceAdd">사용 가능한 닉네임입니다.</p>
             <div class="okBtn onlyOk continue">확인</div>
         </div>
-    </div>
+    </div> -->
 
     <!-- 닉네임 중복 확인 실패 모달 -->
-    <div class="modal" id="doubleCheckFailedModal">
+    <!-- <div class="modal" id="doubleCheckFailedModal">
         <div class="modal_Content">
             <p class="center simpleTextSpaceAdd">중복된 닉네임입니다.</p>
             <div class="okBtn onlyOk continue">확인</div>
         </div>
-    </div>
+    </div> -->
 
     <!-- 회원수정 완료 모달 -->
-    <div class="modal" id="updateSucceedModal">
+    <!-- <div class="modal" id="updateSucceedModal">
         <div class="modal_Content">
             <p class="center simpleTextSpaceAdd">회원 정보 수정이 완료되었습니다.</p>
             <div class="okBtn onlyOk completed">확인</div>
         </div>
-    </div>
+    </div> -->
 
     <!-- 회원수정 실패 모달(닉네임 중복 확인 요청) -->
-    <div class="modal" id="requestDoubleCheckModal">
+    <!-- <div class="modal" id="requestDoubleCheckModal">
         <div class="modal_Content">
             <p class="center simpleTextSpaceAdd">닉네임 중복 확인이 필요합니다.</p>
             <div class="okBtn onlyOk continue">확인</div>
         </div>
-    </div>
-
-    <!-- 회원수정 실패 모달(비밀번호 불일치) -->
-    <div class="modal" id="pwdMismatchModal">
-        <div class="modal_Content">
-            <p class="center simpleTextSpaceAdd">비밀번호가 일치하지 않습니다.</p>
-            <div class="okBtn onlyOk continue">확인</div>
-        </div>
-    </div>
-
-    <!-- 회원수정 실패 모달(비밀번호 양식 틀림) -->
-    <div class="modal" id="pwdFormCheckModal">
-        <div class="modal_Content">
-            <p class="center simpleTextSpaceAdd">비밀번호는 영문 대소문자, 숫자, 특수문자 포함<br>8자 이상 12자 이하로 입력해주세요.</p>
-            <div class="okBtn onlyOk continue">확인</div>
-        </div>
-    </div>
+    </div> -->
 </body>
 
 </html>

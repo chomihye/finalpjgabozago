@@ -204,5 +204,16 @@ body .sections input[type="file"] {
     padding: 0;
     overflow: hidden;
     border: 0;
-  }
+}
 
+#nameExplain{
+    font-size: 14px;
+    color: #999999;
+    margin: 5px 0;
+}
+
+#nameError, #pwError, #pwcheckError{
+    font-size: 14px;
+    color: red;
+    margin: 5px 0;
+}

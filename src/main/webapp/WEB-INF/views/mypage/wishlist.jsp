@@ -46,11 +46,11 @@
 
     <!-- script -->
     <script src="/resources/mypage/js/6-12.mypage_wishlist.js"></script>
-    <script>
+    <!-- <script>
         $(function(){
             $(".profileAndMenu .profile h2").append('${sessionScope.__MEMBER__.nickname}');
         });
-    </script>
+    </script> -->
 </head>
 
 <body>

@@ -55,7 +55,7 @@
     <script>
         $(function(){       
             $("#reservation").css("font-weight", "bold");
-            $(".profileAndMenu .profile h2").append('${sessionScope.__MEMBER__.nickname}');
+            // $(".profileAndMenu .profile h2").append('${sessionScope.__MEMBER__.nickname}');
 
             window.history.forward();
 

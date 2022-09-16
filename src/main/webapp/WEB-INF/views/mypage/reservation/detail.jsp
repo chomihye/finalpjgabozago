@@ -53,7 +53,7 @@
     <script>
         $(function(){
             $("#reservation").css("font-weight", "bold");
-            $(".profileAndMenu .profile h2").append('${sessionScope.__MEMBER__.nickname}');
+            // $(".profileAndMenu .profile h2").append('${sessionScope.__MEMBER__.nickname}');
         })
     </script>
 </head>
@@ -75,10 +75,10 @@
                 <div class="reser_info">
                     <h1>예약 정보</h1>
                     <div class="accom_info">
-                        <a href="/reservation/datail"><img src="/resources/acco/img/himg/${item.FILE_NAME}" alt="accom image"></a>
+                        <a href="/reservation/datail?accom_idx=${item.ACCOM_IDX}"><img src="/resources/acco/img/himg/${item.FILE_NAME}" alt="accom image"></a>
                         <div class="accom_info_letter">
-                            <h3><a href="/reservation/datail">${item.ACCOM_NAME}</a></h3>
-                            <p><a href="/reservation/room">${item.ROOM_NAME}</a></p>
+                            <h3><a href="/reservation/datail?accom_idx=${item.ACCOM_IDX}">${item.ACCOM_NAME}</a></h3>
+                            <p><a href="/reservation/room?room_idx=${item.ACCOM_ROOM_IDX}">${item.ROOM_NAME}</a></p>
                         </div>
                     </div>
                     <div class="date_info">

@@ -27,6 +27,7 @@ import com.pj.gabozago.domain.AccomReservationDTO;
 import com.pj.gabozago.domain.AccomReviewDTO;
 import com.pj.gabozago.domain.AccomReviewVO;
 import com.pj.gabozago.domain.Criteria;
+import com.pj.gabozago.domain.MemberDTO;
 import com.pj.gabozago.domain.MemberVO;
 import com.pj.gabozago.domain.PageDTO;
 import com.pj.gabozago.domain.PointHistoryVO;
@@ -66,29 +67,13 @@ public class MypageController {
 	
 
 	@RequestMapping(path = {"", "/main"})
-	public String loadMyPageMain(
-			@SessionAttribute(SharedScopeKeys.USER_KEY) MemberVO member, Criteria cri, Model model) throws ControllerException {		
+	public String loadMyPageMain(@SessionAttribute(SharedScopeKeys.USER_KEY) MemberVO member, Criteria cri, Model model) throws ControllerException {		
 		log.trace(">>>>>>>>>>>>>>>>>>>> loadMyPageMain() invoked.");
 		
-		try {
+		try {			
 			// 메인페이지 로드시
 			this.reserService.modifyReserStatus(member);			// 예약상태 체크(날짜에 따라 상태 업데이트 필요하면 수정)
 			this.pointWriteService.getUserCurrentPoint(member);		// 회원의 현재 포인트 업데이트
-			
-			// 프로필 사이드바에 회원정보(이미지, 닉네임) 불러오는 메소드
-			Map<String, String> profileMap = this.memberService.getMemberProfile(member);
-			
-			String hasProfileImg;
-			
-			if(profileMap.get("PROFILE_IMG") != null) hasProfileImg = "Y";
-			else hasProfileImg = "N";			 // if-else
-			
-			profileMap.remove("PROFILE_IMG");
-			profileMap.put("PROFILE_IMG", hasProfileImg);
-			
-			log.info("================================== 프로필 이미지 존재여부 : {}", hasProfileImg);
-			
-			model.addAttribute("profileMap", profileMap);
 			
 			// 회원의 사용일 임박순 숙소예약내역 2건을 가져오는 메소드
 			List<LinkedHashMap<String, Object>> accomList = this.memberService.getReserOrderOfUseDate(member);
@@ -118,11 +103,94 @@ public class MypageController {
 	
 	// 회원수정 페이지 비밀번호 체크
 	@PostMapping(path = "/myInfo/modify")
-	public String checkPwdForMyInfo() {
-		log.trace(">>>>>>>>>>>>>>>>>>>> checkPwdForMyInfo() invoked.");
+	public String checkPwdForModify(@SessionAttribute(SharedScopeKeys.USER_KEY) MemberVO member, String pw, 
+			RedirectAttributes rttrs, Model model) throws ControllerException {
+		log.trace(">>>>>>>>>>>>>>>>>>>> checkPwdForModify() invoked.");
+		
+		try {
+			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
+			// 비밀번호 비교
+			if(encoder.matches(pw + "__SALT__", member.getPassword())) {	
+				getModifyPage(member, model);
+				return null;
+			}else {
+				rttrs.addFlashAttribute("match", "NO");
+				return "redirect:/mypage/myInfo/pwdCheck";
+			} // if-else
+			
+		} catch(Exception e) {
+			throw new ControllerException(e);
+		} // try-catch
+		
+	} // checkPwdForModify
+	
+	
+	// 회원정보를 가져와 회원수정 페이지에 전달
+	public String getModifyPage(MemberVO member, Model model) throws ControllerException {
+		log.trace(">>>>>>>>>>>>>>>>>>>> getModifyPage() invoked.");
+
+		try {
+			MemberVO memberVO = this.memberService.getMemberInfo(member);
+			model.addAttribute(SharedScopeKeys.USER_KEY, memberVO);
+		} catch (ServiceException e) {
+			throw new ControllerException(e);
+		} // try-catch
+		
 		return "/mypage/myInfo/modify";
-	} // checkPwdForMyInfo
+	} // getModifyPage
+	
+	
+	// 회원정보 업데이트
+	@PostMapping(path = "/myInfo/modify.do")
+	public String modifyMemberInfo(HttpServletRequest req, 
+			String name, String pw, String nickname, String phone, String profileImg) throws ControllerException {
+		log.trace(">>>>>>>>>>>>>>>>>>>> modifyMemberInfo() invoked.");
+		
+		try {
+			// Session Scope 접근
+			HttpSession session = req.getSession();
+			MemberVO vo = (MemberVO) session.getAttribute(SharedScopeKeys.USER_KEY);
+			
+			MemberDTO dto = new MemberDTO();
+			dto.setIdx(vo.getIdx());	
+			
+			if(name == "") { dto.setName(vo.getName()); }
+			else { dto.setName(name); } // 이름
+			
+			if(pw == "") { 
+				dto.setPassword(vo.getPassword()); 
+			}else { 
+				String newPwd = pw + "__SALT__";
+				BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+				String cipherText = encoder.encode(newPwd);		
+				dto.setPassword(cipherText); 
+			} // 비밀번호(해쉬처리)
+			
+			if(nickname == "") { dto.setNickname(vo.getNickname()); }
+			else { dto.setNickname(nickname); } // 닉네임
+
+			if(phone == "") { dto.setPhone(vo.getPhone()); }
+			else { dto.setPhone(phone); } // 휴대폰번호
+			
+			if(profileImg == "" || profileImg == null) { dto.setProfileImg(vo.getProfileImg()); }
+			else { dto.setProfileImg(profileImg); } // 프로필 이미지경로	
+			
+			this.memberService.modifyMemberInfo(dto);		// 회원 수정 로직
+			
+			// 회원정보 수정 후, Session Scope에 회원정보 업데이트
+			MemberVO newInfo = new MemberVO(vo.getIdx(), vo.getEmail(), dto.getPassword(), dto.getName(), dto.getNickname(),
+					dto.getPhone(), vo.getBirthday(), vo.getProvider(), vo.getUidNum(), dto.getProfileImg(),
+					vo.getPoint(), vo.getRememberMe(), vo.getRememberAge(), vo.getInsertTs(), vo.getUpdateTs(), 
+					vo.getIsSecession());
+			session.setAttribute(SharedScopeKeys.USER_KEY, this.memberService.getMemberInfo(newInfo));
+				
+			return "redirect:/mypage/main";
+		} catch(Exception e) {
+			throw new ControllerException(e);
+		} // try-catch
+		
+	} // modifyMemberInfo
 	
 	
 	@GetMapping(path = "/plan")

@@ -38,4 +38,18 @@
         FETCH FIRST 2 ROWS ONLY
     </select>
 
+    <update id="updateMemberInfo">
+        UPDATE 
+            tbl_member 
+        SET 
+            name = #{name}, 
+            password = #{password},
+            nickname = #{nickname},
+            phone = #{phone},
+            profile_img = #{profileImg},
+            update_ts = current_date
+        WHERE 
+            idx = #{idx}
+    </update>
+
 </mapper>

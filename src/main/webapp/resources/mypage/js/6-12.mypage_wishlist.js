@@ -92,6 +92,7 @@ function getAccomWishlist(currPage){
                 console.log(list[i]);
 
                 file_name = list[i].FILE_NAME;
+                accom_idx = list[i].ACCOM_IDX;
                 accom_name = list[i].ACCOM_NAME;
                 large_area_name = list[i].LARGE_AREA_NAME;
 
@@ -101,7 +102,7 @@ function getAccomWishlist(currPage){
                 particleStr += '<li id="item' + num + '">';
                 particleStr += '<input type="checkbox" id="select' + num + '" name="selectParticle">';
                 particleStr += '<label for="select' + num + '"></label>';
-                particleStr += '<a href="/reservation/datail" class="accomBox">';
+                particleStr += '<a href="/reservation/datail?accom_idx=' + accom_idx + '" class="accomBox">';
                 particleStr += '<img src="/resources/acco/img/himg/' + file_name + '" alt="accom image">';
                 particleStr += '<div class="accom_info">';
                 particleStr += '<h3>' + accom_name + '</h3>';

@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.pj.gabozago.domain.MemberDTO;
 import com.pj.gabozago.domain.MemberVO;
 import com.pj.gabozago.exception.DAOException;
 import com.pj.gabozago.exception.ServiceException;
@@ -27,10 +28,10 @@ public class MypageMainMemberServiceImpl implements MypageMainMemberService {
 	private MypageMainMemberMapper mapper;
 	
 	
-	// 프로필 사이드바에 회원정보(이미지, 닉네임) 불러오기
+	// 회원정보 업데이트가 필요한 경우, 다시 정보를 불러오는 메소드
 	@Override
-	public Map<String, String> getMemberProfile(MemberVO member) throws ServiceException {
-		try { return this.mapper.selectMemberProfile(member); } 
+	public MemberVO getMemberInfo(MemberVO member) throws ServiceException {
+		try { return this.mapper.selectMemberInfo(member); } 
 		catch (DAOException e) { throw new ServiceException(e); }
 	} // getMemberProfile
 	
@@ -47,6 +48,12 @@ public class MypageMainMemberServiceImpl implements MypageMainMemberService {
 		try { return this.mapper.deleteMember(member); } 
 		catch (DAOException e) { throw new ServiceException(e); }
 	} // withdrawFromSite
+
+	@Override
+	public void modifyMemberInfo(MemberDTO member) throws ServiceException {
+		try { this.mapper.updateMemberInfo(member); } 
+		catch (DAOException e) { throw new ServiceException(e); }
+	} // modifyMemberInfo
 
 
 } // end class
