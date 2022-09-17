@@ -141,11 +141,36 @@ public class MypageController {
 	} // getModifyPage
 	
 	
+	// 회원정보 업데이트 전 닉네임 중복검사(ajax)
+	@PostMapping(value = "myInfo/modify/nickCheck")
+	public void checkNickname(HttpServletRequest req, HttpServletResponse res) throws ControllerException {
+		log.trace(">>>>>>>>>>>>>>>>>>>> checkNickname() invoked.");
+		
+		String nickname = req.getParameter("nickname");
+		
+		try {
+			boolean isDouble = this.memberService.checkDoubleNickname(nickname);
+			
+			Gson gson = new Gson();
+			String json = gson.toJson(isDouble);
+			log.info(json);
+			
+			@Cleanup
+		    PrintWriter out = res.getWriter();
+		    out.print(json);	
+		} catch (Exception e) {
+			throw new ControllerException(e);
+		} // try-catch
+
+	} // checkNickname
+	
+
 	// 회원정보 업데이트
 	@PostMapping(path = "/myInfo/modify.do")
 	public String modifyMemberInfo(HttpServletRequest req, 
 			String name, String pw, String nickname, String phone, String profileImg) throws ControllerException {
 		log.trace(">>>>>>>>>>>>>>>>>>>> modifyMemberInfo() invoked.");
+//		log.info(">>>>>>>>>>>>>>>>>>>> 뷰에서 가져온 프로필 이미지 : {}", profileImg);
 		
 		try {
 			// Session Scope 접근
@@ -173,8 +198,12 @@ public class MypageController {
 			if(phone == "") { dto.setPhone(vo.getPhone()); }
 			else { dto.setPhone(phone); } // 휴대폰번호
 			
-			if(profileImg == "" || profileImg == null) { dto.setProfileImg(vo.getProfileImg()); }
-			else { dto.setProfileImg(profileImg); } // 프로필 이미지경로	
+			if(profileImg == "" || profileImg == null) { 
+				dto.setProfileImg(vo.getProfileImg());
+			}else { 
+				profileImg = "/resources/member/img/profile/" + profileImg;
+				dto.setProfileImg(profileImg); 
+			} // 프로필 이미지경로	
 			
 			this.memberService.modifyMemberInfo(dto);		// 회원 수정 로직
 			

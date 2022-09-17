@@ -22,6 +22,9 @@ public interface MypageMainMemberService {		// 마이페이지 메인과 회원�
 	// 회원의 사용일 임박순 숙소예약내역 2건을 가져오는 메소드
 	public abstract List<LinkedHashMap<String, Object>> getReserOrderOfUseDate(MemberVO member) throws ServiceException;
 	
+	// 닉네임 중복검사용
+	public abstract boolean checkDoubleNickname(String nickname) throws ServiceException;
+	
 	// 회원 수정 로직
 	public abstract void modifyMemberInfo(MemberDTO member) throws ServiceException;
 	

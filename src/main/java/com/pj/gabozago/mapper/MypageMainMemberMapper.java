@@ -21,6 +21,10 @@ public interface MypageMainMemberMapper {		// 마이페이지 메인과 회원�
 	// 회원의 사용일 임박순 숙소예약내역 2건을 가져오는 메소드
 	public abstract List<LinkedHashMap<String, Object>> selectReserOrderOfUseDate(MemberVO member) throws DAOException;
 	
+	// 닉네임 중복검사용
+	@Select("SELECT count(idx) FROM tbl_member WHERE nickname = #{nickname}")
+	public abstract boolean selectDoubleNickname(String nickname) throws DAOException;
+	
 	// 회원 수정 로직
 	public abstract void updateMemberInfo(MemberDTO member) throws DAOException;
 	

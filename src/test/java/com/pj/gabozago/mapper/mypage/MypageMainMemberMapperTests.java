@@ -123,6 +123,19 @@ public class MypageMainMemberMapperTests {
 		
 		log.info(">>>>>>>>>>>> vo : {}", vo);
 	} // testSelectMemberProfile
+	
+	
+	@Test
+	@Order(5)
+	@DisplayName("5. testSelectDoubleNickname")
+	@Timeout(value = 10, unit = TimeUnit.SECONDS)
+	void testSelectDoubleNickname() throws DAOException {
+		log.info("testSelectDoubleNickname() invoked.");
+		
+		boolean isDouble = this.mapper.selectDoubleNickname("테스트");
+		
+		log.info(">>>>>>>>>>>>>>>>>>>> isDouble : {}", isDouble);
+	} // testSelectDoubleNickname
 
 	
 } // end class

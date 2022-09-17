@@ -88,8 +88,8 @@
                     <div class="sections">
                         <h4>닉네임</h4>
                         <p class="ruleTexts">한문, 특수문자, 공백 제외 8자 이내</p>
-                        <input type="text" name="nickname" id="nickname" placeholder="${__MEMBER__.nickname}" maxlength="8">
-                        <button class="formCheckBox" id="doubleCheckBtn">중복 확인</button>
+                        <input type="text" name="nickname" id="nickname" placeholder="${__MEMBER__.nickname}" maxlength="8" onchange="changeNickFnc()">
+                        <button class="formCheckBox" id="doubleCheckBtn" onclick="checkDoucle()">중복 확인</button>
                     </div>
                     
                     <div class="sections">
@@ -108,11 +108,11 @@
                         <p class="ruleTexts">크기 1MB 이하의 jpg, png 이미지 업로드 가능</p>
                         <img src="/resources/mypage/img/userprofile.jpg" alt="profileImgSample" id="profileImgSample">
                         <div id="imageUpload">
-                            <input type="text" class="uploadName" id="imageUploadPlaceHolder"
-                            value="이미지를 업로드 하세요" placeholder="이미지를 업로드 하세요" disabled>
+                            <input type="text" name="profileImg" class="uploadName" id="imageUploadPlaceHolder"
+                            placeholder="이미지를 업로드 하세요" disabled>
                             <label for="uploadFile">파일 선택</label>
-                        </div id="imageUpload">
-                        <input type="file" id="uploadFile">
+                        </div>
+                        <input type="file" name="profileImg" id="uploadFile" accept=".jpg, .png">
                     </div>
                     
                     <div class="btnBox">
@@ -153,6 +153,40 @@
         </div>
     </div>
 
+    <!-- 닉네임 양식 오류 모달 -->
+    <div class="modal" id="nicknameErrorModal">
+        <div class="modal_Content">
+            <p class="center simpleTextSpaceAdd">닉네임은 한문, 특수문자, 공백 제외 8자 이내로 입력 바랍니다.</p>
+            <div class="okBtn onlyOk continue">확인</div>
+        </div>
+    </div>
+
+    <!-- 닉네임 중복 확인 요청 -->
+    <div class="modal" id="requestDoubleCheckModal">
+        <div class="modal_Content">
+            <p class="center simpleTextSpaceAdd">닉네임 중복 확인이 필요합니다.</p>
+            <div class="okBtn onlyOk continue">확인</div>
+        </div>
+    </div>
+
+    <!-- 닉네임 중복 확인 성공 모달 -->
+    <div class="modal" id="doubleCheckSucceedModal">
+        <div class="modal_Content">
+            <p class="center simpleTextSpaceAdd">사용 가능한 닉네임입니다.</p>
+            <div class="okBtn onlyOk continue">확인</div>
+        </div>
+    </div>
+
+    <!-- 닉네임 중복 확인 실패 모달 -->
+    <div class="modal" id="doubleCheckFailedModal">
+        <div class="modal_Content">
+            <p class="center simpleTextSpaceAdd">중복된 닉네임입니다.</p>
+            <div class="okBtn onlyOk continue">확인</div>
+        </div>
+    </div>
+
+
+
     <!-- 휴대폰 번호 인증 모달 -->
     <!-- <div class="modal" id="phoneModal">
         <div class="modal_Content">
@@ -183,23 +217,7 @@
             <p class="center simpleTextSpaceAdd">휴대폰 인증이 실패하였습니다.</p>
             <div class="okBtn onlyOk continue">확인</div>
         </div>
-    </div> -->
-
-    <!-- 닉네임 중복 확인 성공 모달 -->
-    <!-- <div class="modal" id="doubleCheckSucceedModal">
-        <div class="modal_Content">
-            <p class="center simpleTextSpaceAdd">사용 가능한 닉네임입니다.</p>
-            <div class="okBtn onlyOk continue">확인</div>
-        </div>
-    </div> -->
-
-    <!-- 닉네임 중복 확인 실패 모달 -->
-    <!-- <div class="modal" id="doubleCheckFailedModal">
-        <div class="modal_Content">
-            <p class="center simpleTextSpaceAdd">중복된 닉네임입니다.</p>
-            <div class="okBtn onlyOk continue">확인</div>
-        </div>
-    </div> -->
+    </div> -->    
 
     <!-- 회원수정 완료 모달 -->
     <!-- <div class="modal" id="updateSucceedModal">
@@ -209,13 +227,7 @@
         </div>
     </div> -->
 
-    <!-- 회원수정 실패 모달(닉네임 중복 확인 요청) -->
-    <!-- <div class="modal" id="requestDoubleCheckModal">
-        <div class="modal_Content">
-            <p class="center simpleTextSpaceAdd">닉네임 중복 확인이 필요합니다.</p>
-            <div class="okBtn onlyOk continue">확인</div>
-        </div>
-    </div> -->
+    
 </body>
 
 </html>

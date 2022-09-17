@@ -31,10 +31,8 @@
                 let profileImg = null;
                 profileImg = '${sessionScope.__MEMBER__.profileImg}';
 
-                // console.log("프로필 이미지 : " + profileImg);
-
                 if(profileImg != ''){
-                    $(".profileAndMenu .profile img").attr('src', '/resources/acco/img/himg/1.jpg');        // 프로필 이미지가 있으면, 프로필 이미지 경로(임시로 아무 이미지 넣어둠)
+                    $(".profileAndMenu .profile img").attr('src', profileImg);        // 프로필 이미지가 있으면, 프로필 이미지 경로
                 }else{
                     $(".profileAndMenu .profile img").attr('src', '/resources/common/img/logo_Green_2.png');    // 프로필 이미지가 없으면, 기본이미지
                 } // if-else

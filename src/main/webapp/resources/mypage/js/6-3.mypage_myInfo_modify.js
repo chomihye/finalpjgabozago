@@ -3,7 +3,9 @@
  */
  let nameSuccess = true;
  let pwdSuccess = true;
- let pwdCheckSuccess = false;
+ let pwdCheckSuccess = true;
+ let validNick = true;              // 유효한 닉네임인지
+ let doubleCheckSuccess = true;     // 중복확인 했는지
 
 
 /**
@@ -16,6 +18,9 @@ $(function(){
 
     $("#pwError").css({display: "none"});       // 비밀번호 수정 관련
     $("#pwcheckError").css({display: "none"}); 
+
+    modifyProfileImg();     // 프로필 이미지 변경 관련
+
 
     // // 정규식 관련
     // let specialChar = /[~!@\#$%^&*\()\-=+_'\"]/gi;  // 특수문자
@@ -80,12 +85,13 @@ function checkName(){
     changeName = $("#name").val();
 
     // 유효성 검사(이름에 한글과 영문만 있는지 확인, 글자수 확인)
-    let nameRegex = /^[ㄱ-ㅎ|가-힣|a-z|A-Z]+$/;
+    // let nameRegex = /^[ㄱ-ㅎ|가-힣|a-z|A-Z]+$/;
+    let nameRegex = /^[가-힣|a-z|A-Z]+$/;
 
     if(!changeName){        // 바뀐 값이 없으면,
         nameSuccess = true;
     }else{
-        if(!(nameRegex.test(changeName)) || changeName.length > 10){
+        if(!(nameRegex.test(changeName)) || changeName.length > 10 || changeName.length < 2){
             nameSuccess = false;
         }else{
             nameSuccess = true;
@@ -166,6 +172,103 @@ function reCheckPwd(){
 
 
 /**
+ * @desc 닉네임 수정 관련
+ */
+function changeNickFnc(){
+    let changeNickname = null;
+    changeNickname = $("#nickname").val();
+
+    if(!changeNickname){        // 바뀐 값이 없으면,
+        doubleCheckSuccess = true;
+    }else{                      // 바뀐 값이 있으면,
+        doubleCheckSuccess = false;     // 중복확인 필요
+    } // if-else
+} // 닉네임 변경값이 있는지 체크
+
+function checkDoucle(){
+    let changeNickname = null;
+    changeNickname = $("#nickname").val();
+
+    // 유효성 검사
+    let nicknameRegex = /^[가-힣|a-z|A-Z|0-9]+$/;
+
+    if(!(nicknameRegex.test(changeNickname))){      // 변경할 닉네임이 유효하지 않은 경우
+        validNick = false;
+        $("#nicknameErrorModal").css({display: "block"});
+    }else{                                          // 변경할 닉네임이 유효한 경우
+        validNick = true;
+
+        // 중복 검사 ajax
+        $.ajax({
+            type: "POST",
+            url: "modify/nickCheck",
+            data:{
+                "nickname" : changeNickname
+            },
+            cache : false,
+            error : function(error) {
+                console.log("error");
+            },
+            success : function(resp) {
+                console.log("success");
+
+                const isDouble = JSON.parse(resp);
+                
+                if(isDouble){
+                    $("#doubleCheckFailedModal").css({display: "block"});
+                    doubleCheckSuccess = false;
+                }else{
+                    $("#doubleCheckSucceedModal").css({display: "block"});
+                    doubleCheckSuccess = true;
+                } // if-else
+            } // success
+        }); // ajax
+    } // if
+} // 중복확인 버튼 클릭시 닉네임 유효성 및 중복검사
+
+
+/**
+ * @desc 프로필 이미지 변경
+ */
+ function modifyProfileImg(){
+    
+    $('#uploadFile').on('change',function(e){
+        var filePath = $('#uploadFile').val();
+        
+        if(filePath != ''){
+            var ext = filePath.split('.').pop().toLowerCase(); // 파일 업로드 확장자 체크
+
+            if($.inArray( ext, ['png','jpg','jpeg'] ) == -1) {
+                alert('업로드할 수 없는 파일 확장자입니다. png, 혹은 jpg 파일을 선택해주세요.');
+                $('#imageUploadPlaceHolder').attr('placeholder', '이미지를 업로드하세요.');  // input 파일명 지우기
+                $('#profileImgSample').attr('src', '/resources/member/img/userprofile.jpg'); // input 파일 썸네일 지우기
+                return;
+            } else{
+                var lastIndex = filePath.lastIndexOf('\\');
+                var fileName = filePath.substring(lastIndex + 1, filePath.length);      // 프로필 파일명
+        
+                $('#imageUploadPlaceHolder').attr('placeholder', fileName); 
+                readImage(e.target); 
+            }// if-else
+        }// if
+
+    }); // 프로필 이미지 첨부 시 파일명 & 샘플 이미지 표시
+
+} // modifyProfileImg
+
+function readImage(input) {
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        
+        reader.onload = e => {                
+            $('#profileImgSample').attr('src', e.target.result);
+        }
+        reader.readAsDataURL(input.files[0]);
+    }// if
+}// readImage
+
+
+/**
  * @desc 모달창 관련
  */
 function modal(){
@@ -178,6 +281,8 @@ function modal(){
             $("#pwdFormCheckModal").css({display: "block"});
         }else if(!pwdCheckSuccess){
             $("#pwdMismatchModal").css({display: "block"});
+        }else if(!doubleCheckSuccess){
+            $("#requestDoubleCheckModal").css({display: "block"});
         }else{
             $("#form").unbind();    // 최종으로 아무것도 문제가 없으면, 버튼 활성화
         } // if

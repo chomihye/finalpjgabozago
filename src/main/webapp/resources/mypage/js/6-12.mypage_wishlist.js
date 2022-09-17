@@ -68,7 +68,7 @@ function selectAllCheckBox(){
  * @desc 숙소 위시리스트 불러오기
  */
 function getAccomWishlist(currPage){
-	debugger;
+	// debugger;
     $.ajax({
         type: "POST",
         url: "wishlist/accom",

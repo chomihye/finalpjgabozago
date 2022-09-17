@@ -42,6 +42,13 @@ public class MypageMainMemberServiceImpl implements MypageMainMemberService {
 		catch (DAOException e) { throw new ServiceException(e); }
 	} // getReserOrderOfUseDate
 
+	// 닉네임 중복검사용
+	@Override
+	public boolean checkDoubleNickname(String nickname) throws ServiceException {
+		try { return this.mapper.selectDoubleNickname(nickname); } 
+		catch (DAOException e) { throw new ServiceException(e); }
+	} // checkDoubleNickname
+	
 	// 회원 탈퇴 처리
 	@Override
 	public Boolean withdrawFromSite(MemberVO member) throws ServiceException {
