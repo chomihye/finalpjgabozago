@@ -31,27 +31,37 @@ function addEventToHeartIcon() {
   
     $.ajax({
       type: 'POST',
-      url: '/reservation/main/wishlist/' + currentIdx ,
+      url: '/reservation/wishlist',
+      data: { accom_idx: currentIdx },
+      dataType: 'json',
       success: function (response) {
-        console.log(response);
+        const action_type = response.type;
+
+        if (response.code === 200) {
+          if (action_type === "insert") {
+            event.target.closest('.heart_icon').classList.add('act');
+            document.getElementById('wishlist_modal').style.display = 'block';
+            // 하트 버튼 클릭 시 모달창 나타남(display: none → block)
+          } else if (action_type === "delete") {
+            event.target.closest('.heart_icon').classList.remove('act');
+          }
+        } else {
+          alert((action_type === "insert" ? "등록" : "삭제") + "에 실패했습니다.\n다시 시도해주세요.");
+        }
       },
       error: function (error) {
         console.log(error);
       },
     });
-    if (event.target.closest('.heart_icon').classList.contains('act')) {
-      event.target.closest('.heart_icon').classList.remove('act');
-    } else {
-      event.target.closest('.heart_icon').classList.add('act');
-      document.getElementById('wishlist_modal').style.display = 'block';
-      // 하트 버튼 클릭 시 모달창 나타남(display: none → block)
-    }
   }
   for (let i = 0; i < icons.length; i++) {
     let icon = icons[i];
     icon.addEventListener('click', handleClick);
   }
 }
+
+//위시리스트 end
+
 
 $(function () {
   // $('.header').load('header.html');

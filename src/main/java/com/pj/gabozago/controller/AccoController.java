@@ -53,15 +53,16 @@ public class AccoController {
 	private AccomService accomService;
 
 	// 숙소 전체 목록 가져오기
-	@RequestMapping(path = { "", "/main" })//로그인 여부 확인 
-	public String getHotelList(@SessionAttribute(name=SharedScopeKeys.USER_KEY,required=false) MemberVO member, Model model) throws ControllerException, ServiceException {
+	@RequestMapping(path = { "", "/main" }) // 로그인 여부 확인
+	public String getHotelList(@SessionAttribute(name = SharedScopeKeys.USER_KEY, required = false) MemberVO member,
+			Model model) throws ControllerException, ServiceException {
 
 		List<AccomDTO> list;
-		
-		if (member == null) {			//member -> null -> getList출력
+
+		if (member == null) { // member -> null -> getList출력
 			list = this.accomService.getList();
 		} else {
-			list = this.accomService.getListWithMember(member);			
+			list = this.accomService.getListWithMember(member);
 		}
 		model.addAttribute("_ACCOM_", list);
 
@@ -137,28 +138,45 @@ public class AccoController {
 		return "acco/reservation_payment";
 	} // loadUser
 
-
 	// 위시리스트 추가/삭제
-	@PostMapping("/main/wishlist/{idx}")
+	@RequestMapping(value = "wishlist", method = RequestMethod.POST)
 	@ResponseBody
-	public ResponseEntity<String> hotelWishList(@SessionAttribute(SharedScopeKeys.USER_KEY) MemberVO member, @PathVariable("idx") Integer idx, WishlistAccomDTO wishaccom,
-			Model model) throws ControllerException, ServiceException {
-
-		ResponseEntity<String> entity = null;
-		wishaccom.setMemberIdx(member.getIdx());
-		wishaccom.setAccomIdx(idx);
+	public HashMap<String, Object> hotelWishList(
+			@SessionAttribute(name = SharedScopeKeys.USER_KEY, required = false) MemberVO member,
+			HttpServletRequest request,
+			WishlistAccomDTO wishaccom)
+			throws ControllerException, ServiceException {
 		
+		HashMap<String, Object> result = new HashMap<String, Object>();
+		
+		if (member == null) return result;
+		
+		String accomIdx = request.getParameter("accom_idx");
+		if(accomIdx == "") return result;
+		
+		wishaccom.setMemberIdx(member.getIdx());
+		wishaccom.setAccomIdx(Integer.parseInt(accomIdx));
 
 		try {
-			accomService.setHotelLike(wishaccom);
-			entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+			Map<String, Object> like_result = accomService.setHotelLike(wishaccom);
+			
+			if((int) like_result.get("success") == 1) {				
+				result.put("code", 200);
+				result.put("msg", "성공");
+			} else {
+				result.put("code", 500);
+				result.put("msg", "실패");				
+			}
+			result.put("type", like_result.get("type"));
 		} catch (Exception e) {
 			e.printStackTrace();
-			entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+			result.put("code", 500);
+			result.put("msg", e.getMessage());	
 		}
 
-		return entity;
+		return result;
 	}
+	
 
 	// 결제 ..
 //	@GetMapping("/payment")
@@ -173,49 +191,6 @@ public class AccoController {
 //		return "acco/reservation_room";
 //	}
 
-//	@GetMapping("/datail")
-//	public String list1(@ModelAttribute("accom") AccomDTO accom, Model model)
-//
-//			throws ControllerException, ServiceException {
-//
-//		try {
-//			
-//			List<AccomDTO> list = this.accomService.getDetailList(accom);
-//			model.addAttribute("accom", list);
-//
-//		} catch (ServiceException e) {
-//			throw new ControllerException(e);
-//		} // try-catch
-//
-//		return "acco/reservation_datail";
-//	}
 
-//	@GetMapping("/datail")
-//	public String reservationDetail(@ModelAttribute("accom_idx") Integer accom_idx, AccomDTO accom, Model model) throws ControllerException {
-//		
-//		accom.setIdx(accom_idx);
-//		
-//		try {
-//			Map<String, Object> map = this.accomService.getOneAccomDetail(accom);
-//			log.info(map);
-//			model.addAttribute("accom", map);
-//		} catch (ServiceException e) {
-//			throw new ControllerException(e);
-//		} // try-catch
-//		
-//		return "acco/reservation_datail";
-//	}
-
-//	@GetMapping("/room")
-//	public String reservationRoom() {
-//
-//		return "acco/reservation_room";
-//	}
-
-//	@GetMapping("/payment")
-//	public String reservationPayment() {
-//
-//		return "acco/reservation_payment";
-//	}
 
 }// end class

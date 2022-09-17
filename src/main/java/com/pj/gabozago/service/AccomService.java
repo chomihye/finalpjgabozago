@@ -39,7 +39,7 @@ public interface AccomService {
 	public abstract Map<String, Object> getOneRoomInfo(AccomRoomDTO room) throws ServiceException;
 
 	//위시리스트
-	public abstract void setHotelLike(WishlistAccomDTO wishaccom) throws ServiceException, DAOException;
+	public abstract Map<String, Object> setHotelLike(WishlistAccomDTO wishaccom) throws ServiceException, DAOException;
 	
 
 

@@ -1,5 +1,6 @@
 package com.pj.gabozago.service;
 
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -113,9 +114,24 @@ public class AccomServiceImpl implements AccomService {
 	
 	//위시리스트
 	@Override
-	public void setHotelLike(WishlistAccomDTO wishaccom) throws ServiceException, DAOException {
+	public Map<String, Object> setHotelLike(WishlistAccomDTO wishaccom) throws ServiceException, DAOException {
 		
-		mapper.insertHotelLike(wishaccom);
+		try {
+			Map<String, Object> original_wish_data = this.mapper.selectHotelLike(wishaccom);
+			Map<String, Object> result = new HashMap<String, Object>();
+			if(original_wish_data == null) {
+				// 좋아요 등록
+				result.put("success", this.mapper.insertHotelLike(wishaccom));
+				result.put("type", "insert");
+			} else {
+				// 좋아요 삭제
+				result.put("success", this.mapper.deleteHotelLike(wishaccom));
+				result.put("type", "delete");
+			}
+			return result;
+		} catch (DAOException e) {
+			throw new ServiceException(e);
+		}
 		
 	} // getOneRoomInfo
 

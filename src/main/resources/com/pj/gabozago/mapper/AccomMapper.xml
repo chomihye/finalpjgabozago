@@ -132,17 +132,25 @@
         WHERE ar.idx = #{idx}
     </select>
 
-
-
-
-
+    <select id="selectHotelLike" resultType="java.util.Map">   
+        SELECT idx
+        FROM tbl_wishlist_accom
+		WHERE member_idx=#{memberIdx} 
+    		AND accom_idx=#{accomIdx}
+    </select>
+    
     <insert id="insertHotelLike">
         INSERT INTO 
             tbl_wishlist_accom(member_idx,accom_idx)
-        VALUES(#{memberIdx},#{accomIdx});
+        VALUES(#{memberIdx},#{accomIdx})
     </insert>
 
-    
+    <delete id="deleteHotelLike">
+    	DELETE 
+    	FROM tbl_wishlist_accom
+    	WHERE member_idx=#{memberIdx} 
+    		AND accom_idx=#{accomIdx}
+    </delete>
 
 
 

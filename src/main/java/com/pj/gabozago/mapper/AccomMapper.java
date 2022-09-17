@@ -40,7 +40,9 @@ public interface AccomMapper {
 	public abstract Map<String, Object> selectOneRoomInfo(AccomRoomDTO room) throws DAOException;
 
 	//위시리스트
-	public abstract Object insertHotelLike(WishlistAccomDTO wishaccom) throws DAOException;
+	public abstract Map<String, Object> selectHotelLike(WishlistAccomDTO wishaccom) throws DAOException; // 기존 좋아요 유무 확인
+	public abstract Integer insertHotelLike(WishlistAccomDTO wishaccom) throws DAOException; // 좋아요 등록
+	public abstract Integer deleteHotelLike(WishlistAccomDTO wishaccom) throws DAOException; // 좋아요 삭제
 	
 
 	
