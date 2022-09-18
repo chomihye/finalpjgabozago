@@ -6,6 +6,7 @@
  let pwdCheckSuccess = true;
  let validNick = true;              // 유효한 닉네임인지
  let doubleCheckSuccess = true;     // 중복확인 했는지
+ let phoneCertifySuccess = true;    // 폰인증
 
 
 /**
@@ -20,38 +21,6 @@ $(function(){
     $("#pwcheckError").css({display: "none"}); 
 
     modifyProfileImg();     // 프로필 이미지 변경 관련
-
-
-    // // 정규식 관련
-    // let specialChar = /[~!@\#$%^&*\()\-=+_'\"]/gi;  // 특수문자
-    // let blank = /[ ]/g;      // 공백
-    // let specialChar = /[0-9a-z~!@\#$%^&*\()\-=+_'\" ]/gi;  // 특수문자
-    // let number = /[^0-9]/g;  // 숫자
-    // let eng = /[^a-z]/gi;     // 영문 대소문자
-    // // /^[a-z|A-Z|0-9|~!@\#$%^&*\()\-=+_'\"]+$/
-
-    // let str0 = "* abc920324";
-    // let test0 = str0.match(blank);
-    
-
-    // if(test0 == null){
-    //     console.log("공백문자가 없습니다.");
-    // }else{
-    //     console.log("공백문자가 포함되었습니다.");
-    // } // 공백검사
-
-    // let str = "*abc920324";
-    // let test = str.replace(number, "");     // 숫자만 뽑는 함수
-    // console.log("숫자만 : " + test);
-
-    // let str2 = "*aNc안녕920324";
-    // let test2 = str2.replace(specialChar, "");    // 특수문자만 뽑는 함수
-    // console.log("특수문자만 : " + test2);
-
-    // let str3 = "*abcABC920324";
-    // let test3 = str3.replace(eng, "");    // 영문 대소문자만 뽑는 함수
-    // console.log("영문자만 : " + test3);
-
 
     // 최초 submit 버튼 비활성화
     $("#form").submit(function(e){
@@ -228,6 +197,90 @@ function checkDoucle(){
 
 
 /**
+ * @desc 휴대폰 번호 수정 관련
+ */
+function changePhoneNumFnc(){
+    let changePhoneNum = null;
+    changePhoneNum = $("#phone").val();
+
+    if(!changePhoneNum){        // 바뀐 값이 없으면,
+        phoneCertifySuccess = true;
+    }else{                      // 바뀐 값이 있으면,
+        phoneCertifySuccess = false;   
+    } // if-else
+} // 휴대폰 번호 입력값 있는지 체크
+
+function certifyPhone(){
+    let changePhoneNum = null;
+    changePhoneNum = $("#phone").val();
+
+    if(changePhoneNum){        // 인증번호가 들어온 경우에만,
+        $("#phoneNum").text(changePhoneNum);
+        CountDownTimer('#certifyTime');     // 인증 시간 카운트
+
+        $("#phoneModal").css({display: "block"});
+    }else{
+        return;
+    } // if
+
+} // 인증버튼 클릭시
+
+let timer;
+function CountDownTimer(id) {
+    clearInterval(timer);
+    $(id).css('font-size', '24px').css('color', '#333333');
+
+    // let setTime = 180;     // 3분을 초단위로
+    let setTime = 7;     // 임시확인용
+    let distance = setTime;
+    
+    function showRemaining() {
+        let secondsStr = "초문자열";
+
+        distance -= 1;
+        let minutes = parseInt(distance / 60);
+        let seconds = distance - (minutes * 60);   
+
+        if (distance < 0) {
+            $(id).css('font-size', '14px').css('color', 'red');
+            $(id).html("인증 시간이 만료되었습니다.<br> 재전송 버튼을 눌러 다시 인증해주세요.");
+            clearInterval(timer);
+            return;
+        } // if
+        
+        if(seconds < 10){ secondsStr = "0" + seconds.toString(); }
+        else{ secondsStr = seconds.toString(); }
+        
+        $(id).text("0" + minutes + " : " + secondsStr);
+    } // showRemaining
+
+    timer = setInterval(showRemaining, 1000);
+    $(id).empty();
+} // 인증 시간 카운트 함수(3분)
+   
+function repeat(){
+    CountDownTimer('#certifyTime');
+} // 재전송
+
+function checkCertifyNum(){
+    let certifyNum = null;
+    certifyNum = $("#phoneValidationNumInput").val();
+
+    // 숫자만 있는지 확인
+    let numRegex = /^[0-9]+$/;
+
+    if(!(numRegex.test(certifyNum))){       // 인증이 유효하지 않은 경우
+        $("#phoneValidationFailedModal").css({display: "block"});
+        phoneCertifySuccess = false;
+    }else{                                      
+        $("#phoneValidationSucceedModal").css({display: "block"});
+        phoneCertifySuccess = true;
+    } // if-else
+    
+} // 인증번호 검사
+
+
+/**
  * @desc 프로필 이미지 변경
  */
  function modifyProfileImg(){
@@ -283,6 +336,8 @@ function modal(){
             $("#pwdMismatchModal").css({display: "block"});
         }else if(!doubleCheckSuccess){
             $("#requestDoubleCheckModal").css({display: "block"});
+        }else if(!phoneCertifySuccess){
+            $("#phoneValidationModal").css({display: "block"});
         }else{
             $("#form").unbind();    // 최종으로 아무것도 문제가 없으면, 버튼 활성화
         } // if
@@ -292,38 +347,4 @@ function modal(){
     $(".continue").click(function(){
 		$(".modal").css({display: "none"});
 	}); // 모달창 내 확인버튼 공통
-
-
-
-
-
-    // $(".completed").click(function(){
-	// 	$(".modal").css({display: "none"});
-    //     location.href="/mypage/main";
-	// }); // 수정완료
-
-
-
-    // $("#doubleCheckBtn").click(function(){
-	// 	$("#doubleCheckSucceedModal").css({display: "block"});
-    //     // $("#doubleCheckFailedModal").css({display: "block"});
-	// }); // 닉네임 중복 확인 버튼 클릭
-
-    // $("#phoneValidationBtn").click(function(){
-    //     $(" #phoneModal").css({display: "block"});
-    // }); // 폰 인증 버튼 클릭
-
-    // $("#phoneValidationNumBtn").click(function(){
-    //     $(" #phoneValidationSucceedModal").css({display: "block"});
-    //     // $(" #phoneValidationFailedModal").css({display: "block"});
-    // }); // 폰 인증 확인 버튼 클릭
 } // modal
-
-
-//     window.onclick = function(event) {
-//         if(event.target == emailModal || event.target == phoneModal) {
-//             $("#emailModal").css({display: "none"});
-//             $("#phoneModal").css({display: "none"});
-//             $("#doubleCheckSucceedModal").css({display: "none"});
-//         }// if
-//     } // 배경 누르면 취소되는 경우 구현

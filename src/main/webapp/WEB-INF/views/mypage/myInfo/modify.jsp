@@ -94,8 +94,8 @@
                     
                     <div class="sections">
                         <h4>휴대폰 번호</h4>
-                        <input type="text" name="phone" id="phone" pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}" placeholder="${__MEMBER__.phone}">
-                        <button class="formCheckBox" id="phoneValidationBtn">인증</button>
+                        <input type="text" name="phone" id="phone" pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}" placeholder="${__MEMBER__.phone}" onchange="changePhoneNumFnc()">
+                        <button class="formCheckBox" id="phoneValidationBtn" onclick="certifyPhone()">인증</button>
                     </div>
                     
                     <div class="sections">
@@ -185,39 +185,45 @@
         </div>
     </div>
 
-
-
     <!-- 휴대폰 번호 인증 모달 -->
-    <!-- <div class="modal" id="phoneModal">
+    <div class="modal" id="phoneModal">
         <div class="modal_Content">
             <h3><i class="fas fa-check"></i>휴대폰 번호 인증</h3>
-            <p>010-1111-1111으로 SMS 인증 번호를 발송하였습니다.<br>
+            <p><span id="phoneNum"></span>으로 SMS 인증 번호를 발송하였습니다.<br>
             3분 이내에 인증 번호 6글자를 입력하세요.</p>
-            <h2>02:59</h2>
+            <h2 id="certifyTime"></h2>
             <div id="phoneValidation">
                 <input type="text" name="phoneValidationNum" id="phoneValidationNumInput" placeholder="인증 번호를 입력하세요." maxlength="6">
-                <button id="phoneValidationNumBtn">확인</button>
+                <button id="phoneValidationNumBtn" onclick="checkCertifyNum()">확인</button>
             </div>
-            <div id="resendLink"><a href="">재전송</a></div>
+            <div id="resendLink"><a href="javascript:void(0);" onclick="repeat()">재전송</a></div>
             <div class="okBtn onlyOk continue" id="closeBtn">취소</div>
         </div>
-    </div> -->
+    </div>
 
     <!-- 휴대폰 번호 인증 성공 모달 -->
-    <!-- <div class="modal" id="phoneValidationSucceedModal">
+    <div class="modal" id="phoneValidationSucceedModal">
         <div class="modal_Content">
             <p class="center simpleTextSpaceAdd">휴대폰 인증이 완료되었습니다.</p>
             <div class="okBtn onlyOk continue">확인</div>
         </div>
-    </div> -->
+    </div>
 
     <!-- 휴대폰 번호 인증 실패 모달 -->
-    <!-- <div class="modal" id="phoneValidationFailedModal">
+    <div class="modal" id="phoneValidationFailedModal">
         <div class="modal_Content">
             <p class="center simpleTextSpaceAdd">휴대폰 인증이 실패하였습니다.</p>
             <div class="okBtn onlyOk continue">확인</div>
         </div>
-    </div> -->    
+    </div>    
+
+    <!-- 휴대폰 번호 인증 요청 모달 -->
+    <div class="modal" id="phoneValidationModal">
+        <div class="modal_Content">
+            <p class="center simpleTextSpaceAdd">휴대폰 번호 인증이 필요합니다.</p>
+            <div class="okBtn onlyOk continue">확인</div>
+        </div>
+    </div> 
 
     <!-- 회원수정 완료 모달 -->
     <!-- <div class="modal" id="updateSucceedModal">
@@ -227,7 +233,6 @@
         </div>
     </div> -->
 
-    
 </body>
 
 </html>
