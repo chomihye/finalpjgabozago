@@ -2,6 +2,8 @@ package com.pj.gabozago.controller.mypage;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.jupiter.api.BeforeAll;
@@ -15,6 +17,7 @@ import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.Timeout;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -25,6 +28,8 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.context.WebApplicationContext;
+
+import com.pj.gabozago.common.UUIDGenerator;
 
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -156,6 +161,7 @@ public class MypageControllerTests {
 		modelMap = null;	
 		
 	} // testGetRegisterReview
+	
 	
 	
 } // end class

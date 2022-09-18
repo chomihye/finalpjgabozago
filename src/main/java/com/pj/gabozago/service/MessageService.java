@@ -20,8 +20,8 @@ public class MessageService  {
 	
 	public void sendMessage(String toNumber, String randomNumber) {
 
-	    String api_key = "#ENTER_YOUR_OWN#";
-	    String api_secret = "#ENTER_YOUR_OWN#";
+	    String api_key = "NCSAZ5E97ZPWMERQ";
+	    String api_secret = "IZIBQUG7TKCSX9LJCCUYPKTHZVG85CA7";
 	    String fromNumber = "010-8741-9039";
 	    
 	    Message coolsms = new Message(api_key, api_secret);
@@ -31,7 +31,7 @@ public class MessageService  {
 		params.put("to", toNumber);
 		params.put("from", fromNumber);
 		params.put("type", "SMS");
-		params.put("text", "[가보자고] 인증번호 " + randomNumber + " 를 입력하세요.");
+		params.put("text", "[가보자고] 임시 비밀번호는 " + randomNumber + " 입니다. 로그인 후 꼭 비밀번호를 변경해주세요.");
 		params.put("app_version", "test app 1.2"); // application name and version
 
 		try {

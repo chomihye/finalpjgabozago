@@ -151,11 +151,9 @@ public class MemberServiceImpl implements MemberService {
 		
 		try {
 			// 문자 발송 로직
+			this.messageService.sendMessage(phone, uid);
 			
-			
-			
-			
-			return this.mapper.updateUserforFindPwWithEmail(phone, password) == 1;
+			return this.mapper.updateUserforFindPwWithPhone(phone, password) == 1;
 		} catch (Exception e) {
 			throw new ServiceException(e);
 		}// try-catch	

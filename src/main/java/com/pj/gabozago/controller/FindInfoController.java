@@ -73,10 +73,15 @@ public class FindInfoController {
 
 		try {
 			String uid = UUIDGenerator.generateUniqueKeysWithUUIDAndMessageDigest().substring(0, 8);
+			
+			log.info("uid: {}", uid);
+			
 			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 			
 			String tempPw = encoder.encode(uid + "__SALT__"); // uid 암호화
 
+			log.info("tempPw: {}", tempPw);
+			
 			if(pwfindCase.equals("email")) { // 이메일로 비밀번호 찾기 선택한 경우
 				String userEmail = this.service.findUserPwByEmail(email);
 				
@@ -91,7 +96,7 @@ public class FindInfoController {
 				String userPhone = this.service.findUserPwByPhone(phone);
 				
 				if(userPhone != null) {				
-					// 유효회원 DB 임시 비밀번호 변경(+문자로 비밀번호 발송 -> 구현 예정)										
+					// 유효회원 DB 임시 비밀번호 변경(+문자로 비밀번호 발송)										
 					boolean isPwChanged = this.service.modifyUserforFindPwWithPhone(phone, uid, tempPw); // 임시 비밀번호로 DB 업데이트
 					log.info("isPwChanged: {}", isPwChanged);
 
