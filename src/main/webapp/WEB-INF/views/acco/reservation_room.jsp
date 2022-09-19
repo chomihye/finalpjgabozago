@@ -101,7 +101,7 @@
                     <span>${_ACCOM_.ROOM_DESC}</span>
                 </div>
                 <div class="np-box">
-                    <a href="/reservation/payment?room_idx=${list.IDX}">
+                    <a href="/reservation/payment?room_idx=${_ACCOM_.IDX}">
                         <button type="button" class="detail_reserve_btn">예약하기</button>
                     </a>
                     <p>체크인 ${_ACCOM_.CHECK_IN} / 체크아웃 ${_ACCOM_.CHECK_OUT}</p>
@@ -116,8 +116,8 @@
 
             <div class="container" id="change_info_img">
                 <div id="carouselExampleIndicators" class="carousel slide" data-interval="false">
-                    <div class="carousel-indicators"">
-                      <button type=" button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0"
+                    <div class="carousel-indicators">
+                      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0"
                         class="active" aria-current="true" aria-label="Slide 1"></button>
                         <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
                             aria-label="Slide 2"></button>
@@ -130,10 +130,10 @@
                             <img src="/resources/acco/img/rimg/${_ACCOM_.FILE_NAME}" class="d-block w-100" alt="...">
                         </div>
                         <div class="carousel-item">
-                            <img src="/resources/acco/img/room4.jpg" class="d-block w-100" alt="...">
+                            <img src="/resources/acco/img/slide.jpg" class="d-block w-100" alt="...">
                         </div>
                         <div class="carousel-item">
-                            <img src="/resources/acco/img/room5.jpg" class="d-block w-100" alt="...">
+                            <img src="/resources/acco/img/slide2.jpg" class="d-block w-100" alt="...">
                         </div>
                     </div>
                     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"

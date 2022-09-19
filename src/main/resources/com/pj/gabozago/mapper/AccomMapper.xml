@@ -7,6 +7,7 @@
 <!-- namespace 명명법은 경로구분자로 .를 사용하고, 마지막 이름은 Mapper파일명으로 지어주는것이관레임 -->
 <mapper namespace="com.pj.gabozago.mapper.AccomMapper">
 
+    <!-- 호텔 전체 리스트 -->
 	 <select id="getList" resultMap="AccomDTO" >
         SELECT
         	-1 wishlist_idx,
@@ -22,6 +23,7 @@
         ORDER BY r.idx asc
 	</select>
 	
+    <!--  -->
 	 <select id="getListWithMember" resultMap="AccomDTO">      
         SELECT 
             NVL(wa.idx, -1) wishlist_idx,
@@ -38,8 +40,10 @@
         ORDER BY r.idx asc
 	</select>
 
+    <!-- 검색한 숙소 리스트 -->
     <select id="selectSearchedAccomList" resultMap="AccomDTO">
         SELECT 
+        	-1 wishlist_idx,
             r.idx,
             r.accom_name,
             r.large_area_idx,
@@ -54,8 +58,30 @@
         </where>
         ORDER BY r.idx asc
 	</select>
+	
+    <!-- 멤버가 검색한 숙소 리스트 -->
+    <select id="selectSearchedAccomListWithMember" resultMap="AccomDTO">
+        SELECT 
+        	NVL(wa.idx, -1) wishlist_idx,
+            r.idx,
+            r.accom_name,
+            r.large_area_idx,
+            a.large_area_name,  
+            (select max(price) from tbl_accom_room where accom_idx = r.idx) as max_price,
+            (select min(price) from tbl_accom_room where accom_idx = r.idx) as min_price,
+            (select ai.file_name from tbl_accom_images ai where r.idx = ai.idx) as file_name
+        FROM tbl_accom r
+            INNER JOIN tbl_large_area a ON a.idx = r.large_area_idx
+            LEFT OUTER JOIN (select * from tbl_wishlist_accom where member_idx = #{memberIdx}) wa ON wa.accom_idx = r.idx
+        <where>
+            r.large_area_idx = a.idx
+            <if test="largeAreaIdx != null">AND r.large_area_idx = #{largeAreaIdx}</if>
+        </where>
+        ORDER BY r.idx asc
+	</select>
 
 
+    <!-- 선택한 숙소 한개의 정보 -->
     <select id="getOneAccomDetail" resultType="java.util.Map">
 	    SELECT 
             r.idx,
@@ -67,6 +93,7 @@
 		WHERE r.idx = #{idx}
 	</select>
 	
+
 
     <select 
         id="selectRoomList"
@@ -126,9 +153,11 @@
             r.accom_name,
             ar.idx AS accom_room_idx,
             ar.price,
-            ar.room_name
+            ar.room_name,
+            arimg.file_name
         FROM tbl_accom_room ar
             INNER JOIN tbl_accom r ON r.idx = ar.accom_idx
+            INNER JOIN tbl_accom_images arimg  ON arimg.idx = ar.idx
         WHERE ar.idx = #{idx}
     </select>
 
@@ -137,6 +166,12 @@
         FROM tbl_wishlist_accom
 		WHERE member_idx=#{memberIdx} 
     		AND accom_idx=#{accomIdx}
+    </select>
+    
+     <select id="selectCountHotelLike" resultType="int">
+        SELECT count(idx)
+        FROM tbl_wishlist_accom
+		WHERE member_idx=#{memberIdx} 
     </select>
     
     <insert id="insertHotelLike">
@@ -152,9 +187,51 @@
     		AND accom_idx=#{accomIdx}
     </delete>
 
-
-
- 
+	<!-- 후기 조회 -->
+	<select id="selectHotelReviewList"  resultType="java.util.LinkedHashMap">
+		SELECT 
+		    r.idx,
+		    m.nickname,
+		    r.accom_room_idx,
+		    ar.room_name,
+		    r.grade1,
+		    r.grade2,
+		    r.grade3
+		FROM tbl_accom_review r
+		    INNER JOIN tbl_member m ON m.idx = r.member_idx
+		    INNER JOIN tbl_accom_room ar ON ar.idx = r.accom_room_idx
+		    INNER JOIN tbl_accom a ON a.idx = ar.accom_idx
+		WHERE a.idx = #{idx}
+	</select>
+	
+	<select id="selectHotelAvgReview"  resultType="java.util.LinkedHashMap">
+		SELECT 
+			ROUND(AVG(r.grade1),1) AS GRADE1,
+			ROUND(AVG(r.grade2),1) AS GRADE2,
+			ROUND(AVG(r.grade3),1) AS GRADE3
+		FROM tbl_accom_review r
+		    INNER JOIN tbl_member m ON m.idx = r.member_idx
+		    INNER JOIN tbl_accom_room ar ON ar.idx = r.accom_room_idx
+		    INNER JOIN tbl_accom a ON a.idx = ar.accom_idx
+		WHERE a.idx = #{idx}
+	</select>
+	
+	
+	<update id="updateMemberPoint">
+        UPDATE tbl_member 
+        SET point = 
+            ((SELECT sum(point_amount) 
+            FROM tbl_point_history 
+            WHERE member_idx = #{idx} 
+            AND is_plus = 'Y')
+            -(SELECT sum(point_amount) 
+            FROM tbl_point_history 
+            WHERE member_idx = #{idx} 
+            AND is_plus = 'N')) 
+        WHERE idx = #{idx}
+    </update>
+	
+	
     <resultMap type="com.pj.gabozago.domain.AccomDTO" id="AccomDTO">
         <result property="wishlistIdx" column="WISHLIST_IDX"/>
         <result property="idx" column="IDX"/>

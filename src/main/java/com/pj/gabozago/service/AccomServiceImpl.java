@@ -6,7 +6,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.UncategorizedSQLException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 
 import com.pj.gabozago.domain.AccomDTO;
@@ -72,6 +74,27 @@ public class AccomServiceImpl implements AccomService {
 		}
 	}//getRoomList
 	
+	//숙소 하위 방 리뷰 조회
+	@Override
+	public List<LinkedHashMap<String, Object>> getHotelReviewList(AccomDTO accom) throws ServiceException {
+		try {
+			return this.mapper.selectHotelReviewList(accom);
+		} catch (DAOException e) {
+			throw new ServiceException(e);
+		}
+	}//getHotelReviewList
+	
+	//숙소 리뷰 평균
+	@Override
+	public Map<String, Object> getHotelAvgReview(AccomDTO accom) throws ServiceException {
+		try {
+			return this.mapper.selectHotelAvgReview(accom);
+		} catch (DAOException e) {
+			throw new ServiceException(e);
+		}
+	}//getHotelAvgReview
+
+	
 	//숙소 방 한개당 상세 정보 조회
 	@Override
 	public Map<String, Object> getOneRoomDetail(AccomDTO accom) throws ServiceException {
@@ -81,6 +104,7 @@ public class AccomServiceImpl implements AccomService {
 			throw new ServiceException(e);
 		}
 	}//getOneRoomDetail
+	
 
 	//숙소 검색 결과 조회
 	@Override
@@ -90,7 +114,17 @@ public class AccomServiceImpl implements AccomService {
 		} catch (DAOException e) {
 			throw new ServiceException(e);
 		}
-	}
+	}//getSearchedList
+	
+	@Override
+	public List<AccomDTO> getSearchedListWithMember(AccomDTO accom) throws ServiceException {
+		try {
+			return this.mapper.selectSearchedAccomListWithMember(accom);
+		} catch (DAOException e) {
+			throw new ServiceException(e);
+		}
+	} // getSearchedListWithMember
+
 	
 	//로그인한 회원 정보 결제 페이지에 출력
 	@Override
@@ -100,7 +134,7 @@ public class AccomServiceImpl implements AccomService {
 		} catch (DAOException e) {
 			throw new ServiceException(e);
 		}
-	}
+	}//getOneMemberInfo
 	
 	//결제 페이지에 선택한 숙소 정보 가져오기
 	@Override
@@ -121,7 +155,12 @@ public class AccomServiceImpl implements AccomService {
 			Map<String, Object> result = new HashMap<String, Object>();
 			if(original_wish_data == null) {
 				// 좋아요 등록
-				result.put("success", this.mapper.insertHotelLike(wishaccom));
+				Integer likeCount = this.mapper.selectCountHotelLike(wishaccom);
+				if (likeCount >= 50) {
+					result.put("success", 2);
+				} else {
+					result.put("success", this.mapper.insertHotelLike(wishaccom));
+				}
 				result.put("type", "insert");
 			} else {
 				// 좋아요 삭제
@@ -133,8 +172,25 @@ public class AccomServiceImpl implements AccomService {
 			throw new ServiceException(e);
 		}
 		
-	} // getOneRoomInfo
+	}
 
+
+	// 회원의 현재포인트를 점검(업데이트)하고, 가져오는 트랜잭션
+	@Transactional
+	@Override
+	public Integer getUserCurrentPoint(MemberVO member) throws ServiceException {
+		try { 
+			try { this.mapper.updateMemberPoint(member); }		// 포인트 내역이 없어 업데이트를 할 수 없는 신규회원은,
+			catch (UncategorizedSQLException e) { ;; }			// inner try-catch(Pass)
+			
+			return this.mapper.selectUserCurrentPoint(member); 
+		} catch (Exception e) { 
+			throw new ServiceException(e); 
+		} // try-catch
+	} // getUserCurrentPoint
+
+
+	
 
 
 } // end class

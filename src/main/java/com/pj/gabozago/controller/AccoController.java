@@ -80,9 +80,15 @@ public class AccoController {
 
 			Map<String, Object> map = this.accomService.getOneAccomDetail(accom);
 			List<LinkedHashMap<String, Object>> room_list = this.accomService.getRoomList(accom);
+			
+			List<LinkedHashMap<String, Object>> review_list = this.accomService.getHotelReviewList(accom);//후기
+			Map<String, Object> reviewMap = this.accomService.getHotelAvgReview(accom);//별점 평균
+			model.addAttribute("_REVIEW_",reviewMap);
 
 			map.put("room_list", room_list);
 			model.addAttribute("_ACCOM_", map);
+			map.put("review_list", review_list);
+			
 
 		} catch (ServiceException e) {
 			throw new ControllerException(e);
@@ -93,13 +99,14 @@ public class AccoController {
 
 	// 숙소 상세 정보
 	@GetMapping("/room")
-	public String getRoomDetail(@RequestParam("room_idx") Integer room_idx, AccomDTO accom, Model model)
+	public String getRoomDetail(@RequestParam("room_idx") Integer room_idx, AccomDTO accom, AccomRoomDTO room, Model model)
 			throws ControllerException, ServiceException {
 
 		accom.setIdx(room_idx);
+		
 		Map<String, Object> map = this.accomService.getOneRoomDetail(accom);
-
 		model.addAttribute("_ACCOM_", map);
+		
 
 		return "acco/reservation_room";
 	}
@@ -107,7 +114,7 @@ public class AccoController {
 	// 호텔정보 필터링하여 조회
 	@RequestMapping(value = "search", method = RequestMethod.POST)
 	@ResponseBody
-	public HashMap<String, Object> searchHotelList(HttpServletRequest request, AccomDTO accom)
+	public HashMap<String, Object> searchHotelList(@SessionAttribute(name = SharedScopeKeys.USER_KEY, required = false) MemberVO member, HttpServletRequest request, AccomDTO accom)
 			throws ControllerException, ServiceException {
 		HashMap<String, Object> result = new HashMap<String, Object>();
 
@@ -116,11 +123,20 @@ public class AccoController {
 		if (locationIdx != "") {
 			accom.setLargeAreaIdx(Integer.parseInt(locationIdx));
 		}
+		
+		List<AccomDTO> list;
 
-		List<AccomDTO> list = this.accomService.getSearchedList(accom);
+		if (member == null) { // member -> null -> getList출력
+			list = this.accomService.getSearchedList(accom);
+		} else {
+			accom.setMemberIdx(member.getIdx());
+			list = this.accomService.getSearchedListWithMember(accom);
+		}
+		
 		result.put("_ACCOM_", list);
 		return result;
 	} // searchHotelList
+	
 
 	// 결제를 위한 정보 넘기기
 	@GetMapping("/payment")
@@ -128,6 +144,9 @@ public class AccoController {
 			@RequestParam("room_idx") Integer room_idx, AccomRoomDTO room, Model model)
 			throws ControllerException, ServiceException {
 
+		this.accomService.getUserCurrentPoint(member);
+		
+		
 		room.setIdx(room_idx);
 		Map<String, Object> accomMap = this.accomService.getOneRoomInfo(room);
 		model.addAttribute("accom", accomMap);
@@ -137,6 +156,7 @@ public class AccoController {
 
 		return "acco/reservation_payment";
 	} // loadUser
+	
 
 	// 위시리스트 추가/삭제
 	@RequestMapping(value = "wishlist", method = RequestMethod.POST)
@@ -149,7 +169,12 @@ public class AccoController {
 		
 		HashMap<String, Object> result = new HashMap<String, Object>();
 		
-		if (member == null) return result;
+		if (member == null) {
+			result.put("code", 401);
+			result.put("msg", "인증실패");
+			
+			return result;
+		}
 		
 		String accomIdx = request.getParameter("accom_idx");
 		if(accomIdx == "") return result;
@@ -163,9 +188,12 @@ public class AccoController {
 			if((int) like_result.get("success") == 1) {				
 				result.put("code", 200);
 				result.put("msg", "성공");
+			} else if((int) like_result.get("success") == 2) {
+				result.put("code", 202);
+				result.put("msg", "갯수를 초과함");				
 			} else {
 				result.put("code", 500);
-				result.put("msg", "실패");				
+				result.put("msg", "실패");	
 			}
 			result.put("type", like_result.get("type"));
 		} catch (Exception e) {
@@ -177,6 +205,7 @@ public class AccoController {
 		return result;
 	}
 	
+
 
 	// 결제 ..
 //	@GetMapping("/payment")

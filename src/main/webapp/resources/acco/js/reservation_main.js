@@ -23,12 +23,12 @@ document.addEventListener('DOMContentLoaded', () => {
   addEventToHeartIcon();
 });
 
-function addEventToHeartIcon() { 
+function addEventToHeartIcon() {
   const icons = document.querySelectorAll('.heart_icon');
 
   function handleClick(event) {
-    const currentIdx = event.target.closest(".heart_icon").dataset.idx;
-  
+    const currentIdx = event.target.closest('.heart_icon').dataset.idx;
+
     $.ajax({
       type: 'POST',
       url: '/reservation/wishlist',
@@ -38,15 +38,22 @@ function addEventToHeartIcon() {
         const action_type = response.type;
 
         if (response.code === 200) {
-          if (action_type === "insert") {
+          if (action_type === 'insert') {
             event.target.closest('.heart_icon').classList.add('act');
             document.getElementById('wishlist_modal').style.display = 'block';
             // 하트 버튼 클릭 시 모달창 나타남(display: none → block)
-          } else if (action_type === "delete") {
+          } else if (action_type === 'delete') {
             event.target.closest('.heart_icon').classList.remove('act');
           }
+        } else if (response.code === 202) {
+          alert('위시리스트를 50개 이상 등록할 수 없습니다. 마이페이지에서 확인해 주세요');
+        } else if (response.code === 401) {
+          alert('로그인 후 이용하세요');
         } else {
-          alert((action_type === "insert" ? "등록" : "삭제") + "에 실패했습니다.\n다시 시도해주세요.");
+          alert(
+            (action_type === 'insert' ? '등록' : '삭제') +
+              '에 실패했습니다.\n다시 시도해주세요.'
+          );
         }
       },
       error: function (error) {
@@ -61,7 +68,6 @@ function addEventToHeartIcon() {
 }
 
 //위시리스트 end
-
 
 $(function () {
   // $('.header').load('header.html');
@@ -107,60 +113,72 @@ $(function () {
   $('#datepicker2').datepicker({
     language: 'ko',
   });
-  
-    //인원수반영
+
+  //인원수반영
   $('#person_okbtn').click(function () {
     let countAdult = $('#adult_count').text();
     let countChild = $('#child_count').text();
     $('#person_btn').text(`성인 - ${countAdult}명 / 유아 - ${countChild}명`);
   });
-  
+
   // 검색결과 조회
-  $("#search_btn").on("click", function () {
+  $('#search_btn').on('click', function () {
     let locationIdx = $('#travel_btn').val();
     console.log(locationIdx);
-    
+
     $.ajax({
-      type: "POST",
-      url: "/reservation/search",
+      type: 'POST',
+      url: '/reservation/search',
       data: { location_idx: locationIdx },
-      dataType: "json",
+      dataType: 'json',
       success: function (response) {
         console.log(response);
-        
-        let htmlText = "";
-       	const accom_list = response._ACCOM_;
-       	
-       	for(let i = 0; i < accom_list.length; i++) {
+
+        let htmlText = '';
+        const accom_list = response._ACCOM_;
+
+        for (let i = 0; i < accom_list.length; i++) {
           let accom = accom_list[i];
           htmlText += `
                     <div class="acco_container">
                         <div class="list">
-                            <a href="/reservation/datail?accom_idx=${accom.idx}" class="list_main_name">${accom.accomName}</a>
+                            <a href="/reservation/datail?accom_idx=${
+                              accom.idx
+                            }" class="list_main_name">${accom.accomName}</a>
                             <p>
-                                <br />${accom.travellargeDTO.largeAreaName}<br />기준인원 2명 <br />${accom.accomroomDTO.minPrice} ~ ${accom.accomroomDTO.maxPrice}
+                                <br />${
+                                  accom.travellargeDTO.largeAreaName
+                                }<br />기준인원 2명 <br />${
+            accom.accomroomDTO.minPrice
+          } ~ ${accom.accomroomDTO.maxPrice}
                                 <br />
                             </p>
-                            <a href="/reservation/datail?accom_idx=${accom.idx}" class="list_reserve">예약하기</a>
+                            <a href="/reservation/datail?accom_idx=${
+                              accom.idx
+                            }" class="list_reserve">예약하기</a>
                         </div>
                         <div class="hotel_picture">
-                            <a href="/reservation/datail?accom_idx=${accom.idx}"><img src="/resources/acco/img/himg/${accom.accomimagesDTO.fileName}" alt="" /></a>
+                            <a href="/reservation/datail?accom_idx=${
+                              accom.idx
+                            }"><img src="/resources/acco/img/himg/${
+            accom.accomimagesDTO.fileName
+          }" alt="" /></a>
 
-                            <div class="heart_icon"><i class="bi bi-heart-fill"></i></div>
+                            <div class="heart_icon ${
+                              accom.wishlistIdx > 0 ? 'act' : ''
+                            }" data-idx="${
+            accom.idx
+          }"><i class="bi bi-heart-fill"></i></div>
                         </div>
                     </div>
           `;
         }
-        $("#accom_list_container").html(htmlText);
+        $('#accom_list_container').html(htmlText);
         addEventToHeartIcon();
-
-            
-            
       },
       error: function (error) {
         console.log(error);
-      }
-    });//ajax
-    
+      },
+    }); //ajax
   });
 });

@@ -25,12 +25,17 @@ public interface AccomService {
 
 	//숙소 하위 방 목록 조회
 	public abstract List<LinkedHashMap<String, Object>> getRoomList(AccomDTO accom) throws ServiceException;
+	//숙소 하위 리뷰 목록 조회
+	public abstract List<LinkedHashMap<String, Object>> getHotelReviewList(AccomDTO accom) throws ServiceException;
+	//숙소 리뷰 평균
+	public abstract Map<String, Object> getHotelAvgReview(AccomDTO accom) throws ServiceException;
 
 	//숙소 방 한개당 상세 정보 조회
 	public abstract Map<String, Object> getOneRoomDetail(AccomDTO accom) throws ServiceException;
 
 	//숙소 검색결과 목록 조회
-	public abstract List<AccomDTO> getSearchedList(AccomDTO accom) throws ServiceException;
+	public abstract List<AccomDTO> getSearchedList(AccomDTO accom) throws ServiceException; //비로그인
+ 	public abstract List<AccomDTO> getSearchedListWithMember(AccomDTO accom) throws ServiceException; //로그인
 
 	//로그인한 회원 정보 결제 페이지에 출력
 	public abstract Map<String, Object> getOneMemberInfo(MemberVO member) throws ServiceException;
@@ -40,6 +45,14 @@ public interface AccomService {
 
 	//위시리스트
 	public abstract Map<String, Object> setHotelLike(WishlistAccomDTO wishaccom) throws ServiceException, DAOException;
+	
+	
+	// 특정 회원의 현재 포인트를 가져오는 메소드
+	public abstract Integer getUserCurrentPoint(MemberVO member) throws ServiceException;
+	
+	
+	
+	
 	
 
 

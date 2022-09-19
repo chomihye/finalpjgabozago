@@ -4,6 +4,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Select;
+
 import com.pj.gabozago.domain.AccomDTO;
 import com.pj.gabozago.domain.AccomRoomDTO;
 import com.pj.gabozago.domain.MemberDTO;
@@ -26,12 +28,19 @@ public interface AccomMapper {
 
 	//숙소의 방 리스트
 	public abstract List<LinkedHashMap<String, Object>> selectRoomList(AccomDTO accom) throws DAOException;
-
+	
+	//숙소의 후기 목록
+	public abstract List<LinkedHashMap<String, Object>> selectHotelReviewList(AccomDTO accom) throws DAOException;
+	
+	//숙소 리뷰 평균
+	public abstract Map<String, Object> selectHotelAvgReview(AccomDTO accom) throws DAOException;
+	
 	//숙소 방의 상세 정보 
 	public abstract Map<String, Object> selectRoomDetail(AccomDTO accom) throws DAOException;
 
 	//숙소 검색 결과 조회
 	public abstract List<AccomDTO> selectSearchedAccomList(AccomDTO accom) throws DAOException;
+	public abstract List<AccomDTO> selectSearchedAccomListWithMember(AccomDTO accom) throws DAOException;
 
 	//로그인한 회원 정보 결제 페이지에 출력
 	public abstract Map<String, Object> selectOneMemberInfo(MemberVO member) throws DAOException;
@@ -41,8 +50,16 @@ public interface AccomMapper {
 
 	//위시리스트
 	public abstract Map<String, Object> selectHotelLike(WishlistAccomDTO wishaccom) throws DAOException; // 기존 좋아요 유무 확인
+	public abstract Integer selectCountHotelLike(WishlistAccomDTO wishaccom) throws DAOException; // 기존 좋아요 갯수 확인
 	public abstract Integer insertHotelLike(WishlistAccomDTO wishaccom) throws DAOException; // 좋아요 등록
 	public abstract Integer deleteHotelLike(WishlistAccomDTO wishaccom) throws DAOException; // 좋아요 삭제
+	
+	// 특정 회원의 member 테이블에 현재 포인트를 점검하는 메소드
+	public abstract void updateMemberPoint(MemberVO member) throws DAOException;
+		
+	// 특정 회원의 현재 포인트를 가져오는 메소드
+	@Select("SELECT point FROM tbl_member WHERE idx = #{idx}")
+	public abstract Integer selectUserCurrentPoint(MemberVO member);
 	
 
 	
