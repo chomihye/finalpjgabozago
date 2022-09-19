@@ -3,6 +3,7 @@ package com.pj.gabozago.mapper;
 import java.sql.Timestamp;
 
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 import com.pj.gabozago.domain.JoinDTO;
 import com.pj.gabozago.domain.LoginDTO;
@@ -14,6 +15,15 @@ public interface MemberMapper {
 
 	// 새로운 멤버 회원가입 시 저장
 	public abstract Integer insert(JoinDTO dto) throws MemberException;
+	
+	// 회원가입 시 닉네임 중복확인
+	public abstract Integer selectUserforNickCheck(String nickname) throws MemberException;
+	
+	// 회원가입 시 이메일 중복확인
+	public abstract Integer selectUserforEmailCheck(String email, String uid) throws MemberException;
+	
+	// 회원가입 시 휴대폰 번호 중복확인
+	public abstract Integer selectUserforPhoneCheck(String phone, String uid) throws MemberException;	
 	
 	public abstract MemberVO selectUser(LoginDTO dto) throws MemberException;
 	

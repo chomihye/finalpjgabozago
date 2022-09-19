@@ -54,6 +54,30 @@
         ]]>
     </select>
     
+     <select id="selectUserforNickCheck" resultType="int">
+        <![CDATA[ 
+            SELECT count(idx)
+            FROM tbl_member
+            WHERE nickname = #{nickname}
+        ]]>
+    </select>
+    
+    <select id="selectUserforEmailCheck" resultType="int">
+        <![CDATA[ 
+            SELECT count(idx)
+            FROM tbl_member
+            WHERE email = #{email}
+        ]]>
+    </select>
+    
+    <select id="selectUserforPhoneCheck" resultType="int">
+        <![CDATA[ 
+            SELECT count(idx)
+            FROM tbl_member
+            WHERE phone = #{phone}
+        ]]>
+    </select>
+    
     <update id="updateUserWithRememberMe">
         UPDATE 
             tbl_member

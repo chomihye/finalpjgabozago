@@ -45,15 +45,15 @@
     
     <!-- 네이버 로그인 -->
     <!-- <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script> -->
-	  <script src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.2.js" charset="utf-8"></script>
+	<script src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.2.js" charset="utf-8"></script>
 
     <!-- 카카오 로그인 -->
     <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 
     <script type="text/javascript">
-      // 1. 카카오 로그인
+     	// 1. 카카오 로그인
 	    Kakao.init('38c41b61e80cae65961a9ddb0441a69c');
-		  console.log(Kakao.isInitialized());
+		console.log(Kakao.isInitialized());
 		
      	function kakaoLogin() {
         Kakao.Auth.login({
@@ -91,63 +91,63 @@
       } // kakaoLogout
      	  
       // 2. 네이버 로그인
-//       var naverLogin = new naver.LoginWithNaverId({
-//             clientId: "ogYcfVAWiOHE79qtuGQH",
-//             callbackUrl: "http://localhost:8080/login/naver/auth",
-//             isPopup: false
-//       });	// 
+      var naverLogin = new naver.LoginWithNaverId({
+            clientId: "ogYcfVAWiOHE79qtuGQH",
+            callbackUrl: "http://localhost:8080/login/naver/auth",
+            isPopup: false
+      });	// 
 
-//       naverLogin.init();
+      naverLogin.init();
 
-//       window.addEventListener('load', function () {
-//         naverLogin.getLoginStatus(function (status) {
+      window.addEventListener('load', function () {
+        naverLogin.getLoginStatus(function (status) {
         	
-//           if (status) { // 필수 설정 항목 조건문 작성
-//             const name = naverLogin.user.getName();
-//             const email = naverLogin.user.getEmail();
-//             const nickname = naverLogin.user.getNickName();
-//             const birthday = naverLogin.user.getBirthday();
-//             const profile_image = naverLogin.user.getProfileImage(); 
-//             const birthyear = naverLogin.user.getBirthyear(); // MM-DD
-//             const mobile = naverLogin.user.getMobile();
+          if (status) { // 필수 설정 항목 조건문 작성
+            const name = naverLogin.user.getName();
+            const email = naverLogin.user.getEmail();
+            const nickname = naverLogin.user.getNickName();
+            const birthday = naverLogin.user.getBirthday();
+            const profile_image = naverLogin.user.getProfileImage(); 
+            const birthyear = naverLogin.user.getBirthyear(); // MM-DD
+            const mobile = naverLogin.user.getMobile();
 
-//             console.log(naverLogin.user); 
+            console.log(naverLogin.user); 
               
-//             if( name == undefined || name == null 
-//             		|| email == undefined || email == null 
-//             		|| nickname == undefined || nickname == null 
-//             		|| birthday == undefined || birthday == null 
-//             		|| profile_image == undefined || profile_image == null 
-//             		|| birthyear == undefined || birthyear == null 
-//             		|| mobile == undefined || mobile == null) {
-//               alert("필수 정보 제공에 동의해주세요.");
-//               naverLogin.reprompt();
-//               return;
-//             }// if
+            if( name == undefined || name == null 
+            		|| email == undefined || email == null 
+            		|| nickname == undefined || nickname == null 
+            		|| birthday == undefined || birthday == null 
+            		|| profile_image == undefined || profile_image == null 
+            		|| birthyear == undefined || birthyear == null 
+            		|| mobile == undefined || mobile == null) {
+              alert("필수 정보 제공에 동의해주세요.");
+              naverLogin.reprompt();
+              return;
+            }// if
 
-//           } else {
-//             console.log("callback 처리에 실패하였습니다.");
-//           }//if-else
-//         });// getLoginStatus
-//       });
+          } else {
+            console.log("callback 처리에 실패하였습니다.");
+          }//if-else
+        });// getLoginStatus
+      });
 
-//       var testPopUp;
+      var testPopUp;
 
-//       function openPopUp() {
-//           testPopUp= window.open("https://nid.naver.com/nidlogin.logout", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,width=1,height=1");
-//       }// openPopUp
+      function openPopUp() {
+          testPopUp= window.open("https://nid.naver.com/nidlogin.logout", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,width=1,height=1");
+      }// openPopUp
 
-//       function closePopUp(){
-//           testPopUp.close();
-//       }// closePopUp
+      function closePopUp(){
+          testPopUp.close();
+      }// closePopUp
 
-//       function naverLogout() {
-//         openPopUp();
+      function naverLogout() {
+        openPopUp();
 
-//         setTimeout(function() {
-//           closePopUp();
-//           }, 1000);
-//       }// naverLogout
+        setTimeout(function() {
+          closePopUp();
+          }, 1000);
+      }// naverLogout
 
       $(function(){
         var resultMsg = '${__RESULT__}'

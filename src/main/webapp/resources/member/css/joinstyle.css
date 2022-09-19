@@ -160,8 +160,8 @@ body #body{
 #body .sections .redStar{
     color: red;
 }
-#body .sections #pwcheckError{
-    color: red;
+#body .sections .validationRulesError, #pwcheckError{
+	color: red;
     display: none;
     font-size: 14px;
 }
@@ -240,6 +240,7 @@ body #body{
     border-radius: 20px;
     text-align: center;
     margin: 18px auto 16px auto;
+    cursor: pointer;
 }
 #joinSucceed{ /* 회원가입 완료 시 확인 버튼 */
 	font-size: 16px;
@@ -282,24 +283,21 @@ body #body{
 .center.simpleTextSpaceAdd{ /* 본문만 있는 모달창 위아래 추가 여백 */
     margin: 70px 0 50px 0;
 }
-.modal_Content #resendLink{
+.modal_Content .resend{
     font-size: 14px;
     color: #444;
     margin: 14px;
-    text-align: center;
-}
-#resendLink a{
     text-decoration: underline;
 }
-#phoneValidation{
+#phoneVerification, #emailVerification{
     margin: 0 auto;
     text-align: center;
 }
-#phoneValidationNumInput{
+#phoneVerificationNumInput, #emailVerificationNumInput{
     width: 60%;
     margin-top: 0;
 }
-#phoneValidationNumBtn{
+#phoneVerificationNumBtn, #emailVerificationNumBtn{
     width: 30%;
     color: #111111;
     background: #FFFFFF;

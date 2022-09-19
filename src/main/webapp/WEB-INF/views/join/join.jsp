@@ -46,235 +46,12 @@
 	<script src="https://npmcdn.com/flatpickr/dist/flatpickr.min.js"></script>
 	<script src="https://npmcdn.com/flatpickr/dist/l10n/ko.js"></script> 
 	
+    <!-- join JS -->
+    <script src="/resources/member/js/join.js"></script>
+    <script src="/resources/member/js/join_validCheck.js"></script>
     
     <script type="text/javascript">
-	    $(function(){
-            var minDate = new Date();
-            var maxDate = new Date();
-            
-            var range = minDate.getDate() - 36500;
-            minDate.setDate(range);
-            
-            var pickr = document.querySelector('#flatpickr');
-            
-            flatpickr.localize(flatpickr.l10ns.ko);
-            flatpickr(pickr);
-            
-            pickr.flatpickr({  
-                local: 'ko',
-                minDate: minDate,
-                maxDate: maxDate,
-                dateFormat: 'Y-m-d',
-                
-                allowInput: true,
-                onOpen: function(selectedDates, dateStr, instance) {
-                    $(instance.altInput).prop('readonly', true);
-                },
-                onClose: function(selectedDates, dateStr, instance) {
-                    $(instance.altInput).prop('readonly', false);
-                    $(instance.altInput).blur();
-                }
-            });
-	    });// flatpickr
-    
-        $(function(){
-            function printEmail()  {
-            	const email = document.querySelector('#email').value;
-            	document.querySelector('#printEmail').innerText = email;
-            }// printEmail
-
-            $('#emailValidationBtn').click(function(){
-            	if(document.querySelector('#email').value == '' || document.querySelector('#email').value == null){
-            		alert('이메일을 입력하세요.');
-            	} else {
-                	$('#emailModal').css({display: 'block'});
-                	printEmail();            		
-            	}// if-else
-            }); // 이메일 인증 버튼 클릭
-            
-            function printPhone()  {
-          	  	const phone = document.querySelector('#phone').value;
-          	  	document.querySelector('#printPhone').innerText = phone;
-          	}// printPhone
-          
-            $('#phoneValidationBtn').click(function(){
-            	if(document.querySelector('#phone').value == '' || document.querySelector('#phone').value == null){
-            		alert('휴대폰 번호를 입력하세요.');
-            	} else {
-            		$('#phoneModal').css({display: 'block'});
-            		printPhone();         
-            		
-		            var time = 180; // 180초
-		        	var min = ''; // 분
-		        	var sec = ''; // 초
-		
-		        	//setInterval(함수, 시간): 주기적인 실행
-		        	var timer = setInterval(function() {
-		        		min = parseInt(time / 60); //몫(정수) 계산
-		        		sec = time % 60; //나머지 계산
-		
-		        		document.querySelector('#timer').innerHTML = + min + '분 ' + sec + '초';
-		        		time--;
-		
-		        		//타임아웃 or 모달창 이탈한 경우
-		        		if (time < 0 || $('#phoneModal').css('display') != 'block') {
-		        			clearInterval(timer); //setInterval() 실행 종료
-                            $('#phoneValidationNumBtn').attr('disabled', true);
-		        			document.querySelector('#timer').innerHTML = '시간 초과';
-		        		}// if
-
-                        // 재전송 버튼을 클릭하는 경우 리셋 - 구현 예정
-                        ;;
-
-		        	}, 1000);// timer
-		        	
-            	}// if-else
-            }); // 폰 인증 버튼 클릭
-
-            $('#doubleCheckBtn').click(function(){
-                $('#doubleCheckSucceedModal').css({display: 'block'}); // 성공한 경우
-            }); // 중복확인 버튼 클릭
-            
-            $('.okBtn').click(function(){
-                $('#emailModal').css({display: 'none'});
-                $('#phoneModal').css({display: 'none'});
-                $('#joinFailedModal').css({display: 'none'});
-                $('#doubleCheckSucceedModal').css({display: 'none'});
-            }); // 확인 혹은 취소 버튼 클릭
-            
-            $('#joinSucceed').click(function(){
-            	self.location = '/main';
-            }); // 회원가입 완료 모달 확인 버튼 클릭 시 메인페이지 이동
-            
-            window.onclick = function(event) {
-                if(event.target == emailModal || event.target == phoneModal || event.target == doubleCheckSucceedModal) {
-                    $('#emailModal').css({display: 'none'});
-                    $('#phoneModal').css({display: 'none'});
-                    $('#doubleCheckSucceedModal').css({display: 'none'});
-                }// if
-            }; // 배경 누르면 취소되는 경우 구현
-            
-            function readImage(input) {
-    	        if (input.files && input.files[0]) {
-    	            const reader = new FileReader();
-    	            
-    	            reader.onload = e => {                
-    	                $('#profileImgSample').attr('src', e.target.result);
-    	            }
-    	            reader.readAsDataURL(input.files[0]);
-    	        }// if
-    		}// readImage
-            
-            $('#uploadFile').on('change',function(e){
-                var filePath = $('#uploadFile').val();
-                
-                if(filePath != ''){
-                var ext = filePath.split('.').pop().toLowerCase(); // 파일 업로드 확장자 체크
-
-                if($.inArray( ext, ['png','jpg','jpeg'] ) == -1) {
-                    alert('업로드할 수 없는 파일 확장자입니다. png, 혹은 jpg 파일을 선택해주세요.');
-                    $('#imageUploadPlaceHolder').attr('placeholder', '이미지를 업로드하세요.');  // input 파일명 지우기
-                    $('#profileImgSample').attr('src', '/resources/member/img/userprofile.jpg'); // input 파일 썸네일 지우기
-                    return;
-                } else{
-                    var lastIndex = filePath.lastIndexOf('\\');
-                    var fileName = filePath.substring(lastIndex + 1, filePath.length);
-            
-                    $('#imageUploadPlaceHolder').attr('placeholder', fileName); 
-                    readImage(e.target); 
-                }// if-else
-                }// if
-           	}); // 프로필 이미지 첨부 시 파일명 & 샘플 이미지 표시
-           	
-               
-            $('#pwcheck').on('input', function(){
-                var pw = $('#pw').val();
-                var pwcheck = $('#pwcheck').val();
-
-                if (pw != '' || pwcheck == ''){
-                    if(pw == pwcheck){ // 비밀번호 일치
-                    	$('#pwcheckError').css({display: 'none'});
-                    } else { // 비밀번호 불일치
-                    	$('#pwcheckError').css({display: 'block'});
-                    } // if-else
-                }// if
-            });// 비밀번호 일치 확인
-            
-            // $('#joinForm').validate({
-            	
-            // 	rules:{
-            // 		name: 'required',
-            // 		email: 'required',
-            // 		pw: 'required',
-            // 		pwcheck: 'required',
-            // 		nickname: 'required',
-            // 		phone: 'required',
-            // 		datepicker: 'required',
-            // 		personalTextAgree: 'required',
-            // 		usageTextAgree: 'required',
-            // 		uploadFile: 'required'
-            // 	},
-            	
-            // 	messages:{
-            // 		personalTextAgree: {required: '필수 동의 항목입니다.'},
-            //         usageTextAgree: {required: '필수 동의 항목입니다.'},
-            // 	},
-            	
-            // 	submitHandler: function(){
-            		
-            // 	},
-            	
-            // 	success: function(e){
-            		
-            // 	}
-            // });
-            
-            
-            // $('#personalTextAgree', '#usageTextAgree').rules('add', {
-        	// 	required: true,
-        	// 	messages: {
-        	// 		required: '필수 동의 항목입니다.'
-        	// 	}
-         	// });            
-            
-            // // 회원가입 submit 성공 조건
-            // $('#joinBtn').on('click', function(){
-            // 	// 클릭 가능 전제 -> 모든 필수 입력폼 입력(브라우저 validation)
-            	
-            // 	if(){
-            //      // 1. 아이디 인증 완료 확인
-            //     	// 2. 닉네임 중복 확인 완료 확인
-            //     	// 3. 휴대폰 번호 인증 완료 확인
-            //     	// 4. 개인정보수집/이용약관 동의 확인
-                	
-            // 		$('#joinSucceedModal').css({display: 'block'}); // 성공한 경우
-            // 	} else {
-            // 		$('#joinFailedModal').css({display: 'block'}); // 실패한 경우
-            // 	}
-       
-            // 	let formObj = $('#joinForm');
-
-            //     formObj.attr('action', '/main');
-            //     formObj.attr('method', 'POST');
-            //     formObj.submit();
-            // });
-            
-// 			if ( $('input:radio[name='usageTextAgree']').is(':checked') == true) { // 만약 usageTextAgree가 체크되어잇다면
-// 			    var usageTextAgreeValue = $('input:radio[name='usageTextAgree']:checked').val();
-			
-// 				if( usageTextAgreeValue == 'disagree' ){
-// 					alert('개인정보 수집 및 이용 동의는 필수 동의 항목입니다.');
-// 				    $('input[name='usageTextAgree']').focus();
-// 				    return false;
-// 				} // if
-				
-// 			}// if
-
-			// document.getElementsByName('personalTextAgree')[0].required = true;
-			// document.getElementsByName('usageTextAgree')[0].required = true;
-
-        });
-
+	   
     </script>
 </head>
 
@@ -290,22 +67,26 @@
             <form 
             action="join/joinProcess"
             
-            method="POST" id="joinForm" enctype="multipart/form-data">
+            method="POST" id="joinForm" enctype="multipart/form-data"
+            onsubmit="return finalCheckBeforeSubmit()">
                 <div class="sections">
                     <h4>이름<span class="redStar">*</span></h4>
                     <input type="text" name="name" id="name" placeholder="예: 홍길동" minlength="2" maxlength="10"required><br>
+                    <div id="nameRulesError" class="validationRulesError">이름을 재작성해주세요.</div>
                 </div >
                 
                 <div class="sections">
                     <h4>아이디(이메일)<span class="redStar">*</span></h4>
                     <input type="email" name="email" id="email" placeholder="예: sample@email.com" required>
-                    <button type="button" class="formCheckBox" id="emailValidationBtn">인증</button><br>
+                    <button type="button" class="formCheckBox verificationBtn" id="emailVerificationBtn" onclick="doubleCheckAndVerifyEmail()">인증</button><br>
+                    <div id="emailRulesError" class="validationRulesError">이메일 양식에 맞게 재작성해주세요.</div>
                 </div>
                 
                 <div class="sections">
                     <h4>비밀번호<span class="redStar">*</span></h4>
                     <p class="ruleTexts">영문 대소문자, 숫자, 특수문자 포함 8자 이상 12자 이하</p>
                     <input type="password" name="pw" id="pw" placeholder="●●●●●●●●" minlength="8" maxlength="12" required>
+                    <div id="pwRulesError" class="validationRulesError">비밀번호 양식에 맞게 재작성해주세요.</div>
                 </div>
                 
                 <div class="sections">
@@ -318,13 +99,15 @@
                     <h4>닉네임<span class="redStar">*</span></h4>
                     <p class="ruleTexts">한문, 특수문자, 공백 제외 8자 이내</p>
                     <input type="text" name="nickname" id="nickname" placeholder="" maxlength="8" required>
-                    <button type="button" class="formCheckBox" id="doubleCheckBtn">중복 확인</button>
+                    <button type="button" class="formCheckBox" id="doubleCheckBtn" onclick="doubleCheckNickname()">중복 확인</button>
+                    <div id="nicknameRulesError" class="validationRulesError">닉네임 양식에 맞게 재작성해주세요.</div>
                 </div>
                 
                 <div class="sections">
                     <h4>휴대폰 번호<span class="redStar">*</span></h4>
                     <input type="text" name="phone" id="phone" pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}" placeholder="010-0000-0000" required>
-                    <button type="button" class="formCheckBox" id="phoneValidationBtn">인증</button>
+                    <button type="button" class="formCheckBox verificationBtn" id="phoneVerificationBtn" onclick="doubleCheckAndVerifyPhone()">인증</button>
+                    <div id="phoneRulesError" class="validationRulesError">휴대폰 번호 양식(010-0000-0000)에 맞게 재작성해주세요.</div>
                 </div>
                 
                 <div class="sections">
@@ -333,7 +116,7 @@
                 </div>
                 
                 <div class="sections">
-                    <h4>개인정보 수집 및 이용 동의<span class="redStar">*</span></h4>
+                    <h4>개인정보 수집 및 이용 동의<span class="redStar">*</span></h4> <span id="personalTextAgreeRulesError" class="validationRulesError">필수 동의 항목입니다.</span>
                     <textarea name="personalText" id="personalText" rows="8" readonly disabled>
 가보자고('http://gabozago.co.kr'이하 '가보자고')은(는) 「개인정보 보호법」 제30조에 따라 정보주체의 개인정보를 보호하고 이와 관련한 고충을 신속하고 원활하게 처리할 수 있도록 하기 위하여 다음과 같이 개인정보 처리방침을 수립·공개합니다.
 
@@ -536,12 +319,12 @@
 
 ② 이전의 개인정보 처리방침은 아래에서 확인하실 수 있습니다.
                     </textarea><br>
-                    <input type="radio" name="personalTextAgree" id="" value="agree" required>동의합니다.
-                    <input type="radio" name="personalTextAgree" id="" value="disgree" >동의하지 않습니다.<br>
+                    <input type="radio" name="personalTextAgree" value="agree" required>동의합니다.
+                    <input type="radio" name="personalTextAgree" value="disgree" >동의하지 않습니다.<br>
                 </div>
                 
                 <div class="sections">
-                    <h4>이용약관 동의<span class="redStar">*</span></h4>
+                    <h4>이용약관 동의<span class="redStar">*</span></h4> <span id="usageTextAgreeRulesError" class="validationRulesError">필수 동의 항목입니다.</span>
                     <textarea name="usageText" id="usageText" rows="8" readonly disabled>
 제 1 장 총칙
 
@@ -672,8 +455,8 @@
 <부칙>
 본 약관은 2022년 7월 1일부터 적용한다.                     
                     </textarea>
-                    <input type="radio" name="usageTextAgree" id="" value="agree" required>동의합니다.
-                    <input type="radio" name="usageTextAgree" id="" value="disgree" >동의하지 않습니다.<br>
+                    <input type="radio" name="usageTextAgree" value="agree" required>동의합니다.
+                    <input type="radio" name="usageTextAgree" value="disgree" >동의하지 않습니다.<br>
                 </div>
                 
                 <div class="sections">
@@ -689,7 +472,7 @@
                 </div>
                 
                 <input type="button" value="취소" onClick="location.href='/login'">
-                <input type="submit" value="회원가입" id="joinBtn">
+                <input type="submit" value="회원가입" id="joinBtn" >
             </form>
 
         </div>
@@ -702,8 +485,14 @@
         <div class="modal_Content">
             <h3><i class="fas fa-check"></i>이메일 주소 인증</h3>
             <p><span id="printEmail"></span>으로 이메일 인증 링크를 발송하였습니다.<br>
-            메일 본문의 링크를 눌러 인증을 완료해주세요.</p>
-            <div class="okBtn">확인</div>
+            3분 이내에 인증 번호 6글자를 입력하세요.</p>
+            <h2 id="timerForEmail" class="center timer"></h2>
+            <div id="emailVerification">
+                <input type="text" id="emailVerificationNumInput" placeholder="인증 번호를 입력하세요." maxlength="6">
+                <button type="button" class="verificationNumBtn" id="emailVerificationNumBtn" onclick="emailVerify()">확인</button>
+            </div>
+            <div class="center resend"><button type="button" class="resendBtn" id="resendEmail" onclick="resendEmail()">재전송</button></div>
+            <div class="okBtn" id="closeBtn">취소</div>
         </div>
     </div>
 
@@ -713,28 +502,28 @@
             <h3><i class="fas fa-check"></i>휴대폰 번호 인증</h3>
             <p><span id="printPhone"></span>으로 SMS 인증 번호를 발송하였습니다.<br>
             3분 이내에 인증 번호 6글자를 입력하세요.</p>
-            <h2 id="timer" class="center"></h2>
-            <div id="phoneValidation">
-                <input type="text" name="phoneValidationNum" id="phoneValidationNumInput" placeholder="인증 번호를 입력하세요." maxlength="6">
-                <button type="button" id="phoneValidationNumBtn">확인</button>
+            <h2 id="timerForPhone" class="center timer"></h2>
+            <div id="phoneVerification">
+                <input type="text" id="phoneVerificationNumInput" placeholder="인증 번호를 입력하세요." maxlength="6">
+                <button type="button" class="verificationNumBtn" id="phoneVerificationNumBtn" onclick="phoneVerify()" >확인</button>
             </div>
-            <div id="resendLink"><a href="">재전송</a></div>
+            <div class="center resend"><button type="button" class="resendBtn" id="resendSms" onclick="resendSms()">재전송</button></div>
             <div class="okBtn" id="closeBtn">취소</div>
         </div>
     </div>
 
-    <!-- 휴대폰 번호 인증 성공 모달 -->
-    <div class="modal" id="phoneValidationSucceedModal">
+    <!-- 인증 성공 모달 -->
+    <div class="modal" id="VerifyingSucceedModal">
         <div class="modal_Content">
-            <p class="center simpleTextSpaceAdd">휴대폰 인증이 완료되었습니다.</p>
+            <p class="center simpleTextSpaceAdd">인증이 완료되었습니다.</p>
             <div class="okBtn">확인</div>
         </div>
     </div>
 
-    <!-- 휴대폰 번호 인증 실패 모달 -->
-    <div class="modal" id="phoneValidationFailedModal">
+    <!-- 인증 실패 모달 -->
+    <div class="modal" id="VerifyingFailedModal">
         <div class="modal_Content">
-            <p class="center simpleTextSpaceAdd">휴대폰 인증이 실패하였습니다.</p>
+            <p class="center simpleTextSpaceAdd">인증이 실패하였습니다.</p>
             <div class="okBtn">확인</div>
         </div>
     </div>
@@ -750,7 +539,7 @@
     <!-- 중복 확인 실패 모달 -->
     <div class="modal" id="doubleCheckFailedModal">
         <div class="modal_Content">
-            <p class="center simpleTextSpaceAdd">중복 확인이 실패하였습니다.</p>
+            <p id="failedText" class="center simpleTextSpaceAdd">중복 확인이 실패하였습니다.</p>
             <div class="okBtn">확인</div>
         </div>
     </div>

@@ -38,36 +38,48 @@
     <!-- jQuery Section -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-migrate/3.4.0/jquery-migrate.min.js"></script>
-
+    
     <script>
-        $(function(){
-        	
-        
+    function checkValidation(){
+    	console.log("checkValidation() invoked.");
+    	
+    	let findpwWay = $("input:radio[name='pwfindCase']:checked").val();
+    	console.log("findpwWay: " + findpwWay);
 
-        });
-        
-    	$('#pwfindBtn').on('click', function(){
+    	if(findpwWay == "email"){
+    		let email = $("#email").val();
+    		$("#phone").val("");
+
+    		let reg_email =/^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/;
     		
-    		console.log("#pwfindBtn clicked.");
+    		if(!(reg_email.test(email)) || email == ""){ // 유효성 검사 실패
+                $("#emailRulesError").css({display: "block"}); 
+                $("#phoneRulesError").css({display: "none"});
+                return false;
+            } else { // 유효성 검사 성공
+                $("#emailRulesError").css({display: "none"});
+                $("#phoneRulesError").css({display: "none"});
+            } // if-else
+            	
+    	} else if(findpwWay == "phone"){
+    		let phone = $("#phone").val();
+    		$("#email").val("");
+
+    		let reg_phone = /^\d{3}-\d{4}-\d{4}$/;
     		
-    		var checkValue = $("input:radio[name=pwfindCase]:checked").val();
-    		var emailInputValLength = $("#email").val().length;
-    		var phoneInputValLength = $("#phone").val().length;
-    		        		
-         	if(checkValue == "email" && emailInputValLength == 0){ // 이메일 체크돼있는데 입력값 없는 경우
-         		alert('가입 시 사용한 아이디(이메일)를 입력하세요.');
-			    $("#email").focus();
-			    return false;
-         	} if else (checkValue == "phone" && phoneInputValLength == 0){ // 휴대폰 체크돼있는데 입력값 없는 경우
-         		alert('가입 시 사용한 휴대폰 번호를 입력하세요.');
-			    $("#phone").focus();
-			    return false;
-         	} else {
-             	let formObj = $('#pwfindForm');
-		            formObj.submit();     		
-         	}// if-else
-   
-         });
+    		if(!(reg_phone.test(phone)) || phone == ""){ // 유효성 검사 실패
+                $("#phoneRulesError").css({display: "block"}); 
+                $("#emailRulesError").css({display: "none"});
+
+                return false;
+            } else { // 유효성 검사 성공
+                $("#phoneRulesError").css({display: "none"});
+                $("#emailRulesError").css({display: "none"});
+
+            } // if-else
+    	}// if-else
+      
+    }// checkValidation
     </script>
 </head>
 
@@ -88,15 +100,17 @@
                 <button type="button" onclick="location.href='/findInfo/pw'">비밀번호 찾기</button>
                 
                 <div class="mainForm" id="pwfindDefault">
-                    <form action="/findInfo/findpwProcess" id="pwfindForm" method="POST">
+                    <form action="/findInfo/findpwProcess" id="pwfindForm" method="POST" onsubmit="return checkValidation()">
                         <div class="leftSorting">
                             <input type="radio" name="pwfindCase" id="pwfindId" value="email" checked>가입한 아이디로 찾기<br>
                             <input type="text" name="email" id="email" placeholder="sample@email.com">
+                            <div id="emailRulesError" class="validationRulesError">이메일 양식에 맞게 재작성해주세요.</div>
                             <br><br>
                             <input type="radio" name="pwfindCase" id="pwfindPhone" value="phone" >가입한 휴대폰 번호로 찾기<br>
-                            <input type="text" name="phone" id="phone" pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}" placeholder="010-1111-1111"><br>
+                            <input type="text" name="phone" id="phone" placeholder="010-0000-0000"><br>
+                            <div id="phoneRulesError" class="validationRulesError">휴대폰 번호 양식(010-0000-0000)에 맞게 재작성해주세요.</div>
                         </div>
-                        <input type="submit" id="pwfindBtn" value="비밀번호 찾기" >
+                        <input type="submit" id="pwfindBtn" value="비밀번호 찾기"  >
                     </form>
 
                 </div>
