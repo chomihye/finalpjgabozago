@@ -42,9 +42,21 @@
     <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
 
     <script type="text/javascript">
-        $(function(){
-        	
-        });
+	    function checkValidation(){
+	    	console.log("checkValidation() invoked.");
+	    
+    		let phone = $("#phone").val();
+
+    		let reg_phone = /^\d{3}-\d{4}-\d{4}$/;
+    		
+    		if(!(reg_phone.test(phone)) || phone == ""){ // 유효성 검사 실패
+                $("#phoneRulesError").css({display: "block"}); 
+
+                return false;
+            } else { // 유효성 검사 성공
+                $("#phoneRulesError").css({display: "none"});	
+            } // if-else	      
+	    }// checkValidation
     </script>
 </head>
 
@@ -65,10 +77,11 @@
                 <button type="button" onclick="location.href='/findInfo/pw'">비밀번호 찾기</button>
                 
                 <div class="mainForm" id="idfindDefault">
-                    <form action="/findInfo/findidProcess" method="POST">
+                    <form action="/findInfo/findidProcess" method="POST" onsubmit="return checkValidation()">
                         <div class="leftSorting">
                             <input type="radio" name="" id="" checked>가입한 휴대폰 번호로 찾기<br>
-                            <input type="text" name="phone" id="phone" pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}" placeholder="010-1111-1111" required><br>
+                            <input type="text" name="phone" id="phone" placeholder="010-0000-0000" required><br>
+                            <div id="phoneRulesError" class="validationRulesError">휴대폰 번호 양식(010-0000-0000)에 맞게 재작성해주세요.</div>
                         </div>
                         
                         <input type="submit" value="아이디 찾기" id="findIdBtn" >

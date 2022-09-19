@@ -14,6 +14,15 @@ public interface MemberService {
 	// 멤버 회원가입
 	public abstract boolean create(JoinDTO dto) throws ServiceException;
 	
+	// 회원가입 시 닉네임 중복 확인
+	public abstract int findUserforNicknameCheck(String nickname) throws ServiceException;
+	
+	// 회원가입 시 이메일 중복 확인과 인증번호 발송
+	public abstract int findUserforEmailCheck(String email, String uid) throws ServiceException;
+	
+	// 회원가입 시 이메일 중복 확인과 인증번호 발송
+	public abstract int findUserforPhoneCheck(String phone, String uid) throws ServiceException;
+
 	// 로그인
 	public abstract MemberVO login(LoginDTO dto) throws ServiceException;
 	
@@ -35,4 +44,5 @@ public interface MemberService {
 	
 	// 휴대폰 번호로 비밀번호 찾기 후 임시비밀번호 업데이트
 	public abstract boolean modifyUserforFindPwWithPhone(String phone, String uid, String password) throws ServiceException;
+	
 }// end interface

@@ -78,6 +78,13 @@ body #body{
 #body .mainForm .leftSorting{
     margin-left: -100px;
 }
+#body .mainForm .validationRulesError{
+	color: red;
+    display: none;
+    font-size: 14px;
+    margin-top: 5px;
+	padding-left: 190px;
+}
 #body .mainForm p{
     margin: 10px 0;
 }

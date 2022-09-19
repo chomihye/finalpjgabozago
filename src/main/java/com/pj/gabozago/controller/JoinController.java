@@ -1,38 +1,39 @@
 package com.pj.gabozago.controller;
 
-import java.awt.image.BufferedImage;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintWriter;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
-import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.google.gson.Gson;
 import com.pj.gabozago.common.SharedScopeKeys;
 import com.pj.gabozago.common.UUIDGenerator;
 import com.pj.gabozago.domain.JoinDTO;
 import com.pj.gabozago.exception.ControllerException;
 import com.pj.gabozago.service.MemberService;
 
+import lombok.Cleanup;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j2;
@@ -69,30 +70,14 @@ public class JoinController {
 		
 		// 프로필 사진을 업로드한 경우
 		if(profileImg.getSize() != 0) {
-			// String targetDir = req.getServletContext().getRealPath("/resources/member/img/profile/"); // 상대 경로 지정
-			// String targetDir = req.getServletContext().getRealPath("/upload/"); // 상대 경로 지정
-			// String targetDir = "/resources/member/img/profile";
-			// String targetDir = req.getSession().getServletContext().getRealPath("/");
-			// String targetDir = System.getProperty("user.dir") + "/src/main/resources/static/profile/";
-			 String targetDir = System.getProperty("user.home") + "/finalgabozago/profile/";
-			
-//			String targetDir = this.savePath; // 임시 보관장소로 이용해보기
+			String targetDir = System.getProperty("user.home") + "/finalgabozago/profile/";
 
-			try {
-				String base64 = convertBinary(profileImg);
-				log.info(">>>>>>>>>>>> base64: ", base64);
-			} catch (Exception e) {
-				throw new ControllerException(e);
-			}// try-catch
-
-			log.info(">>>>>>>>>>>>>>>> 1. targetDir: {}", targetDir);
-			
 			Date today = new Date();
 			SimpleDateFormat changer = new SimpleDateFormat("yyyyMMdd");
 			String dateName = changer.format(today);
 			
-			log.info(">>>>> file 원본 이름: {}", profileImg.getOriginalFilename());
-			log.info(">>>>> file 사이즈: {}", profileImg.getSize());
+			log.info("getOriginalFilename: {}", profileImg.getOriginalFilename());
+			log.info("getSize: {}", profileImg.getSize());
 
 			targetDir += dateName + "/";
 
@@ -101,18 +86,13 @@ public class JoinController {
 			if(!dir.exists()) {
 				dir.mkdirs();
 			}// if
-			log.info(">>>>>>>>>>>>>>>> 2. targetDir 생성 완료: {}", targetDir);
 			
 			try {
 				String fileFullName = profileImg.getOriginalFilename();
 				String targetFile = targetDir + UUIDGenerator.generateUniqueKeysWithUUIDAndMessageDigest()
 					+ fileFullName.substring(fileFullName.lastIndexOf("."));
 								
-				log.info(">>>>> targetFile: {}", targetFile);
-
 				profilePath = targetFile;
-					
-				// profileImg.transferTo(new File(targetDir));
 								
 				InputStream is = profileImg.getInputStream();
 				BufferedInputStream bis = new BufferedInputStream(is);
@@ -130,7 +110,7 @@ public class JoinController {
 					}// while
 					
 					bos.flush();
-					log.info(">>>>> 파일 업로드 완료");
+					log.info("파일 업로드 완료");
 				}// try-with-resources
 				
 			} catch (NoSuchAlgorithmException | IOException e) {
@@ -140,17 +120,15 @@ public class JoinController {
 		}// if
 		
 		dto.setProfilePath(profilePath);
-		log.info(">>>>> dto.setProfilePath({}) 수행 완료", profilePath);
 
 		try { 
-			log.info("this.service.create(dto) 수행 시작합니다.");
 			if(this.service.create(dto)) { // 회원가입 성공
 				log.info(">>>>> 회원가입 성공");
 
-				rttrs.addFlashAttribute(SharedScopeKeys.RESULT_KEY, "회원가입에 성공하였습니다."); 
+				// rttrs.addFlashAttribute(SharedScopeKeys.RESULT_KEY, "회원가입에 성공하였습니다."); 
 				return "redirect:/login";
 			} else{ // 회원가입 실패
-				rttrs.addFlashAttribute(SharedScopeKeys.RESULT_KEY, "회원가입에 실패하였습니다.");
+				// rttrs.addFlashAttribute(SharedScopeKeys.RESULT_KEY, "회원가입에 실패하였습니다.");
 				return "redirect:/join";
 			}// if-else
 			
@@ -160,48 +138,98 @@ public class JoinController {
 		
 	}// joinProcess
 	
-
-	 public String convertBinary(MultipartFile files) throws Exception{
-	        String fileName = StringUtils.cleanPath(files.getOriginalFilename()) ;
-	        BufferedImage image = ImageIO.read(files.getInputStream());
-	        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-	        ImageIO.write(image, fileName.substring(fileName.lastIndexOf(".") + 1), baos);
-	        
-	        return new String(Base64.encodeBase64(baos.toByteArray()));
-	}// convertBinary
-	 
-//	public String fileToString(File file) {
-//		
-//          String fileString = new String();
-//          FileInputStream inputStream = null;
-//          ByteArrayOutputStream byteOutStream = null;
-//          
-//          try {
-//              inputStream = new FileInputStream(file);
-//              int len = 0;
-//              byte[] buf = new byte[1024];
-//              while ((len = inputStream.read(buf)) != -1) {
-//            	  byteOutStream.write(buf, 0, len);
-//              }
-//              byte[] fileArray = byteOutStream.toByteArray();
-//              fileString = new String(Base64.encodeBase64(fileArray));
-//          } catch (IOException e) {
-//              e.printStackTrace();
-//          } finally {
-//              try {
-//            	  inputStream.close();
-//              } catch (IOException e) {
-//                  e.printStackTrace();
-//              }
-//              try {
-//            	  byteOutStream.close();
-//              } catch (IOException e) {
-//                  e.printStackTrace();
-//              }
-//          }
-//
-//          return fileString;
-//          
-//      }	
 	
+	// 1. 아이디(이메일) 인증 처리
+	@PostMapping(path="/emailCheck", produces="application/text; charset=UTF-8")
+	@ResponseBody
+	public void emailCheck(@RequestBody String email, HttpServletResponse res) throws ControllerException {
+		log.trace("emailCheck() invoked.");
+				
+		try {
+			String uid = UUIDGenerator.generateUniqueKeysWithUUIDAndMessageDigest().substring(0, 6);
+
+			int result = this.service.findUserforEmailCheck(email, uid); 
+
+			Gson gson = new Gson();
+			
+			Map<String, Object> map = new HashMap<>();
+			
+			map.put("result", result);
+			map.put("email", email);
+			map.put("uid", uid);
+			
+			String json = gson.toJson(map);
+			log.info(json);
+						
+			@Cleanup
+		    PrintWriter out = res.getWriter();
+		    out.print(json);
+		    
+		} catch (Exception e) {
+			throw new ControllerException(e);
+		} // try-catch
+
+	} // emailCheck
+	
+	// 2. 닉네임 중복 확인
+	@PostMapping(path="/nicknameCheck", produces="application/text; charset=UTF-8")
+	@ResponseBody
+	public void nicknameCheck(@RequestBody String nickname, HttpServletResponse res) throws ControllerException {
+		log.trace("nicknameCheck() invoked.");
+				
+		try {
+			int result = this.service.findUserforNicknameCheck(nickname);
+
+			Gson gson = new Gson();
+			String json = gson.toJson(result);
+			log.info(json);
+						
+			@Cleanup
+		    PrintWriter out = res.getWriter();
+		    out.print(json);
+		    
+		} catch (Exception e) {
+			throw new ControllerException(e);
+		} // try-catch
+
+	} // nicknameCheck
+	
+	// 3. 휴대폰 번호 인증 처리
+	@PostMapping(path="/phoneCheck", produces="application/text; charset=UTF-8")
+	@ResponseBody
+	public void phoneCheck(@RequestBody String phone, HttpServletResponse res) throws ControllerException {
+		log.trace("phoneCheck() invoked.");
+				
+		try {
+			String uid = UUIDGenerator.generateUniqueKeysWithUUIDAndMessageDigest().substring(0, 6);
+
+			int result = this.service.findUserforPhoneCheck(phone, uid); 
+
+			Gson gson = new Gson();
+			
+			Map<String, Object> map = new HashMap<>();
+			
+			map.put("result", result);
+			map.put("phone", phone);
+			map.put("uid", uid);
+			
+			String json = gson.toJson(map);
+			log.info(json);
+						
+			@Cleanup
+		    PrintWriter out = res.getWriter();
+		    out.print(json);
+		    
+		} catch (Exception e) {
+			throw new ControllerException(e);
+		} // try-catch
+
+	} // phoneCheck
+	
+	
+	
+	
+	
+	
+	 
 }// end class

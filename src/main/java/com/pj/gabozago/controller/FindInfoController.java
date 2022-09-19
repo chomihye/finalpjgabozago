@@ -72,17 +72,19 @@ public class FindInfoController {
 		log.trace("findpwProcess({}, {}, {}) invoked.", email, phone, pwfindCase);
 
 		try {
-			String uid = UUIDGenerator.generateUniqueKeysWithUUIDAndMessageDigest().substring(0, 8);
 			
-			log.info("uid: {}", uid);
-			
-			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-			
-			String tempPw = encoder.encode(uid + "__SALT__"); // uid 암호화
-
-			log.info("tempPw: {}", tempPw);
 			
 			if(pwfindCase.equals("email")) { // 이메일로 비밀번호 찾기 선택한 경우
+				String uid = UUIDGenerator.generateUniqueKeysWithUUIDAndMessageDigest().substring(0, 8);
+				
+				log.info("uid: {}", uid);
+				
+				BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+				
+				String tempPw = encoder.encode(uid + "__SALT__"); // uid 암호화
+
+				log.info("tempPw: {}", tempPw);
+				
 				String userEmail = this.service.findUserPwByEmail(email);
 				
 				if(userEmail != null) {				
@@ -93,6 +95,16 @@ public class FindInfoController {
 				}// if
 				
 			} else if(pwfindCase.equals("phone")) { // 휴대폰 번호로 비밀번호 찾기 선택한 경우
+				String uid = UUIDGenerator.generateUniqueKeysWithUUIDAndMessageDigest().substring(0, 8);
+				
+				log.info("uid: {}", uid);
+				
+				BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+				
+				String tempPw = encoder.encode(uid + "__SALT__"); // uid 암호화
+
+				log.info("tempPw: {}", tempPw);
+				
 				String userPhone = this.service.findUserPwByPhone(phone);
 				
 				if(userPhone != null) {				

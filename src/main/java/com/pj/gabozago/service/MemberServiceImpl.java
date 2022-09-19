@@ -33,7 +33,7 @@ public class MemberServiceImpl implements MemberService {
     private EmailSender emailSender;
 	
 	@Setter(onMethod_=@Autowired)
-	private MessageService messageService;	 // 
+	private MessageService messageService;
 	
 	@Override
 	public boolean create(JoinDTO dto) throws ServiceException {
@@ -127,18 +127,23 @@ public class MemberServiceImpl implements MemberService {
 		log.trace("modifyUserforFindPwWithEmail({}, {}) invoked.", email, password);
 		
 		try {
-			EmailDTO mail = new EmailDTO();
-	        mail.setReceiver(email);
-	        mail.setSubject("[가보자고] 임시 비밀번호 발송");
-	        mail.setContent(new StringBuffer().
-	        		append("임시 비밀번호는 [").
-	        		append(uid).
-	        		append("] 입니다. 로그인 후 꼭 비밀번호 변경을 해주세요.").
-	        		toString());
-	        
-	        emailSender.SendEmail(mail);
 			
-			return this.mapper.updateUserforFindPwWithEmail(email, password) == 1;
+			boolean isFoundSuccess = this.mapper.updateUserforFindPwWithEmail(email, password) == 1;
+			
+			if(isFoundSuccess) {
+				EmailDTO mail = new EmailDTO();
+				mail.setReceiver(email);
+				mail.setSubject("[가보자고] 임시 비밀번호 발송");
+				mail.setContent(new StringBuffer().
+						append("임시 비밀번호는 [").
+						append(uid).
+						append("] 입니다. 로그인 후 꼭 비밀번호 변경을 해주세요.").
+						toString());
+				
+				emailSender.SendEmail(mail);				
+			}// if
+			
+			return isFoundSuccess;
 		} catch (Exception e) {
 			throw new ServiceException(e);
 		}// try-catch	
@@ -150,12 +155,81 @@ public class MemberServiceImpl implements MemberService {
 		log.trace("modifyUserforFindPwWithPhone({}, {}) invoked.", phone, password);
 		
 		try {
-			// 문자 발송 로직
-			this.messageService.sendMessage(phone, uid);
+			boolean isFoundSuccess = this.mapper.updateUserforFindPwWithPhone(phone, password) == 1;
 			
-			return this.mapper.updateUserforFindPwWithPhone(phone, password) == 1;
+			if(isFoundSuccess) {
+				this.messageService.sendMessageforFindPw(phone, uid); // SMS 발송
+			}// if
+			
+			return isFoundSuccess;
 		} catch (Exception e) {
 			throw new ServiceException(e);
 		}// try-catch	
-	}// modifyUserforFindPwWithPhone
+	}
+
+	@Override
+	public int findUserforNicknameCheck(String nickname) throws ServiceException {
+		log.trace("findUserforNicknameCheck({}) invoked.", nickname);
+		
+		try {
+			return this.mapper.selectUserforNickCheck(nickname);
+		} catch (MemberException e) {
+			throw new ServiceException(e);
+		}// try-catch
+		
+	}// findUserforNicknameCheck
+
+	@Override
+	public int findUserforEmailCheck(String email, String uid) throws ServiceException {
+		log.trace("findUserforEmailCheck({}, {}) invoked.", email, uid);
+		
+		try {
+			
+			int checkNum = this.mapper.selectUserforEmailCheck(email, uid);
+			
+			if(checkNum == 0) { // 이미 가입된 이메일이 아닌 경우 이메일 인증을 위한 uid 인증번호 발송
+				EmailDTO mail = new EmailDTO();
+				mail.setReceiver(email);
+				mail.setSubject("[가보자고] 회원가입을 위한 이메일 인증번호 발송");
+				mail.setContent(new StringBuffer().
+						append("회원가입을 위해 인증번호를 입력해주세요. [").
+						append(uid).
+						append("] ").
+						toString());
+				
+				emailSender.SendEmail(mail);				
+			}// if
+			
+			return checkNum;
+			
+		} catch (Exception e) {
+			throw new ServiceException(e);
+		}// try-catch
+		
+	}// findUserforEmailCheck
+
+	@Override
+	public int findUserforPhoneCheck(String phone, String uid) throws ServiceException {
+		log.trace("findUserforPhoneCheck({}, {}) invoked.", phone, uid);
+		
+		try {
+			
+			int checkNum = this.mapper.selectUserforPhoneCheck(phone, uid);
+			
+			if(checkNum == 0) { // 이미 가입된 휴대폰 번호가 아닌 경우 휴대폰 인증을 위한 uid 인증번호 발송
+				
+				this.messageService.sendMessageforJoin(phone, uid); // SMS 발송
+				
+			}// if
+			
+			return checkNum;
+			
+		} catch (Exception e) {
+			throw new ServiceException(e);
+		}// try-catch
+	}// findUserforPhoneCheck
+	
+	
+	
+	
 }// end class
