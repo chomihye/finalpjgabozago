@@ -42,6 +42,20 @@
  
     <!-- CSS -->
     <link rel="stylesheet" href="/resources/mypage/css/6-1.mypage_main.css">
+
+    <!-- script -->
+    <script>
+        $(function(){
+            // 회원정보 수정 결과 안내창
+            let modifyResult = '${__RESULT__}';
+
+            if(modifyResult == 'success'){
+                alert("정보 수정이 완료되었습니다.");
+            }else if(modifyResult == 'failed'){
+                alert("정보 수정 중 오류가 발생하였습니다. 다시 시도 바랍니다.");
+            } // if-else
+        });
+    </script>
 </head>
 
 <body>

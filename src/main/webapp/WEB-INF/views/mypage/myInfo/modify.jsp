@@ -63,8 +63,8 @@
                     <div class="sections">
                         <h4>이름</h4>
                         <input type="text" name="name" id="name" placeholder="${__MEMBER__.name}" onchange="checkName()"><br>
-                        <div id="nameExplain">실명이 아닌 경우 서비스 이용에 제한이 있을 수 있으니 참고 바랍니다.</div>
-                        <div id="nameError">최대 10자 이내, 공백과 특수문자가 없어야 합니다.</div>
+                        <div id="nameExplain"></div>
+                        <div id="nameError"></div>
                     </div >
                     
                     <div class="sections">
@@ -76,13 +76,13 @@
                         <h4>비밀번호</h4>
                         <p class="ruleTexts">영문 대소문자, 숫자, 특수문자 포함 8자 이상 12자 이하</p>
                         <input type="password" name="pw" id="pw" placeholder="●●●●●●●●" min="8" maxlength="12" onchange="checkPwd()">
-                        <div id="pwError">비밀번호 양식 불일치</div>
+                        <div id="pwError"></div>
                     </div class="sections">
                     
                     <div class="sections">
                         <h4>비밀번호 확인</h4>
                         <input type="password" name="pwcheck" id="pwcheck" placeholder="●●●●●●●●" maxlength="12" onchange="reCheckPwd()">
-                        <div id="pwcheckError">비밀번호가 일치하지 않습니다.</div>
+                        <div id="pwcheckError"></div>
                     </div class="sections">
                     
                     <div class="sections">
@@ -194,7 +194,7 @@
             <h2 id="certifyTime"></h2>
             <div id="phoneValidation">
                 <input type="text" name="phoneValidationNum" id="phoneValidationNumInput" placeholder="인증 번호를 입력하세요." maxlength="6">
-                <button id="phoneValidationNumBtn" onclick="checkCertifyNum()">확인</button>
+                <button id="phoneValidationNumBtn">확인</button>
             </div>
             <div id="resendLink"><a href="javascript:void(0);" onclick="repeat()">재전송</a></div>
             <div class="okBtn onlyOk continue" id="closeBtn">취소</div>

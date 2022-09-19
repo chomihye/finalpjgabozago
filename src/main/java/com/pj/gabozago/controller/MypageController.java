@@ -167,7 +167,7 @@ public class MypageController {
 
 	// 회원정보 업데이트
 	@PostMapping(path = "/myInfo/modify.do")
-	public String modifyMemberInfo(HttpServletRequest req, 
+	public String modifyMemberInfo(HttpServletRequest req, RedirectAttributes rttrs,
 			String name, String pw, String nickname, String phone, String profileImg) throws ControllerException {
 		log.trace(">>>>>>>>>>>>>>>>>>>> modifyMemberInfo() invoked.");
 //		log.info(">>>>>>>>>>>>>>>>>>>> 뷰에서 가져온 프로필 이미지 : {}", profileImg);
@@ -214,11 +214,12 @@ public class MypageController {
 					vo.getIsSecession());
 			session.setAttribute(SharedScopeKeys.USER_KEY, this.memberService.getMemberInfo(newInfo));
 				
-			return "redirect:/mypage/main";
+			rttrs.addFlashAttribute(SharedScopeKeys.RESULT_KEY, "success");
 		} catch(Exception e) {
-			throw new ControllerException(e);
+			rttrs.addFlashAttribute(SharedScopeKeys.RESULT_KEY, "failed");
 		} // try-catch
 		
+		return "redirect:/mypage/main";
 	} // modifyMemberInfo
 	
 	
