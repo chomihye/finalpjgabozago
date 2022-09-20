@@ -6,6 +6,7 @@ import java.util.Map;
 
 import com.pj.gabozago.domain.AccomDTO;
 import com.pj.gabozago.domain.AccomRoomDTO;
+import com.pj.gabozago.domain.Criteria;
 import com.pj.gabozago.domain.MemberDTO;
 import com.pj.gabozago.domain.MemberVO;
 import com.pj.gabozago.domain.WishlistAccomDTO;
@@ -17,8 +18,8 @@ public interface AccomService {
 	
 
 	//숙소 전체목록 조회
-	public abstract List<AccomDTO> getList() throws ServiceException;
-	public abstract List<AccomDTO> getListWithMember(MemberVO member) throws ServiceException;
+	public abstract List<AccomDTO> getList(Criteria cri) throws ServiceException;
+	public abstract List<AccomDTO> getListWithMember(Criteria cri, MemberVO member) throws ServiceException;
 	
 	//숙소 이름 상세 페이지에 반영
 	public abstract Map<String, Object> getOneAccomDetail(AccomDTO accom) throws ServiceException;
@@ -50,6 +51,8 @@ public interface AccomService {
 	// 특정 회원의 현재 포인트를 가져오는 메소드
 	public abstract Integer getUserCurrentPoint(MemberVO member) throws ServiceException;
 	
+	// 총 레코드 건수를 반환하는 메소드(페이징 처리에 필요)
+	public abstract int getTotal(AccomDTO accom) throws ServiceException;
 	
 	
 	

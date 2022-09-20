@@ -48,6 +48,7 @@
     <!-- css 연결 -->
     <link rel="stylesheet" href="/resources/acco/css/reset.css">
     <link rel="stylesheet" href="/resources/acco/css/reservation.css" />
+    <link rel="stylesheet" href="/resources/common/css/pagination_accom.css">
 
     <!-- 달력 -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
@@ -170,9 +171,52 @@
 
         </div>
 
-
-        <!-- 페이지네이션 제작  -->
-        <div class="pagination_made" id="reservation_pagination">
+        <!-- 페이징 -->
+        <div id="pagination">
+            <form action="#" id="paginationForm">
+                <!-- 1. 3가지 기준정보(criteria)는 hidden 정보로 제공 -->
+                <input type="hidden" name="currPage">
+        
+                <!-- 2. PageDTO 객체의 정보를 이용해서, Pagenation 출력 -->
+                <ul>
+                    <!-- Prev 처리 -->
+                    <li class="frontPage"><a href="/reservation/main?currPage=1"><i class="bi bi-chevron-double-left"></i></a></li>
+        
+                    <c:choose>
+                        <c:when test="${__PAGINATION__.prev}">
+                            <li class="prev"><a href="/reservation/main?currPage=${__PAGINATION__.startPage - 1}"><i
+                                        class="bi bi-chevron-left"></i></a></li>
+                        </c:when>
+                        <c:otherwise>
+                            <li class="prev"><a href="#"><i class="bi bi-chevron-left"></i></a></li>
+                        </c:otherwise>
+                    </c:choose>
+        
+                    <!-- 현재 Pagination 범위에 속한 페이지 번호 목록 출력 -->
+                    <!-- begin부터 end까지 forEach(반복문) -->
+                    <c:forEach var="pageNum" begin="${__PAGINATION__.startPage}" end="${__PAGINATION__.endPage}">
+                        <li class="${pageNum == __PAGINATION__.cri.currPage ? 'currPage' : ''}">
+                            <a href="/reservation/main?currPage=${pageNum}">
+                                <strong>${pageNum}</strong>
+                            </a>
+                        </li>
+                    </c:forEach>
+        
+                    <!-- Next 처리 -->
+                    <c:choose>
+                        <c:when test="${__PAGINATION__.next}">
+                            <li class="next"><a href="/reservation/main?currPage=${__PAGINATION__.endPage + 1}"><i
+                                        class="bi bi-chevron-right"></i></a></li>
+                        </c:when>
+                        <c:otherwise>
+                            <li class="next"><a href="#"><i class="bi bi-chevron-right"></i></a></li>
+                        </c:otherwise>
+                    </c:choose>
+        
+                    <li class="backPage"><a href="/reservation/main?currPage=${__PAGINATION__.realEndPage}"><i
+                                class="bi bi-chevron-double-right"></i></a></li>
+                </ul>
+            </form>
         </div>
 
 

@@ -4,10 +4,12 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import com.pj.gabozago.domain.AccomDTO;
 import com.pj.gabozago.domain.AccomRoomDTO;
+import com.pj.gabozago.domain.Criteria;
 import com.pj.gabozago.domain.MemberDTO;
 import com.pj.gabozago.domain.MemberVO;
 import com.pj.gabozago.domain.WishlistAccomDTO;
@@ -20,8 +22,15 @@ public interface AccomMapper {
 	
 
 	// 전체 목록을 반환
-	public abstract List<AccomDTO> getList() throws DAOException;
-	public abstract List<AccomDTO> getListWithMember(MemberVO member) throws DAOException;
+	public abstract List<AccomDTO> getList(@Param("cri") Criteria cri) throws DAOException;
+	public abstract List<AccomDTO> getListWithMember(@Param("cri") Criteria cri, @Param("member") MemberVO member) throws DAOException;
+	
+	//숙소 검색 결과 조회
+	public abstract List<AccomDTO> selectSearchedAccomList(AccomDTO accom) throws DAOException;
+	public abstract List<AccomDTO> selectSearchedAccomListWithMember(AccomDTO accom) throws DAOException;
+	
+	// 총 레코드 건수를 반환하는 메소드(페이징 처리에 필요)
+	public abstract Integer getTotalHotelCount(AccomDTO accom) throws DAOException;
 	
 	// 숙소 상세 정보 반환
 	public abstract Map<String, Object> getOneAccomDetail(AccomDTO accom) throws DAOException;
@@ -37,10 +46,6 @@ public interface AccomMapper {
 	
 	//숙소 방의 상세 정보 
 	public abstract Map<String, Object> selectRoomDetail(AccomDTO accom) throws DAOException;
-
-	//숙소 검색 결과 조회
-	public abstract List<AccomDTO> selectSearchedAccomList(AccomDTO accom) throws DAOException;
-	public abstract List<AccomDTO> selectSearchedAccomListWithMember(AccomDTO accom) throws DAOException;
 
 	//로그인한 회원 정보 결제 페이지에 출력
 	public abstract Map<String, Object> selectOneMemberInfo(MemberVO member) throws DAOException;
@@ -59,9 +64,6 @@ public interface AccomMapper {
 		
 	// 특정 회원의 현재 포인트를 가져오는 메소드
 	@Select("SELECT point FROM tbl_member WHERE idx = #{idx}")
-	public abstract Integer selectUserCurrentPoint(MemberVO member);
-	
-
-	
+	public abstract Integer selectUserCurrentPoint(MemberVO member);	
 	
 } // end interface

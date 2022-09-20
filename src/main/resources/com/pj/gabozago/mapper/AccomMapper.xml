@@ -21,6 +21,8 @@
         FROM tbl_accom r ,tbl_large_area a
         WHERE r.large_area_idx = a.idx
         ORDER BY r.idx asc
+        OFFSET (#{cri.currPage} -1) * #{cri.amount} ROWS
+        FETCH NEXT #{cri.amount} ROWS ONLY
 	</select>
 	
     <!--  -->
@@ -36,8 +38,18 @@
             (select ai.file_name from tbl_accom_images ai where r.idx = ai.idx) as file_name
         FROM tbl_accom r
             INNER JOIN tbl_large_area a ON a.idx = r.large_area_idx
-            LEFT OUTER JOIN (select * from tbl_wishlist_accom where member_idx = #{idx}) wa ON wa.accom_idx = r.idx
+            LEFT OUTER JOIN (select * from tbl_wishlist_accom where member_idx = #{member.idx}) wa ON wa.accom_idx = r.idx
         ORDER BY r.idx asc
+        OFFSET (#{cri.currPage} -1) * #{cri.amount} ROWS
+        FETCH NEXT #{cri.amount} ROWS ONLY
+	</select>
+	
+	<select id="getTotalHotelCount" resultType="int">
+        SELECT count(idx)
+        FROM tbl_accom r
+        <where>
+            <if test="largeAreaIdx != null">AND r.large_area_idx = #{largeAreaIdx}</if>
+        </where>
 	</select>
 
     <!-- 검색한 숙소 리스트 -->
