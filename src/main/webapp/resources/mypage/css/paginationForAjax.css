@@ -1,0 +1,46 @@
+@charset "UTF-8";
+
+/* Mypage ajax가 사용된 페이지를 위한 CSS */
+
+#pagination{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#paginationForm{
+    border: 1px solid #cfcfcf;
+    border-radius: 5px;
+}
+#pagination li{
+    float: left;
+    list-style: none;
+    text-align: center;
+    line-height: 35px;
+    height: 35px;
+    border-right: 1px solid #cfcfcf;
+}
+/* 너비 따로 주기 */
+.frontPage, .prev, .next, .backPage{
+    width: 35px;
+}
+#pagination li a {
+    display: block;
+}
+#pagination li:last-child{
+    border-right: none;
+}
+.currPage {
+    background-color: #68AE6D;
+}
+.prev i, .next i, .frontPage i, .backPage i, #pagination strong{
+    color: #68AE6D;
+}
+.currPage strong{
+    color: white !important;
+}
+.pageNumber{
+    display: flex;
+}
+.pageNumber li{
+    width: 35px;
+}

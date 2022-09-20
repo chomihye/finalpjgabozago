@@ -37,4 +37,67 @@
 
     </select>
 
+    <select 
+        id="selectPlanWishlist" 
+        resultType="java.util.LinkedHashMap">
+        
+        SELECT
+            wp.idx,
+            wp.travel_plan_idx,
+            la.large_area_name,
+            m.nickname,
+            tp.likes,
+            (SELECT 
+                TRUNC(EndDate - StartDate + 1) 
+            FROM 
+                (SELECT
+                    idx,
+                    TO_DATE(start_date,'yyyy-mm-dd') as StartDate, 
+                    TO_DATE(end_date,'yyyy-mm-dd') as EndDate 
+                FROM tbl_travel_plan)
+            WHERE
+                idx = tp.idx) as total_days
+        FROM 
+            tbl_wishlist_plan wp,
+            tbl_travel_plan tp,
+            tbl_large_area la,
+            tbl_member m
+        WHERE 
+            wp.travel_plan_idx = tp.idx
+            AND tp.large_area_idx = la.idx
+            AND tp.member_idx = m.idx (+)
+            AND wp.member_idx = #{member.idx}
+        ORDER BY
+            wp.idx DESC
+        OFFSET (#{cri.currPage} -1) * #{cri.amount} ROWS
+        FETCH NEXT #{cri.amount} ROWS ONLY
+
+    </select>
+
+    <select 
+        id="selectPlanDetail" 
+        resultType="java.util.LinkedHashMap">
+        
+        SELECT
+            tpd.day,
+            tpd.place_type,
+            a.accom_name,
+            tpd.place_name,
+            tpd.place_seq
+        FROM
+            tbl_travel_plan_detail tpd,
+            tbl_reservation r,
+            tbl_accom_room ar,
+            tbl_accom a
+        WHERE
+            tpd.reservation_idx = r.idx (+)
+            AND r.accom_room_idx = ar.idx (+)
+            AND ar.accom_idx = a.idx (+)
+            AND travel_plan_idx = #{travelPlanIdx}
+            AND tpd.day = #{day}
+        ORDER BY
+            tpd.place_seq
+
+    </select>
+
 </mapper>

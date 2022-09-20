@@ -378,40 +378,38 @@ public class MypageController {
 	} // getAccomWishlist
 	
 	
-	@PostMapping(value = "/wishlist/accom/page")
+	@PostMapping(value = "/wishlist/plan")
 	@ResponseBody
-	public void getPageForAccomWishlist(Criteria cri, @SessionAttribute(SharedScopeKeys.USER_KEY) MemberVO member, 
+	public void getPlanWishlist(Criteria cri, @SessionAttribute(SharedScopeKeys.USER_KEY) MemberVO member, 
 			HttpServletResponse res) throws ControllerException {
-		log.info(">>>>>>>>>>>>>>>>>>>> getPageForAccomWishlist() invoked.");
+		log.trace(">>>>>>>>>>>>>>>>>>>> getPlanWishlist() invoked.");
 		
 		try {
-			cri.setAmount(10);
+			cri.setAmount(4);
+			
+			List<LinkedHashMap<String, Object>> list = this.wishlistService.getPlanWishlist(cri, member);
 			
 			// 총 레코드 건수를 반환
-			int total = this.wishlistService.getTotalOfAccom(cri, member);
+			int total = this.wishlistService.getTotalOfPlan(cri, member);
 			PageDTO pageDTO = new PageDTO(cri, total);
+						
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("list", list);
+			map.put("pageDTO", pageDTO);
 			
 			Gson gson = new Gson();
-			String json = gson.toJson(pageDTO);
-			log.info(json);
+			String mapToJson = gson.toJson(map);
+			log.info(mapToJson);
 			
 			@Cleanup
 		    PrintWriter out = res.getWriter();
-		    out.print(json);	// Ajax는 출력된 데이터를 전송하므로 데이터를 출력해줘야 한다.
+		    out.print(mapToJson);	// Ajax는 출력된 데이터를 전송하므로 데이터를 출력해줘야 한다.
 		} catch (Exception e) {
 			throw new ControllerException(e);
 		} // try-catch
-	} // getPageForAccomWishlist
-//	
-//	
-//	@GetMapping(value = "/wishlist/plan")
-//	public String getWishlistPlan() {
-//		log.trace(">>>>>>>>>>>>>>>>>>>> getWishlistPlan() invoked.");
-//		
-//		return "여행일정 위시리스트";
-//	} // getWishlistPlan
-//	
-//	
+	} // getPlanWishlist
+	
+	
 	@GetMapping(path = "/point")
 	public String getMyPointList(Criteria cri, @SessionAttribute(SharedScopeKeys.USER_KEY) MemberVO member, Model model) throws ControllerException {
 		try {

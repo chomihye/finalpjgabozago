@@ -33,24 +33,32 @@
     <meta name="msapplication-TileImage" content="/resources/common/ico/ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
  
-    <!-- 부트스트랩 -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
- 
     <!-- 제이쿼리 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-migrate/3.4.0/jquery-migrate.min.js"></script>
- 
+
+    <!-- 부트스트랩 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="/resources/common/css/bootstrap.css">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct"
+    crossorigin="anonymous"></script>
+
+    <!-- 폰트어썸, 부트스트랩 폰트 -->
+    <script src="https://kit.fontawesome.com/39d2c0da6a.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
+
     <!-- CSS -->
     <link rel="stylesheet" href="/resources/mypage/css/6-12.mypage_wishlist.css">
-    <link rel="stylesheet" href="/resources/common/css/pagination.css">
+    <link rel="stylesheet" href="/resources/mypage/css/paginationForAjax.css">
+    <link rel="stylesheet" href="/resources/common/css/best_plan_reset.css">
+    <link rel="stylesheet" href="/resources/mypage/css/slide_plan.css">
 
     <!-- script -->
     <script src="/resources/mypage/js/6-12.mypage_wishlist.js"></script>
-    <!-- <script>
-        $(function(){
-            $(".profileAndMenu .profile h2").append('${sessionScope.__MEMBER__.nickname}');
-        });
-    </script> -->
 </head>
 
 <body>
@@ -71,8 +79,7 @@
                 </div>
             </div>
 
-            <!-- 숙소 선택 영역(default) -->
-            <article class="wishlist_accom">
+            <article class="wishlist_item">
                 <div class="select">
                     <input type="checkbox" id="selectAll" name="selectAll">
                     <label for="selectAll"></label>
@@ -80,29 +87,18 @@
                     <a href="javascript:void(0);" class="selectDelete">선택삭제</a>
                 </div>
 
+                <!-- 숙소 아이템 영역(default) -->
                 <ul id="accom_list"></ul>
+
+                <!-- 일정 아이템 영역 -->
+                <ul id="plan_list"></ul>
             </article>
 
-            <!-- 페이지버튼 -->
-            <div id="pagination" class="accomPage">
-                <form action="#" id="paginationForm">
-                    <!-- 1. 3가지 기준정보(criteria)는 hidden 정보로 제공 -->
-                    <input type="hidden" name="currPage">
-    
-                    <!-- 2. PageDTO 객체의 정보를 이용해서, Pagenation 출력 -->
-                    <ul id="pagingBtn">
-                        <!-- Prev 처리 -->
-                        <li class="frontPage"><a href="javascript:void(0);" onclick="getAccomWishlist('1')"><i class="bi bi-chevron-double-left"></i></a></li>
-                        <li class="prev yesPrev"><a href="javascript:void(0);"><i class="bi bi-chevron-left"></i></a></li>
+            <!-- 숙소 영역 페이지버튼 -->
+            <div id="pagination" class="accomPage"></div>
 
-                        <div class="pageNumber"></div>
-
-                        <!-- Next 처리 -->
-                        <li class="next yesNext"><a href="javascript:void(0);"><i class="bi bi-chevron-right"></i></a></li>
-                        <li class="backPage"><a href="javascript:void(0);"><i class="bi bi-chevron-double-right"></i></a></li>
-                    </ul>
-                </form>
-            </div>
+            <!-- 일정 영역 페이지버튼 -->
+            <div id="pagination" class="planPage"></div>
         </section>
     </div>
 

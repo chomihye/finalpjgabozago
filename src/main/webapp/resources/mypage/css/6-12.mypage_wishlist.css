@@ -61,7 +61,7 @@ section .header #wishlist_type{
 }
 
 /* 숙소 선택 영역(default) */
-article.wishlist_accom{
+article.wishlist_item{
     width: 799px;
     /* 화면크기를 줄였을때 nav와 일정 margin을 유지하려면 left에 94px을 준다. */
     margin: 0 auto 50px 94px;
@@ -104,21 +104,21 @@ input[type="checkbox"]:checked + label::after{
     margin-left: auto;
 }
 
-.wishlist_accom ul{
+#accom_list{
     display: flex;
     flex-wrap: wrap;
     margin-top: 30px;
 }
-.wishlist_accom li{
+#accom_list li{
     width: 50%;
     display: flex;
     align-items: center;
     margin-top: 10px;
 }
-/* .wishlist_accom li:nth-child(odd){
+/* #accom_list li:nth-child(odd){
     왼쪽 콘텐츠
 } */
-.wishlist_accom li:nth-child(even){
+#accom_list li:nth-child(even){
     /* 오른쪽 콘텐츠 */
     justify-content: right;
 }

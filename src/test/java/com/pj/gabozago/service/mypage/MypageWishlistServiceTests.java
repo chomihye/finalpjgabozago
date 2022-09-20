@@ -2,6 +2,8 @@ package com.pj.gabozago.service.mypage;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -88,6 +90,24 @@ public class MypageWishlistServiceTests {
 		
 		this.service.getTotalOfAccom(cri, member);
 	} // testGetTotalOfAccom
+	
+	
+	@Test
+	@Order(3)
+	@DisplayName("3. testGetPlanWishlist")
+	@Timeout(value = 10, unit = TimeUnit.SECONDS)
+	void testGetPlanWishlist() throws ServiceException {
+		log.trace("testGetPlanWishlist() invoked.");
+		
+		Criteria cri = new Criteria();
+		cri.setAmount(10);
+		cri.setCurrPage(1);
+		
+		MemberVO member = new MemberVO(53, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+		
+		List<LinkedHashMap<String, Object>> list = this.service.getPlanWishlist(cri, member);
+		list.forEach(log::info);
+	} // testGetPlanWishlist
 
 	
 } // end class
