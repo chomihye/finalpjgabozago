@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<!-- Mapper.xml 파일의 FQCN(상세경로 포함 정확한 이름) -->
+<mapper namespace="com.pj.gabozago.mapper.AdminMapper">
+
+    <!-- id : 메소드명 -->
+    <!-- parameterType="java.util.Map" 은 생략이 가능함 -->
+    <select 
+        id="selectMemberInfo"
+        resultType="java.util.Map">
+        SELECT
+        	m.idx,
+            m.name, 
+            m.email, 
+            m.point, 
+            m.insert_ts, 
+            m.phone
+        FROM 
+            tbl_member m
+        OFFSET (#{currPage} -1) * #{amount} ROWS
+        FETCH NEXT #{amount} ROWS ONLY
+    </select>
+    
+    <select 
+        id="selectMemberInfoDetail"
+        resultType="java.util.Map">
+        SELECT
+        	m.idx,
+            m.name, 
+            m.nickname, 
+            m.email, 
+            m.phone, 
+            m.birthday, 
+            m.point, 
+            m.insert_ts
+        FROM 
+            tbl_member m
+        WHERE
+        	r.idx = #{idx}
+    </select>
+    
+    
+    <select 
+        id="selectNotice"
+        resultType="java.util.Map">
+        SELECT
+        	n.idx,
+            n.title,
+            n.created_at, 
+            n.view_count
+        FROM 
+            tbl_notice n
+        OFFSET (#{currPage} -1) * #{amount} ROWS
+        FETCH NEXT #{amount} ROWS ONLY
+    </select>
+
+</mapper>

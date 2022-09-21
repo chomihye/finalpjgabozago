@@ -1,0 +1,273 @@
+@charset "utf-8";
+
+/* 한국어 : font-family: 'Noto Sans KR', sans-serif; */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+/* 영어(다국어) : font-family: 'Noto Sans', sans-serif; */
+/* @import url('https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap');w */
+
+*{
+    margin: 0;
+    padding: 0;
+
+    /* box-sizing: border-box; */
+
+    font-family: 'Noto Sans KR', sans-serif;
+
+    color: #333333;
+}
+
+#reservation {
+    margin-left: 50px;
+    width: 920px;
+}
+
+a {
+    text-decoration: none;
+    color: #333;
+}
+
+body {
+    margin: 0px;
+    padding: 0px;
+}
+
+ul li {
+    list-style: none;
+}
+
+header{
+    width: 100%;
+    height: 200px;
+    background-color: #68AE6D;
+}
+
+#accordion {
+    justify-content: center;
+    margin: 85px 30px auto 50px;
+}
+
+.card {
+    /* float: left; */
+    width: 250px;
+    height: 450px;
+    /* padding: 30px 50px 30px; */
+    background-color: #68AE6D;
+    background-color: rgba(104, 174, 109, 0.15);
+    border-style: none;
+    font-size: 15px;
+    font-weight: bold;
+    /* text-decoration: none;
+    vertical-align: middle; */
+}
+
+.card-header {
+    /* background-color: transparent; */
+    border-bottom: 1px solid rgba(0,0,0,.125);
+    /* border-bottom: transparent; */
+    /* background-color: rgba(0,0,0,.03); */
+}
+
+[type=button]:not(:disabled), [type=reset]:not(:disabled), [type=submit]:not(:disabled), button:not(:disabled) {
+    cursor: pointer;
+    background-color: transparent;
+}
+
+button {
+    border: 0;
+    display: flex;
+    padding-left: 18px;
+}
+
+button.btn {
+    color: #333333;
+}
+
+.title {
+    margin: 0 0 15px 30px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+table {
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.board-table-top {
+    padding-bottom: 50px;
+}
+
+.board_list {
+    width: 920px;
+    padding: 20px 0 35px 0;
+    position: relative;
+    border-top: 3px solid #68ae6d;
+    table-layout: fixed;
+    margin: 0 auto;
+    border-collapse: collapse;
+}
+
+.notice_table {
+    border-top: none;
+    padding-top: 5px;
+}
+
+.notice_table:before {
+    width: 100%;
+    height: 5px;
+    background: #68ae6d;
+    border-radius: 10px;
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+}
+
+.board_list caption {
+    width: 1px;
+    height: 1px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: 0;
+    line-height: 0;
+    overflow: hidden;
+}
+
+caption,
+th,
+td {
+    text-align: left;
+    font-weight: normal;
+}
+
+.board_list tr {
+    width: 100%;
+}
+
+.notice_table thead .num {
+    width: 160px;
+}
+
+.board_list th {
+    padding: 23px 0;
+    position: relative;
+    font-size: 16px;
+    text-align: center;
+    font-weight: 600;
+    color: #333;
+    vertical-align: middle;
+    border-bottom: 2px solid #ddd;
+}
+
+.board_list th:before {
+    content: '';
+    display: block;
+    width: 1px;
+    height: 11px;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    margin-top: -6.5px;
+    background: #dedede;
+}
+
+.notice_table th:before {
+    height: 14px;
+}
+
+.notice_table thead .name {
+    width: 160px;
+}
+
+.notice_table thead .hotel {
+    width: 180px;
+}
+
+.notice_table thead .checkin {
+    width: 130px;
+}
+
+.notice_table thead .checkout {
+    width: 160px;
+}
+
+.notice_table thead .status {
+    width: 130px;
+}
+
+.notice_table tbody td {
+    padding: 23px 0 24px;
+    cursor: auto;
+    cursor: initial;
+}
+
+.board_list tr td {
+    font-size: 15px;
+}
+
+.notice_table tbody .checkin, .checkout {
+    letter-spacing: 0.05em;
+}
+
+.board_list td {
+    padding: 20px 0;
+    font-size: 16px;
+    font-weight: 400;
+    text-align: center;
+    color: #666;
+    vertical-align: middle;
+    border-bottom: 1px solid #dedede;
+    cursor: pointer;
+    -webkit-transition: background 300ms;
+    transition: background 300ms;
+}
+
+.notice_table tbody td {
+    padding: 15px 0 15x;
+    cursor: auto;
+    cursor: initial;
+}
+
+.notice_table tbody .box_f {
+    border: 1px solid;
+    width: 70px;
+    height: 35px;
+    padding: 6px;
+    /* color: white; */
+    border-radius: 10px;
+    /* background: rgb(162, 229, 162); */
+    margin-left: 40px;
+}
+
+.notice_table tbody .box {
+    /* border: 1px solid; */
+    width: 70px;
+    height: 35px;
+    padding: 6px;
+    color: white;
+    border-radius: 10px;
+    background: #a1d5a5;
+    margin-left: 40px;
+
+}
+
+
+footer{
+    width: 100%;
+    height: 280px;
+    background-color: #68AE6D;
+    clear: both;
+}
+
+i {
+    padding-left: 15px;
+    font-size: 20px;
+}
+
+.wrap {
+    /* max-width: 990px; */
+    display: flex;
+    justify-content: center;
+    margin: 50px 50px;
+}

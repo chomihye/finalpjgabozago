@@ -1,0 +1,271 @@
+@charset "utf-8";
+
+/* 한국어 : font-family: 'Noto Sans KR', sans-serif; */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+/* 영어(다국어) : font-family: 'Noto Sans', sans-serif; */
+/* @import url('https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap');w */
+
+*{
+    margin: 0;
+    padding: 0;
+
+    /* box-sizing: border-box; */
+
+    font-family: 'Noto Sans KR', sans-serif;
+
+    color: #333333;
+}
+
+
+body {
+    margin: 0px;
+    padding: 0px;
+}
+
+ul li {
+    list-style: none;
+}
+
+header{
+    width: 100%;
+    height: 200px;
+    background-color: #68AE6D;
+}
+
+/* #menu {
+    float: left;
+    width: 240px;
+    padding: 30px 50px 400px;
+    background-color: #68AE6D;
+    background-color: rgba(104, 174, 109, 0.15);
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+#menu a {
+    display: inline-block;
+    line-height: 2.0;
+    text-decoration: none;
+    vertical-align: middle;
+} */
+
+
+#accordion {
+    justify-content: center;
+    margin: 85px 30px auto 50px;
+}
+
+.card {
+    /* float: left; */
+    width: 250px;
+    height: 450px;
+    /* padding: 30px 50px 30px; */
+    background-color: #68AE6D;
+    background-color: rgba(104, 174, 109, 0.15);
+    border-style: none;
+    font-size: 15px;
+    font-weight: bold;
+    /* text-decoration: none;
+    vertical-align: middle; */
+}
+
+.card-header {
+    /* background-color: transparent; */
+    border-bottom: 1px solid rgba(0,0,0,.125);
+    /* border-bottom: transparent; */
+    /* background-color: rgba(0,0,0,.03); */
+}
+
+[type=button]:not(:disabled), [type=reset]:not(:disabled), [type=submit]:not(:disabled), button:not(:disabled) {
+    cursor: pointer;
+    background-color: transparent;
+}
+
+button {
+    border: 0;
+    display: flex;
+    padding-left: 18px;
+}
+
+footer{
+    width: 100%;
+    height: 280px;
+    background-color: #68AE6D;
+    clear: both;
+}
+
+i {
+    padding-left: 15px;
+    font-size: 20px;
+}
+
+.wrap {
+    display: flex;
+    justify-content: center;
+    margin: 50px 0;
+}
+
+
+section.reservation_info{
+    /* width 고정 940px, 콘텐츠는 80%인 752px 안으로 */
+    width: 940px;
+    display: inline-block;
+}
+
+section .header{
+    width: 752px;
+    /* 화면크기를 줄였을때 nav와 일정 margin을 유지하려면 left에 94px을 준다. */
+    margin: 0 auto 40px 59px;
+    display: flex;
+}
+
+section .header h1{
+    font-size: 22px;
+    display: inline-block;
+}
+section .header i{
+    font-size: 30px;
+    display: inline-block;
+    color: #68AE6D;
+    margin: 3px 20px 0 0;
+}
+
+article.infoBox{
+    width: 752px;
+    /* 화면크기를 줄였을때 nav와 일정 margin을 유지하려면 left에 94px을 준다. */
+    margin: 0 auto 0 94px;
+}
+.reser_info, .member_info, .payment_info{
+    margin-bottom: 30px;
+}
+.infoBox h1{
+    width: 100%;
+    font-size: 20px;
+    border-bottom: 1px solid #68AE6D;
+    padding-bottom: 20px;
+    margin-bottom: 30px;
+}
+
+.reser_info .accom_info{
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.accom_info img{
+    width: 80px;
+    height: 80px;
+    border-radius: 10px;
+    margin-right: 30px;
+}
+
+.accom_info_letter h3, .accom_info_letter p{
+    width: 500px;
+    /* 글자가 너무 길때, ... 표시하려면 아래 코드 */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.accom_info_letter h3:hover, .accom_info_letter p:hover{
+    text-decoration: underline;
+}
+
+.reser_info .date_info{
+    margin-bottom: 20px;
+}
+
+.member_info h3, .member_info p{
+    height: 40px;
+}
+.member_info h3{
+    width: 30%;
+    display: inline-block;
+}
+.member_info p{
+    width: 70%;
+    display: inline-block;
+}
+
+.payment_info h3, .payment_info p{
+    height: 40px;
+}
+
+.payment_info h3{
+    width: 30%;
+    display: inline-block;
+}
+
+.payment_info p{
+    width: 70%;
+    display: inline-block;
+}
+
+.payment_info .total{
+    font-weight: bold;
+}
+
+.card_info{
+    color: #999999;
+    margin-top: 5px;
+    font-size: 14px;
+}
+
+.cancel{
+    width: 752px;
+    display: flex;
+    justify-content: center;
+    margin-top: 70px;
+}
+
+.btnCancel{
+    width: 100px;
+    height: 35px;
+    font-size: 14px;
+    color: white;
+    background-color: #68AE6D;
+    border-radius: 20px;
+    border: none;
+}
+
+.back a.btnBack{
+    display: block;
+    width: 90px;
+    height: 32px;
+    margin: 95px auto;
+
+    font-size: 12px;
+    font-weight: bold;
+    /* height 값이랑 동일한 px을 주면 높이 중앙 */
+    line-height: 32px;
+    text-align: center;
+
+    color: white;
+    border-radius: 16px;
+
+    background:#68AE6D;
+    box-shadow: 5px 8px 20px rgba(0, 0, 0, .1); 
+}
+
+.refund_info h3, .refund_info p{
+    height: 40px;
+}
+
+.refund_info h3{
+    width: 30%;
+    display: inline-block;
+}
+
+.refund_info p{
+    width: 70%;
+    display: inline-block;
+}
+
+.refund_info .total{
+    font-weight: bold;
+}
+
+.refund_info h1{
+    color: red;
+}

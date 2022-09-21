@@ -1,0 +1,149 @@
+@charset "utf-8";
+
+/* 한국어 : font-family: 'Noto Sans KR', sans-serif; */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+/* 영어(다국어) : font-family: 'Noto Sans', sans-serif; */
+/* @import url('https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap');w */
+
+*{
+    margin: 0;
+    padding: 0;
+
+    /* box-sizing: border-box; */
+
+    font-family: 'Noto Sans KR', sans-serif;
+
+    color: #333333;
+}
+
+#ask {
+    width: 500px;
+}
+
+#admin-post {
+    width: 500px;
+    /* margin : 0 0 0 auto; */
+}
+
+body {
+    margin: 0px;
+    padding: 0px;
+}
+
+#customer {
+    margin-left: 50px;
+}
+
+ul li {
+    list-style: none;
+}
+
+header{
+    width: 100%;
+    height: 200px;
+    background-color: #68AE6D;
+}
+
+
+#accordion {
+    justify-content: center;
+    margin: 85px 30px auto 50px;
+}
+
+.card {
+    /* float: left; */
+    width: 250px;
+    height: 450px;
+    /* padding: 30px 50px 30px; */
+    background-color: #68AE6D;
+    background-color: rgba(104, 174, 109, 0.15);
+    border-style: none;
+    font-size: 15px;
+    font-weight: bold;
+    /* text-decoration: none;
+    vertical-align: middle; */
+}
+
+.card-header {
+    /* background-color: transparent; */
+    border-bottom: 1px solid rgba(0,0,0,.125);
+    /* border-bottom: transparent; */
+    /* background-color: rgba(0,0,0,.03); */
+}
+
+[type=button]:not(:disabled), [type=reset]:not(:disabled), [type=submit]:not(:disabled), button:not(:disabled) {
+    cursor: pointer;
+    background-color: transparent;
+}
+
+button {
+    border: 0;
+    display: flex;
+    padding-left: 18px;
+}
+
+.back a.btnBack{
+    display: block;
+    width: 90px;
+    height: 32px;
+    margin: 95px auto;
+
+    font-size: 12px;
+    font-weight: bold;
+    /* height 값이랑 동일한 px을 주면 높이 중앙 */
+    line-height: 0px;
+    text-align: center;
+
+    color: white;
+    border-radius: 16px;
+
+    background:#68AE6D;
+    box-shadow: 5px 8px 20px rgba(0, 0, 0, .1); 
+}
+
+.board-table-top {
+    width: 800px;
+    padding: 50px 0 20px 0;
+    background-color: #F5F5F5;
+    border-radius: 10px;
+}
+
+#detail-list {
+    float: left;
+    font-weight: bold;
+    padding: 0 150px 100px 220px;
+}
+
+footer{
+    width: 100%;
+    height: 280px;
+    background-color: #68AE6D;
+    clear: both;
+}
+
+i {
+    padding-left: 15px;
+    font-size: 20px;
+}
+
+.profile_img {
+    text-align: center;
+    padding: 30px 0 80px 0;
+    border-radius: 50%;  
+}
+
+div .profile_img img {
+    border-radius: 50%;
+}
+
+.title {
+    margin: 0 0 15px 30px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.wrap {
+    display: flex;
+    justify-content: center;
+    margin: 50px 0;
+}
