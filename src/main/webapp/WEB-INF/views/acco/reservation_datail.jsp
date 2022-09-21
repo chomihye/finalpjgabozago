@@ -121,14 +121,16 @@
               <i class="bi bi-calendar-check"></i>
               <div>
                 <p class="title">체크인</p>
-                <input type="text" id="dateSelector" class="datepicker_input" name="spot" placeholder="체크인 날짜를 선택하세요" />
+             
+                	<input type="text" id="dateSelector" class="datepicker_input" name="checkInDate" value="" placeholder="체크인 날짜를 선택하세요" />
+              	
               </div>
             </li>
             <li>
               <i class="bi bi-calendar-check"></i>
               <div>
                 <p class="title">체크아웃</p>
-                <input type="text" id="dateSelector2" class="datepicker_input" name="spot"
+                <input type="text" id="dateSelector2" class="datepicker_input" name="checkOutDate" value=""
                   placeholder="체크아웃 날짜를 선택하세요" />
               </div>
             </li>
@@ -170,7 +172,8 @@
                   </div>
                   <div class="room_type">${list.ROOM_NAME}</div>
                   <div class="room_price">₩${list.PRICE}</div>
-                  <a href="/reservation/payment?room_idx=${list.IDX}" class="book_btn">예약하기</a>
+                  
+                  <a href="javascript:void(0);" class="book_btn" onclick="moveToPaymentPage('${list.IDX}');">예약하기</a>
                 </div>
               </div>
             </c:forEach>
@@ -266,78 +269,13 @@
                   <div class="star_name ">${list.NICKNAME}</div>
                   <div class="review_room_type">룸 타입 : ${list.ROOM_NAME}</div>
                   <div class="np-box">
-                    <p class="star_review">청결도 ${list.GRADE1}
-	
-                    </p>
-                    <p class="star_review">위치&nbsp;&nbsp;&nbsp;&nbsp; ${list.GRADE2}
-
-                    </p>
-                    <p class="star_review">만족도 ${list.GRADE3}
-
-                    </p>
+                    <p class="star_review">청결도 ${list.GRADE1}</p>
+                    <p class="star_review">위치&nbsp;&nbsp;&nbsp;&nbsp; ${list.GRADE2}</p>
+                    <p class="star_review">만족도 ${list.GRADE3}</p>
                   </div>
                 </div>
-
               </div>
             </c:forEach>
-            <!-- <div class="swiper-slide star_box">
-              <div class="star_box_wrap">
-                <div class="star_name">asd</div>
-                <div class="review_room_type">룸 타입 : 더블</div>
-                <div class="np-box">
-                  <p class="star_review">청결도
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star"></i>
-                    <i class="bi bi-star"></i>
-                  </p>
-                  <p class="star_review">위치&nbsp;&nbsp;&nbsp;&nbsp;
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star"></i>
-                    <i class="bi bi-star"></i>
-                  </p>
-                  <p class="star_review">만족도
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star"></i>
-                    <i class="bi bi-star"></i>
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div class="swiper-slide star_box">
-              <div class="star_box_wrap">
-                <div class="star_name">lisa stark</div>
-                <div class="review_room_type">룸 타입 : 더블</div>
-                <div class="np-box">
-                  <p class="star_review">청결도
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star"></i>
-                    <i class="bi bi-star"></i>
-                  </p>
-                  <p class="star_review">위치&nbsp;&nbsp;&nbsp;&nbsp;
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star"></i>
-                    <i class="bi bi-star"></i>
-                  </p>
-                  <p class="star_review">만족도
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star"></i>
-                    <i class="bi bi-star"></i>
-                  </p>
-                </div>
-              </div>
-            </div> -->
           </div>
 
           <div class="swiper-pagination"></div>
@@ -383,7 +321,7 @@
 
         <div class="person_apply_btn">
           <div class="cancel_btn">취소</div>
-          <div class="okBtn">적용하기</div>
+          <div class="okBtn" id="person_okbtn">적용하기</div>
         </div>
 
       </div>
@@ -441,21 +379,37 @@
 
       var dateSelector = document.querySelector('#dateSelector');
       dateSelector.flatpickr({
+    	local:"ko",
         monthSelectorType: "dropdown",
-        dateFormat: "Y.m.d",
+        dateFormat: "Y-m-d",
         minDate: "today"
       });
 
       var dateSelector = document.querySelector('#dateSelector2');
       dateSelector.flatpickr({
+    	local:"ko",
         monthSelectorType: "dropdown",
-        dateFormat: "Y.m.d",
+        dateFormat: "Y-m-d",
         minDate: "today",
         maxDate: new Date().fp_incr(730)
       });
     </script>
 
-
+    <script>
+      function moveToPaymentPage(idx) {
+        let check_in_date = $('[name=checkInDate]').val();
+        let check_out_date = $('[name=checkOutDate]').val();
+        const url = "/reservation/payment?room_idx="+idx+"&check_in_date="+check_in_date+"&check_out_date="+check_out_date;
+        
+        location.href = url;
+      }
+      
+      $(function () {
+    	 $('input[name=checkInDate]').attr('value','${check_in_date}'); 
+    	 $('input[name=checkOutDate]').attr('value','${check_out_date}');
+    	 
+      });
+    </script>
   </body>
 
   </html>

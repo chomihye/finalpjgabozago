@@ -54,7 +54,9 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <link rel="stylesheet" type="text/css" href="https://npmcdn.com/flatpickr/dist/themes/material_green.css">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://npmcdn.com/flatpickr/dist/flatpickr.min.js"></script>
     <script src="https://npmcdn.com/flatpickr/dist/l10n/ko.js"></script>
+    
 
     <!-- 제이쿼리 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -120,8 +122,8 @@
                         <div>
                             <p class="title">체크인</p>
                             
-                            <input type="text" id="dateSelector" class="datepicker_input" name="spot"
-                                placeholder="체크인 날짜를 선택하세요" />
+                                <input type="text" id="dateSelector" class="datepicker_input" name="checkInDate" 
+                                    placeholder="체크인 날짜를 선택하세요"  />
                             
                         </div>
                     </li>
@@ -129,7 +131,7 @@
                         <i class="bi bi-calendar-check"></i>
                         <div>
                             <p class="title">체크아웃</p>
-                            <input type="text" id="dateSelector2" class="datepicker_input" name="spot"
+                            <input type="text" id="dateSelector2" class="datepicker_input" name="checkOutDate"
                                 placeholder="체크아웃 날짜를 선택하세요" />
                         </div>
                     </li>
@@ -139,6 +141,7 @@
                         <div>
                             <p class="title">인원</p>
                             <button type="button" class="person_btn" id="person_btn">인원을 선택하세요</button>
+                            
                         </div>
                     </li>
                 </ul>
@@ -153,16 +156,17 @@
          <c:forEach items= "${_ACCOM_}" var="list">
                 <div class="acco_container">
                     <div class="list">
-                        <a href="/reservation/datail?accom_idx=${list.idx}" class="list_main_name">${list.accomName}</a>
+                        <a href="javascript:void(0);" class="list_main_name" onclick="moveToDetailPage('${list.idx}');">${list.accomName}</a>
 
                         <p>
                             <br />${list.travellargeDTO.largeAreaName}<br />기준인원 2명 <br />${list.accomroomDTO.minPrice} ~ ${list.accomroomDTO.maxPrice}
                             <br />
                         </p>
-                        <a href="/reservation/datail?accom_idx=${list.idx}" class="list_reserve">예약하기</a>
+                        
+                        <a href="javascript:void(0);" class="list_reserve" onclick="moveToDetailPage('${list.idx}');">예약하기</a>
                     </div>
                     <div class="hotel_picture">
-                        <a href="/reservation/datail?accom_idx=${list.idx}"><img src="/resources/acco/img/himg/${list.accomimagesDTO.fileName}" alt="" /></a>
+                        <a href="javascript:void(0);" onclick="moveToDetailPage('${list.idx}');"><img src="/resources/acco/img/himg/${list.accomimagesDTO.fileName}" alt="" /></a>
 
                         <div class="heart_icon ${list.wishlistIdx > 0 ? 'act' : ''}" data-idx="${list.idx}"><i class="bi bi-heart-fill"></i></div>
                     </div>
@@ -338,23 +342,36 @@
 
      <jsp:include page="/WEB-INF/views/common/footer.jsp" flush="false" />
 
+	
     <script>
         var dateSelector = document.querySelector('#dateSelector');
         dateSelector.flatpickr({
+        	local:"ko",
             monthSelectorType: "dropdown",
-            dateFormat: "Y.m.d",
+            dateFormat: "Y-m-d",
             minDate: "today"
         });
 
         var dateSelector = document.querySelector('#dateSelector2');
         dateSelector.flatpickr({
+        	local:"ko",
             monthSelectorType: "dropdown",
-            dateFormat: "Y.m.d",
+            dateFormat: "Y-m-d",
             minDate: "today",
             maxDate: new Date().fp_incr(730)
         });
     </script>
-  
+  	
+  	<script>
+      function moveToDetailPage(idx) {
+        let check_in_date = $('[name=checkInDate]').val();
+        let check_out_date = $('[name=checkOutDate]').val();
+        const url = "/reservation/datail?accom_idx="+idx+"&check_in_date="+check_in_date+"&check_out_date="+check_out_date;
+        
+        location.href = url;
+      }
+    </script>
+  	
 
 
 

@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 
 import com.pj.gabozago.domain.AccomDTO;
+import com.pj.gabozago.domain.AccomReservationDTO;
 import com.pj.gabozago.domain.AccomRoomDTO;
 import com.pj.gabozago.domain.AccomRoomVO;
 import com.pj.gabozago.domain.Criteria;
@@ -201,5 +202,7 @@ public class AccomServiceImpl implements AccomService {
 			throw new ServiceException(e);
 		}
 	}
+
+	
 
 } // end class

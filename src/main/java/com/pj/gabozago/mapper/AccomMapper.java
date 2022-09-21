@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import com.pj.gabozago.domain.AccomDTO;
+import com.pj.gabozago.domain.AccomReservationDTO;
 import com.pj.gabozago.domain.AccomRoomDTO;
 import com.pj.gabozago.domain.Criteria;
 import com.pj.gabozago.domain.MemberDTO;
@@ -64,6 +65,8 @@ public interface AccomMapper {
 		
 	// 특정 회원의 현재 포인트를 가져오는 메소드
 	@Select("SELECT point FROM tbl_member WHERE idx = #{idx}")
-	public abstract Integer selectUserCurrentPoint(MemberVO member);	
+	public abstract Integer selectUserCurrentPoint(MemberVO member);
+	
+	
 	
 } // end interface

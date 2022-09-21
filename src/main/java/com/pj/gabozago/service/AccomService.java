@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.pj.gabozago.domain.AccomDTO;
+import com.pj.gabozago.domain.AccomReservationDTO;
 import com.pj.gabozago.domain.AccomRoomDTO;
 import com.pj.gabozago.domain.Criteria;
 import com.pj.gabozago.domain.MemberDTO;
@@ -53,6 +54,7 @@ public interface AccomService {
 	
 	// 총 레코드 건수를 반환하는 메소드(페이징 처리에 필요)
 	public abstract int getTotal(AccomDTO accom) throws ServiceException;
+	
 	
 	
 	

@@ -46,7 +46,9 @@ function addEventToHeartIcon() {
             event.target.closest('.heart_icon').classList.remove('act');
           }
         } else if (response.code === 202) {
-          alert('위시리스트를 50개 이상 등록할 수 없습니다. 마이페이지에서 확인해 주세요');
+          alert(
+            '위시리스트를 50개 이상 등록할 수 없습니다. 마이페이지에서 확인해 주세요'
+          );
         } else if (response.code === 401) {
           alert('로그인 후 이용하세요');
         } else {
@@ -70,8 +72,7 @@ function addEventToHeartIcon() {
 //위시리스트 end
 
 $(function () {
-  // $('.header').load('header.html');
-  // $('.footer').load('footer.html');
+  
 
   $('.okBtn').click(function () {
     $('#wishlist_modal').css({ display: 'none' });
@@ -106,13 +107,8 @@ $(function () {
     $('#location_list li button').removeClass('act');
     $(this).toggleClass('act');
   });
-
-  $('#datepicker').datepicker({
-    language: 'ko',
-  });
-  $('#datepicker2').datepicker({
-    language: 'ko',
-  });
+  
+ 
 
   //인원수반영
   $('#person_okbtn').click(function () {
@@ -139,40 +135,20 @@ $(function () {
 
         for (let i = 0; i < accom_list.length; i++) {
           let accom = accom_list[i];
-          htmlText += `
-                    <div class="acco_container">
+          htmlText += `<div class="acco_container">
                         <div class="list">
-                            <a href="/reservation/datail?accom_idx=${
-                              accom.idx
-                            }" class="list_main_name">${accom.accomName}</a>
-                            <p>
-                                <br />${
-                                  accom.travellargeDTO.largeAreaName
-                                }<br />기준인원 2명 <br />${
-            accom.accomroomDTO.minPrice
-          } ~ ${accom.accomroomDTO.maxPrice}
-                                <br />
+                            <a href="/reservation/datail?accom_idx=${accom.idx}" class="list_main_name">${accom.accomName}</a>
+                            <p> <br />${accom.travellargeDTO.largeAreaName}<br />기준인원 2명 <br />${accom.accomroomDTO.minPrice} ~ ${accom.accomroomDTO.maxPrice}<br />
                             </p>
-                            <a href="/reservation/datail?accom_idx=${
-                              accom.idx
-                            }" class="list_reserve">예약하기</a>
+                            <a href="/reservation/datail?accom_idx=${accom.idx}" class="list_reserve">예약하기</a>
                         </div>
                         <div class="hotel_picture">
-                            <a href="/reservation/datail?accom_idx=${
-                              accom.idx
-                            }"><img src="/resources/acco/img/himg/${
-            accom.accomimagesDTO.fileName
-          }" alt="" /></a>
-
-                            <div class="heart_icon ${
-                              accom.wishlistIdx > 0 ? 'act' : ''
-                            }" data-idx="${
-            accom.idx
-          }"><i class="bi bi-heart-fill"></i></div>
+                            <a href="/reservation/datail?accom_idx=${accom.idx}"><img src="/resources/acco/img/himg/${accom.accomimagesDTO.fileName}" alt="" /></a>
+                            <div class="heart_icon ${accom.wishlistIdx > 0 ? 'act' : ''}" data-idx="${accom.idx}">
+                            <i class="bi bi-heart-fill"></i></div>
                         </div>
-                    </div>
-          `;
-        }
+                      </div>`;}
+                      
         $('#accom_list_container').html(htmlText);
         addEventToHeartIcon();
       },
