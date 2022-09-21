@@ -9,8 +9,10 @@ import org.springframework.stereotype.Service;
 import com.pj.gabozago.common.EmailSender;
 import com.pj.gabozago.domain.EmailDTO;
 import com.pj.gabozago.domain.JoinDTO;
+import com.pj.gabozago.domain.KakaoDTO;
 import com.pj.gabozago.domain.LoginDTO;
 import com.pj.gabozago.domain.MemberVO;
+import com.pj.gabozago.domain.NaverDTO;
 import com.pj.gabozago.exception.MemberException;
 import com.pj.gabozago.exception.ServiceException;
 import com.pj.gabozago.mapper.MemberMapper;
@@ -217,9 +219,7 @@ public class MemberServiceImpl implements MemberService {
 			int checkNum = this.mapper.selectUserforPhoneCheck(phone, uid);
 			
 			if(checkNum == 0) { // 이미 가입된 휴대폰 번호가 아닌 경우 휴대폰 인증을 위한 uid 인증번호 발송
-				
-				this.messageService.sendMessageforJoin(phone, uid); // SMS 발송
-				
+				this.messageService.sendMessageforJoin(phone, uid); // SMS 발송 @@@@@@ 임시 주석 설정 시 sms 발송 안됨
 			}// if
 			
 			return checkNum;
@@ -227,9 +227,50 @@ public class MemberServiceImpl implements MemberService {
 		} catch (Exception e) {
 			throw new ServiceException(e);
 		}// try-catch
-	}// findUserforPhoneCheck
-	
-	
-	
+	}
+
+	@Override
+	public MemberVO naverLogin(String uid_num) throws ServiceException {
+		log.trace("naverLogin() invoked.");
+		
+		try {						
+			return this.mapper.selectUserForNaverLogin(uid_num);
+		} catch (MemberException e) {
+			throw new ServiceException(e);
+		}// try-catch
+	} // naverLogin
+
+	@Override
+	public boolean createUserForNaverLogin(NaverDTO dto) throws ServiceException {
+		log.trace("create() invoked.");
+
+		try {
+			return this.mapper.insertUserForNaverLogin(dto) == 1;
+		} catch (MemberException e) {
+			throw new ServiceException(e);
+		}// try-catch
+	}// createUserForNaverLogin
+
+	@Override
+	public MemberVO kakaoLogin(String email) throws ServiceException {
+		log.trace("kakaoLogin() invoked.");
+		
+		try {						
+			return this.mapper.selectUserForKakaoLogin(email);
+		} catch (MemberException e) {
+			throw new ServiceException(e);
+		}// try-catch
+	}// kakaoLogin
+
+	@Override
+	public boolean createUserForKakaoLogin(KakaoDTO dto) throws ServiceException {
+		log.trace("createUserForKakaoLogin() invoked.");
+
+		try {
+			return this.mapper.insertUserForKakaoLogin(dto) == 1;
+		} catch (MemberException e) {
+			throw new ServiceException(e);
+		}// try-catch
+	}// createUserForKakaoLogin
 	
 }// end class

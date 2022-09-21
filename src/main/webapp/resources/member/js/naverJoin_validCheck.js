@@ -22,7 +22,6 @@ let sentSmsUid = ""; // 사용자에게 발송한 UID
 let isPersonalAgree = false; // 개인정보 수집 및 이용 약관 동의 여부
 let isUsageAgree = false; // 이용약관 동의 여부
 let isPasswordInsertedCorrect = false; // 비밀번호&비밀번호 재입력 일치 여부
-let isValidName = false; // 이름 형식 
 let isValidPassword = false; // 비밀번호 형식 확인
 
 
@@ -78,6 +77,7 @@ function doubleCheckAndVerifyEmail(){
 	console.log("doubleCheckAndVerifyEmail() invoked.");
 	
     let email = $("#email").val();
+	console.log("email: " + email);
 
 	const reg_email =/^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/;
 	
@@ -350,7 +350,7 @@ function finalCheckBeforeSubmit(){
 	// 아래 항목 중 하나라도 false인 경우 return false;
 	if( !isPersonalAgree || !isUsageAgree || !isValidNick || !isDoubleCheckNickname || !isValidEmail 
 	|| !isDoubleCheckEmail || !isVerifiedEmail || !isValidPhone || !isDoubleCheckPhone || !isVerifiedPhone 
-	|| !isPasswordInsertedCorrect || !isValidName || !isValidPassword){
+	|| !isPasswordInsertedCorrect || !isValidPassword){
 		
 		console.log("isPersonalAgree: " + isPersonalAgree);
 		console.log("isUsageAgree: " + isUsageAgree);
@@ -363,7 +363,6 @@ function finalCheckBeforeSubmit(){
 		console.log("isDoubleCheckPhone: " + isDoubleCheckPhone);
 		console.log("isVerifiedPhone: " + isVerifiedPhone);
 		console.log("isPasswordInsertedCorrect: " + isPasswordInsertedCorrect);
-		console.log("isValidName: " + isValidName);
 		console.log("isValidPassword: " + isValidPassword);
 
 		$("#joinFailedModal").css({display: "block"});

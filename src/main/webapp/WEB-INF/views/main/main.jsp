@@ -53,24 +53,6 @@
 				alert(resultMsg);
 			}// if
         });
-      	
-		// 네이버 사용자 프로필 조회 이후 프로필 정보를 처리할 callback function
-		var naver_id_login = new naver_id_login("ogYcfVAWiOHE79qtuGQH", "http://localhost:8080/login/naver/auth"); // 역시 마찬가지로 'localhost'가 포함된 CallBack URL
-		
-		// 접근 토큰 값 출력
-		alert(naver_id_login.oauthParams.access_token);
-		
-		// 네이버 사용자 프로필 조회
-		naver_id_login.get_naver_userprofile("naverSignInCallback()");
-		
-        // 네이버 사용자 프로필 조회 이후 프로필 정보를 처리할 callback function
-        function naverSignInCallback() {
-            alert(naver_id_login.getProfileData('email'));
-            alert(naver_id_login.getProfileData('nickname'));
-            // alert(naver_id_login.getProfileData('id'));
-            alert(naver_id_login.getProfileData('birthday'));
-            alert(naver_id_login.getProfileData('mobile'));
-        }
     </script>
 
 </head>
@@ -78,11 +60,10 @@
 <body>
 
     <% 
-    String msg = null; // if session scope이 null 아닌지 뭐가 있는지 확인 후 수행
+    String msg = null; // session scope null 확인 후 수행
     if( ( msg = (String) session.getAttribute("__RESULT__")) != null ){
-        if(msg.equals("로그아웃 되었습니다.") || msg.equals("회원 전용 서비스입니다. 먼저 로그인을 해주세요.")){ // 로그아웃 성공한 경우 or 로그인이 안됐는데 회원서비스 접근한 경우 Session Scope 삭제
+        if(msg.equals("로그아웃 되었습니다.") || msg.equals("회원 전용 서비스입니다. 먼저 로그인을 해주세요.") || msg.equals("로그인에 성공하였습니다.")){ // 로그아웃 성공한 경우 or 로그인이 안됐는데 회원서비스 접근한 경우 Session Scope 삭제
             session.removeAttribute("__RESULT__");
-            System.out.println("세션 삭제");
         }// if
     }// if
     %>

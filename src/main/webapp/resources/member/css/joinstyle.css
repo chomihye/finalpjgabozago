@@ -63,6 +63,9 @@ body #body{
     /* margin-top: 5px; */
     border: 1px solid #999999;
 }
+#body .sections .no_update{
+    color : #999999;
+}
 #body input:invalid{
     outline-color: red;
 }
@@ -114,12 +117,18 @@ body #body{
     clear: both;
 }
 #body .formCheckBox{
+	float: right;
     width: 80px;
     height: 40px;
     background: #FFFFFF;
     border: 1px solid #27AE60;
     border-radius: 12px;
-    margin-left: 3px;
+    margin-right: 10px;
+}
+#body .formCheckBox::after{
+	content: "";
+    display: block;
+    clear: both;
 }
 #body textarea{
     width: 600px;

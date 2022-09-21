@@ -48,7 +48,7 @@
 	
     <!-- join JS -->
     <script src="/resources/member/js/join.js"></script>
-    <script src="/resources/member/js/join_validCheck.js"></script>
+    <script src="/resources/member/js/kakaojoin_validCheck.js"></script>
     
     <script type="text/javascript">
 	   
@@ -61,25 +61,24 @@
         <jsp:include page="/WEB-INF/views/common/header.jsp" flush="true"/>
         
         <div id="body">        
-            <div class="midHr">&nbsp;회원가입&nbsp;</div>
+            <div class="midHr">&nbsp;카카오 연동 회원가입&nbsp;</div>
 
-            <!-- action="http://localhost:5050/join/joinProcess" --> 
             <form 
-            action="join/joinProcess"
+            action="http://localhost:8080/join/KakaojoinProcess"
             
             method="POST" id="joinForm" enctype="multipart/form-data"
             onsubmit="return finalCheckBeforeSubmit()">
                 <div class="sections">
                     <h4>이름<span class="redStar">*</span></h4>
-                    <input type="text" name="name" id="name" placeholder="예: 홍길동" minlength="2" maxlength="10"required><br>
-                    <div id="nameRulesError" class="validationRulesError">이름을 재작성해주세요.</div>
+                   <input type="text" name="name" id="name" placeholder="예: 홍길동" minlength="2" maxlength="10" value="${__KAKAO__.nickname}"><br>
+                   <div id="nameRulesError" class="validationRulesError">이름을 재작성해주세요.</div>
+                	
                 </div >
                 
                 <div class="sections">
-                    <h4>아이디(이메일)<span class="redStar">*</span></h4>
-                    <input type="email" name="email" id="email" placeholder="예: sample@email.com" required>
+                    <h4>아이디(이메일)(변경불가)<span class="redStar">*</span></h4>
+                    <input type="email" name="email" id="email" placeholder="예: sample@email.com" readonly value="${__KAKAO__.email}">
                     <button type="button" class="formCheckBox verificationBtn" id="emailVerificationBtn" onclick="doubleCheckAndVerifyEmail()">인증</button><br>
-                    <div id="emailRulesError" class="validationRulesError">이메일 양식에 맞게 작성해주세요.</div>
                 </div>
                 
                 <div class="sections">
@@ -98,7 +97,7 @@
                 <div class="sections">
                     <h4>닉네임<span class="redStar">*</span></h4>
                     <p class="ruleTexts">한문, 특수문자, 공백 제외 8자 이내</p>
-                    <input type="text" name="nickname" id="nickname" placeholder="" maxlength="8" required>
+                    <input type="text" name="nickname" id="nickname" placeholder="" maxlength="8">
                     <button type="button" class="formCheckBox" id="doubleCheckBtn" onclick="doubleCheckNickname()">중복 확인</button>
                     <div id="nicknameRulesError" class="validationRulesError">닉네임 양식에 맞게 작성해주세요.</div>
                 </div>

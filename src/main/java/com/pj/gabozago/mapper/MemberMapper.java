@@ -3,12 +3,13 @@ package com.pj.gabozago.mapper;
 import java.sql.Timestamp;
 
 import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import com.pj.gabozago.domain.JoinDTO;
+import com.pj.gabozago.domain.KakaoDTO;
 import com.pj.gabozago.domain.LoginDTO;
-import com.pj.gabozago.domain.LoginVO;
 import com.pj.gabozago.domain.MemberVO;
+import com.pj.gabozago.domain.NaverDTO;
 import com.pj.gabozago.exception.MemberException;
 
 public interface MemberMapper {
@@ -16,6 +17,18 @@ public interface MemberMapper {
 	// 새로운 멤버 회원가입 시 저장
 	public abstract Integer insert(JoinDTO dto) throws MemberException;
 	
+	// 네이버 로그인 회원 저장
+	public abstract Integer insertUserForNaverLogin(NaverDTO dto) throws MemberException;
+	
+	// 카카오 로그인 회원 저장
+	public abstract Integer insertUserForKakaoLogin(KakaoDTO dto) throws MemberException;
+	
+	// 네이버 로그인
+	public abstract MemberVO selectUserForNaverLogin(String uid_num) throws MemberException;
+	
+	// 카카오 로그인
+	public abstract MemberVO selectUserForKakaoLogin(String email) throws MemberException;
+
 	// 회원가입 시 닉네임 중복확인
 	public abstract Integer selectUserforNickCheck(String nickname) throws MemberException;
 	
@@ -41,8 +54,10 @@ public interface MemberMapper {
 	public abstract String selectUserPhoneByPhone(String phone) throws MemberException;
 
 	// 비밀번호 찾기(이메일) - 임시비밀번호 업데이트
-	public abstract Integer updateUserforFindPwWithEmail(String email, String password) throws MemberException;
+	@Update("UPDATE tbl_member SET password = #{password} WHERE email = #{email}")
+	public abstract Integer updateUserforFindPwWithEmail(@Param("email")String email, @Param("password")String password) throws MemberException;
 	
 	// 비밀번호 찾기(휴대폰) - 임시비밀번호 업데이트
+	@Update("UPDATE tbl_member SET password = #{password} WHERE phone = #{phone}")
 	public abstract Integer updateUserforFindPwWithPhone(String phone, String password) throws MemberException;
 }// end interface

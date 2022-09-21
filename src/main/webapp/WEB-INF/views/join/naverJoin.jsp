@@ -48,7 +48,7 @@
 	
     <!-- join JS -->
     <script src="/resources/member/js/join.js"></script>
-    <script src="/resources/member/js/join_validCheck.js"></script>
+    <script src="/resources/member/js/naverJoin_validCheck.js"></script>
     
     <script type="text/javascript">
 	   
@@ -61,25 +61,22 @@
         <jsp:include page="/WEB-INF/views/common/header.jsp" flush="true"/>
         
         <div id="body">        
-            <div class="midHr">&nbsp;회원가입&nbsp;</div>
+            <div class="midHr">&nbsp;네이버 연동 회원가입&nbsp;</div>
 
-            <!-- action="http://localhost:5050/join/joinProcess" --> 
             <form 
-            action="join/joinProcess"
+            action="http://localhost:8080/join/NaverjoinProcess"
             
             method="POST" id="joinForm" enctype="multipart/form-data"
             onsubmit="return finalCheckBeforeSubmit()">
                 <div class="sections">
-                    <h4>이름<span class="redStar">*</span></h4>
-                    <input type="text" name="name" id="name" placeholder="예: 홍길동" minlength="2" maxlength="10"required><br>
-                    <div id="nameRulesError" class="validationRulesError">이름을 재작성해주세요.</div>
+                   <h4>이름(변경불가)</h4>
+                   <input type="text" name="name" id="name" placeholder="예: 홍길동" minlength="2" maxlength="10" readonly value="${__NAVER__.name}"><br>
                 </div >
                 
                 <div class="sections">
-                    <h4>아이디(이메일)<span class="redStar">*</span></h4>
-                    <input type="email" name="email" id="email" placeholder="예: sample@email.com" required>
+                    <h4>아이디(이메일)<span class="redStar">&nbsp;인증 필수*</span></h4>
+                    <input type="email" name="email" id="email" placeholder="예: sample@email.com" value="${__NAVER__.email}">
                     <button type="button" class="formCheckBox verificationBtn" id="emailVerificationBtn" onclick="doubleCheckAndVerifyEmail()">인증</button><br>
-                    <div id="emailRulesError" class="validationRulesError">이메일 양식에 맞게 작성해주세요.</div>
                 </div>
                 
                 <div class="sections">
@@ -96,23 +93,17 @@
                 </div>
                 
                 <div class="sections">
-                    <h4>닉네임<span class="redStar">*</span></h4>
+                    <h4>닉네임<span class="redStar">&nbsp;중복확인 필수*</span></h4>
                     <p class="ruleTexts">한문, 특수문자, 공백 제외 8자 이내</p>
-                    <input type="text" name="nickname" id="nickname" placeholder="" maxlength="8" required>
+                    <input type="text" name="nickname" id="nickname" placeholder="" maxlength="8" value="${__NAVER__.nickname}">
                     <button type="button" class="formCheckBox" id="doubleCheckBtn" onclick="doubleCheckNickname()">중복 확인</button>
                     <div id="nicknameRulesError" class="validationRulesError">닉네임 양식에 맞게 작성해주세요.</div>
                 </div>
                 
                 <div class="sections">
-                    <h4>휴대폰 번호<span class="redStar">*</span></h4>
-                    <input type="text" name="phone" id="phone" pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}" placeholder="010-0000-0000" required>
+                    <h4>휴대폰 번호(변경불가)<span class="redStar">&nbsp;인증 필수*</span></h4>
+                    <input type="text" name="phone" id="phone" pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}" placeholder="010-0000-0000" readonly value="${__NAVER__.mobile}">
                     <button type="button" class="formCheckBox verificationBtn" id="phoneVerificationBtn" onclick="doubleCheckAndVerifyPhone()">인증</button>
-                    <div id="phoneRulesError" class="validationRulesError">휴대폰 번호 양식(010-0000-0000)에 맞게 작성해주세요.</div>
-                </div>
-                
-                <div class="sections">
-                    <h4>생년월일<span class="redStar">*</span></h4>
-                    <input type="text" name="birthday" id="flatpickr" placeholder="생년월일 선택" required>
                 </div>
                 
                 <div class="sections">

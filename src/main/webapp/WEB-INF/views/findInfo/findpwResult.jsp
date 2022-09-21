@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>findpwResult</title>
+    <title>가보자고:: 아이디/비밀번호 찾기</title>
 
     <!-- favicon -->
     <link rel="shortcut icon" href="/resources/common/ico/favicon.ico" type="image/x-icon">

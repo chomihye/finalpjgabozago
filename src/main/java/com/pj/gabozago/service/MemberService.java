@@ -3,16 +3,22 @@ package com.pj.gabozago.service;
 import java.sql.Timestamp;
 
 import com.pj.gabozago.domain.JoinDTO;
+import com.pj.gabozago.domain.KakaoDTO;
 import com.pj.gabozago.domain.LoginDTO;
-import com.pj.gabozago.domain.LoginVO;
 import com.pj.gabozago.domain.MemberVO;
-import com.pj.gabozago.exception.MemberException;
+import com.pj.gabozago.domain.NaverDTO;
 import com.pj.gabozago.exception.ServiceException;
 
 public interface MemberService {
 
 	// 멤버 회원가입
 	public abstract boolean create(JoinDTO dto) throws ServiceException;
+	
+	// 네이버 로그인 DB 저장
+	public abstract boolean createUserForNaverLogin(NaverDTO dto) throws ServiceException;
+	
+	// 카카오 로그인 DB 저장
+	public abstract boolean createUserForKakaoLogin(KakaoDTO dto) throws ServiceException;
 	
 	// 회원가입 시 닉네임 중복 확인
 	public abstract int findUserforNicknameCheck(String nickname) throws ServiceException;
@@ -25,6 +31,10 @@ public interface MemberService {
 
 	// 로그인
 	public abstract MemberVO login(LoginDTO dto) throws ServiceException;
+	
+	public abstract MemberVO naverLogin(String uid_num) throws ServiceException;
+	
+	public abstract MemberVO kakaoLogin(String email) throws ServiceException;
 	
 	public abstract boolean modifyUserWithRememberMe(Integer idx, String rememberMe, Timestamp rememberAge) throws ServiceException;
 	

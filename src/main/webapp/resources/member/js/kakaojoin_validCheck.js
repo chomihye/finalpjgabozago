@@ -296,19 +296,9 @@ function resendSms(){
 	    }// if
 	 });// 비밀번호 일치 확인
 	 
-	 $('#name').on('input', function(){		
-		let name = $("#name").val();
-	
-		const reg_name = /^[가-힣a-zA-Z]+$/;
+	 /*$('#name').on('input', function(){		
 		
-	    if(!(reg_name.test(name))){
-	        isValidName = false;
-	        $("#nameRulesError").css({display: "block"}); 
-	    }else{ 
-	        isValidName = true;
-	        $("#nameRulesError").css({display: "none"}); 
-	    }// if-else 
-	}); // oninput
+	}); // oninput*/
 
 	 $('#pw').on('input', function(){		
 		let password = $("#pw").val();
@@ -346,6 +336,19 @@ function finalCheckBeforeSubmit(){
 	}else {
 		$("#usageTextAgreeRulesError").css({display: "none"});
 	}// if-else
+	
+	// 이름 확인
+	let name = $("#name").val();
+	
+	const reg_name = /^[가-힣a-zA-Z]+$/;
+	
+    if(!(reg_name.test(name))){
+        isValidName = false;
+        $("#nameRulesError").css({display: "block"}); 
+    }else{ 
+        isValidName = true;
+        $("#nameRulesError").css({display: "none"}); 
+    }// if-else 
 	
 	// 아래 항목 중 하나라도 false인 경우 return false;
 	if( !isPersonalAgree || !isUsageAgree || !isValidNick || !isDoubleCheckNickname || !isValidEmail 
