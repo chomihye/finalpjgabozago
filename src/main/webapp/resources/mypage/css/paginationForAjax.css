@@ -44,3 +44,10 @@
 .pageNumber li{
     width: 35px;
 }
+
+.pageBtn{
+    margin-left: 50px;
+}
+.planBoxWrap{
+    margin-bottom: 75px;
+}

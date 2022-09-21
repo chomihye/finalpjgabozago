@@ -67,6 +67,7 @@
             AND tp.large_area_idx = la.idx
             AND tp.member_idx = m.idx (+)
             AND wp.member_idx = #{member.idx}
+            AND tp.is_public = 'Y'
         ORDER BY
             wp.idx DESC
         OFFSET (#{cri.currPage} -1) * #{cri.amount} ROWS
@@ -88,13 +89,16 @@
             tbl_travel_plan_detail tpd,
             tbl_reservation r,
             tbl_accom_room ar,
-            tbl_accom a
+            tbl_accom a,
+            tbl_travel_plan tp
         WHERE
             tpd.reservation_idx = r.idx (+)
             AND r.accom_room_idx = ar.idx (+)
             AND ar.accom_idx = a.idx (+)
+            AND tp.idx = tpd.travel_plan_idx (+)
             AND travel_plan_idx = #{travelPlanIdx}
             AND tpd.day = #{day}
+            AND tp.is_public = 'Y'
         ORDER BY
             tpd.place_seq
 

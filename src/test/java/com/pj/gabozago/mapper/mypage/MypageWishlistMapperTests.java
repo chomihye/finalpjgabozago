@@ -126,4 +126,17 @@ public class MypageWishlistMapperTests {
 	} // testSelectPlanDetail
 	
 	
+	@Test
+	@Order(5)
+	@DisplayName("5. testDeleteAccomWishlist")
+	@Timeout(value = 10, unit = TimeUnit.SECONDS)
+	void testDeleteAccomWishlist() throws DAOException {
+		log.info("testDeleteAccomWishlist() invoked.");
+		
+		String idx = "532";
+		
+		this.mapper.deleteAccomWishlist(idx);
+	} // testDeleteAccomWishlist
+	
+	
 } // end class

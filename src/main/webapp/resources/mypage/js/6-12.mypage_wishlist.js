@@ -6,11 +6,47 @@ let optionValue = null;
  */
 $(function(){
 	$("#wishlist").css("font-weight", "bold");
+    $(".simpleTextSpaceAdd").css('margin', '68px 0');       // 로딩 모달
 
     getAccomWishlist('1');     // 숙소 위시리스트 불러오는 ajax(default)
 
     changeOption();     // 옵션 선택시 메소드 호출
-});
+
+    // 삭제 버튼 클릭시
+    $(".selectDelete").off().on("click", function(){
+
+        // 현재 페이지 값 가져오기
+        let currPage = $(".currPage strong").text();
+
+        // idx 값 담을 배열 선언
+        let itemIdxArray = new Array();
+
+        optionValue = $("select[name=wishlist_type]").val();
+        let checkItems = $("input[name='selectParticle']:checked"); 
+
+        if(optionValue == "accom"){           // 숙소라면,
+
+            $.each(checkItems, function(index, value) {       
+                let idx = $(value).attr("idx");
+                itemIdxArray.push(idx);
+            }); // each
+
+            deleteAccomWishlist(itemIdxArray, currPage);
+
+        }else if(optionValue == "plan"){     // 일정이라면,
+
+            $.each(checkItems, function(index, value) {       
+                let idx = $(value).attr("idx");
+                itemIdxArray.push(idx);
+            }); // each
+
+            deletePlanWishlist(itemIdxArray, currPage);
+
+        } // if-else
+
+    }); // delete click
+    
+}); // 초기함수
 
 
 /**
@@ -38,16 +74,18 @@ function selectAllCheckBox(cnt){
 /**
  * @desc Select Option 선택시 변경
  */
- function changeOption(){
+function changeOption(){
     $("select[name=wishlist_type]").on("change", function(){
         console.log($(this).val());
         optionValue = $(this).val(); //value값 가져오기
 
         if(optionValue == "accom"){
+            $("#plan_list").empty();
+            $("input[type='checkbox']").prop("checked", false);
             getAccomWishlist('1');
         }else if(optionValue == "plan"){
             $("#accom_list").empty();
-            $(".accomPage").empty();
+            $("input[type='checkbox']").prop("checked", false);
             getPlanWishlist('1');
         } // if-else
     });
@@ -76,11 +114,13 @@ function getAccomWishlist(currPage){
             const list = map.list;
             const pageDTO = map.pageDTO;
 
+            $("input[type='checkbox']").prop("checked", false);
             $("#accom_list").empty();
 
             for(var i = 0 ; i < list.length ; i++){
-                console.log(list[i]);
+                // console.log(list[i]);
 
+                wishAccomIdx = list[i].IDX;
                 file_name = list[i].FILE_NAME;
                 accom_idx = list[i].ACCOM_IDX;
                 accom_name = list[i].ACCOM_NAME;
@@ -90,7 +130,7 @@ function getAccomWishlist(currPage){
 
                 let particleStr = "";
                 particleStr += '<li id="item' + num + '">';
-                particleStr += '<input type="checkbox" id="select' + num + '" name="selectParticle">';
+                particleStr += '<input type="checkbox" id="select' + num + '" name="selectParticle" idx="' + wishAccomIdx + '">';
                 particleStr += '<label for="select' + num + '"></label>';
                 particleStr += '<a href="/reservation/datail?accom_idx=' + accom_idx + '" class="accomBox">';
                 particleStr += '<img src="/resources/acco/img/himg/' + file_name + '" alt="accom image">';
@@ -111,7 +151,7 @@ function getAccomWishlist(currPage){
 
             // ================================================================
 
-            $(".accomPage").empty();
+            $(".pageBtn").empty();
 
             let initialPageStr = "";
             initialPageStr += '<form action="#" id="paginationForm">';
@@ -125,7 +165,7 @@ function getAccomWishlist(currPage){
             initialPageStr += '</ul>';
             initialPageStr += '</form>';
 
-            $(".accomPage").append(initialPageStr);
+            $(".pageBtn").append(initialPageStr);
 
             for(let i = pageDTO.startPage ; i <= pageDTO.endPage ; i++){
                 let pageStr = "";
@@ -166,7 +206,9 @@ function getAccomWishlist(currPage){
 /**
  * @desc 일정 위시리스트 불러오기
  */
- function getPlanWishlist(currPage){
+function getPlanWishlist(currPage){
+
+    showLoadingModal();
 
     $.ajax({
         type: "POST",
@@ -177,6 +219,7 @@ function getAccomWishlist(currPage){
         cache : false,
         error : function(error) {
             console.log("error");
+            hideLoadingModal();
         },
         success : function(resp) {
             console.log("success");
@@ -185,15 +228,16 @@ function getAccomWishlist(currPage){
             const list = map.list;
             const pageDTO = map.pageDTO;
 
+            $("input[type='checkbox']").prop("checked", false);
             $("#plan_list").empty();
 
             let particleStr = "";
             particleStr += '<div class="planBoxWrap">';
 
             for(var i = 0 ; i < list.length ; i++){
-                console.log(list[i]);
+                // console.log(list[i]);
 
-                wishlistIdx = list[i].wishlistIdx;
+                wishPlanIdx = list[i].wishlistIdx;
                 travelPlanIdx = list[i].travelPlanIdx;
                 largeAreaName = list[i].largeAreaName;
                 nickname = list[i].nickname;
@@ -210,7 +254,7 @@ function getAccomWishlist(currPage){
                 let num = i + 1;
                 
                 particleStr += '<div class="planBox">';
-                particleStr += '<input type="checkbox" id="select' + num + '" name="selectParticle">';
+                particleStr += '<input type="checkbox" id="select' + num + '" name="selectParticle" idx="' + wishPlanIdx + '">';
                 particleStr += '<label for="select' + num + '"></label>';
                 particleStr += '<div class="slideContainer">';
                 particleStr += '<div id="plan' + num + '" class="carousel slide" data-touch="false" data-interval="false">';
@@ -243,10 +287,6 @@ function getAccomWishlist(currPage){
                             particleStr += '<li></li>';
                         } // if-else
                     } // for
-
-                    for(var l = 0 ; l < (7-seqCount) ; l++){
-                        particleStr += '<li></li>';
-                    } // for
                     
                     particleStr += '</ul>';
                     particleStr += '</div>';
@@ -276,13 +316,13 @@ function getAccomWishlist(currPage){
             $("#plan3 .carousel-inner").children().first().addClass('active');
             $("#plan4 .carousel-inner").children().first().addClass('active');
 
-            cnt = $("#plan_list .planBoxWrap > div").length;           // 숙소의 체크박스 갯수
+            cnt = $("#plan_list .planBoxWrap > div").length;           // 일정의 체크박스 갯수
             console.log("cnt : " + cnt);
             selectAllCheckBox(cnt);
 
             // ================================================================
 
-            $(".accomPage").empty();
+            $(".pageBtn").empty();
 
             let initialPageStr = "";
             initialPageStr += '<form action="#" id="paginationForm">';
@@ -296,7 +336,7 @@ function getAccomWishlist(currPage){
             initialPageStr += '</ul>';
             initialPageStr += '</form>';
 
-            $(".accomPage").append(initialPageStr);
+            $(".pageBtn").append(initialPageStr);
 
             for(let i = pageDTO.startPage ; i <= pageDTO.endPage ; i++){
                 let pageStr = "";
@@ -327,8 +367,67 @@ function getAccomWishlist(currPage){
 
             $(".backPage > a").off().on('click', function(){
                 getPlanWishlist(pageDTO.realEndPage);
-            });     
-
+            });   
+            
+            hideLoadingModal();
         } // success
     }); // ajax
 } // getPlanWishlist
+
+
+/**
+ * @desc 숙소 위시리스트 삭제
+ */
+function deleteAccomWishlist(itemIdxArray, currPage){
+
+    $.ajax({
+        type: "POST",
+        url: "wishlist/accom/delete",
+        data: { "itemIdxArray" : itemIdxArray },
+        traditional: true,
+        cache : false,
+        error : function(error) {
+            console.log("error");
+        },
+        success : function(resp) {
+            console.log("success");
+            getAccomWishlist(currPage);
+        } // success
+    }); // ajax
+    
+} // getAccomWishlist
+
+
+/**
+ * @desc 일정 위시리스트 삭제
+ */
+ function deletePlanWishlist(itemIdxArray, currPage){
+
+    $.ajax({
+        type: "POST",
+        url: "wishlist/plan/delete",
+        data: { "itemIdxArray" : itemIdxArray },
+        traditional: true,
+        cache : false,
+        error : function(error) {
+            console.log("error");
+        },
+        success : function(resp) {
+            console.log("success");
+            getPlanWishlist(currPage);
+        } // success
+    }); // ajax
+    
+} // getAccomWishlist
+
+
+/**
+ * @desc 로딩 모달
+ */
+function showLoadingModal() {
+    $("#loadingModal").css('display', 'block');
+}
+    
+function hideLoadingModal() {
+    $("#loadingModal").css('display', 'none');
+}

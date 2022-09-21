@@ -96,5 +96,21 @@ public class MypageWishlistServiceImpl implements MypageWishlistService {
 		} // try-catch
 	} // getPlanWishlist
 
+
+	// 숙소 위시리스트 삭제
+	@Override
+	public void deleteAccomWishlist(String idx) throws ServiceException {
+		try { this.mapper.deleteAccomWishlist(idx); } 
+		catch (DAOException e) { throw new ServiceException(e); }
+	} // deleteAccomWishlist
+
+
+	// 일정 위시리스트 삭제
+	@Override
+	public void deletePlanWishlist(String idx) throws ServiceException {
+		try { this.mapper.deletePlanWishlist(idx); } 
+		catch (DAOException e) { throw new ServiceException(e); }
+	} // deletePlanWishlist
+
 	
 } // end class

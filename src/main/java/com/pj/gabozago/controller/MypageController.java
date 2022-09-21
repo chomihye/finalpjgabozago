@@ -17,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -371,7 +372,7 @@ public class MypageController {
 			
 			@Cleanup
 		    PrintWriter out = res.getWriter();
-		    out.print(mapToJson);	// Ajax는 출력된 데이터를 전송하므로 데이터를 출력해줘야 한다.
+		    out.print(mapToJson);		// Ajax에 전송하기 위해 출력
 		} catch (Exception e) {
 			throw new ControllerException(e);
 		} // try-catch
@@ -403,11 +404,49 @@ public class MypageController {
 			
 			@Cleanup
 		    PrintWriter out = res.getWriter();
-		    out.print(mapToJson);	// Ajax는 출력된 데이터를 전송하므로 데이터를 출력해줘야 한다.
+		    out.print(mapToJson);		// Ajax에 전송하기 위해 출력
 		} catch (Exception e) {
 			throw new ControllerException(e);
 		} // try-catch
 	} // getPlanWishlist
+	
+	
+	@PostMapping(value = "/wishlist/accom/delete")
+	@ResponseBody
+	public void deleteAccomWishItems(@RequestParam(value="itemIdxArray") String[] itemIdxArray) throws ControllerException {
+		log.trace(">>>>>>>>>>>>>>>>>>>> deleteAccomWishItems() invoked.");
+		
+		try {
+			String idx = itemIdxArray[0];
+			
+			for(int i = 1 ; i < itemIdxArray.length ; i++) {
+				idx += String.format("%s  %s",  ", ", itemIdxArray[i]);
+			} // for
+			
+			this.wishlistService.deleteAccomWishlist(idx);
+		}catch(Exception e) {
+			throw new ControllerException(e);
+		} // try-catch
+	} // deleteAccomWishItems
+	
+	
+	@PostMapping(value = "/wishlist/plan/delete")
+	@ResponseBody
+	public void deletePlanWishItems(@RequestParam(value="itemIdxArray") String[] itemIdxArray) throws ControllerException {
+		log.trace(">>>>>>>>>>>>>>>>>>>> deletePlanWishItems() invoked.");
+		
+		try {
+			String idx = itemIdxArray[0];
+			
+			for(int i = 1 ; i < itemIdxArray.length ; i++) {
+				idx += String.format("%s  %s",  ", ", itemIdxArray[i]);
+			} // for
+
+			this.wishlistService.deletePlanWishlist(idx);
+		}catch(Exception e) {
+			throw new ControllerException(e);
+		} // try-catch
+	} // deletePlanWishItems
 	
 	
 	@GetMapping(path = "/point")
