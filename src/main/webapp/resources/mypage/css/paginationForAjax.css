@@ -48,6 +48,9 @@
 .pageBtn{
     margin-left: 50px;
 }
+.writePageBtn{
+    margin-left: 0px !important;
+}
 .planBoxWrap{
     margin-bottom: 75px;
 }

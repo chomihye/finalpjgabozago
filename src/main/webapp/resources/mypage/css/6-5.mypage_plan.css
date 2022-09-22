@@ -47,10 +47,10 @@ section .plan_header h1{
 .planBoxWrap{
     width: 752px;
     /* 화면크기를 줄였을때 nav와 일정 margin을 유지하려면 left에 94px을 준다. */
-    margin: 0 auto 50px 94px;
+    margin: 0 auto 50px 103px;
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    /* justify-content: center; */
 }
 .planBox{
     display: flex;

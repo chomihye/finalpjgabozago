@@ -47,16 +47,7 @@
             la.large_area_name,
             m.nickname,
             tp.likes,
-            (SELECT 
-                TRUNC(EndDate - StartDate + 1) 
-            FROM 
-                (SELECT
-                    idx,
-                    TO_DATE(start_date,'yyyy-mm-dd') as StartDate, 
-                    TO_DATE(end_date,'yyyy-mm-dd') as EndDate 
-                FROM tbl_travel_plan)
-            WHERE
-                idx = tp.idx) as total_days
+            tp.days as total_days
         FROM 
             tbl_wishlist_plan wp,
             tbl_travel_plan tp,
@@ -80,7 +71,7 @@
         resultType="java.util.LinkedHashMap">
         
         SELECT
-            tpd.day,
+            <!-- tpd.day, -->
             tpd.place_type,
             a.accom_name,
             tpd.place_name,

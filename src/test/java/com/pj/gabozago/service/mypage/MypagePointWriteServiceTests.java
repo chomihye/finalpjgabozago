@@ -2,6 +2,7 @@ package com.pj.gabozago.service.mypage;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
@@ -42,7 +43,7 @@ public class MypagePointWriteServiceTests {
 	
 	
 	@Setter(onMethod_ = {@Autowired})
-	private MypagePointWriteService service;
+	private MypagePlanPointWriteService service;
 	
 	
 	@BeforeAll
@@ -87,6 +88,24 @@ public class MypagePointWriteServiceTests {
 		Objects.requireNonNull(point);
 		log.info("\t+ current point : {}", point);
 	} // testGetUserCurrentPoint
+	
+	
+	@Test
+	@Order(3)
+	@DisplayName("3. testGetPlanList")
+	@Timeout(value = 10, unit = TimeUnit.SECONDS)
+	void testGetPlanList() throws ServiceException {
+		log.trace("testGetPlanList() invoked.");
+		
+		Criteria cri = new Criteria();
+		cri.setAmount(4);
+		
+		MemberVO member = new MemberVO(53, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+		
+		List<LinkedHashMap<String, Object>> list = this.service.getPlanList(cri, member);
+		
+		list.forEach(log::info);
+	} // testGetPlanList
 
 	
 } // end class

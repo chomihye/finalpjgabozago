@@ -27,6 +27,7 @@ import com.pj.gabozago.common.SharedScopeKeys;
 import com.pj.gabozago.domain.AccomReservationDTO;
 import com.pj.gabozago.domain.AccomReviewDTO;
 import com.pj.gabozago.domain.AccomReviewVO;
+import com.pj.gabozago.domain.CommunityVO;
 import com.pj.gabozago.domain.Criteria;
 import com.pj.gabozago.domain.MemberDTO;
 import com.pj.gabozago.domain.MemberVO;
@@ -36,7 +37,7 @@ import com.pj.gabozago.domain.RefundVO;
 import com.pj.gabozago.exception.ControllerException;
 import com.pj.gabozago.exception.ServiceException;
 import com.pj.gabozago.service.mypage.MypageMainMemberService;
-import com.pj.gabozago.service.mypage.MypagePointWriteService;
+import com.pj.gabozago.service.mypage.MypagePlanPointWriteService;
 import com.pj.gabozago.service.mypage.MypageReserService;
 import com.pj.gabozago.service.mypage.MypageWishlistService;
 
@@ -55,16 +56,16 @@ public class MypageController {
 
 	
 	@Setter(onMethod_= {@Autowired})
-	private MypagePointWriteService pointWriteService;
+	private MypageMainMemberService memberService;
 	
 	@Setter(onMethod_= {@Autowired})
 	private MypageReserService reserService;
 	
 	@Setter(onMethod_= {@Autowired})
-	private MypageMainMemberService memberService;
+	private MypageWishlistService wishlistService;
 	
 	@Setter(onMethod_= {@Autowired})
-	private MypageWishlistService wishlistService;
+	private MypagePlanPointWriteService planPointWriteService;
 	
 
 	@RequestMapping(path = {"", "/main"})
@@ -74,7 +75,7 @@ public class MypageController {
 		try {			
 			// 메인페이지 로드시
 			this.reserService.modifyReserStatus(member);			// 예약상태 체크(날짜에 따라 상태 업데이트 필요하면 수정)
-			this.pointWriteService.getUserCurrentPoint(member);		// 회원의 현재 포인트 업데이트
+			this.planPointWriteService.getUserCurrentPoint(member);		// 회원의 현재 포인트 업데이트
 			
 			// 회원의 사용일 임박순 숙소예약내역 2건을 가져오는 메소드
 			List<LinkedHashMap<String, Object>> accomList = this.memberService.getReserOrderOfUseDate(member);
@@ -225,11 +226,43 @@ public class MypageController {
 	
 	
 	@GetMapping(path = "/plan")
-	public String getMyPlanPage() {
+	public String getMyPlanPage(Criteria cri, @SessionAttribute(SharedScopeKeys.USER_KEY) MemberVO member, Model model) 
+			throws ControllerException {
 		log.trace(">>>>>>>>>>>>>>>>>>>> getMyPlanPage() invoked.");
+		
+		try {
+			cri.setAmount(4);
+			List<LinkedHashMap<String, Object>> list = this.planPointWriteService.getPlanList(cri, member);
+			
+			// 총 레코드 건수를 반환
+			int total = this.planPointWriteService.getTotalOfPlan(cri, member);
+			PageDTO pageDTO = new PageDTO(cri, total);
+						
+			model.addAttribute(SharedScopeKeys.LIST_KEY, list);
+			model.addAttribute(SharedScopeKeys.PAGINATION_KEY, pageDTO);
+		} catch (Exception e) {
+			throw new ControllerException(e);
+		} // try-catch
 		
 		return "mypage/plan";
 	} // getMyPlanPage
+	
+	
+	@PostMapping(path = "/plan/delete")
+	public String deleteTravelPlan(Criteria cri, int idx, RedirectAttributes rttrs) throws ControllerException {
+		log.trace(">>>>>>>>>>>>>>>>>>>> deleteTravelPlan() invoked.");
+		
+		try {
+			this.planPointWriteService.deletePlan(idx);
+			
+			rttrs.addFlashAttribute(SharedScopeKeys.RESULT_KEY, "success");
+		} catch (Exception e) {
+			rttrs.addFlashAttribute(SharedScopeKeys.RESULT_KEY, "failed");
+			throw new ControllerException(e);
+		} // try-catch
+		
+		return "redirect:/mypage/plan?currPage=" + cri.getCurrPage();
+	} // deleteTravelPlan
 	
 	
 	@GetMapping(path = "/reservation")
@@ -454,16 +487,16 @@ public class MypageController {
 		try {
 			cri.setAmount(10);
 			
-			List<PointHistoryVO> list = this.pointWriteService.getUserPointList(cri, member);
+			List<PointHistoryVO> list = this.planPointWriteService.getUserPointList(cri, member);
 			list.forEach(log::trace);
 			
-			int userCurrentPoint = this.pointWriteService.getUserCurrentPoint(member);		// 회원의 현재 총 포인트
+			int userCurrentPoint = this.planPointWriteService.getUserCurrentPoint(member);		// 회원의 현재 총 포인트
 			
 			model.addAttribute(SharedScopeKeys.LIST_KEY, list);
 			model.addAttribute(SharedScopeKeys.RESULT_KEY, userCurrentPoint);
 			
 			// 총 레코드 건수를 반환
-			int total = this.pointWriteService.getTotal(cri, member);
+			int total = this.planPointWriteService.getTotalOfPoint(cri, member);
 			PageDTO pageDTO = new PageDTO(cri, total);
 			model.addAttribute(SharedScopeKeys.PAGINATION_KEY, pageDTO);
 			
@@ -476,11 +509,75 @@ public class MypageController {
 	
 	
 	@GetMapping(path = "/write")
-	public String getWritePage() {
-		log.trace(">>>>>>>>>>>>>>>>>>>> getWritePage() invoked.");
+	public String loadWritePage() {
+		log.trace(">>>>>>>>>>>>>>>>>>>> loadWritePage() invoked.");
 		
 		return "mypage/write";
-	} // getWritePage
+	} // loadWritePage
+	
+	
+	@PostMapping(path = "/write/community")
+	@ResponseBody
+	public void getWriteCommunity(Criteria cri, @SessionAttribute(SharedScopeKeys.USER_KEY) MemberVO member, 
+			HttpServletResponse res) throws ControllerException {
+		log.trace(">>>>>>>>>>>>>>>>>>>> getWriteCommunity() invoked.");
+		
+		try {
+			cri.setAmount(5);
+			
+			List<CommunityVO> list = this.planPointWriteService.getWriteList(cri, member);
+			
+			// 총 레코드 건수를 반환
+			int total = this.planPointWriteService.getTotalOfWrite(member);
+			PageDTO pageDTO = new PageDTO(cri, total);
+						
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("list", list);
+			map.put("pageDTO", pageDTO);
+			
+			Gson gson = new Gson();
+			String mapToJson = gson.toJson(map);
+			log.trace(mapToJson);
+			
+			@Cleanup
+		    PrintWriter out = res.getWriter();
+		    out.print(mapToJson);		// Ajax에 전송하기 위해 출력
+		} catch (Exception e) {
+			throw new ControllerException(e);
+		} // try-catch
+	} // getWriteCommunity
+	
+	
+	@PostMapping(path = "/write/comment")
+	@ResponseBody
+	public void getWriteComment(Criteria cri, @SessionAttribute(SharedScopeKeys.USER_KEY) MemberVO member, 
+			HttpServletResponse res) throws ControllerException {
+		log.trace(">>>>>>>>>>>>>>>>>>>> getWriteComment() invoked.");
+		
+		try {
+			cri.setAmount(5);
+			
+			List<LinkedHashMap<String, Object>> list = this.planPointWriteService.getCommentList(cri, member);
+			
+			// 총 레코드 건수를 반환
+			int total = this.planPointWriteService.getTotalOfComment(member);
+			PageDTO pageDTO = new PageDTO(cri, total);
+						
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("list", list);
+			map.put("pageDTO", pageDTO);
+			
+			Gson gson = new Gson();
+			String mapToJson = gson.toJson(map);
+			log.trace(mapToJson);
+			
+			@Cleanup
+		    PrintWriter out = res.getWriter();
+		    out.print(mapToJson);		// Ajax에 전송하기 위해 출력
+		} catch (Exception e) {
+			throw new ControllerException(e);
+		} // try-catch
+	} // getWriteComment
 	
 	
 	@GetMapping(path = "/withdrawal/pwdCheck")

@@ -1,9 +1,8 @@
 /**
  * @desc 초기 수행 (**모달만을 위한 곳이다.)
  * 연결된 페이지
- * plan.jsp
  * reservation/detail.jsp
- * reservation/review.jsp
+ * plan.jsp
  */
 $(function(){
     $(".btnCancel").click(function(){

@@ -48,8 +48,8 @@
     crossorigin="anonymous"></script>
 
     <!-- 폰트어썸, 부트스트랩 폰트 -->
-    <script src="https://kit.fontawesome.com/39d2c0da6a.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
+    <!-- <script src="https://kit.fontawesome.com/39d2c0da6a.js" crossorigin="anonymous"></script> -->
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css"> -->
 
     <!-- CSS -->
     <link rel="stylesheet" href="/resources/mypage/css/6-12.mypage_wishlist.css">

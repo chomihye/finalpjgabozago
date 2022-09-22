@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<!-- Mapper.xml 파일의 FQCN(상세경로 포함 정확한 이름) -->
+<mapper namespace="com.pj.gabozago.mapper.MypagePlanPointWriteMapper">
+
+    <!-- id : 메소드명 -->
+    <!-- parameterType="java.util.Map" 은 생략이 가능함 -->
+    
+    <select 
+        id="selectPlanList"
+        resultType="java.util.LinkedHashMap">
+
+        SELECT
+            tp.idx as travel_plan_idx,
+            tp.is_public,
+            la.large_area_name,
+            tp.start_date,
+            tp.end_date,
+            tp.days,
+            tp.insert_ts,
+            tp.update_ts
+        FROM 
+            tbl_travel_plan tp,
+            tbl_large_area la
+        WHERE 
+            tp.large_area_idx = la.idx
+            AND tp.member_idx = #{member.idx}
+        ORDER BY
+            tp.idx DESC
+        OFFSET (#{cri.currPage} -1) * #{cri.amount} ROWS
+        FETCH NEXT #{cri.amount} ROWS ONLY
+    </select>
+
+    <select 
+        id="selectPlanDetail" 
+        resultType="java.util.LinkedHashMap">
+        
+        SELECT
+            <!-- tpd.day, -->
+            tpd.place_type,
+            a.accom_name,
+            tpd.place_name,
+            tpd.place_seq
+        FROM
+            tbl_travel_plan_detail tpd,
+            tbl_reservation r,
+            tbl_accom_room ar,
+            tbl_accom a,
+            tbl_travel_plan tp
+        WHERE
+            tpd.reservation_idx = r.idx (+)
+            AND r.accom_room_idx = ar.idx (+)
+            AND ar.accom_idx = a.idx (+)
+            AND tp.idx = tpd.travel_plan_idx (+)
+            AND travel_plan_idx = #{travelPlanIdx}
+            AND tpd.day = #{day}
+        ORDER BY
+            tpd.place_seq
+    </select>
+
+    <select 
+        id="selectUserPointList" 
+        parameterType="map" 
+        resultType="com.pj.gabozago.domain.PointHistoryVO">
+        
+        SELECT 
+            /*+ INDEX_DESC(tbl_point_history) */ 
+            idx, member_idx, point_amount, point_reason, is_plus, insert_ts
+        FROM tbl_point_history
+        WHERE member_idx = #{member.idx}
+        OFFSET (#{cri.currPage} -1) * #{cri.amount} ROWS
+        FETCH NEXT #{cri.amount} ROWS ONLY
+    </select>
+
+    <update id="updateMemberPoint">
+        UPDATE tbl_member 
+        SET point = 
+            ((SELECT sum(point_amount) 
+            FROM tbl_point_history 
+            WHERE member_idx = #{idx} 
+            AND is_plus = 'Y')
+            -(SELECT sum(point_amount) 
+            FROM tbl_point_history 
+            WHERE member_idx = #{idx} 
+            AND is_plus = 'N')) 
+        WHERE idx = #{idx}
+    </update>
+
+    <select 
+        id="selectWriteList"
+        resultType="com.pj.gabozago.domain.CommunityVO">
+
+        SELECT
+            /*+ INDEX_DESC(tbl_community) */ 
+            idx,
+            img,
+            title,
+            content,
+            insert_ts,
+            update_ts
+        FROM
+            tbl_community
+        WHERE
+            member_idx = #{member.idx}
+        OFFSET (#{cri.currPage} -1) * #{cri.amount} ROWS
+        FETCH NEXT #{cri.amount} ROWS ONLY
+    </select>
+
+    <select 
+        id="selectCommentList"
+        resultType="java.util.LinkedHashMap">
+        SELECT
+            t.idx,
+            t.content,
+            y.title,
+            y.comment_count,
+            t.insert_ts,
+            t.update_ts
+        FROM
+            tbl_comment t,
+            tbl_community y
+        WHERE
+            t.community_idx = y.idx
+            AND y.member_idx = #{member.idx}
+        ORDER BY
+            t.idx DESC
+        OFFSET (#{cri.currPage} -1) * #{cri.amount} ROWS
+        FETCH NEXT #{cri.amount} ROWS ONLY
+    </select>
+
+</mapper>

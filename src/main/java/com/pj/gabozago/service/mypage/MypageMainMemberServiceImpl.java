@@ -20,6 +20,7 @@ import lombok.extern.log4j.Log4j2;
 
 @NoArgsConstructor
 
+//마이페이지 메인과 회원정보수정 및 탈퇴 페이지 관련 service
 @Service
 public class MypageMainMemberServiceImpl implements MypageMainMemberService {
 

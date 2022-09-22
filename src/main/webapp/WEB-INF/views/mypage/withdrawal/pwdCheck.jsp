@@ -42,13 +42,6 @@
  
     <!-- CSS -->
     <link rel="stylesheet" href="/resources/mypage/css/6-16.mypage_withdrawal_pwdCheck.css">
-
-    <!-- script -->
-    <!-- <script>
-        $(function(){
-            $(".profileAndMenu .profile h2").append('${sessionScope.__MEMBER__.nickname}');
-        });
-    </script> -->
 </head>
 
 <body>

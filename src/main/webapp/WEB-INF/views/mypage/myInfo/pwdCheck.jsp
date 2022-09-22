@@ -45,11 +45,6 @@
 
     <!-- script -->
     <script src="/resources/mypage/js/6-2.mypage_myInfo_pwdCheck.js"></script>
-    <!-- <script>
-        $(function(){
-            $(".profileAndMenu .profile h2").append('${sessionScope.__MEMBER__.nickname}');
-        });
-    </script> -->
 </head>
 
 <body>
