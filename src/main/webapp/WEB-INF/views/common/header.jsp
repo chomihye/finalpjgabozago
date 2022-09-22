@@ -41,8 +41,8 @@
                 <ul>
                     <li><a href="/travel/main">일정관리</a></li>
                     <li><a href="/reservation/">숙박예약</a></li>
-                    <li><a href="#">커뮤니티</a></li>
-                    <li><a href="#">고객센터</a> </li>
+                    <li><a href="/board/community">커뮤니티</a></li>
+                    <li><a href="/board/notice">고객센터</a> </li>
                 </ul>
             </div>
 

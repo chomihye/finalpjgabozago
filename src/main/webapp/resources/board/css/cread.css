@@ -1,0 +1,400 @@
+@charset "utf-8";
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css");
+@import url('https://fonts.googleapis.com/css2?family=Gochi+Hand&family=Jua&family=Noto+Sans+KR:wght@300;400&display=swap');
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Noto Sans KR', sans-serif;
+    text-decoration: none;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    /* text-align: center; */
+}
+
+
+#header {
+    width: 100%;
+    height: 150px;
+    background-color: rgb(209, 238, 209);
+}
+
+section {
+    width: 1240px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#contents {
+    width: 990px;
+    margin: 0 auto;
+    margin-bottom: 150px;
+
+}
+
+button {
+    border: 0 none;
+    background-color: transparent;
+    cursor: pointer;
+    /* outline: 0 none; */
+}
+
+.C_head {
+    text-align: center;
+    position: relative;
+    margin-top: 50px;
+}
+
+.C_head .T_box {
+    text-align: left;
+    padding-bottom: 10px;
+    font-size: 20px;
+    font-weight: 700;
+    color: #333;
+}
+
+.C_head .T_box .img {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+    margin-right: 5px;
+    vertical-align: top;
+}
+
+.C_head .T_box .img img {
+    width: 100%;
+    height: 100%;
+    border: 1px solid #d3d0d0;
+    border-radius: 100%;
+    vertical-align: top;
+}
+
+.C_head .T_box .nname {
+    display: inline-block;
+    margin-top: 5px;
+}
+
+.C_head .titl h2 {
+    display: block;
+}
+
+.C_head h2 {
+    text-align: center;
+    margin: 0;
+    color: #333;
+    font-size: 36px;
+    font-weight: 700;
+    letter-spacing: -1px;
+    word-break: keep-all;
+}
+
+.C_head .icon_area {
+    position: relative;
+    top: 0;
+    margin: 50px 0 5px;
+}
+
+.icon_area {
+    position: relative;
+    right: 0;
+    top: 11px;
+    z-index: 100;
+}
+
+.icon_area .like {
+    float: left;
+
+}
+
+.icon_area .num_1 {
+    float: left;
+    margin-right: 20px;
+    margin-top: 5px;
+    font-size: 18px;
+}
+
+.icon_area .views {
+    float: left;
+    margin-top: 5px;
+    font-size: 18px;
+}
+
+.C_head .icon_area .R {
+    float: right;
+}
+
+.R button {
+    margin-right: 5px;
+}
+
+.icon_area::after {
+    content: '';
+    display: block;
+    clear: both;
+}
+
+.modal,
+.share_modal,
+.delete_modal {
+    /*모달창 전체(뒷 배경 포함)*/
+    display: none;
+    position: fixed;
+    padding-top: 100px;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    overflow: auto;
+    z-index: 1;
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal_Content {
+    /*메인 모달칭*/
+    margin: 80px auto 0 auto;
+    padding: 15px 35px 20px 35px;
+    width: 20%;
+    position: relative;
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+    background-color: #ffffff;
+}
+
+.modal_Content1 {
+    /*공유모달*/
+    margin: 80px auto 0 auto;
+    padding: 15px 35px 20px 35px;
+    width: 15%;
+    position: relative;
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+    background-color: #ffffff;
+}
+
+.modal_Content2 {
+    /*삭제모달*/
+    margin: 80px auto 0 auto;
+    padding: 15px 35px 20px 35px;
+    width: 20%;
+    position: relative;
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+    background-color: #ffffff;
+}
+
+
+.wish_btn {
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+    margin-bottom: 16px;
+}
+
+.okBtn {
+    /* 확인 버튼(원래 페이지로 돌아가는 용도) */
+    font-size: 16px;
+    line-height: 35px;
+    /* width: 65px; */
+    width: 150px;
+    height: 35px;
+    color: #ffffff;
+    background: #6dcc76;
+    border-radius: 20px;
+    text-align: center;
+    margin-left: 20px;
+    cursor: pointer;
+}
+
+.my_plan {
+    font-size: 16px;
+    line-height: 35px;
+    width: 150px;
+    height: 35px;
+    color: #666;
+    background: #e2e2e2;
+    border-radius: 20px;
+    text-align: center;
+}
+
+.my_plan:hover {
+    color: #666;
+}
+
+.center {
+    /* 중앙 정렬 */
+    text-align: center;
+    margin: 0 auto;
+}
+
+.center.simpleTextSpaceAdd {
+    /* 스타일3 모달창 위아래 추가 여백으로 height 조정 */
+    margin: 70px 0 50px 0;
+    text-align: center;
+}
+
+
+.plan_box {
+    border-top: 1px solid #e6e6e6;
+    border-bottom: 1px solid #e6e6e6;
+    height: 300px;
+}
+
+.contview {
+    position: relative;
+    width: 100%;
+    margin-top: 24px;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.contview>p {
+    color: #333;
+    font-size: 18px;
+    line-height: 1.7;
+    letter-spacing: -1px;
+}
+
+.bottom {
+    margin-top: 50px;
+
+}
+
+.bottom .comment {
+    display: inline-block;
+    position: relative;
+}
+
+.bottom .comment {
+    float: left;
+
+}
+
+.bottom .comment .bi {
+    font-size: 25px;
+}
+
+/* .bottom .comment .ico {
+    width: 25px;
+    height: 25px;
+    background: url(./free-icon-speech-bubble-151793.png);
+    background-size: 25px 25px;
+    text-indent: -9999px;
+    display: inline-block;
+} */
+
+.bottom .comment .comm {
+    display: inline-block;
+    margin-left: 8px;
+    color: #333;
+    font-size: 16px;
+}
+
+.bottom .button {
+    float: right;
+}
+
+.bottom .button input#S {
+    width: 70px;
+    height: 30px;
+    background-color: #68ae6d;
+    color: #FFFFFF;
+    cursor: pointer;
+    font-size: 16px;
+    border: none;
+    border-radius: 3px;
+}
+
+.bottom .button input#C {
+    width: 70px;
+    height: 30px;
+    background-color: #e2e2e2;
+    color: #333;
+    cursor: pointer;
+    font-size: 16px;
+    border: none;
+    border-radius: 3px;
+}
+
+.B::after {
+    content: '';
+    display: block;
+    clear: both;
+}
+
+.bottom .B {
+    position: relative;
+    top: 0;
+    margin: 35px 0 18px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e2e2e2;
+}
+
+.comm_box {
+    height: auto;
+    background: #f7f7f7;
+    border: 1px solid #e5e5e5;
+    padding: 14px 0;
+    text-align: center;
+}
+
+.comm_box input[type=text] {
+    width: 880px;
+    height: 130px;
+    border: 1px solid #e5e5e5;
+    /* border-radius: 3px; */
+}
+
+.comm_box .sa_b {
+    text-align: right;
+    margin-right: 55px;
+}
+
+.comm_box input#save {
+    width: 50px;
+    height: 30px;
+    background-color: #68ae6d;
+    color: #FFFFFF;
+    cursor: pointer;
+    font-size: 16px;
+    border: none;
+    border-radius: 3px;
+    margin-top: 5px;
+}
+
+.bottom input {
+    width: 60px;
+    height: 35px;
+    border: none;
+    /* border-radius: 10px; */
+}
+
+.bottom .L {
+    text-align: center;
+    margin-top: 50px;
+    /* margin-right: 120px; */
+}
+
+.bottom input#B {
+    width: 100px;
+    height: 40px;
+    background-color: #68ae6d;
+    color: #FFFFFF;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#footer {
+    width: 100%;
+    height: 200px;
+
+    background-color: rgb(209, 238, 209);
+}
