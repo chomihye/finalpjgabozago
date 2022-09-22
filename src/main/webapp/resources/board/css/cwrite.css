@@ -1,0 +1,148 @@
+@charset "utf-8";
+
+@import url('https://fonts.googleapis.com/css2?family=Gochi+Hand&family=Jua&family=Noto+Sans+KR:wght@300;400&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    /* text-align: center; */
+}
+
+
+#header {
+    width: 100%;
+    height: 150px;
+    background-color: rgb(209, 238, 209);
+}
+
+#footer {
+    width: 100%;
+    height: 200px;
+
+    background-color: rgb(209, 238, 209);
+}
+
+section {
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 150px;
+}
+
+.article_head {
+    width: 100%;
+    text-align: center;
+}
+
+
+.title {
+    font-size: 32px;
+    font-family: 'Binggrae', sans-serif;
+    margin-top: 80px;
+    color: #68ae6d;
+}
+
+.desc {
+    margin-bottom: 70px;
+    font-weight: 300;
+    /* letter-spacing: 0.05em; */
+    line-height: 1.7;
+    color: #68ae6d;
+}
+
+.W_box {
+    width: 1240px;
+}
+
+.W_box fieldset {
+    border: none;
+}
+
+.W_box form {
+    width: 100%;
+    height: 100%;
+}
+
+.W_box form img {
+    width: 50px;
+}
+
+.W_box legend {
+    padding: 10px;
+    margin-left: 110px;
+}
+.W_box .I {
+    text-align: center;
+    margin-top: 50px;
+}
+
+.W_box .I select {
+    width: 150px;
+    height: 40px;
+    font-size: 20px;
+}
+
+.W_box .I .se {
+    text-align: left;
+    margin-left: 120px;
+}
+
+.W_box .I input#title {
+    width: 1000px;
+    height: 40px;
+    font-size: 18px;
+}
+
+.W_box .I input#writing {
+    width: 1000px;
+    height: 700px;
+    font-size: 18px;
+}
+
+.W_box .I input#file {
+    font-size: 18px;
+    margin-right: 650px;
+}
+
+
+
+.W_box .button {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.W_box input#S {
+    width: 90px;
+    height: 40px;
+    background-color: #68ae6d;
+    color: #FFFFFF;
+    cursor: pointer;
+    font-size: 18px;
+    border: none;
+    border-radius: 3px;
+}
+
+.W_box input#C {
+    width: 90px;
+    height: 40px;
+    background-color: #e2e2e2;
+    color: #333;
+    cursor: pointer;
+    font-size: 18px;
+    border: none;
+    border-radius: 3px;
+}
+
+.W_box .button input {
+    margin: 10px;
+}
