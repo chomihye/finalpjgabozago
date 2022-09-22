@@ -115,17 +115,19 @@ $(function () {
     let countAdult = $('#adult_count').text();
     let countChild = $('#child_count').text();
     $('#person_btn').text(`성인 - ${countAdult}명 / 유아 - ${countChild}명`);
+    $("[name=adult_count]").val(countAdult);
+    $('[name=child_count]').val(countChild);
   });
 
   // 검색결과 조회
   $('#search_btn').on('click', function () {
     let locationIdx = $('#travel_btn').val();
     console.log(locationIdx);
-
+    
     $.ajax({
       type: 'POST',
       url: '/reservation/search',
-      data: { location_idx: locationIdx },
+      data: { location_idx: locationIdx},
       dataType: 'json',
       success: function (response) {
         console.log(response);
@@ -138,16 +140,19 @@ $(function () {
           htmlText += `<div class="acco_container">
                         <div class="list">
                             <a href="/reservation/datail?accom_idx=${accom.idx}" class="list_main_name">${accom.accomName}</a>
-                            <p> <br />${accom.travellargeDTO.largeAreaName}<br />기준인원 2명 <br />${accom.accomroomDTO.minPrice} ~ ${accom.accomroomDTO.maxPrice}<br />
+                            <p>
+                               <br />${accom.travellargeDTO.largeAreaName}<br />기준인원 2명 <br />${accom.accomroomDTO.minPrice} ~ ${accom.accomroomDTO.maxPrice}
+                               <br />
                             </p>
-                            <a href="/reservation/datail?accom_idx=${accom.idx}" class="list_reserve">예약하기</a>
+                            <a href="javascript:void(0);" class="list_reserve" onclick="moveToDetailPage('${accom.idx}');">예약하기</a>
                         </div>
                         <div class="hotel_picture">
-                            <a href="/reservation/datail?accom_idx=${accom.idx}"><img src="/resources/acco/img/himg/${accom.accomimagesDTO.fileName}" alt="" /></a>
+                            <a href="javascript:void(0);" onclick="moveToDetailPage('${accom.idx}');"><img src="/resources/acco/img/himg/${accom.accomimagesDTO.fileName}" alt="" /></a>
                             <div class="heart_icon ${accom.wishlistIdx > 0 ? 'act' : ''}" data-idx="${accom.idx}">
                             <i class="bi bi-heart-fill"></i></div>
                         </div>
-                      </div>`;}
+                      </div>`;
+        }
                       
         $('#accom_list_container').html(htmlText);
         addEventToHeartIcon();

@@ -69,7 +69,9 @@ public class AccoController {
 			list = this.accomService.getListWithMember(cri, member);
 		}
 		model.addAttribute("_ACCOM_", list);
-
+		
+		log.info("asdfasdfasdfasdfasdfasdfasdf");
+		
 		// 총 레코드 건수를 반환
 		int total = this.accomService.getTotal(accom);
 		PageDTO pageDTO = new PageDTO(cri, total);
@@ -80,12 +82,15 @@ public class AccoController {
 
 	// 숙소 방 리스트, 위치 가져오기
 	@GetMapping("/datail")
-	public String getRoominfo(@RequestParam("accom_idx") Integer accom_idx, @RequestParam("check_in_date") String check_in_date,
-			@RequestParam("check_out_date") String check_out_date,  AccomDTO accom, AccomReservationDTO reser,
+	public String getRoominfo(@RequestParam("accom_idx") Integer accom_idx,
+			@RequestParam(value="check_in_date",required=false) String check_in_date,
+			@RequestParam(value="check_out_date",required=false) String check_out_date,
+			@RequestParam(value="adult_count",required=false) String adult_count,
+			@RequestParam(value="child_count",required=false) String child_count,AccomDTO accom, AccomReservationDTO reser,
 			Model model) throws ControllerException, ServiceException {
 
 		accom.setIdx(accom_idx);
-		
+
 		try {
 
 			Map<String, Object> map = this.accomService.getOneAccomDetail(accom);
@@ -98,11 +103,11 @@ public class AccoController {
 			map.put("room_list", room_list);
 			model.addAttribute("_ACCOM_", map);
 			map.put("review_list", review_list);
-			
-			model.addAttribute("check_in_date",check_in_date);
-			model.addAttribute("check_out_date",check_out_date);
 
-			
+			model.addAttribute("check_in_date", check_in_date);
+			model.addAttribute("check_out_date", check_out_date);
+			model.addAttribute("adult_count", adult_count);
+			model.addAttribute("child_count", child_count);
 
 		} catch (ServiceException e) {
 			throw new ControllerException(e);
@@ -128,12 +133,12 @@ public class AccoController {
 	@RequestMapping(value = "search", method = RequestMethod.POST)
 	@ResponseBody
 	public HashMap<String, Object> searchHotelList(
-			@SessionAttribute(name = SharedScopeKeys.USER_KEY, required = false) @RequestParam("check_in_date") String check_in_date, @RequestParam("check_out_date") String check_out_date,
-			MemberVO member,HttpServletRequest request, AccomDTO accom) throws ControllerException, ServiceException {
-		
-		HashMap<String, Object> result = new HashMap<String, Object>();
+			@SessionAttribute(name = SharedScopeKeys.USER_KEY, required = false) MemberVO member,
+			HttpServletRequest request, AccomDTO accom) throws ControllerException, ServiceException {
 
+		HashMap<String, Object> result = new HashMap<String, Object>();
 		String locationIdx = request.getParameter("location_idx");
+		log.info(locationIdx);
 
 		if (locationIdx != "") {
 			accom.setLargeAreaIdx(Integer.parseInt(locationIdx));
@@ -157,7 +162,7 @@ public class AccoController {
 	public String loadUser(@SessionAttribute(name = SharedScopeKeys.USER_KEY, required = true) MemberVO member,
 			@RequestParam("room_idx") Integer room_idx, @RequestParam("check_in_date") String check_in_date,
 			@RequestParam("check_out_date") String check_out_date,
-			
+
 			AccomRoomDTO room, AccomReservationDTO reser, Model model) throws ControllerException, ServiceException {
 
 		this.accomService.getUserCurrentPoint(member);
@@ -168,13 +173,13 @@ public class AccoController {
 
 		Map<String, Object> memberMap = this.accomService.getOneMemberInfo(member);
 		model.addAttribute("member", memberMap);
-		
+
 		model.addAttribute("check_in_date", check_in_date);
-		model.addAttribute("check_out_date",check_out_date);
-		//model.addAttribute("adult_count",adult_count);
-		//model.addAttribute("child_count",child_count);
-		//@RequestParam("adult_count") Integer adult_count,
-		//@RequestParam("child_count") Integer child_count,
+		model.addAttribute("check_out_date", check_out_date);
+		// model.addAttribute("adult_count",adult_count);
+		// model.addAttribute("child_count",child_count);
+		// @RequestParam("adult_count") Integer adult_count,
+		// @RequestParam("child_count") Integer child_count,
 		return "acco/reservation_payment";
 	} // loadUser
 

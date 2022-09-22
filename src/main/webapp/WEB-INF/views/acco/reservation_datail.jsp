@@ -138,7 +138,10 @@
               <i class="bi bi-person-plus"></i>
               <div>
                 <p class="title">인원</p>
-                <button type="button" class="person_btn" id="person_btn">인원을 선택하세요</button>
+                <button type="button" class="person_btn" id="person_btn">
+                	${adult_count ne null && adult_count ne '' ? ('성인 - ' += adult_count += '명') : '인원을 입력하세요.'}
+                	${child_count ne null && child_count ne '' ? ('/ 유아 - ' += child_count += '명') : ''}
+               	</button>
               </div>
             </li>
           </ul>

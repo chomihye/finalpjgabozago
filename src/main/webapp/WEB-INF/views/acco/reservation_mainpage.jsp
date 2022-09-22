@@ -141,6 +141,8 @@
                         <div>
                             <p class="title">인원</p>
                             <button type="button" class="person_btn" id="person_btn">인원을 선택하세요</button>
+                            <input type="hidden" name="adult_count">
+                            <input type="hidden" name="child_count">
                             
                         </div>
                     </li>
@@ -366,7 +368,9 @@
       function moveToDetailPage(idx) {
         let check_in_date = $('[name=checkInDate]').val();
         let check_out_date = $('[name=checkOutDate]').val();
-        const url = "/reservation/datail?accom_idx="+idx+"&check_in_date="+check_in_date+"&check_out_date="+check_out_date;
+        let adult_count = $('[name=adult_count]').val();
+        let child_count = $('[name=child_count]').val();
+        const url = "/reservation/datail?accom_idx="+idx+"&check_in_date="+check_in_date+"&check_out_date="+check_out_date+"&adult_count="+adult_count+"&child_count="+child_count;
         
         location.href = url;
       }

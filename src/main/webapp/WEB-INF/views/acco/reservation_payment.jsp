@@ -53,8 +53,7 @@
 
 
         <!-- js -->
-        <script src="../js/payment.js"></script>
-
+        
         <script>
             $(function () {
                 $('.header').load("header.html")
@@ -111,6 +110,52 @@
                     }
                 })//결제체크박스
 
+                $("#point_input").on("propertychange change keyup paste", function(){
+
+                    const maxPoint = parseInt('${member.POINT}');
+                    let inputValue = parseInt($(this).val());
+
+                    setPaymentPoint(isNaN(inputValue) ? 0 : inputValue);
+                    if(inputValue < 0 ){
+                        $(this).val(0);
+                    } else if(inputValue > maxPoint){
+                        $(this).val(maxPoint);
+                    }
+                });//포인트 범위
+
+                function setPaymentPoint(point) {
+                    $("#payment_point").text(point);
+                };
+
+                $(".point_all").on('click',function(){
+                	
+                    const maxPoint = parseInt('${member.POINT}');
+                    $("#point_input").val(maxPoint);
+                    setPaymentPoint(isNaN(maxPoint) ? 0 : maxPoint);
+                    
+                }); //전액사용 버튼 클릭시 포인트 변경
+
+
+
+                function setTotalInfo(){
+
+                    let hotelPrice = 0; //호텔 원래 가격
+                    let usePoint = 0; //포인트
+                    let finalPrice = 0; //포인트 반영된 호텔가격
+
+                    usePoint = $("#point_input").val();
+                    finalPrice = hotelPrice - usePoint;
+
+                    //호텔 원래 가격
+                    $(".hotel_price").text(hotelPrice);
+                    //최종 가격
+                    $(".final_price").text(finalPrice);
+
+
+
+
+                }
+
             });
 
         </script>
@@ -157,7 +202,7 @@
                 <h2 class="point_info">포인트 사용</h2>
 
                 <div class="point">
-                    <input type="text" class="point_input" placeholder="0P" />
+                    <input type="text" class="point_input" id="point_input" placeholder="0P" value="0"/>
                     <button type="button" class="point_all">
                         전액사용
                     </button>
@@ -204,11 +249,11 @@
                         <div class="green_pay">
                             <div class="green_payment">
                                 <span>주문금액</span>
-                                <span>231,000원</span>
+                                <span class="hotel_price">${accom.PRICE}원</span>
                             </div>
                             <div class="green_payment">
                                 <span>포인트 사용금액</span>
-                                <span>0P</span>
+                                <span class="point"><span id="payment_point">0</span>P</span>
                             </div>
                         </div>
                     </div>
@@ -218,7 +263,7 @@
                         <div class="wrapper">
                             <div class="total_pay">
                                 <div>총 결제금액</div>
-                                <div>231,000원</div>
+                                <div class="final_price">231,000원</div>
                             </div>
                         </div>
                     </div>
