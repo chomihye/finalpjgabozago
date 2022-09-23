@@ -26,7 +26,7 @@ public interface MypageMainMemberService {		// 마이페이지 메인과 회원�
 	public abstract boolean checkDoubleNickname(String nickname) throws ServiceException;
 	
 	// 회원 수정 로직
-	public abstract void modifyMemberInfo(MemberDTO member) throws ServiceException;
+	public abstract MemberVO modifyMemberInfo(MemberDTO dto, MemberVO vo) throws ServiceException;
 	
 	// 회원 탈퇴 처리
 	public abstract Boolean withdrawFromSite(MemberVO member) throws ServiceException;

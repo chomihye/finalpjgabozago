@@ -2,9 +2,9 @@ package com.pj.gabozago.service.mypage;
 
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.pj.gabozago.domain.MemberDTO;
@@ -15,7 +15,6 @@ import com.pj.gabozago.mapper.MypageMainMemberMapper;
 
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.extern.log4j.Log4j2;
 
 
 @NoArgsConstructor
@@ -50,18 +49,53 @@ public class MypageMainMemberServiceImpl implements MypageMainMemberService {
 		catch (DAOException e) { throw new ServiceException(e); }
 	} // checkDoubleNickname
 	
+	// 회원 수정 로직
+	@Override					
+	public MemberVO modifyMemberInfo(MemberDTO dto, MemberVO vo) throws ServiceException {
+		try { 
+			dto.setIdx(vo.getIdx());	
+			
+			if(dto.getName() == "") { dto.setName(vo.getName()); }		 // 이름
+			
+			if(dto.getPassword() == "") { 
+				dto.setPassword(vo.getPassword()); 
+			}else { 
+				String newPwd = dto.getPassword() + "__SALT__";
+				BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+				String cipherText = encoder.encode(newPwd);		
+				dto.setPassword(cipherText); 
+			} // 비밀번호(해쉬처리)
+			
+			if(dto.getNickname() == "") { dto.setNickname(vo.getNickname()); }		 // 닉네임
+
+			if(dto.getPhone() == "") { dto.setPhone(vo.getPhone()); }		 // 휴대폰번호
+			
+			if(dto.getProfileImg() == "" || dto.getProfileImg() == null) { 
+				dto.setProfileImg(vo.getProfileImg());
+			}else { 
+				String profileImg = "/resources/member/img/profile/" + dto.getProfileImg();
+				dto.setProfileImg(profileImg); 
+			} // 프로필 이미지경로	
+			
+			this.mapper.updateMemberInfo(dto); 
+			
+			MemberVO newInfo = new MemberVO(vo.getIdx(), vo.getEmail(), dto.getPassword(), dto.getName(), dto.getNickname(),
+			dto.getPhone(), vo.getBirthday(), vo.getProvider(), vo.getUidNum(), dto.getProfileImg(),
+			vo.getPoint(), vo.getRememberMe(), vo.getRememberAge(), vo.getInsertTs(), vo.getUpdateTs(), 
+			vo.getIsSecession());
+			
+			return newInfo;
+		} catch (DAOException e) { 
+			throw new ServiceException(e); 
+		} // try-catch
+	} // modifyMemberInfo
+	
 	// 회원 탈퇴 처리
 	@Override
 	public Boolean withdrawFromSite(MemberVO member) throws ServiceException {
 		try { return this.mapper.deleteMember(member); } 
 		catch (DAOException e) { throw new ServiceException(e); }
 	} // withdrawFromSite
-
-	@Override
-	public void modifyMemberInfo(MemberDTO member) throws ServiceException {
-		try { this.mapper.updateMemberInfo(member); } 
-		catch (DAOException e) { throw new ServiceException(e); }
-	} // modifyMemberInfo
 
 
 } // end class

@@ -75,7 +75,7 @@
                     <div class="sections">
                         <h4>비밀번호</h4>
                         <p class="ruleTexts">영문 대소문자, 숫자, 특수문자 포함 8자 이상 12자 이하</p>
-                        <input type="password" name="pw" id="pw" placeholder="●●●●●●●●" min="8" maxlength="12" onchange="checkPwd()">
+                        <input type="password" name="password" id="pw" placeholder="●●●●●●●●" min="8" maxlength="12" onchange="checkPwd()">
                         <div id="pwError"></div>
                     </div class="sections">
                     

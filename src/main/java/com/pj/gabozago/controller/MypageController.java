@@ -79,9 +79,7 @@ public class MypageController {
 			
 			// 회원의 사용일 임박순 숙소예약내역 2건을 가져오는 메소드
 			List<LinkedHashMap<String, Object>> accomList = this.memberService.getReserOrderOfUseDate(member);
-			LinkedHashMap<String, Object> accomMap = new LinkedHashMap<String, Object>();
-			accomMap.put("model", accomList);
-			model.addAttribute("result", accomMap);
+			model.addAttribute(SharedScopeKeys.LIST_KEY, accomList);
 			
 			// 총 레코드 건수를 반환
 			int total = this.reserService.getTotal(cri, member);
@@ -96,11 +94,11 @@ public class MypageController {
 	
 	
 	@GetMapping(path = "/myInfo/pwdCheck")
-	public String getMyInfoPwdCheckPage() {
-		log.trace(">>>>>>>>>>>>>>>>>>>> getMyInfoPwdCheckPage() invoked.");
+	public String loadMyInfoPwdCheckPage() {
+		log.trace(">>>>>>>>>>>>>>>>>>>> loadMyInfoPwdCheckPage() invoked.");
 		
 		return "mypage/myInfo/pwdCheck";
-	} // getMyInfoPwdCheckPage
+	} // loadMyInfoPwdCheckPage
 	
 	
 	// 회원수정 페이지 비밀번호 체크
@@ -114,7 +112,7 @@ public class MypageController {
 
 			// 비밀번호 비교
 			if(encoder.matches(pw + "__SALT__", member.getPassword())) {	
-				getModifyPage(member, model);
+				loadMyInfoModifyPage(member, model);
 				return null;
 			}else {
 				rttrs.addFlashAttribute("match", "NO");
@@ -129,8 +127,8 @@ public class MypageController {
 	
 	
 	// 회원정보를 가져와 회원수정 페이지에 전달
-	public String getModifyPage(MemberVO member, Model model) throws ControllerException {
-		log.trace(">>>>>>>>>>>>>>>>>>>> getModifyPage() invoked.");
+	public String loadMyInfoModifyPage(MemberVO member, Model model) throws ControllerException {
+		log.trace(">>>>>>>>>>>>>>>>>>>> loadMyInfoModifyPage() invoked.");
 
 		try {
 			MemberVO memberVO = this.memberService.getMemberInfo(member);
@@ -140,7 +138,7 @@ public class MypageController {
 		} // try-catch
 		
 		return "/mypage/myInfo/modify";
-	} // getModifyPage
+	} // loadMyInfoModifyPage
 	
 	
 	// 회원정보 업데이트 전 닉네임 중복검사(ajax)
@@ -155,7 +153,7 @@ public class MypageController {
 			
 			Gson gson = new Gson();
 			String json = gson.toJson(isDouble);
-			log.info(json);
+			log.trace(json);
 			
 			@Cleanup
 		    PrintWriter out = res.getWriter();
@@ -169,52 +167,19 @@ public class MypageController {
 
 	// 회원정보 업데이트
 	@PostMapping(path = "/myInfo/modify.do")
-	public String modifyMemberInfo(HttpServletRequest req, RedirectAttributes rttrs,
-			String name, String pw, String nickname, String phone, String profileImg) throws ControllerException {
+	public String modifyMemberInfo(HttpServletRequest req, RedirectAttributes rttrs, MemberDTO dto) {
 		log.trace(">>>>>>>>>>>>>>>>>>>> modifyMemberInfo() invoked.");
-//		log.info(">>>>>>>>>>>>>>>>>>>> 뷰에서 가져온 프로필 이미지 : {}", profileImg);
 		
 		try {
 			// Session Scope 접근
 			HttpSession session = req.getSession();
 			MemberVO vo = (MemberVO) session.getAttribute(SharedScopeKeys.USER_KEY);
 			
-			MemberDTO dto = new MemberDTO();
-			dto.setIdx(vo.getIdx());	
-			
-			if(name == "") { dto.setName(vo.getName()); }
-			else { dto.setName(name); } // 이름
-			
-			if(pw == "") { 
-				dto.setPassword(vo.getPassword()); 
-			}else { 
-				String newPwd = pw + "__SALT__";
-				BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-				String cipherText = encoder.encode(newPwd);		
-				dto.setPassword(cipherText); 
-			} // 비밀번호(해쉬처리)
-			
-			if(nickname == "") { dto.setNickname(vo.getNickname()); }
-			else { dto.setNickname(nickname); } // 닉네임
-
-			if(phone == "") { dto.setPhone(vo.getPhone()); }
-			else { dto.setPhone(phone); } // 휴대폰번호
-			
-			if(profileImg == "" || profileImg == null) { 
-				dto.setProfileImg(vo.getProfileImg());
-			}else { 
-				profileImg = "/resources/member/img/profile/" + profileImg;
-				dto.setProfileImg(profileImg); 
-			} // 프로필 이미지경로	
-			
-			this.memberService.modifyMemberInfo(dto);		// 회원 수정 로직
+			// 회원정보를 수정하는 서비스 메소드 호출
+			MemberVO newInfo = this.memberService.modifyMemberInfo(dto, vo);		
 			
 			// 회원정보 수정 후, Session Scope에 회원정보 업데이트
-			MemberVO newInfo = new MemberVO(vo.getIdx(), vo.getEmail(), dto.getPassword(), dto.getName(), dto.getNickname(),
-					dto.getPhone(), vo.getBirthday(), vo.getProvider(), vo.getUidNum(), dto.getProfileImg(),
-					vo.getPoint(), vo.getRememberMe(), vo.getRememberAge(), vo.getInsertTs(), vo.getUpdateTs(), 
-					vo.getIsSecession());
-			session.setAttribute(SharedScopeKeys.USER_KEY, this.memberService.getMemberInfo(newInfo));
+			session.setAttribute(SharedScopeKeys.USER_KEY, newInfo);
 				
 			rttrs.addFlashAttribute(SharedScopeKeys.RESULT_KEY, "success");
 		} catch(Exception e) {
@@ -226,9 +191,9 @@ public class MypageController {
 	
 	
 	@GetMapping(path = "/plan")
-	public String getMyPlanPage(Criteria cri, @SessionAttribute(SharedScopeKeys.USER_KEY) MemberVO member, Model model) 
+	public String loadMyPlanPage(Criteria cri, @SessionAttribute(SharedScopeKeys.USER_KEY) MemberVO member, Model model) 
 			throws ControllerException {
-		log.trace(">>>>>>>>>>>>>>>>>>>> getMyPlanPage() invoked.");
+		log.trace(">>>>>>>>>>>>>>>>>>>> loadMyPlanPage() invoked.");
 		
 		try {
 			cri.setAmount(4);
@@ -245,7 +210,7 @@ public class MypageController {
 		} // try-catch
 		
 		return "mypage/plan";
-	} // getMyPlanPage
+	} // loadMyPlanPage
 	
 	
 	@PostMapping(path = "/plan/delete")
@@ -266,17 +231,13 @@ public class MypageController {
 	
 	
 	@GetMapping(path = "/reservation")
-	public String getReservationList(Criteria cri, @SessionAttribute(SharedScopeKeys.USER_KEY) MemberVO member, Model model) throws ControllerException{
+	public String loadReservationPage(Criteria cri, @SessionAttribute(SharedScopeKeys.USER_KEY) MemberVO member, Model model) throws ControllerException{
 		
 		try {
 			this.reserService.modifyReserStatus(member);	// 예약상태 체크(날짜에 따라 상태 업데이트 필요하면 수정)
 			
 			List<LinkedHashMap<String, Object>> list = this.reserService.getUserReserList(cri, member);
-			
-			LinkedHashMap<String, Object> map = new LinkedHashMap<String, Object>();
-			
-			map.put("model", list);
-			model.addAttribute("result", map);
+			model.addAttribute(SharedScopeKeys.LIST_KEY, list);
 			
 			// 총 레코드 건수를 반환
 			int total = this.reserService.getTotal(cri, member);
@@ -288,11 +249,11 @@ public class MypageController {
 		} // try-catch
 		
 		return "mypage/reservation";
-	} // getReservationList
+	} // loadReservationPage
 	
 	
 	@GetMapping(path = "/reservation/detail")
-	public String getReservationDetailPage(
+	public String loadReservationDetailPage(
 			@SessionAttribute(SharedScopeKeys.USER_KEY) MemberVO member, 
 			AccomReservationDTO reser, Model model) throws ControllerException {
 		
@@ -307,11 +268,11 @@ public class MypageController {
 		} // try-catch
 		
 		return "mypage/reservation/detail";
-	} // getReservationDetailPage
+	} // loadReservationDetailPage
 	
 	
 	@PostMapping(path = "/reservation/detail")
-	public String showAfterCancel(
+	public String cancelReservation(
 			@SessionAttribute(SharedScopeKeys.USER_KEY) MemberVO member, 
 			AccomReservationDTO reser, Model model) throws ControllerException {
 
@@ -327,11 +288,11 @@ public class MypageController {
 		} // try-catch
 		
 		return String.format("redirect:/mypage/reservation/detail?status=%s&idx=%s", reser.getStatus(), reser.getIdx());
-	} // showAfterCancel
+	} // cancelReservation
 	
 	
 	@GetMapping(path = "/reservation/review")
-	public String getReserReviewPage(
+	public String loadReviewPage(
 			@SessionAttribute(SharedScopeKeys.USER_KEY) MemberVO member, 
 			Criteria cri, AccomReservationDTO reser, Model model) throws ControllerException {		
 		try {
@@ -345,11 +306,11 @@ public class MypageController {
 		} // try-catch
 	
 		return "mypage/reservation/review";
-	} // getReserReviewPage
+	} // loadReviewPage
 	
 	
 	@PostMapping(path = "/reservation/review")
-	public String getRegisterReview(Criteria cri, AccomReviewDTO review, Model model, RedirectAttributes rttrs) throws ControllerException {
+	public String registerReview(Criteria cri, AccomReviewDTO review, Model model, RedirectAttributes rttrs) throws ControllerException {
 		try {		
 			// 해당 예약번호로 리뷰가 이미 작성되었는지 체크
 			AccomReviewVO vo = this.reserService.checkDuplicationReview(review);
@@ -369,7 +330,7 @@ public class MypageController {
 			throw new ControllerException(e);
 		} // try-catch
 		
-	} // getRegisterReview
+	} // registerReview
 	
 	
 	@GetMapping(path = "/wishlist")
@@ -384,7 +345,7 @@ public class MypageController {
 	@ResponseBody
 	public void getAccomWishlist(Criteria cri, @SessionAttribute(SharedScopeKeys.USER_KEY) MemberVO member, 
 			HttpServletResponse res) throws ControllerException {
-		log.info(">>>>>>>>>>>>>>>>>>>> getAccomWishlist() invoked.");
+		log.trace(">>>>>>>>>>>>>>>>>>>> getAccomWishlist() invoked.");
 		
 		try {
 			cri.setAmount(10);
@@ -401,7 +362,7 @@ public class MypageController {
 			
 			Gson gson = new Gson();
 			String mapToJson = gson.toJson(map);
-			log.info(mapToJson);
+			log.trace(mapToJson);
 			
 			@Cleanup
 		    PrintWriter out = res.getWriter();
@@ -433,7 +394,7 @@ public class MypageController {
 			
 			Gson gson = new Gson();
 			String mapToJson = gson.toJson(map);
-			log.info(mapToJson);
+			log.trace(mapToJson);
 			
 			@Cleanup
 		    PrintWriter out = res.getWriter();
@@ -483,13 +444,11 @@ public class MypageController {
 	
 	
 	@GetMapping(path = "/point")
-	public String getMyPointList(Criteria cri, @SessionAttribute(SharedScopeKeys.USER_KEY) MemberVO member, Model model) throws ControllerException {
+	public String loadMyPointPage(Criteria cri, @SessionAttribute(SharedScopeKeys.USER_KEY) MemberVO member, Model model) throws ControllerException {
 		try {
 			cri.setAmount(10);
 			
 			List<PointHistoryVO> list = this.planPointWriteService.getUserPointList(cri, member);
-			list.forEach(log::trace);
-			
 			int userCurrentPoint = this.planPointWriteService.getUserCurrentPoint(member);		// 회원의 현재 총 포인트
 			
 			model.addAttribute(SharedScopeKeys.LIST_KEY, list);
@@ -505,15 +464,15 @@ public class MypageController {
 		} // try-catch
 		
 		return "mypage/point";
-	} // getMyPointList
+	} // loadMyPointPage
 	
 	
 	@GetMapping(path = "/write")
-	public String loadWritePage() {
-		log.trace(">>>>>>>>>>>>>>>>>>>> loadWritePage() invoked.");
+	public String loadMyWritePage() {
+		log.trace(">>>>>>>>>>>>>>>>>>>> loadMyWritePage() invoked.");
 		
 		return "mypage/write";
-	} // loadWritePage
+	} // loadMyWritePage
 	
 	
 	@PostMapping(path = "/write/community")
@@ -581,11 +540,11 @@ public class MypageController {
 	
 	
 	@GetMapping(path = "/withdrawal/pwdCheck")
-	public String getWithdrawalPwdCheckPage() {
-		log.trace(">>>>>>>>>>>>>>>>>>>> getWithdrawalPwdCheckPage() invoked.");
+	public String loadWithdrawalPwdCheckPage() {
+		log.trace(">>>>>>>>>>>>>>>>>>>> loadWithdrawalPwdCheckPage() invoked.");
 		
 		return "mypage/withdrawal/pwdCheck";
-	} // getWithdrawalPwdCheckPage
+	} // loadWithdrawalPwdCheckPage
 	
 	
 	// 회원탈퇴 페이지 비밀번호 체크
@@ -614,11 +573,11 @@ public class MypageController {
 	
 	
 	@PostMapping(path = "/withdrawal/confirm")
-	public String getWithdrawalConfirmPage() {
-		log.trace(">>>>>>>>>>>>>>>>>>>> getWithdrawalConfirmPage() invoked.");
+	public String loadWithdrawalConfirmPage() {
+		log.trace(">>>>>>>>>>>>>>>>>>>> loadWithdrawalConfirmPage() invoked.");
 		
 		return "mypage/withdrawal/confirm";
-	} // getWithdrawalConfirmPage
+	} // loadWithdrawalConfirmPage
 	
 	
 	@PostMapping(path = "/withdrawal/completed")

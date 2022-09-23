@@ -86,14 +86,14 @@
                 <c:choose>
                     <c:when test="${__PAGINATION__.totalAmount != 0}"> 
                         <ul class="accom">
-                            <c:forEach var="item" items="${result.model}">
+                            <c:forEach var="list" items="${__LIST__}">
                                 <li>
-                                    <a href="/mypage/reservation/detail?status=${item.STATUS}&idx=${item.IDX}" class="accomInfoBox">
-                                        <img src="/resources/acco/img/himg/${item.FILE_NAME}" alt="accom image">
+                                    <a href="/mypage/reservation/detail?status=${list.STATUS}&idx=${list.IDX}" class="accomInfoBox">
+                                        <img src="/resources/acco/img/himg/${list.FILE_NAME}" alt="accom image">
                                         <div class="accom_info">
-                                            <div class="accom_name">${item.ACCOM_NAME}</div>
-                                            <div class="accom_name">(${item.ROOM_NAME})</div>
-                                            <div class="reser_date"><i class="bi bi-calendar"></i> <span>${item.CHECK_IN_DATE} ~ ${item.CHECK_OUT_DATE}</span></div>
+                                            <div class="accom_name">${list.ACCOM_NAME}</div>
+                                            <div class="accom_name">(${list.ROOM_NAME})</div>
+                                            <div class="reser_date"><i class="bi bi-calendar"></i> <span>${list.CHECK_IN_DATE} ~ ${list.CHECK_OUT_DATE}</span></div>
                                         </div>
                                     </a>
                                 </li>

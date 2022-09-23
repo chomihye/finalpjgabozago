@@ -92,26 +92,26 @@
                 <c:when test="${__PAGINATION__.totalAmount != 0}"> 
                     <article class="reser_context">
                         <ul>
-                            <c:forEach var="item" items="${result.model}">
+                            <c:forEach var="list" items="${__LIST__}">
                                 <li>
-                                    <a href="/mypage/reservation/detail?status=${item.STATUS}&idx=${item.IDX}">
-                                        <img src="/resources/acco/img/himg/${item.FILE_NAME}" alt="accom image">
+                                    <a href="/mypage/reservation/detail?status=${list.STATUS}&idx=${list.IDX}">
+                                        <img src="/resources/acco/img/himg/${list.FILE_NAME}" alt="accom image">
                                         <div class="accom_info">
-                                            <div class="accom_name">${item.ACCOM_NAME}(${item.ROOM_NAME})</div>
+                                            <div class="accom_name">${list.ACCOM_NAME}(${list.ROOM_NAME})</div>
                                             <div class="accom_num">
                                                 <i class="bi bi-person"></i>&nbsp; 
-                                                성인 ${item.ADULT_COUNT}인
-                                                <c:if test="${item.CHILD_COUNT != 0}">
-                                                    , 유아 ${item.CHILD_COUNT}인
+                                                성인 ${list.ADULT_COUNT}인
+                                                <c:if test="${list.CHILD_COUNT != 0}">
+                                                    , 유아 ${list.CHILD_COUNT}인
                                                 </c:if>
                                             </div>
-                                            <div class="accom_date"><i class="bi bi-calendar"></i>&nbsp; ${item.CHECK_IN_DATE} ~ ${item.CHECK_OUT_DATE}</div>
-                                            <div class="accom_location"><i class="bi bi-geo-alt"></i>&nbsp; ${item.LARGE_AREA_NAME}</div>
+                                            <div class="accom_date"><i class="bi bi-calendar"></i>&nbsp; ${list.CHECK_IN_DATE} ~ ${list.CHECK_OUT_DATE}</div>
+                                            <div class="accom_location"><i class="bi bi-geo-alt"></i>&nbsp; ${list.LARGE_AREA_NAME}</div>
                                         </div>
                                         <form action="/mypage/reservation/review" method="get" class="btn">
-                                            <input type="hidden" value="${item.STATUS}" class="status">
+                                            <input type="hidden" value="${list.STATUS}" class="status">
                                             <input type="hidden" name="currPage" value="${__PAGINATION__.cri.currPage}">
-                                            <input type="hidden" name="idx" value="${item.IDX}">
+                                            <input type="hidden" name="idx" value="${list.IDX}">
                                         </form>
                                     </a>
                                 </li>
