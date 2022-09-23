@@ -161,7 +161,8 @@ public class AccoController {
 	@GetMapping("/payment")
 	public String loadUser(@SessionAttribute(name = SharedScopeKeys.USER_KEY, required = true) MemberVO member,
 			@RequestParam("room_idx") Integer room_idx, @RequestParam("check_in_date") String check_in_date,
-			@RequestParam("check_out_date") String check_out_date,
+			@RequestParam("check_out_date") String check_out_date,@RequestParam("adult_count") String adult_count,
+			@RequestParam("child_count") String child_count,
 
 			AccomRoomDTO room, AccomReservationDTO reser, Model model) throws ControllerException, ServiceException {
 
@@ -176,10 +177,9 @@ public class AccoController {
 
 		model.addAttribute("check_in_date", check_in_date);
 		model.addAttribute("check_out_date", check_out_date);
-		// model.addAttribute("adult_count",adult_count);
-		// model.addAttribute("child_count",child_count);
-		// @RequestParam("adult_count") Integer adult_count,
-		// @RequestParam("child_count") Integer child_count,
+		model.addAttribute("adult_count",adult_count);
+		model.addAttribute("child_count",child_count);
+		
 		return "acco/reservation_payment";
 	} // loadUser
 

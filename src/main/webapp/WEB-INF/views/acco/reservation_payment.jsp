@@ -110,6 +110,11 @@
                     }
                 })//결제체크박스
 
+
+                $(document).ready(function(){
+                    setFinalPrice();
+                });
+
                 $("#point_input").on("propertychange change keyup paste", function(){
 
                     const maxPoint = parseInt('${member.POINT}');
@@ -121,6 +126,8 @@
                     } else if(inputValue > maxPoint){
                         $(this).val(maxPoint);
                     }
+
+                    setFinalPrice();
                 });//포인트 범위
 
                 function setPaymentPoint(point) {
@@ -133,27 +140,17 @@
                     $("#point_input").val(maxPoint);
                     setPaymentPoint(isNaN(maxPoint) ? 0 : maxPoint);
                     
+                    setFinalPrice();
                 }); //전액사용 버튼 클릭시 포인트 변경
 
+                function setFinalPrice(){
 
+                    let hotelPrice = parseInt('${accom.PRICE}');
+                    let usePoint = $("#point_input").val();
 
-                function setTotalInfo(){
-
-                    let hotelPrice = 0; //호텔 원래 가격
-                    let usePoint = 0; //포인트
-                    let finalPrice = 0; //포인트 반영된 호텔가격
-
-                    usePoint = $("#point_input").val();
                     finalPrice = hotelPrice - usePoint;
 
-                    //호텔 원래 가격
-                    $(".hotel_price").text(hotelPrice);
-                    //최종 가격
-                    $(".final_price").text(finalPrice);
-
-
-
-
+                    $(".final_payprice").text(finalPrice);
                 }
 
             });
@@ -186,6 +183,7 @@
                     <div class="room_detail">
                         <div class="room_name">${accom.ACCOM_NAME}</div>
                         <span class="book_date">${check_in_date} ~ ${check_out_date}</span>
+                        <div class="person_count">성인 ${adult_count} 명, 유아 ${child_count}명 </div>
                     </div>
                 </div>
 
@@ -263,7 +261,7 @@
                         <div class="wrapper">
                             <div class="total_pay">
                                 <div>총 결제금액</div>
-                                <div class="final_price">231,000원</div>
+                                <div class="final_price"><span class="final_payprice"></span>원</div>
                             </div>
                         </div>
                     </div>
@@ -296,7 +294,7 @@
                                         class="bi bi-chevron-right"></i></button>
                             </label>
                         </div>
-                        <button type="button" class="btn_payment">231,000원 결제하기</button>
+                        <button type="button" class="btn_payment"><span class="final_payprice">231,000</span>원 결제하기</button>
                     </div>
 
                 </div>

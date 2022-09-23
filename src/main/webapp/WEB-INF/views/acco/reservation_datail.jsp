@@ -402,7 +402,10 @@
       function moveToPaymentPage(idx) {
         let check_in_date = $('[name=checkInDate]').val();
         let check_out_date = $('[name=checkOutDate]').val();
-        const url = "/reservation/payment?room_idx="+idx+"&check_in_date="+check_in_date+"&check_out_date="+check_out_date;
+        let adult_count = $('[name=adultCount]').val();
+        let child_count = $('[name=childCount]').val();
+   	
+        const url = "/reservation/payment?room_idx="+idx+"&check_in_date="+check_in_date+"&check_out_date="+check_out_date+"&adult_count="+adult_count+"&child_count="+child_count;
         
         location.href = url;
       }
@@ -410,7 +413,9 @@
       $(function () {
     	 $('input[name=checkInDate]').attr('value','${check_in_date}'); 
     	 $('input[name=checkOutDate]').attr('value','${check_out_date}');
-    	 
+    	 $('input[name=adultCount]').attr('value','${adult_count}');
+    	 $('input[name=childCount]').attr('value','${child_count}');
+    	
       });
     </script>
   </body>

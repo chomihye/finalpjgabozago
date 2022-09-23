@@ -282,6 +282,10 @@ button {
   color: white;
 }
 
+.final_payprice{
+  color: white;
+}
+
 /* 약관안내 */
 .terms_all {
   display: block;
