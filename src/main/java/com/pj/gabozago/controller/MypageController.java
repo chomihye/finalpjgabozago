@@ -141,13 +141,20 @@ public class MypageController {
 	
 	// 회원정보 업데이트 전 닉네임 중복검사(ajax)
 	@PostMapping(value = "myInfo/modify/nickCheck")
-	public void checkNickname(HttpServletRequest req, HttpServletResponse res) throws ControllerException {
+	public void checkNickname(@SessionAttribute(SharedScopeKeys.USER_KEY) MemberVO member, 
+			HttpServletRequest req, HttpServletResponse res) throws ControllerException {
 		log.trace(">>>>>>>>>>>>>>>>>>>> checkNickname() invoked.");
 		
 		String nickname = req.getParameter("nickname");
 		
 		try {
-			boolean isDouble = this.memberService.checkDoubleNickname(nickname);
+			boolean isDouble;
+			
+			if(nickname.equals(member.getNickname())) {		// 변경하려는 닉네임이 기존과 동일한 경우,
+				isDouble = false;
+			}else {
+				isDouble = this.memberService.checkDoubleNickname(nickname);
+			} // if-else
 			
 			Gson gson = new Gson();
 			String json = gson.toJson(isDouble);
@@ -174,7 +181,7 @@ public class MypageController {
 			MemberVO vo = (MemberVO) session.getAttribute(SharedScopeKeys.USER_KEY);
 			
 			// 회원정보를 수정하는 서비스 메소드 호출
-			MemberVO newInfo = this.memberService.modifyMemberInfo(dto, vo);		
+			MemberVO newInfo = this.memberService.modifyMemberInfo(req, dto, vo);		
 			
 			// 회원정보 수정 후, Session Scope에 회원정보 업데이트
 			session.setAttribute(SharedScopeKeys.USER_KEY, newInfo);

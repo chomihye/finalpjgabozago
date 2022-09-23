@@ -10,42 +10,7 @@ $(function(){
 
     getAccomWishlist('1');     // 숙소 위시리스트 불러오는 ajax(default)
 
-    changeOption();     // 옵션 선택시 메소드 호출
-
-    // 삭제 버튼 클릭시
-    $(".selectDelete").off().on("click", function(){
-
-        // 현재 페이지 값 가져오기
-        let currPage = $(".currPage strong").text();
-
-        // idx 값 담을 배열 선언
-        let itemIdxArray = new Array();
-
-        optionValue = $("select[name=wishlist_type]").val();
-        let checkItems = $("input[name='selectParticle']:checked"); 
-
-        if(optionValue == "accom"){           // 숙소라면,
-
-            $.each(checkItems, function(index, value) {       
-                let idx = $(value).attr("idx");
-                itemIdxArray.push(idx);
-            }); // each
-
-            deleteAccomWishlist(itemIdxArray, currPage);
-
-        }else if(optionValue == "plan"){     // 일정이라면,
-
-            $.each(checkItems, function(index, value) {       
-                let idx = $(value).attr("idx");
-                itemIdxArray.push(idx);
-            }); // each
-
-            deletePlanWishlist(itemIdxArray, currPage);
-
-        } // if-else
-
-    }); // delete click
-    
+    changeOption();     // 옵션 선택시 메소드 호출    
 }); // 초기함수
 
 
@@ -79,13 +44,12 @@ function changeOption(){
         console.log($(this).val());
         optionValue = $(this).val(); //value값 가져오기
 
+        $(".wishlist_item").empty();
+        $(".pageBtn").empty();
+
         if(optionValue == "accom"){
-            $("#plan_list").empty();
-            $("input[type='checkbox']").prop("checked", false);
             getAccomWishlist('1');
         }else if(optionValue == "plan"){
-            $("#accom_list").empty();
-            $("input[type='checkbox']").prop("checked", false);
             getPlanWishlist('1');
         } // if-else
     });
@@ -114,90 +78,106 @@ function getAccomWishlist(currPage){
             const list = map.list;
             const pageDTO = map.pageDTO;
 
-            $("input[type='checkbox']").prop("checked", false);
-            $("#accom_list").empty();
-
-            for(var i = 0 ; i < list.length ; i++){
-                // console.log(list[i]);
-
-                wishAccomIdx = list[i].IDX;
-                file_name = list[i].FILE_NAME;
-                accom_idx = list[i].ACCOM_IDX;
-                accom_name = list[i].ACCOM_NAME;
-                large_area_name = list[i].LARGE_AREA_NAME;
-
-                let num = i + 1;
-
-                let particleStr = "";
-                particleStr += '<li id="item' + num + '">';
-                particleStr += '<input type="checkbox" id="select' + num + '" name="selectParticle" idx="' + wishAccomIdx + '">';
-                particleStr += '<label for="select' + num + '"></label>';
-                particleStr += '<a href="/reservation/datail?accom_idx=' + accom_idx + '" class="accomBox">';
-                particleStr += '<img src="/resources/acco/img/himg/' + file_name + '" alt="accom image">';
-                particleStr += '<div class="accom_info">';
-                particleStr += '<h3>' + accom_name + '</h3>';
-                particleStr += '<p><i class="fas fa-location-dot"></i>&nbsp;' + large_area_name + '</p>';
-                particleStr += '</div>';
-                particleStr += '<button type="button" class="payment">결제하기</button>';
-                particleStr += '</a>';
-                particleStr += '</li>';
-
-                $("#accom_list").append(particleStr);
-            } // for
-
-            cnt = $("#accom_list li").length;           // 숙소의 체크박스 갯수
-            console.log("cnt : " + cnt);
-            selectAllCheckBox(cnt);
-
-            // ================================================================
-
+            $(".wishlist_item").empty();
             $(".pageBtn").empty();
 
-            let initialPageStr = "";
-            initialPageStr += '<form action="#" id="paginationForm">';
-            initialPageStr += '<input type="hidden" name="currPage">';
-            initialPageStr += '<ul id="pagingBtn">';
-            initialPageStr += '<li class="frontPage"><a href="javascript:void(0);" onclick="getAccomWishlist(' + 1 + ')"><i class="bi bi-chevron-double-left"></i></a></li>';
-            initialPageStr += '<li class="prev yesPrev"><a href="javascript:void(0);"><i class="bi bi-chevron-left"></i></a></li>';
-            initialPageStr += '<li class="pageNumber"></li>';
-            initialPageStr += '<li class="next yesNext"><a href="javascript:void(0);"><i class="bi bi-chevron-right"></i></a></li>';
-            initialPageStr += '<li class="backPage"><a href="javascript:void(0);"><i class="bi bi-chevron-double-right"></i></a></li>';
-            initialPageStr += '</ul>';
-            initialPageStr += '</form>';
+            let particleStr = "";
 
-            $(".pageBtn").append(initialPageStr);
+            // 아무것도 없는 회원 처리
+            if(pageDTO.totalAmount == 0){       // 레코드가 아무것도 없다면,
+                particleStr = '<div id="no_get">숙소 위시리스트가 없습니다.</div>';
+                $(".wishlist_item").append(particleStr);
+                return;
+            }else{                              // 레코드가 1개 이상이면,
+                // checkbox load
+                particleStr = "";
+                particleStr += '<div class="select">';
+                particleStr += '<input type="checkbox" id="selectAll" name="selectAll">';
+                particleStr += '<label for="selectAll"></label>';
+                particleStr += '<label for="selectAll" class="selectAll">전체선택</label>';
+                particleStr += '<a href="javascript:void(0);" class="selectDelete" onclick="deleteItems()">선택삭제</a>';
+                particleStr += '</div>';
+                particleStr += '<ul id="accom_list"></ul>';
 
-            for(let i = pageDTO.startPage ; i <= pageDTO.endPage ; i++){
-                let pageStr = "";
+                $(".wishlist_item").append(particleStr);
 
-                if (pageDTO.cri.currPage == i) {
-                    pageStr += '<li class="currPage" onclick="getAccomWishlist(' + i + ')">';
-                } else{
-                    pageStr += '<li class="" onclick="getAccomWishlist(' + i + ')">';
-                } // if-else
+                for(var i = 0 ; i < list.length ; i++){
+                    wishAccomIdx = list[i].IDX;
+                    file_name = list[i].FILE_NAME;
+                    accom_idx = list[i].ACCOM_IDX;
+                    accom_name = list[i].ACCOM_NAME;
+                    large_area_name = list[i].LARGE_AREA_NAME;
 
-                pageStr += '<a href="javascript:void(0);">';
-                pageStr += '<strong>' + i + '</strong>';
-                pageStr += '</a>';
-                pageStr += '</li>';
+                    let num = i + 1;
 
-                $(".pageNumber").append(pageStr);
-            } // for
-            
-            $(".yesPrev > a").off().on('click', function(){
-                if(pageDTO.startPage - 1 < 1){ getAccomWishlist(pageDTO.startPage); }
-                else{ getAccomWishlist(pageDTO.startPage - 1); }
-            });   
+                    particleStr = "";
+                    particleStr += '<li id="item' + num + '">';
+                    particleStr += '<input type="checkbox" id="select' + num + '" name="selectParticle" idx="' + wishAccomIdx + '">';
+                    particleStr += '<label for="select' + num + '"></label>';
+                    particleStr += '<a href="/reservation/datail?accom_idx=' + accom_idx + '" class="accomBox">';
+                    particleStr += '<img src="/resources/acco/img/himg/' + file_name + '" alt="accom image">';
+                    particleStr += '<div class="accom_info">';
+                    particleStr += '<h3>' + accom_name + '</h3>';
+                    particleStr += '<p><i class="fas fa-location-dot"></i>&nbsp;' + large_area_name + '</p>';
+                    particleStr += '</div>';
+                    particleStr += '<button type="button" class="payment">결제하기</button>';
+                    particleStr += '</a>';
+                    particleStr += '</li>';
 
-            $(".yesNext > a").off().on('click', function(){
-                if(pageDTO.endPage + 1 > pageDTO.realEndPage){ getAccomWishlist(pageDTO.endPage); }
-                else{ getAccomWishlist(pageDTO.endPage + 1); }
-            });     
+                    $("#accom_list").append(particleStr);
+                } // for
 
-            $(".backPage > a").off().on('click', function(){
-                getAccomWishlist(pageDTO.realEndPage);
-            });     
+                cnt = $("#accom_list li").length;           // 숙소의 체크박스 갯수
+                console.log("cnt : " + cnt);
+                selectAllCheckBox(cnt);
 
+                // ================================================================
+
+                let initialPageStr = "";
+                initialPageStr += '<form action="#" id="paginationForm">';
+                initialPageStr += '<input type="hidden" name="currPage">';
+                initialPageStr += '<ul id="pagingBtn">';
+                initialPageStr += '<li class="frontPage"><a href="javascript:void(0);" onclick="getAccomWishlist(' + 1 + ')"><i class="bi bi-chevron-double-left"></i></a></li>';
+                initialPageStr += '<li class="prev yesPrev"><a href="javascript:void(0);"><i class="bi bi-chevron-left"></i></a></li>';
+                initialPageStr += '<li class="pageNumber"></li>';
+                initialPageStr += '<li class="next yesNext"><a href="javascript:void(0);"><i class="bi bi-chevron-right"></i></a></li>';
+                initialPageStr += '<li class="backPage"><a href="javascript:void(0);"><i class="bi bi-chevron-double-right"></i></a></li>';
+                initialPageStr += '</ul>';
+                initialPageStr += '</form>';
+
+                $(".pageBtn").append(initialPageStr);
+
+                for(let i = pageDTO.startPage ; i <= pageDTO.endPage ; i++){
+                    let pageStr = "";
+
+                    if (pageDTO.cri.currPage == i) {
+                        pageStr += '<li class="currPage" onclick="getAccomWishlist(' + i + ')">';
+                    } else{
+                        pageStr += '<li class="" onclick="getAccomWishlist(' + i + ')">';
+                    } // if-else
+
+                    pageStr += '<a href="javascript:void(0);">';
+                    pageStr += '<strong>' + i + '</strong>';
+                    pageStr += '</a>';
+                    pageStr += '</li>';
+
+                    $(".pageNumber").append(pageStr);
+                } // for
+                
+                $(".yesPrev > a").off().on('click', function(){
+                    if(pageDTO.startPage - 1 < 1){ getAccomWishlist(pageDTO.startPage); }
+                    else{ getAccomWishlist(pageDTO.startPage - 1); }
+                });   
+
+                $(".yesNext > a").off().on('click', function(){
+                    if(pageDTO.endPage + 1 > pageDTO.realEndPage){ getAccomWishlist(pageDTO.endPage); }
+                    else{ getAccomWishlist(pageDTO.endPage + 1); }
+                });     
+
+                $(".backPage > a").off().on('click', function(){
+                    getAccomWishlist(pageDTO.realEndPage);
+                });     
+            } // outer if-else
         } // success
     }); // ajax
 } // getAccomWishlist
@@ -228,151 +208,206 @@ function getPlanWishlist(currPage){
             const list = map.list;
             const pageDTO = map.pageDTO;
 
-            $("input[type='checkbox']").prop("checked", false);
-            $("#plan_list").empty();
-
-            let particleStr = "";
-            particleStr += '<div class="planBoxWrap">';
-
-            for(var i = 0 ; i < list.length ; i++){
-                // console.log(list[i]);
-
-                wishPlanIdx = list[i].wishlistIdx;
-                travelPlanIdx = list[i].travelPlanIdx;
-                largeAreaName = list[i].largeAreaName;
-                nickname = list[i].nickname;
-                likes = list[i].likes;
-                totalDays = list[i].totalDays;
-                DAY1 = list[i].DAY1;
-                DAY2 = list[i].DAY2;
-                DAY3 = list[i].DAY3;
-                DAY4 = list[i].DAY4;
-                DAY5 = list[i].DAY5;
-                DAY6 = list[i].DAY6;
-                DAY7 = list[i].DAY7;
-
-                let num = i + 1;
-                
-                particleStr += '<div class="planBox">';
-                particleStr += '<input type="checkbox" id="select' + num + '" name="selectParticle" idx="' + wishPlanIdx + '">';
-                particleStr += '<label for="select' + num + '"></label>';
-                particleStr += '<div class="slideContainer">';
-                particleStr += '<div id="plan' + num + '" class="carousel slide" data-touch="false" data-interval="false">';
-                particleStr += '<div class="userInfo">';
-                particleStr += '<ul>';
-                particleStr += '<li class="title">' + largeAreaName + '</li>';
-                particleStr += '<li class="username">' + nickname + '</li>';
-                particleStr += '</ul>';
-                particleStr += '<p><i class="bi bi-suit-heart-fill"></i> ' + likes + '</p>';
-                particleStr += '</div>';
-                particleStr += '<div class="carousel-inner">';
-
-                for(var j = 1 ; j <= totalDays ; j++){      // day
-                    particleStr += '<div class="carousel-item">';
-                    particleStr += '<div class="dayList">';
-                    particleStr += '<h1>DAY' + j + '</h1>';
-                    particleStr += '<div class="areaList">';
-                    particleStr += '<img src="/resources/common/img/list.png" width="">';
-                    particleStr += '<ul>';
-
-                    let temp = eval("DAY" + j);
-                    let seqCount = temp.length; 
-
-                    for(var k = 0 ; k < seqCount ; k++){   //  시퀀스
-                        if(temp[k].PLACE_TYPE == 'T'){
-                            particleStr += '<li>' + temp[k].PLACE_NAME + '</li>';
-                        }else if(temp[k].PLACE_TYPE == 'A'){
-                            particleStr += '<li>' + temp[k].ACCOM_NAME + '</li>';
-                        }else{
-                            particleStr += '<li></li>';
-                        } // if-else
-                    } // for
-                    
-                    particleStr += '</ul>';
-                    particleStr += '</div>';
-                    particleStr += '</div>';
-                    particleStr += '</div>';     
-                } // inner-for
-                
-                particleStr += '</div>';
-                particleStr += '<button id="leftArrow" class="carousel-control-prev arrows" type="button"';
-                particleStr += 'data-target="#plan' + num + '" data-slide="prev">';
-                particleStr += '<span class="bi bi-arrow-left-circle-fill" aria-hidden="true"></span>';
-                particleStr += '</button>';
-                particleStr += '<button id="rightArrow" class="carousel-control-next arrows" type="button"';
-                particleStr += 'data-target="#plan' + num + '" data-slide="next">';
-                particleStr += '<span class="bi bi-arrow-right-circle-fill" aria-hidden="true"></span>';
-                particleStr += '</button>';
-                particleStr += '<button class="planAdd" onclick="">일정에 추가</button>';
-                particleStr += '</div>';
-                particleStr += '</div>';
-                particleStr += '</div>';
-            } // for
-
-            particleStr += '</div>';
-            $("#plan_list").append(particleStr);
-            $("#plan1 .carousel-inner").children().first().addClass('active');
-            $("#plan2 .carousel-inner").children().first().addClass('active');
-            $("#plan3 .carousel-inner").children().first().addClass('active');
-            $("#plan4 .carousel-inner").children().first().addClass('active');
-
-            cnt = $("#plan_list .planBoxWrap > div").length;           // 일정의 체크박스 갯수
-            console.log("cnt : " + cnt);
-            selectAllCheckBox(cnt);
-
-            // ================================================================
-
+            $(".wishlist_item").empty();
             $(".pageBtn").empty();
 
-            let initialPageStr = "";
-            initialPageStr += '<form action="#" id="paginationForm">';
-            initialPageStr += '<input type="hidden" name="currPage">';
-            initialPageStr += '<ul id="pagingBtn">';
-            initialPageStr += '<li class="frontPage"><a href="javascript:void(0);" onclick="getPlanWishlist(' + 1 + ')"><i class="bi bi-chevron-double-left"></i></a></li>';
-            initialPageStr += '<li class="prev yesPrev"><a href="javascript:void(0);"><i class="bi bi-chevron-left"></i></a></li>';
-            initialPageStr += '<li class="pageNumber"></li>';
-            initialPageStr += '<li class="next yesNext"><a href="javascript:void(0);"><i class="bi bi-chevron-right"></i></a></li>';
-            initialPageStr += '<li class="backPage"><a href="javascript:void(0);"><i class="bi bi-chevron-double-right"></i></a></li>';
-            initialPageStr += '</ul>';
-            initialPageStr += '</form>';
+            let particleStr = "";
 
-            $(".pageBtn").append(initialPageStr);
+            // 아무것도 없는 회원 처리
+            if(pageDTO.totalAmount == 0){       // 레코드가 아무것도 없다면,
+                particleStr = '<div id="no_get">일정 위시리스트가 없습니다.</div>';
+                $(".wishlist_item").append(particleStr);
+                hideLoadingModal();
+                return;
+            }else{                              // 레코드가 1개 이상이면,
+                // checkbox load
+                particleStr = "";
+                particleStr += '<div class="select">';
+                particleStr += '<input type="checkbox" id="selectAll" name="selectAll">';
+                particleStr += '<label for="selectAll"></label>';
+                particleStr += '<label for="selectAll" class="selectAll">전체선택</label>';
+                particleStr += '<a href="javascript:void(0);" class="selectDelete" onclick="deleteItems()">선택삭제</a>';
+                particleStr += '</div>';
+                particleStr += '<ul id="plan_list"></ul>';
 
-            for(let i = pageDTO.startPage ; i <= pageDTO.endPage ; i++){
-                let pageStr = "";
+                $(".wishlist_item").append(particleStr);
 
-                if (pageDTO.cri.currPage == i) {
-                    pageStr += '<li class="currPage" onclick="getPlanWishlist(' + i + ')">';
-                } else{
-                    pageStr += '<li class="" onclick="getPlanWishlist(' + i + ')">';
-                } // if-else
+                particleStr = "";
+                particleStr += '<div class="planBoxWrap">';
 
-                pageStr += '<a href="javascript:void(0);">';
-                pageStr += '<strong>' + i + '</strong>';
-                pageStr += '</a>';
-                pageStr += '</li>';
+                for(var i = 0 ; i < list.length ; i++){
+                    wishPlanIdx = list[i].wishlistIdx;
+                    travelPlanIdx = list[i].travelPlanIdx;
+                    largeAreaName = list[i].largeAreaName;
+                    nickname = list[i].nickname;
+                    likes = list[i].likes;
+                    totalDays = list[i].totalDays;
+                    DAY1 = list[i].DAY1;
+                    DAY2 = list[i].DAY2;
+                    DAY3 = list[i].DAY3;
+                    DAY4 = list[i].DAY4;
+                    DAY5 = list[i].DAY5;
+                    DAY6 = list[i].DAY6;
+                    DAY7 = list[i].DAY7;
 
-                $(".pageNumber").append(pageStr);
-            } // for
-            
-            $(".yesPrev > a").off().on('click', function(){
-                if(pageDTO.startPage - 1 < 1){ getPlanWishlist(pageDTO.startPage); }
-                else{ getPlanWishlist(pageDTO.startPage - 1); }
-            });   
+                    let num = i + 1;
+                    
+                    particleStr += '<div class="planBox">';
+                    particleStr += '<input type="checkbox" id="select' + num + '" name="selectParticle" idx="' + wishPlanIdx + '">';
+                    particleStr += '<label for="select' + num + '"></label>';
+                    particleStr += '<div class="slideContainer">';
+                    particleStr += '<div id="plan' + num + '" class="carousel slide" data-touch="false" data-interval="false">';
+                    particleStr += '<div class="userInfo">';
+                    particleStr += '<ul>';
+                    particleStr += '<li class="title">' + largeAreaName + '</li>';
+                    particleStr += '<li class="username">' + nickname + '</li>';
+                    particleStr += '</ul>';
+                    particleStr += '<p><i class="bi bi-suit-heart-fill"></i> ' + likes + '</p>';
+                    particleStr += '</div>';
+                    particleStr += '<div class="carousel-inner">';
 
-            $(".yesNext > a").off().on('click', function(){
-                if(pageDTO.endPage + 1 > pageDTO.realEndPage){ getPlanWishlist(pageDTO.endPage); }
-                else{ getPlanWishlist(pageDTO.endPage + 1); }
-            });     
+                    for(var j = 1 ; j <= totalDays ; j++){      // day
+                        particleStr += '<div class="carousel-item">';
+                        particleStr += '<div class="dayList">';
+                        particleStr += '<h1>DAY' + j + '</h1>';
+                        particleStr += '<div class="areaList">';
+                        particleStr += '<img src="/resources/common/img/list.png" width="">';
+                        particleStr += '<ul>';
 
-            $(".backPage > a").off().on('click', function(){
-                getPlanWishlist(pageDTO.realEndPage);
-            });   
-            
-            hideLoadingModal();
+                        let temp = eval("DAY" + j);
+                        let seqCount = temp.length; 
+
+                        for(var k = 0 ; k < seqCount ; k++){   //  시퀀스
+                            if(temp[k].PLACE_TYPE == 'T'){
+                                particleStr += '<li>' + temp[k].PLACE_NAME + '</li>';
+                            }else if(temp[k].PLACE_TYPE == 'A'){
+                                particleStr += '<li>' + temp[k].ACCOM_NAME + '</li>';
+                            }else{
+                                particleStr += '<li></li>';
+                            } // if-else
+                        } // for
+                        
+                        particleStr += '</ul>';
+                        particleStr += '</div>';
+                        particleStr += '</div>';
+                        particleStr += '</div>';     
+                    } // inner-for
+                    
+                    particleStr += '</div>';
+                    particleStr += '<button id="leftArrow" class="carousel-control-prev arrows" type="button"';
+                    particleStr += 'data-target="#plan' + num + '" data-slide="prev">';
+                    particleStr += '<span class="bi bi-arrow-left-circle-fill" aria-hidden="true"></span>';
+                    particleStr += '</button>';
+                    particleStr += '<button id="rightArrow" class="carousel-control-next arrows" type="button"';
+                    particleStr += 'data-target="#plan' + num + '" data-slide="next">';
+                    particleStr += '<span class="bi bi-arrow-right-circle-fill" aria-hidden="true"></span>';
+                    particleStr += '</button>';
+                    particleStr += '<button class="planAdd" onclick="">일정에 추가</button>';
+                    particleStr += '</div>';
+                    particleStr += '</div>';
+                    particleStr += '</div>';
+                } // for
+
+                particleStr += '</div>';
+                $("#plan_list").append(particleStr);
+                $("#plan1 .carousel-inner").children().first().addClass('active');
+                $("#plan2 .carousel-inner").children().first().addClass('active');
+                $("#plan3 .carousel-inner").children().first().addClass('active');
+                $("#plan4 .carousel-inner").children().first().addClass('active');
+
+                cnt = $("#plan_list .planBoxWrap > div").length;           // 일정의 체크박스 갯수
+                console.log("cnt : " + cnt);
+                selectAllCheckBox(cnt);
+
+                // ================================================================
+
+                $(".pageBtn").empty();
+
+                let initialPageStr = "";
+                initialPageStr += '<form action="#" id="paginationForm">';
+                initialPageStr += '<input type="hidden" name="currPage">';
+                initialPageStr += '<ul id="pagingBtn">';
+                initialPageStr += '<li class="frontPage"><a href="javascript:void(0);" onclick="getPlanWishlist(' + 1 + ')"><i class="bi bi-chevron-double-left"></i></a></li>';
+                initialPageStr += '<li class="prev yesPrev"><a href="javascript:void(0);"><i class="bi bi-chevron-left"></i></a></li>';
+                initialPageStr += '<li class="pageNumber"></li>';
+                initialPageStr += '<li class="next yesNext"><a href="javascript:void(0);"><i class="bi bi-chevron-right"></i></a></li>';
+                initialPageStr += '<li class="backPage"><a href="javascript:void(0);"><i class="bi bi-chevron-double-right"></i></a></li>';
+                initialPageStr += '</ul>';
+                initialPageStr += '</form>';
+
+                $(".pageBtn").append(initialPageStr);
+
+                for(let i = pageDTO.startPage ; i <= pageDTO.endPage ; i++){
+                    let pageStr = "";
+
+                    if (pageDTO.cri.currPage == i) {
+                        pageStr += '<li class="currPage" onclick="getPlanWishlist(' + i + ')">';
+                    } else{
+                        pageStr += '<li class="" onclick="getPlanWishlist(' + i + ')">';
+                    } // if-else
+
+                    pageStr += '<a href="javascript:void(0);">';
+                    pageStr += '<strong>' + i + '</strong>';
+                    pageStr += '</a>';
+                    pageStr += '</li>';
+
+                    $(".pageNumber").append(pageStr);
+                } // for
+                
+                $(".yesPrev > a").off().on('click', function(){
+                    if(pageDTO.startPage - 1 < 1){ getPlanWishlist(pageDTO.startPage); }
+                    else{ getPlanWishlist(pageDTO.startPage - 1); }
+                });   
+
+                $(".yesNext > a").off().on('click', function(){
+                    if(pageDTO.endPage + 1 > pageDTO.realEndPage){ getPlanWishlist(pageDTO.endPage); }
+                    else{ getPlanWishlist(pageDTO.endPage + 1); }
+                });     
+
+                $(".backPage > a").off().on('click', function(){
+                    getPlanWishlist(pageDTO.realEndPage);
+                }); 
+
+                hideLoadingModal();
+            } // outer if-else
         } // success
     }); // ajax
 } // getPlanWishlist
+
+
+/**
+ * @desc 선택삭제 버튼 클릭시
+ */
+function deleteItems(){
+    // 현재 페이지 값 가져오기
+    let currPage = $(".currPage strong").text();
+
+    // idx 값 담을 배열 선언
+    let itemIdxArray = new Array();
+
+    optionValue = $("select[name=wishlist_type]").val();
+    let checkItems = $("input[name='selectParticle']:checked"); 
+
+    if(optionValue == "accom"){           // 숙소라면,
+
+        $.each(checkItems, function(index, value) {       
+            let idx = $(value).attr("idx");
+            itemIdxArray.push(idx);
+        }); // each
+
+        deleteAccomWishlist(itemIdxArray, currPage);
+
+    }else if(optionValue == "plan"){     // 일정이라면,
+
+        $.each(checkItems, function(index, value) {       
+            let idx = $(value).attr("idx");
+            itemIdxArray.push(idx);
+        }); // each
+
+        deletePlanWishlist(itemIdxArray, currPage);
+
+    } // if-else
+} // deleteItems
 
 
 /**

@@ -1,7 +1,10 @@
 package com.pj.gabozago.service.mypage;
 
+import java.io.FileReader;
 import java.util.LinkedHashMap;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -13,6 +16,7 @@ import com.pj.gabozago.exception.DAOException;
 import com.pj.gabozago.exception.ServiceException;
 import com.pj.gabozago.mapper.MypageMainMemberMapper;
 
+import lombok.Cleanup;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
@@ -35,6 +39,7 @@ public class MypageMainMemberServiceImpl implements MypageMainMemberService {
 		catch (DAOException e) { throw new ServiceException(e); }
 	} // getMemberProfile
 	
+	
 	// 회원의 사용일 임박순 숙소예약내역 2건을 가져오는 메소드
 	@Override
 	public List<LinkedHashMap<String, Object>> getReserOrderOfUseDate(MemberVO member) throws ServiceException {
@@ -42,6 +47,7 @@ public class MypageMainMemberServiceImpl implements MypageMainMemberService {
 		catch (DAOException e) { throw new ServiceException(e); }
 	} // getReserOrderOfUseDate
 
+	
 	// 닉네임 중복검사용
 	@Override
 	public boolean checkDoubleNickname(String nickname) throws ServiceException {
@@ -49,9 +55,10 @@ public class MypageMainMemberServiceImpl implements MypageMainMemberService {
 		catch (DAOException e) { throw new ServiceException(e); }
 	} // checkDoubleNickname
 	
+	
 	// 회원 수정 로직
 	@Override					
-	public MemberVO modifyMemberInfo(MemberDTO dto, MemberVO vo) throws ServiceException {
+	public MemberVO modifyMemberInfo(HttpServletRequest req, MemberDTO dto, MemberVO vo) throws ServiceException {
 		try { 
 			dto.setIdx(vo.getIdx());	
 			
@@ -73,8 +80,22 @@ public class MypageMainMemberServiceImpl implements MypageMainMemberService {
 			if(dto.getProfileImg() == "" || dto.getProfileImg() == null) { 
 				dto.setProfileImg(vo.getProfileImg());
 			}else { 
-				String profileImg = "/resources/member/img/profile/" + dto.getProfileImg();
-				dto.setProfileImg(profileImg); 
+				String imgName = dto.getProfileImg();		// 이미지 파일 이름
+		        String filePath = req.getServletContext().getRealPath("resources/member/img/profile/" + imgName);		// 파일의 경로
+		        String profileImg = null;		// DB에 저장할 이미지 파일 경로 변수 선언
+		        
+		        try {
+		        	@Cleanup
+					FileReader reader = new FileReader(filePath);
+					
+					// 파일을 읽었을 때, 오류가 발생하지 않는다면 => 파일 존재함
+					profileImg = "/resources/member/img/profile/" + imgName;
+				} catch (Exception e) {
+					// 파일을 읽었을 때, 오류가 발생한다면 => 파일이 없음
+					profileImg = null;
+				} // try-catch
+		        
+		        dto.setProfileImg(profileImg); 
 			} // 프로필 이미지경로	
 			
 			this.mapper.updateMemberInfo(dto); 
@@ -89,6 +110,7 @@ public class MypageMainMemberServiceImpl implements MypageMainMemberService {
 			throw new ServiceException(e); 
 		} // try-catch
 	} // modifyMemberInfo
+	
 	
 	// 회원 탈퇴 처리
 	@Override

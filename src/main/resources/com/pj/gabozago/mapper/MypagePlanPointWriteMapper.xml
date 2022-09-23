@@ -126,7 +126,7 @@
             tbl_community y
         WHERE
             t.community_idx = y.idx
-            AND y.member_idx = #{member.idx}
+            AND t.member_idx = #{member.idx}
         ORDER BY
             t.idx DESC
         OFFSET (#{cri.currPage} -1) * #{cri.amount} ROWS

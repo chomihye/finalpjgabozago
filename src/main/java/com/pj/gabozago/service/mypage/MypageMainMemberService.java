@@ -2,14 +2,11 @@ package com.pj.gabozago.service.mypage;
 
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Select;
+import javax.servlet.http.HttpServletRequest;
 
 import com.pj.gabozago.domain.MemberDTO;
 import com.pj.gabozago.domain.MemberVO;
-import com.pj.gabozago.exception.DAOException;
 import com.pj.gabozago.exception.ServiceException;
 
 
@@ -26,7 +23,7 @@ public interface MypageMainMemberService {		// 마이페이지 메인과 회원�
 	public abstract boolean checkDoubleNickname(String nickname) throws ServiceException;
 	
 	// 회원 수정 로직
-	public abstract MemberVO modifyMemberInfo(MemberDTO dto, MemberVO vo) throws ServiceException;
+	public abstract MemberVO modifyMemberInfo(HttpServletRequest req, MemberDTO dto, MemberVO vo) throws ServiceException;
 	
 	// 회원 탈퇴 처리
 	public abstract Boolean withdrawFromSite(MemberVO member) throws ServiceException;

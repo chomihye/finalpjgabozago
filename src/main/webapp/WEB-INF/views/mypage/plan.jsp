@@ -77,155 +77,163 @@
                 <h1>여행일정</h1>
             </div>
 
-            <article class="planBoxWrap">
-                <c:forEach var="list" items="${__LIST__}">
-                    <!-- 아이템 list의 개수에 따라 반복되는 부분 -->
-                    <div class="planBox"> 
-                        <div class="slideContainer">              
-                            <div id="plan${list.itemNumber}" class="carousel slide" data-touch="false" data-interval="false">
-                                <div class="userInfo">
-                                    <ul>
-                                        <div class="firstLine">
-                                            <c:choose>
-                                                <c:when test="${list.isPublic == 'Y'}"> 
-                                                    <li class="title">${list.largeAreaName}</li>
-                                                </c:when>    
-                                                <c:otherwise>
-                                                    <li class="title"><i class="bi bi-lock"></i> ${list.largeAreaName}</li>
-                                                </c:otherwise>
-                                            </c:choose>
-                                            
-                                            <div class="modifyBtn modifyBtn${list.itemNumber}">
-                                                <input type="hidden" id="tempIdx" value="${list.travelPlanIdx}">
-                                                <a href="javascript:void(0);"><i class="bi bi-pencil"></i></a>
-                                                <a href="javascript:void(0);" class="btnCancel"><i class="bi bi-trash3"></i></a>
-                                            </div>
+            <c:choose>
+                <c:when test="${__PAGINATION__.totalAmount != 0}">
+                    <article class="planBoxWrap">
+                        <c:forEach var="list" items="${__LIST__}">
+                            <!-- 아이템 list의 개수에 따라 반복되는 부분 -->
+                            <div class="planBox"> 
+                                <div class="slideContainer">              
+                                    <div id="plan${list.itemNumber}" class="carousel slide" data-touch="false" data-interval="false">
+                                        <div class="userInfo">
+                                            <ul>
+                                                <div class="firstLine">
+                                                    <c:choose>
+                                                        <c:when test="${list.isPublic == 'Y'}"> 
+                                                            <li class="title">${list.largeAreaName}</li>
+                                                        </c:when>    
+                                                        <c:otherwise>
+                                                            <li class="title"><i class="bi bi-lock"></i> ${list.largeAreaName}</li>
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                    
+                                                    <div class="modifyBtn modifyBtn${list.itemNumber}">
+                                                        <input type="hidden" id="tempIdx" value="${list.travelPlanIdx}">
+                                                        <a href="javascript:void(0);"><i class="bi bi-pencil"></i></a>
+                                                        <a href="javascript:void(0);" class="btnCancel"><i class="bi bi-trash3"></i></a>
+                                                    </div>
+                                                </div>
+                                    
+                                                <li class="travelDays">
+                                                    여행기간 : 
+                                                    <span>
+                                                        ${list.startDate} ~ ${list.endDate}
+                                                    </span>
+                                                </li>
+                                            </ul>
                                         </div>
-                            
-                                        <li class="travelDays">
-                                            여행기간 : 
-                                            <span>
-                                                ${list.startDate} ~ ${list.endDate}
-                                            </span>
-                                        </li>
-                                    </ul>
-                                </div>
-                        
-                                <!-- 슬라이드 영역 -->
-                                <div class="carousel-inner">
-                                    <c:forEach  var="eachDays" items="${list.eachDays}">
-                                        <c:set var="DAY" value="DAY${eachDays}" />
-
-                                        <c:choose>
-                                            <c:when test="${eachDays == 1}"> 
-                                                <div class="carousel-item active">
-                                                    <div class="dayList">
-                                                        <h1>DAY1</h1>
-                                                        <div class="areaList">
-                                                            <img src="/resources/common/img/list.png" width="">
-                                                            <ul>
-                                                                <c:forEach var="dayNum" items="${list[DAY]}">
-                                                                    <c:choose>
-                                                                        <c:when test="${dayNum.PLACE_TYPE == 'T'}"> 
-                                                                            <li>${dayNum.PLACE_NAME}</li>
-                                                                        </c:when> 
-                                                                        <c:otherwise>
-                                                                            <li>${dayNum.ACCOM_NAME}</li>
-                                                                        </c:otherwise>
-                                                                    </c:choose>
-                                                                </c:forEach>
-                                                            </ul>
+                                
+                                        <!-- 슬라이드 영역 -->
+                                        <div class="carousel-inner">
+                                            <c:forEach  var="eachDays" items="${list.eachDays}">
+                                                <c:set var="DAY" value="DAY${eachDays}" />
+        
+                                                <c:choose>
+                                                    <c:when test="${eachDays == 1}"> 
+                                                        <div class="carousel-item active">
+                                                            <div class="dayList">
+                                                                <h1>DAY1</h1>
+                                                                <div class="areaList">
+                                                                    <img src="/resources/common/img/list.png" width="">
+                                                                    <ul>
+                                                                        <c:forEach var="dayNum" items="${list[DAY]}">
+                                                                            <c:choose>
+                                                                                <c:when test="${dayNum.PLACE_TYPE == 'T'}"> 
+                                                                                    <li>${dayNum.PLACE_NAME}</li>
+                                                                                </c:when> 
+                                                                                <c:otherwise>
+                                                                                    <li>${dayNum.ACCOM_NAME}</li>
+                                                                                </c:otherwise>
+                                                                            </c:choose>
+                                                                        </c:forEach>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                </div>
-                                            </c:when>    
-
-                                            <c:otherwise>
-                                                <div class="carousel-item">
-                                                    <div class="dayList">
-                                                        <h1>DAY${eachDays}</h1>
-                                                        <div class="areaList">
-                                                            <img src="/resources/common/img/list.png">
-                                                            <ul>
-                                                                <c:forEach var="dayNum" items="${list[DAY]}">
-                                                                    <c:choose>
-                                                                        <c:when test="${dayNum.PLACE_TYPE == 'T'}"> 
-                                                                            <li>${dayNum.PLACE_NAME}</li>
-                                                                        </c:when> 
-                                                                        <c:otherwise>
-                                                                            <li>${dayNum.ACCOM_NAME}</li>
-                                                                        </c:otherwise>
-                                                                    </c:choose>
-                                                                </c:forEach>
-                                                            </ul>
+                                                    </c:when>    
+        
+                                                    <c:otherwise>
+                                                        <div class="carousel-item">
+                                                            <div class="dayList">
+                                                                <h1>DAY${eachDays}</h1>
+                                                                <div class="areaList">
+                                                                    <img src="/resources/common/img/list.png">
+                                                                    <ul>
+                                                                        <c:forEach var="dayNum" items="${list[DAY]}">
+                                                                            <c:choose>
+                                                                                <c:when test="${dayNum.PLACE_TYPE == 'T'}"> 
+                                                                                    <li>${dayNum.PLACE_NAME}</li>
+                                                                                </c:when> 
+                                                                                <c:otherwise>
+                                                                                    <li>${dayNum.ACCOM_NAME}</li>
+                                                                                </c:otherwise>
+                                                                            </c:choose>
+                                                                        </c:forEach>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                </div>
-                                            </c:otherwise>
-                                        </c:choose>
-                                    </c:forEach>
-                                </div>
-                        
-                                <button id="leftArrow" class="carousel-control-prev arrows" type="button" data-target="#plan${list.itemNumber}" data-slide="prev">
-                                    <span class="bi bi-arrow-left-circle-fill" aria-hidden="true"></span>
-                                </button>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </c:forEach>
+                                        </div>
+                                
+                                        <button id="leftArrow" class="carousel-control-prev arrows" type="button" data-target="#plan${list.itemNumber}" data-slide="prev">
+                                            <span class="bi bi-arrow-left-circle-fill" aria-hidden="true"></span>
+                                        </button>
+                                    
+                                        <button id="rightArrow" class="carousel-control-next arrows" type="button" data-target="#plan${list.itemNumber}" data-slide="next">
+                                            <span class="bi bi-arrow-right-circle-fill" aria-hidden="true"></span>
+                                        </button>
+        
+                                        <div class="lastModify">마지막 수정일자 : <span><fmt:formatDate pattern="yyyy.MM.dd" value="${list.lastUpdate}" /></span></div>
                             
-                                <button id="rightArrow" class="carousel-control-next arrows" type="button" data-target="#plan${list.itemNumber}" data-slide="next">
-                                    <span class="bi bi-arrow-right-circle-fill" aria-hidden="true"></span>
-                                </button>
-
-                                <div class="lastModify">마지막 수정일자 : <span><fmt:formatDate pattern="yyyy.MM.dd" value="${list.lastUpdate}" /></span></div>
-                    
-                            </div> 
-                        </div>
-                    </div>
-                </c:forEach>
-            </article>
-
-            <!-- 페이지버튼 임시 -->
-            <div id="pagination">
-                <form action="#" id="paginationForm">
-                    <!-- 1. 3가지 기준정보(criteria)는 hidden 정보로 제공 -->
-                    <input type="hidden" name="currPage">
-    
-                    <!-- 2. PageDTO 객체의 정보를 이용해서, Pagenation 출력 -->
-                    <ul>
-                        <!-- Prev 처리 -->
-                        <li class="frontPage"><a href="/mypage/plan?currPage=1"><i class="bi bi-chevron-double-left"></i></a></li>
-
-                        <c:choose>
-                            <c:when test="${__PAGINATION__.prev}">
-                                <li class="prev"><a href="/mypage/plan?currPage=${__PAGINATION__.startPage - 1}"><i class="bi bi-chevron-left"></i></a></li>
-                            </c:when>
-                            <c:otherwise>
-                                <li class="prev"><a href="javascript:void(0);"><i class="bi bi-chevron-left"></i></a></li>
-                            </c:otherwise>
-                        </c:choose>
-
-                        <!-- 현재 Pagination 범위에 속한 페이지 번호 목록 출력 -->
-                        <!-- begin부터 end까지 forEach(반복문) -->
-                        <c:forEach var="pageNum" begin="${__PAGINATION__.startPage}" end="${__PAGINATION__.endPage}">
-                            <li class="${pageNum == __PAGINATION__.cri.currPage ? 'currPage' : ''}">
-                                <a href="/mypage/plan?currPage=${pageNum}">
-                                    <strong>${pageNum}</strong>
-                                </a>
-                            </li>
+                                    </div> 
+                                </div>
+                            </div>
                         </c:forEach>
-    
-                        <!-- Next 처리 -->
-                        <c:choose>
-                            <c:when test="${__PAGINATION__.next}">
-                                <li class="next"><a href="/mypage/plan?currPage=${__PAGINATION__.endPage + 1}"><i class="bi bi-chevron-right"></i></a></li>
-                            </c:when>
-                            <c:otherwise>
-                                <li class="next"><a href="javascript:void(0);"><i class="bi bi-chevron-right"></i></a></li>
-                            </c:otherwise>
-                        </c:choose>
+                    </article>
+        
+                    <!-- 페이지버튼 -->
+                    <div id="pagination">
+                        <form action="#" id="paginationForm">
+                            <!-- 1. 3가지 기준정보(criteria)는 hidden 정보로 제공 -->
+                            <input type="hidden" name="currPage">
+            
+                            <!-- 2. PageDTO 객체의 정보를 이용해서, Pagenation 출력 -->
+                            <ul>
+                                <!-- Prev 처리 -->
+                                <li class="frontPage"><a href="/mypage/plan?currPage=1"><i class="bi bi-chevron-double-left"></i></a></li>
+        
+                                <c:choose>
+                                    <c:when test="${__PAGINATION__.prev}">
+                                        <li class="prev"><a href="/mypage/plan?currPage=${__PAGINATION__.startPage - 1}"><i class="bi bi-chevron-left"></i></a></li>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <li class="prev"><a href="javascript:void(0);"><i class="bi bi-chevron-left"></i></a></li>
+                                    </c:otherwise>
+                                </c:choose>
+        
+                                <!-- 현재 Pagination 범위에 속한 페이지 번호 목록 출력 -->
+                                <!-- begin부터 end까지 forEach(반복문) -->
+                                <c:forEach var="pageNum" begin="${__PAGINATION__.startPage}" end="${__PAGINATION__.endPage}">
+                                    <li class="${pageNum == __PAGINATION__.cri.currPage ? 'currPage' : ''}">
+                                        <a href="/mypage/plan?currPage=${pageNum}">
+                                            <strong>${pageNum}</strong>
+                                        </a>
+                                    </li>
+                                </c:forEach>
+            
+                                <!-- Next 처리 -->
+                                <c:choose>
+                                    <c:when test="${__PAGINATION__.next}">
+                                        <li class="next"><a href="/mypage/plan?currPage=${__PAGINATION__.endPage + 1}"><i class="bi bi-chevron-right"></i></a></li>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <li class="next"><a href="javascript:void(0);"><i class="bi bi-chevron-right"></i></a></li>
+                                    </c:otherwise>
+                                </c:choose>
+        
+                                <li class="backPage"><a href="/mypage/plan?currPage=${__PAGINATION__.realEndPage}"><i class="bi bi-chevron-double-right"></i></a></li>
+                            </ul>
+                        </form>
+                    </div>
+                </c:when>
 
-                        <li class="backPage"><a href="/mypage/plan?currPage=${__PAGINATION__.realEndPage}"><i class="bi bi-chevron-double-right"></i></a></li>
-                    </ul>
-                </form>
-            </div>
+                <c:otherwise>
+                    <div id="no_get">여행일정이 없습니다.</div>
+                </c:otherwise>
+            </c:choose>
         </section>
     </div>
 

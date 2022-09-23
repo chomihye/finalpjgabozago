@@ -209,3 +209,11 @@ article.wishlist_plan{
 .carousel-inner li{
     width: 250px;
 }
+
+/* 내역이 없는 사람을 위한 용도 */
+#no_get{
+    border-top: none;
+    text-align: center;
+    height: 400px;
+    line-height: 400px;
+}
