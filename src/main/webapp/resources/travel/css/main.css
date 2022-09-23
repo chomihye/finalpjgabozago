@@ -1,0 +1,582 @@
+body {
+    margin: 0;
+    padding: 0;
+    width: 1920px;
+    /* width: 100%; */
+    
+    font-family: 'Noto Sans KR', sans-serif !important ;
+    color: #333333;
+  
+}
+
+header {
+    height: 140px;
+    width: 1920px;
+
+    /* width: 100%; */
+}
+
+nav {
+    clear: both;
+    position: absolute;
+    float: left;
+    width: 400px;
+    height: 900px;
+    
+    /* background-color: white; */
+    background-color: rgba(218, 232, 218, 1); 
+    /* overflow: scroll; */
+
+    /* width: 100%; */
+}
+/* 여행지 버튼 */
+.btn_small_area  {
+    /* background-color: rgba(104, 174, 109, 1); */
+    /* width: 111px;
+    height: 48px; */
+   
+    display: flex;
+    border: none;
+    background-color: rgba(218, 232, 218, 1);
+    font-size: 38px;
+    font-weight: 400;
+    color: #333333;
+    margin: 37px auto 0px;
+    
+}
+
+.btn_small_area:hover {
+    opacity: 60%;
+}
+
+.btn_small_area_set:hover {
+    background-color : #6DCC76
+
+}
+/* 날짜 선택 처음 버튼  */
+.btn_date {
+    /* background-color: rgba(104, 174, 109, 1); */
+    /* width: 300px;
+    height: 38px; */
+    
+    display: inline-block;
+    font-size: 25px;
+    margin-top: 30px;
+    margin-left: 30px;
+    color: #999999;
+}
+
+.btn_date:hover {
+    opacity: 60%;
+}
+/* 날짜 선택 후 날짜 표시 */
+.dateSelector {
+    font-size: 25px;
+    /* font-weight: 400; */
+    text-align: center;
+    color: #666666;
+
+    border: none;
+    width: 366px;
+    padding-right: 25px;
+    outline: none;
+    background-color: rgba(218, 232, 218, 1);
+  }
+/* left button line2 */
+.left_button_line2 {
+    display: inline
+    
+}
+/* 내 숙소 버튼  , 일정 구경*/
+#btn_reservation {
+    margin-left: 50px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+}
+#btn_plan {
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+}
+/* 일정 생성 버튼 */
+#btn_plan_create {
+    margin: auto 140px;
+    background-color: #6DCC76 !important;
+    color: #fff !important;
+    font-weight: 700;
+    /* box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); */
+}
+
+/* 지역별 여행지 안 버튼 */
+.button {
+	background-color:white !important;
+	border-radius:40px !important;
+    border: none !important;
+	display:inline-block;
+	cursor:pointer;
+	color: rgba(33, 150, 83, 1);
+	padding:10px 22px !important;
+	text-decoration:none !important;
+
+    margin-left: 20px;
+    margin-top: 25px;
+    row-gap: 0px;
+}
+.button:hover {
+	background-color:#999999;
+    opacity: 65%;
+}
+.button:active {
+	position:relative;
+	top:1px;
+}
+
+/* 지도 */
+section #map {
+    float: left;
+    margin-left: 405px;
+    width: 1515px;
+    height: 735px;
+
+    /* width: 100%; */
+    
+}
+
+/* 지도 리스트 */
+section #maplist {
+    margin-top: 3px;
+    float: left;
+    margin-left: 405px;
+    width: 1515px;
+    height: 160px;
+
+    /* background-color: white; */
+    box-shadow: #999999;
+    background-color: rgba(218, 232, 218, 1); 
+    overflow-y: scroll;
+    overflow-x: hidden;
+
+    /* font-size: smaller; */
+
+    /* width: 100%; */
+}
+
+#maplist::-webkit-scrollbar {
+    width: 10px;
+}
+
+#maplist::-webkit-scrollbar-thumb {
+    background-color: #2f3542;
+}
+
+#maplist::-webkit-scrollbar-track {
+    background-color: grey;
+}
+
+footer {
+    clear: both;
+    height: 280px;
+    background-color: rgba(104, 174, 109, 1);
+
+    /* width: 100%; */
+}
+
+
+
+/* document.querySelector("#setupPop") */
+/* 지역별 여행지 팝업 */
+#setupPop {
+    display: block;
+    left: 400px;
+    top: 180px;
+    display: none;
+}
+.wrap_layerpop {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 110;
+    width: 100%;
+    height: 100%;
+}
+#setupPop .layerpop {
+    width: 480px !important;
+    height: 590px !important;
+
+}
+.layerpop {
+    position: absolute;
+    z-index: 110;
+    padding: 20px 20px;
+    background: #fff !important ;
+}
+#setupPop .layerpop .card-header strong {
+    display: block;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 18px;
+    line-height: 21px;
+    letter-spacing: -0.7px;
+    font-weight: 200;
+    color: #333;
+    
+}
+#setupPop .layerpop .card-header .card-link {
+    width: 90px !important;
+    height: 35px !important;
+    border-radius: 40px !important;
+    color:white !important;
+    font-size: 18px !important;
+    font-family: 'Noto Sans KR', sans-serif !important;
+    font-weight: 300 !important;
+}
+/*여행지 안 버튼 카드  */
+.card {
+    border: none !important;
+}
+
+/* 서울,부산.. */
+.card-header {
+    background-color: white !important ;
+    border: none !important ;
+    
+}
+.card-link {
+    display: inline;
+    padding: 5px 25px ;
+    margin: 0 auto;
+    background-color: #bab7b7;
+    cursor: pointer;
+    font-size: 16px;
+    /* width: 65px;
+    height: 35px; */
+    text-align: center;
+    margin: auto;
+    
+}
+
+.card-link:hover {
+	background-color:#6DCC76;
+}
+
+dl, ul, menu {
+    list-style: none;
+}
+
+.layerpop h3 {
+    font-size: 25px;
+    font-weight: 500;
+    padding: 0px 20px 20px 5px;
+}
+
+/* 강남구,,도봉구,, */
+.card-body {
+    display: flex;
+    height: 60px;
+}
+.small_area {
+    margin: auto;
+    background-color:#bab7b7  ;
+    border:none;
+	border-radius:40px;
+	cursor:pointer;
+	color:#ffffff;
+	font-size:16px;
+    text-align: center;
+    width: 85px;
+    height: 35px;
+    padding: auto;
+
+}
+.small_area:hover {
+	background-color:#6DCC76;
+}
+.small_area:active {
+	position:relative;
+	top:1px;
+}
+
+/* 지역별 여행지 확인 버튼 */
+.btn_small_area_set {
+    font-size: 16px;
+    line-height: 35px;
+    width: 100px;
+    height: 35px;
+    color: #ffffff;
+    background: #D0D0D0;
+    border-radius: 20px;
+    text-align: center;
+    margin: 18px auto 16px auto;
+}
+
+/* 내 숙소 팝업 */
+#setupPop2 {
+    display: block;
+    left: 400px;
+    top: 180px;
+    display: none;
+ 
+}
+.wrap_layerpop2 {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 110;
+    width: 100%;
+    height: 100%;
+   
+}
+#setupPop2 .layerpop2 {
+    position: absolute;
+    z-index: 110;
+    padding: 20px 20px;
+    background: #D0D0D0;
+    width: 480px;
+    height: 596px;
+    border-radius: 8px;
+    /* display: inline; */
+}
+/* 나의 예약 내역 타이틀 */
+.layerpop2 h3 {
+    font-size: 25px;
+    font-weight: 500;
+    text-align: center;
+    margin: 15px auto;
+}
+/* 카루셀 크기 */
+.carousel-inner {
+    margin-top: 20px;
+    height: 420px;
+    /* background-color: #2f3542; */
+}
+/* 예약 내역 카드 */
+div.card_reservation {
+    margin: 30px auto;
+    width: 340px;
+    height: 100px;
+    background-color: white;
+    border-radius: 20px;
+    display: flex;
+}
+.card_reservation span {
+    display: block;
+}
+.card_reservation img {
+    border-radius: 20px;
+    width: 100px;
+    height: 85px;
+    margin: auto 8px;
+}
+.card_reservation p {
+    margin: auto;
+
+}
+.btn_reservation i {
+    margin: 20px;
+}
+/* 나의 예약 내역 닫기 버튼 */
+#btn_reservation_cs{ /* 확인 버튼(원래 페이지로 돌아가는 용도) */
+    font-size: 16px;
+    line-height: 35px;
+    width: 65px;
+    height: 35px;
+    color: #ffffff;
+    background: #6DCC76;
+    border-radius: 20px;
+    border: none;
+    text-align: center;
+    margin: 15px 190px 100px;
+}
+#btn_reservation_cs:hover {
+    background: #999999;
+}
+
+/* DAY 1~~~ n 리스트들 정렬*/
+.day_box {
+    margin: 20px 10px 20px 0 !important;
+    padding: auto !important;
+    
+    width: 380px !important;
+    height: 540px !important;
+    overflow-y: scroll !important;
+
+    -ms-overflow-style: none;
+}
+
+ .day_box::-webkit-scrollbar{
+   display:none;
+ }
+.day_text {
+    text-align: center;
+    font-size: 28px;
+    margin: 20px 0 20px 0;
+    height: 60px;
+}
+.row {
+    font-size: 20px;
+    padding-top: 15px !important;
+    margin: 5px auto !important; 
+}
+
+.col-1, .col-4 {
+    margin: auto 0px !important;
+}
+
+.col-2 {
+    margin: auto 20px !important;
+    padding: auto 20px !important;
+    white-space: nowrap;
+}
+
+.col-1 {
+    box-sizing: border-box;
+    position: relative;
+    z-index: 1;
+
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 8.60563px 13.2394px;
+    gap: 20px;
+    
+    width: 60px;
+    height: 30px;
+
+    background: #4E944F;
+    box-shadow: 0px 0.661972px 0.661972px rgba(0, 14, 51, 0.05);
+    border-radius: 30px;
+}
+
+/* DAY 리스트 번호 인덱스랑 이미지 -- 이거 나중에 무조건 수정해야함*/
+ol { 
+    counter-reset: item;
+    list-style-type: none;
+}
+
+.row_index li { display: block; }
+.row_index li:before { 
+    content: counter(item) "  "; 
+    counter-increment: item 
+}
+.row_num {
+    font-size: 17px;
+   font-weight: 400;
+   color: white; 
+   position: relative;
+   left: -2px;
+   bottom: 8px;
+   z-index: 2;
+}
+
+img {
+    width: 115px;
+    height: 100px;
+    border-radius: 5%;
+}
+.row .col-sm-1:hover {
+    opacity: 85%;
+}
+
+
+/* 빼기 버튼  */
+.row_btn {
+    margin-left: 30px;
+    width: 25px;
+    height: 25px;
+	background-color:transparent;
+	border-radius:50px;
+	border:1.5px solid #666666;
+	display:inline-block;
+	cursor:pointer;
+    padding: auto;
+
+	color:#666666;
+	font-size:15px;
+}
+.row_btn:hover {
+	background-color : #e3e0e0;
+    opacity: 65%;
+}
+.row_btn:active {
+	position:relative;
+	top:1px;
+}
+
+/* maplist */
+.col-sm-1, .col-sm-4 {
+    margin: auto;
+}
+
+
+
+/* 일정 공유 alert */
+#myModal { 
+    display: none;
+    position: fixed;
+    padding-top: 100px;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    overflow: auto;
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.5);
+}
+.modal_Content { /*메인 모달칭*/
+   
+    background-color: aqua;
+    margin: 80px auto 0 auto;
+    padding: 15px 35px 20px 35px;
+    width: 35%;
+    position: relative;
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+    background-color: #ffffff;
+}
+.modal_button_container {
+    margin: auto;
+    display: flex;
+    width: 200px;
+    justify-content: center;
+    
+   
+}
+.modal_button{ /* 확인 버튼(원래 페이지로 돌아가는 용도) */
+    font-size: 16px;
+    line-height: 35px;
+    width: 65px;
+    height: 35px;
+    color: #ffffff;
+    background: #6DCC76;
+    border-radius: 20px;
+    text-align: center;
+    margin: 18px auto 16px auto;
+}
+.modal_button a {
+    text-decoration: none;
+    color: inherit;
+}
+.modal_Content h3{ /* 제목 */
+    margin: 18px 0;
+}
+.modal_Content i{ /* 체크 아이콘 */
+    color: #68AE6D;
+    padding-right: 10px;
+}
+.modal_Content p{ /* 본문 폰트 */
+    word-break: break-all;
+	margin: 20px 0;
+    text-align: center;
+}
+.joinModalTexts{ /* 스타일2 모달창 위아래 추가 여백으로 height 조정 */
+    margin: 40px;
+}
+.center { /* 중앙 정렬 */
+    text-align: center;
+    margin: 0 auto;
+}
+.center.simpleTextSpaceAdd{ /* 스타일3 모달창 위아래 추가 여백으로 height 조정 */
+    margin: 70px 0 50px 0;
+}
+
+
+
+

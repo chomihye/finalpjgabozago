@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.pj.gabozago.mapper.TravelMapper">
+
+	
+	<!--1.insertPlanSelectKey : travel_plan에 일정 정보를 넣고 plan_idx반환-->
+	<insert id="insertPlanSelectKey">
+		<selectKey keyProperty="idx" 
+				   order="BEFORE" 
+				   resultType="int">
+   		SELECT "ADMIN"."TRAVEL_PLAN_SEQ"."NEXTVAL" from DUAL
+   		</selectKey>
+   		
+		INSERT INTO tbl_travel_plan(idx,member_idx,start_date,end_date,is_public,large_area_idx,days)
+	    VALUES (#{idx},#{memberIdx},#{startDate},#{endDate},#{isPublic},#{largeAreaIdx},#{days})
+   </insert> 
+   
+   
+   	<!--2. insertPlanSelectKey : travel_plan에 일정 정보를 넣는다-->
+	<insert id="insertPlanDetail">
+	
+	<selectKey keyProperty="idx" 
+				   order="BEFORE" 
+				   resultType="int">
+   		SELECT "ADMIN"."TRAVEL_PLAN_DETAIL_SEQ"."NEXTVAL" from DUAL
+   		</selectKey>
+   		
+		INSERT INTO tbl_travel_plan_detail(idx,travel_plan_idx,day,place_type,reservation_idx,place_name,place_seq,latitude,longitude,img)
+	    VALUES (#{idx},#{travelPlanIdx},#{day},#{placeType},#{reservationIdx},#{placeName},#{placeSeq},#{latitude},#{longitude},#{img})
+   </insert> 
+   
+   
+   
+   
+   <!--3. 조인할 테이블 두개 : TravelPlan,  TravelPlanDetail-->
+   <resultMap id="TravelPlanVO" type="com.pj.gabozago.domain.TravelPlanVO">
+
+        <!-- property값: vo에 선언한거랑 동일하게 맞추기 -->
+        
+        <result column="IDX"            property="idx" />
+        <result column="MEMBER_IDX"     property="memberIdx" />
+        <result column="STRAT_DATE"     property="startDate" />
+        <result column="END_DATE"       property="endDate" />
+        <result column="IS_PUBLIC"      property="isPublic" />
+        <result column="LARGE_AREA_IDX" property="largeAreaIdx" />
+        <result column="DAYS"           property="days" />
+        
+   
+      	<collection property="travelplanDetailVO" resultMap="TravelPlanDetailVO"></collection>
+    </resultMap>
+
+    <resultMap id="TravelPlanDetailVO" type="com.pj.gabozago.domain.TravelPlanDetailVO">
+
+		<result column="TRAVEL_PLAN_IDX"  property="travelPlanIdx" />
+        <result column="DAY" 			  property="day" />
+        <result column="PLACE_TYPE" 	  property="placeType" />
+        <result column="RESERVATION_IDX"  property="reservationIdx" />
+        <result column="PLACE_NAME" 	  property="placeName" />
+        <result column="PLACE_SEQ" 	      property="placeSeq" />
+        <result column="LATITUDE" 		  property="latitude" />
+        <result column="LONGTITUDE" 	  property="longitude" />
+        <result column="IMG" 			  property="img" />
+        
+    </resultMap>
+    
+    
+    <resultMap id="TravePlanlCreateVO" type="com.pj.gabozago.domain.TravePlanlCreateVO">
+
+		<result column="STRAT_DATE"     property="start_date" />
+		<result column="END_DATE"       property="end_date" />
+		<result column="DAYS" property="days" />
+        <result column="DAY" property="day" />
+        <result column="PLACE_NAME" property="place_name" />
+        <result column="PLACE_SEQ" property="place_seq" />
+        <result column="LATITUDE" property="latitude" />
+        <result column="LONGTITUDE" property="longitude" />
+        <result column="IMG" property="img" />
+        
+    </resultMap>
+    
+   
+
+    <select id="selectList"  resultType="com.pj.gabozago.domain.TravePlanlCreateVO" >
+
+        SELECT 
+            p.start_date,
+            p.end_date,
+            p.days,
+            d.day,    
+            d.place_name,
+            d.place_seq,
+            d.latitude,
+            d.longitude,
+            d.img
+         
+        FROM 
+            tbl_travel_plan p, tbl_travel_plan_detail d
+       
+        WHERE  p.idx(+) = d.travel_plan_idx
+    	AND p.idx = #{idx}
+    </select>
+   
+
+</mapper>
