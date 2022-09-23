@@ -30,7 +30,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300&display=swap" rel="stylesheet">
 
     <!-- Customized Stylesheet -->
-    <link rel="stylesheet" type="text/css" href="${path}/resources/travel/css/plan.css?after">
+    <link rel="stylesheet" type="text/css" href="${path}/resources/travel/css/plan.css?ver=1">
 
     <!-- map -->
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=31ac49eb45c2f47546120a0ea0a28dbe&libraries=services"></script>
@@ -85,6 +85,7 @@
             $("#map_part").show();  
         })  
     });
+
    </script>
 
 </head>
@@ -130,10 +131,9 @@
                     <c:set var="day5" value="0"/>
                     <c:set var="day6" value="0"/>
                     <c:set var="day7" value="0"/>
-                    <c:set var="dayCnt" value="day${i}"/>
                     <c:set var="listCnt" value="0"/>
                     
-
+                    <!-- day N 별로 몇개의 ..장소가있는지 Cnt할 변수,,,,  -->
                         <c:forEach var="planList" items="${__LIST__}"> 
                             <c:choose>
                                 <c:when test="${planList.day == 1}">
@@ -166,21 +166,105 @@
                             </c:choose> 
                         </c:forEach>
 
+                        <!-- DAY n 별로 장소출력,,,,, -->
                         <div class="row">
-                            <div class="col-sm-2"><fmt:formatDate value="${date}" pattern="yyyy년 MM월 dd일"/>DAY ${day}</div>
+                            <div class="col-sm-4"><fmt:formatDate value="${date}" pattern="yyyy년 MM월 dd일"/> DAY ${day}</div>
 
-                           
-                           
-                                
-                            
-                                    <div class="col-sm-4">
-                                        <c:forEach var="j" begin="${listCnt}" end="{${dayCnt}-1}" varStatus="status">
-                                        <c:set var="index" value="${status.index}"/>
-                                            <img src=${__LIST__[index].img} width="100px;" height="85px;">${__LIST__[index].place_name}
-                                        </c:forEach>
-                                    </div>
+                                <c:choose>
+                                    <c:when test="${day == 1}">
+                                        <div class="col-sm-8">
+                                            <c:forEach var="j" begin="${listCnt}" end="${day1-1}" varStatus="status">
+                                            <c:set var="index" value="${status.index}"/>
+                                            <div class="place">
+                                                <div class="place_img"><img src=${__LIST__[index].img}></div>
+                                                <div class="place_name">${__LIST__[index].place_name}</div>
+                                            </div>
+                                            </c:forEach>
+                                        </div>
+                                    </c:when>
 
-                                    <c:set var="listCnt" value="${listCnt+dayCnt-1}" />
+                                    <c:when test="${day == 2}">
+                                        <div class="col-sm-8">
+                                            <c:forEach var="j" begin="${day1}" end="${day1+day2-1}" varStatus="status">
+                                            <c:set var="index" value="${status.index}"/>
+                                            <div class="place">
+                                                <div class="place_img"><img src=${__LIST__[index].img}></div>
+                                                <div class="place_name">${__LIST__[index].place_name}</div>
+                                            </div>
+                                            </c:forEach>
+                                            <c:set var="listCnt" value="${day1+day2-1}" />
+                                        </div>
+                                    </c:when>
+
+                                    <c:when test="${day == 3}">
+                                        <div class="col-sm-8">
+                                            <c:forEach var="j" begin="${day1+day2}" end="${day1+day2+day3-1}" varStatus="status">
+                                            <c:set var="index" value="${status.index}"/>
+                                            <div class="place">
+                                                <div class="place_img"><img src=${__LIST__[index].img}></div>
+                                                <div class="place_name">${__LIST__[index].place_name}</div>
+                                            </div>
+                                            </c:forEach>
+                                            <c:set var="listCnt" value="${day1+day2-1}" />
+                                        </div>
+                                    </c:when>
+
+                                    <c:when test="${day == 4}">
+                                        <div class="col-sm-8">
+                                            <c:forEach var="j" begin="${day1+day2+day3}" end="${day1+day2+day3+day4-1}" varStatus="status">
+                                            <c:set var="index" value="${status.index}"/>
+                                            <div class="place">
+                                                <div class="place_img"><img src=${__LIST__[index].img}></div>
+                                                <div class="place_name">${__LIST__[index].place_name}</div>
+                                            </div>
+                                            </c:forEach>
+                                            <c:set var="listCnt" value="${listCnt+day1-1}" />
+                                        </div>
+                                    </c:when>
+
+                                    <c:when test="${day == 5}">
+                                        <div class="col-sm-8">
+                                            <c:forEach var="j" begin="${day1+day2+day3+day4}" end="${day1+day2+day3+day4+day5-1}" varStatus="status">
+                                            <c:set var="index" value="${status.index}"/>
+                                            <div class="place">
+                                                <div class="place_img"><img src=${__LIST__[index].img}></div>
+                                                <div class="place_name">${__LIST__[index].place_name}</div>
+                                            </div>
+                                            </c:forEach>
+                                            <c:set var="listCnt" value="${listCnt+day1-1}" />
+                                        </div>
+                                    </c:when>
+
+                                    <c:when test="${day == 6}">
+                                        <div class="col-sm-8">
+                                            <c:forEach var="j" begin="${day1+day2+day3+day4+day5}" end="${day1+day2+day3+day4+day5+day6-1}" varStatus="status">
+                                            <c:set var="index" value="${status.index}"/>
+                                            <div class="place">
+                                                <div class="place_img"><img src=${__LIST__[index].img}></div>
+                                                <div class="place_name">${__LIST__[index].place_name}</div>
+                                            </div>
+                                            </c:forEach>
+                                            <c:set var="listCnt" value="${listCnt+day1-1}" />
+                                        </div>
+                                    </c:when>
+
+                                    <c:when test="${day == 7}">
+                                        <div class="col-sm-8">
+                                            <c:forEach var="j" begin="${day1+day2+day3+day4+day5+day6}" end="${day1+day2+day3+day4+day5+day6+day7-1}" varStatus="status">
+                                            <c:set var="index" value="${status.index}"/>
+                                            <div class="place">
+                                                <div class="place_img"><img src=${__LIST__[index].img}></div>
+                                                <div class="place_name">${__LIST__[index].place_name}</div>
+                                            </div>
+                                            </c:forEach>
+                                            <c:set var="listCnt" value="${listCnt+day1-1}" />
+                                        </div>
+                                    </c:when>
+                                </c:choose>
+
+                                    
+
+                                    
                         </div>
 
 

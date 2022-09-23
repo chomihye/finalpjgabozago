@@ -90,12 +90,10 @@ footer {
     width: 1780px !important;
     height: 750px !important;
     overflow-y: scroll;
-    
-    font-weight: 700;
-    font-size: 24px;
+
     text-align: center;
- 
 }
+
 
 
 /* 날짜박스 각각 */
@@ -113,15 +111,42 @@ footer {
     border-radius: 20px;
 
     margin: 15px auto !important;
+    display: grid;
 }
 
 /* 날짜박스 안 정렬 */
-.col-sm-2 {
-    margin: auto !important;
-}
 .col-sm-4 {
     margin: auto !important;
+
+    font-weight: 700;
+    font-size: 24px;
+    text-align: center;
 }
+.col-sm-8 {
+    margin: auto !important;
+    display: flex;
+}
+.place {
+    flex: auto;
+}
+.place_img {
+    padding-left: 25px;
+    position: absolute;
+    
+    
+}
+.place_name {
+    width: 100px;
+    height: 90px;
+    margin: auto;
+    position: relative;
+    
+    padding-top: 40px;
+    
+    color: #F5F5F5;
+    font-weight: 600;
+}
+
 
 /* 지도박스 */
 #map_all {
@@ -168,6 +193,13 @@ footer {
 .btn_circle:hover {
     background: #68AE6D;
     color: white;
+}
+img {
+    opacity: 90%;
+    width: 120px;
+    height: 120px;
+    filter: brightness(70%); 
+    border-radius: 5%;
 }
 
 
