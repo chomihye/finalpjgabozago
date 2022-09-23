@@ -12,7 +12,7 @@
         </selectKey>
 
         INSERT INTO tbl_member( idx, email, password, name, nickname, phone, birthday, provider, uid_num, profile_img, point, insert_ts, update_ts, is_secession )
-        VALUES( #{idx}, #{account_email}, #{password}, #{name}, #{profile_nickname}, #{phone}, #{birthday}, 'gabozago', null, #{profilePath}, 3000, CURRENT_DATE, null, 'N' )
+        VALUES( #{idx}, #{email}, #{password}, #{name}, #{nickname}, #{phone}, #{birthday}, 'gabozago', null, #{profilePath}, 3000, CURRENT_DATE, null, 'N' )
     </insert>
 
 	<insert id="insertUserForNaverLogin">
@@ -25,6 +25,15 @@
     </insert>
 
 	<insert id="insertUserForKakaoLogin">
+        <selectKey keyProperty="idx" order="BEFORE" resultType="int" >
+            SELECT MAX(idx)+1 FROM tbl_member
+        </selectKey>
+
+        INSERT INTO tbl_member( idx, email, password, name, nickname, phone, provider, birthday, uid_num, profile_img, point, insert_ts, update_ts, is_secession )
+        VALUES( #{idx}, #{email}, #{password}, #{name}, #{nickname}, #{phone}, #{provider}, #{birthday}, #{uidnum}, #{profilePath}, 3000, CURRENT_DATE, null, 'N' )
+    </insert>
+    
+   	<insert id="insertUserForGoogleLogin">
         <selectKey keyProperty="idx" order="BEFORE" resultType="int" >
             SELECT MAX(idx)+1 FROM tbl_member
         </selectKey>
@@ -50,6 +59,14 @@
     </select>
     
      <select id="selectUserForKakaoLogin" resultType="com.pj.gabozago.domain.MemberVO">
+        <![CDATA[ 
+            SELECT idx, email, password, name, nickname, phone, birthday, provider, uid_num, profile_img, point, rememberme, rememberage, insert_ts, update_ts, is_secession
+            FROM tbl_member
+            WHERE email = #{email}
+        ]]>
+    </select>
+    
+    <select id="selectUserForGoogleLogin" resultType="com.pj.gabozago.domain.MemberVO">
         <![CDATA[ 
             SELECT idx, email, password, name, nickname, phone, birthday, provider, uid_num, profile_img, point, rememberme, rememberage, insert_ts, update_ts, is_secession
             FROM tbl_member
