@@ -1,8 +1,8 @@
 $(function() {
-    $('.swiper-wrapper div').click(function(){
+    $('.areainfoWrapper div').click(function(){
 		var select_id = $(this).attr('data-area');
 
-		$('.swiper-wrapper div').removeClass('current');
+		$('.areainfoWrapper div').removeClass('current');
 		$('.recommendContents').removeClass('current');
 
 		$(this).addClass('current');

@@ -81,10 +81,8 @@ public class MypageController {
 			List<LinkedHashMap<String, Object>> accomList = this.memberService.getReserOrderOfUseDate(member);
 			model.addAttribute(SharedScopeKeys.LIST_KEY, accomList);
 			
-			// 총 레코드 건수를 반환
-			int total = this.reserService.getTotal(cri, member);
-			PageDTO pageDTO = new PageDTO(cri, total);
-			model.addAttribute(SharedScopeKeys.PAGINATION_KEY, pageDTO);
+			// 예약 중 숙소 건수 전달
+			model.addAttribute("reserCount", accomList.size());
 		}catch (ServiceException e) {
 			throw new ControllerException(e);
 		} // try-catch
