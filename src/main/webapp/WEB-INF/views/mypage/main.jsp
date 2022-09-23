@@ -84,7 +84,7 @@
                 </div>
 
                 <c:choose>
-                    <c:when test="${__PAGINATION__.totalAmount != 0}"> 
+                    <c:when test="${reserCount != 0}"> 
                         <ul class="accom">
                             <c:forEach var="list" items="${__LIST__}">
                                 <li>
@@ -102,7 +102,7 @@
                     </c:when> 
 
                     <c:otherwise>
-                        <div id="no_get">숙소예약내역이 없습니다.</div>
+                        <div id="no_get">이용 예정 숙소 내역이 없습니다.</div>
                     </c:otherwise>
                 </c:choose>
             </article>

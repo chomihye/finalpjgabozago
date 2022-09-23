@@ -36,7 +36,7 @@ public interface MypageReserMapper {		// 숙박예약내역 페이지 관련 map
 	public abstract void updateStatusUcrnToUcry(MemberVO member) throws DAOException;
 	
 	// 특정 숙소예약내역 detail 페이지 정보 불러오는 메소드
-	public abstract Map<String, Object> selectOneReserDetail(AccomReservationDTO reser, MemberVO member) throws DAOException;
+	public abstract Map<String, Object> selectOneReserDetail(@Param("reser") AccomReservationDTO reser, @Param("member") MemberVO member) throws DAOException;
 	
 	// 예약취소 전 해당 예약내역의 결제정보를 불러오는 메소드 => cancelReservaion 서비스 트랜잭션 시작
 	@Select("SELECT idx, reservation_idx, member_idx, order_price, use_point, payment_price, payment_type, insert_ts, update_ts \r\n"
@@ -63,7 +63,7 @@ public interface MypageReserMapper {		// 숙박예약내역 페이지 관련 map
 	public abstract RefundVO selectRefundInfo(AccomReservationDTO reser) throws DAOException;
 	
 	// 화면에 보여줄 용도의 리뷰페이지 숙소정보만 가져오는 메소드(사진, 숙소이름, 룸타입)
-	public abstract Map<String, Object> selectAccomInfo(AccomReservationDTO reser, MemberVO member) throws DAOException;
+	public abstract Map<String, Object> selectAccomInfo(@Param("reser") AccomReservationDTO reser, @Param("member") MemberVO member) throws DAOException;
 	
 	// 리뷰 등록시 review 테이블에 insert => registerNewReview 서비스 트랜잭션 시작
 	public abstract void insertNewReview(AccomReviewDTO review) throws DAOException;
