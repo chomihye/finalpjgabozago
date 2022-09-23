@@ -45,6 +45,14 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
 
     <script>
+	  	$(function(){
+			var resultMsg = '${__RESULT__}'
+			
+			if(resultMsg != null && resultMsg.length > 0){
+				alert(resultMsg);
+			}// if
+	    });
+  	
         $(function () {
 
             var state =1;
