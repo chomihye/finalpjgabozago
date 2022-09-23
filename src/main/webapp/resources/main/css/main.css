@@ -85,115 +85,14 @@ article {
     text-align: center;
 }
 .largeContainer {
+    height: 420px;
     margin-bottom: 20px !important;
 }
-/* .areaContainer p {
-    font-size: 23px !important;
-    text-align: center;
 
-    color: #333333;
-}
-.areaContainer img{
-    margin-bottom: 10px;
-
-    width: 340px;
-    height: 270px;
-
-    border-radius: 10px;
-}
-.allAreaContainer {
-    width:90%;
-    display: flex;
-    justify-content: space-between;
-}
-
-.areaArrow_container button {
-    color: #68AE6D;
-    background: none;
-
-    border: none;
-
-    font-size: 50px;
-}
-.areaArrow_container {
-    height: 318px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-.largeContainer {
-    height: auto;
-    margin-bottom: 80px;
-} */
-/* 추천여행지 슬라이드 */
-.swiper-container {
-
-    font-family: 'Noto Sans KR', sans-serif;
-    box-sizing: border-box;
-    padding: 0;
-    margin: 0;
-
-    position: relative;
-    width: 1240px;
-    height: 320px;
-}
-.swiper {
-    width: 90% !important;
-    height: 100%;
-}
-
-.swiper-slide {
-    text-align: center;
-    font-size: 18px;
-
-
-    /* Center slide text vertically */
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: -webkit-flex;
-    display: flex;
-    flex-direction: column;
-    -webkit-box-pack: center;
-    -ms-flex-pack: center;
-    -webkit-justify-content: center;
-    justify-content: center;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    -webkit-align-items: center;
-    align-items: center;
-}
-
-.swiper-slide img {
-    border-radius: 5px;
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-.swiper-container button {
-    color: #68AE6D;
-    background: none;
-    border: none;
-
-    padding: 0;
-
-    position: absolute;
-    top:35%;
-
-    font-size: 50px;
-}
-.swiper-slide > p{
-   margin: 15px;
-    font-size: 23px;
-    font-weight: 500;
-}
-.swiper-container > .prevBtn {
-    left: 5px;
-}
-.swiper-container > .nextBtn {
-    right: 5px;
-}
 /* recommendContents */
+.recommendContainer {
+    margin-top: 50px;
+}
 .recommendContents {
     display: none;
 }
@@ -201,22 +100,22 @@ article {
     display: inherit;
 }
 .placeList {
-    margin-left: 60px;
-    margin-right: 60px;
-
     display: flex;
     justify-content: space-between;
 }
 .decContainer {
-    width: 750px;
+    width: 800px;
 }
 .decContainer img{
-    width: 750px;
+    width: 100%;
     height: 420px;
 }
 .decContainer h2{
     font-size: 22pt;
-    margin: 5px auto;
+    margin: 30px auto;
+}
+.decContainer p {
+    font-size: 20px;
 }
 .subArea img{
     width: 300px;
@@ -226,15 +125,6 @@ article {
     font-size: 15pt;
     text-align: center;   
     margin-bottom: 7px;
-}
-/* best plan=============================== */
-.best_plan {
-    position: relative;
-    width: 93%;
-
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
 }
 
 .bestPlanOutter >h1 {
@@ -248,9 +138,6 @@ article {
 
 /* ----------------------------- best post --------------------------*/
 
-.bestPost {
-    margin: 0 40px;
-}
 .bestPost h1 {
     font-size: 30px !important;
     font-weight: 500 !important;

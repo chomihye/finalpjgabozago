@@ -1,0 +1,180 @@
+@charset "utf-8";
+
+@import url('https://fonts.googleapis.com/css2?family=Kanit&family=Mulish:wght@500&family=Nanum+Myeongjo&family=Noto+Sans+KR:wght@100;300;400;500;700;900&family=Orbitron:wght@500&display=swap');
+
+
+.recmdaOuter .swiper {
+  width: 100%;
+  height: 71%;
+
+  border-top: 1px solid green;
+  border-bottom: 1px solid green;
+}
+
+.recmdaOuter .swiper-slide {
+  /* text-align: center; */
+  /* font-size: 18px; */
+  /* background: #fff; */
+
+  /* Center slide text vertically */
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+}
+
+.recmdaOuter .swiper-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+/* -------------------------------------demo slide css----------------------------------- */
+
+.recmdaOuter ul {
+  padding: 0;
+}
+
+.recmdaOuter li {
+  list-style: none;
+}
+
+.recmdaOuter {
+  width: 350px;
+  height: 620px;
+
+  background-color: #ffffff;
+
+  position: relative;
+  border: 1px solid #68AE6D;
+  border-radius: 20px;
+}
+
+.recmdaOuter .userInfo {
+  display: flex;
+  justify-content: space-between;
+
+  margin-left: 30px;
+  margin-right: 20px;
+
+  font-size: 20px;
+}
+
+.recmdaOuter .userInfo li {
+  margin-bottom: 5px;
+}
+
+.userInfo .title {
+  font-size: 25px;
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+.userInfo .likeBtn {
+  font-weight: 500;
+}
+.userInfo .bi-suit-heart-fill {
+  color: red;
+}
+
+
+.planAdd {
+  width: 110px;
+  height: 33px;
+  color: #68AE6D;
+  background-color: #ffffff;
+  text-align: center;
+  border: 2px solid #68AE6D;
+  border-radius: 30px;
+  position: absolute;
+  top: 572px;
+  right: 23px;
+}
+ .recmdaOuter .swiper .bi {
+  color: #68AE6D;
+  font-size: 25px;
+  top:410px;
+}
+.recmdaOuter .swiper .prevBtn {
+  left: 262px;
+}
+.recmdaOuter .swiper .nextBtn {
+  right: 28px;
+}
+.recmdaOuter .swiper-button-next::after,
+.recmdaOuter .swiper-button-prev::after {
+  display: none;
+}
+
+.areaListOuter {
+  width: 100%;
+  height: 100%;
+
+  margin: auto 30px;
+}
+.areaListOuter h1{
+  color: #68AE6D;
+  font-size: 21px;
+  margin-top: 20px;
+}
+.areaListOuter li {
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 20px;
+  color: #333333;
+  margin-left: 15px;
+  margin-bottom: 30px;
+}
+.listOuter {
+  width: 1240px;
+
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+}
+
+/* 모달창 */
+#planAddModal {
+  display: none;
+}
+#planAddModal .modalInner{
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+
+  border: #68AE6D 1px solid;
+
+  z-index: 1050;
+
+  background: #ffffff;
+
+  width: 500px;
+  height: 200px;
+
+  display:flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+.addController button{
+  width: 90px;
+  height:37px;
+  border: 2px solid #68AE6D;
+  border-radius: 20px;
+}
+.addController button:nth-of-type(2) {
+  margin-left: 30px;
+  background-color: #68AE6D;
+  color: #ffffff;
+}
+#planAddModal p {
+  font-size: 20px;
+}

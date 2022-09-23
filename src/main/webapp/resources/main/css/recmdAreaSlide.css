@@ -1,0 +1,79 @@
+@charset "utf-8";
+
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css");
+@import url('https://fonts.googleapis.com/css2?family=Kanit&family=Mulish:wght@500&family=Nanum+Myeongjo&family=Noto+Sans+KR:wght@100;300;400;500;700;900&family=Orbitron:wght@500&display=swap');
+
+
+.recmdAreaOuter .swiper-container {
+    width: 100%;
+    height: 100%;
+
+}
+
+.recmdAreaOuter .swiper-slide {
+    text-align: center;
+    font-size: 18px;
+    background: #fff;
+
+    /* Center slide text vertically */
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+}
+
+.recmdAreaOuter {
+    font-family: 'Noto Sans KR', sans-serif;
+    box-sizing: border-box;
+    position: relative;
+    width: 100%;
+    height: 100%;
+
+    margin: 0 auto;
+}
+
+.recmdAreaOuter .recmdAreaSwiper {
+    height: 100%;
+    overflow: hidden;
+    padding-top: 40px;
+}
+
+.recmdAreaOuter .recmdAreaSwiper img {
+    width: 100%;
+    height: 260px;
+}
+
+.recmdAreaOuter .areainfo {
+    display: block;
+}
+
+.recmdAreaOuter .areainfo p {
+    font-size: 23px;
+    font-weight: 600;
+    margin-top: 15px;
+    margin-bottom: 0;
+}
+
+.recmdAreaOuter .swiper-pagination-bullet-active {
+    background-color: #68AE6D !important;
+}
+
+.recmdAreaOuter .swiper-pagination {
+    bottom: 0 !important;
+    top: 0px;
+    height: 20px;
+
+}
+
+.recmdAreaOuter .swiper-pagination-bullet {
+    width: 15px;
+    height: 15px;
+}
