@@ -4,7 +4,7 @@ let optionValue = null;
 /**
  * @desc 초기 수행
  */
-$(function(){
+$(function(){ 
 	$("#wishlist").css("font-weight", "bold");
     $(".simpleTextSpaceAdd").css('margin', '68px 0');       // 로딩 모달
 

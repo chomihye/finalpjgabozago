@@ -341,7 +341,7 @@ public class MypageController {
 	} // loadWishlistPage
 	
 	
-	@PostMapping(value = "/wishlist/accom")
+	@PostMapping(value = "/wishlist/accom") 
 	@ResponseBody
 	public void getAccomWishlist(Criteria cri, @SessionAttribute(SharedScopeKeys.USER_KEY) MemberVO member, 
 			HttpServletResponse res) throws ControllerException {

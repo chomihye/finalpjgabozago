@@ -12,7 +12,7 @@
     <!-- parameterType="java.util.Map" 은 생략이 가능함 -->
     <select 
         id="selectAccomWishlist" 
-        resultType="java.util.LinkedHashMap">
+        resultType="java.util.LinkedHashMap"> 
         
         SELECT 
             wa.idx,

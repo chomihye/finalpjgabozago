@@ -59,7 +59,7 @@
     <link rel="stylesheet" href="/resources/mypage/css/modal.css">
 
     <!-- script -->
-    <script src="/resources/mypage/js/6-12.mypage_wishlist.js"></script>
+    <script src="/resources/mypage/js/6-12.mypage_wishlist.js"></script> 
 </head>
 
 <body>

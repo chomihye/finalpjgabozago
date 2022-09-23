@@ -11,7 +11,7 @@ import com.pj.gabozago.domain.MemberVO;
 import com.pj.gabozago.exception.DAOException;
 
 
-public interface MypageWishlistMapper {		// 위시리스트 페이지 관련 mapper
+public interface MypageWishlistMapper {		// 위시리스트 페이지 관련 mapper 
 
 	
 	// 숙소 위시리스트의 총 레코드 건수를 반환하는 메소드(페이징 처리에 필요)

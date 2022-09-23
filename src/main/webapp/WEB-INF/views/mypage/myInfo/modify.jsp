@@ -62,7 +62,7 @@
                 <form action="modify.do" method="POST" id="form">
                     <div class="sections">
                         <h4>이름</h4>
-                        <input type="text" name="name" id="name" placeholder="${__MEMBER__.name}" onchange="checkName()"><br>
+                        <input type="text" name="name" id="name" placeholder="${__MEMBER__.name}" maxlength="10" onchange="checkName()"><br>
                         <div id="nameExplain"></div>
                         <div id="nameError"></div>
                     </div >

@@ -23,7 +23,7 @@ import lombok.extern.log4j.Log4j2;
 
 @Service
 //위시리스트 페이지를 위한 서비스 처리
-public class MypageWishlistServiceImpl implements MypageWishlistService {
+public class MypageWishlistServiceImpl implements MypageWishlistService { 
 
 	
 	@Setter(onMethod_ = {@Autowired})
