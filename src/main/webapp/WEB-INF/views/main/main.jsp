@@ -61,6 +61,16 @@
 
 <body>
 
+    <% 
+    	String msg = null; // session scope null 확인 후 수행
+    
+   		if( ( msg = (String) session.getAttribute("__RESULT__")) != null ){
+   			// redirection으로 들어오는 경우 session scope에 메세지 담기 때문에 메세지 alert 후 세션 삭제
+        	if(msg.equals("로그아웃 되었습니다.") || msg.equals("회원 전용 서비스입니다. 먼저 로그인을 해주세요.") || msg.equals("로그인에 성공하였습니다.")){ 
+            	session.removeAttribute("__RESULT__");
+        	}// if
+    	}// if
+    %>
 
     <jsp:include page="../common/header.jsp" flush="true" />
     <div class="mainContainer">
