@@ -77,15 +77,7 @@ public class MypageWishlistServiceImpl implements MypageWishlistService {
 
 				// put travelPlanDetail into finalMap
 				Object travelPlanIdx = tempList.get(i).get("TRAVEL_PLAN_IDX");
-				int totalDays = Integer.parseInt(String.valueOf(tempList.get(i).get("TOTAL_DAYS")));
-				
-				LinkedHashMap<String, Object> dayMap = new LinkedHashMap<String, Object>();
-				
-				for(int j = 1 ; j <= totalDays ; j++) {								
-					dayMap.put("DAY" + j, this.mapper.selectPlanDetail(travelPlanIdx, j));
-				} // inner-for
-				
-				finalMap.put("travelPlanDetail", dayMap);
+				finalMap.put("travelPlanDetail", this.mapper.selectPlanDetail(travelPlanIdx));
 				
 				finalList.add(finalMap);	
 			} // outer-for

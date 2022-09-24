@@ -116,7 +116,6 @@
                                         <!-- 슬라이드 영역 -->
                                         <div class="carousel-inner">
                                             <c:forEach  var="eachDays" items="${list.eachDays}">
-                                                <c:set var="DAY" value="DAY${eachDays}" />
         
                                                 <c:choose>
                                                     <c:when test="${eachDays == 1}"> 
@@ -126,15 +125,18 @@
                                                                 <div class="areaList">
                                                                     <img src="/resources/common/img/list.png" width="">
                                                                     <ul>
-                                                                        <c:forEach var="dayNum" items="${list.travelPlanDetail[DAY]}">
-                                                                            <c:choose>
-                                                                                <c:when test="${dayNum.PLACE_TYPE == 'T'}"> 
-                                                                                    <li>${dayNum.PLACE_NAME}</li>
-                                                                                </c:when> 
-                                                                                <c:otherwise>
-                                                                                    <li>${dayNum.ACCOM_NAME}</li>
-                                                                                </c:otherwise>
-                                                                            </c:choose>
+                                                                        <c:forEach var="travelPlanDetail" items="${list.travelPlanDetail}">
+                                                                            <c:if test="${travelPlanDetail.DAY == eachDays}">
+                                                                                <c:choose>
+                                                                                    <c:when test="${travelPlanDetail.PLACE_TYPE == 'T'}"> 
+                                                                                        <li>${travelPlanDetail.PLACE_NAME}</li>
+                                                                                    </c:when> 
+                                                                                    
+                                                                                    <c:otherwise>
+                                                                                        <li>${travelPlanDetail.ACCOM_NAME}</li>
+                                                                                    </c:otherwise>
+                                                                                </c:choose>
+                                                                            </c:if>
                                                                         </c:forEach>
                                                                     </ul>
                                                                 </div>
@@ -149,15 +151,18 @@
                                                                 <div class="areaList">
                                                                     <img src="/resources/common/img/list.png">
                                                                     <ul>
-                                                                        <c:forEach var="dayNum" items="${list.travelPlanDetail[DAY]}">
-                                                                            <c:choose>
-                                                                                <c:when test="${dayNum.PLACE_TYPE == 'T'}"> 
-                                                                                    <li>${dayNum.PLACE_NAME}</li>
-                                                                                </c:when> 
-                                                                                <c:otherwise>
-                                                                                    <li>${dayNum.ACCOM_NAME}</li>
-                                                                                </c:otherwise>
-                                                                            </c:choose>
+                                                                        <c:forEach var="travelPlanDetail" items="${list.travelPlanDetail}">
+                                                                            <c:if test="${travelPlanDetail.DAY == eachDays}">
+                                                                                <c:choose>
+                                                                                    <c:when test="${travelPlanDetail.PLACE_TYPE == 'T'}"> 
+                                                                                        <li>${travelPlanDetail.PLACE_NAME}</li>
+                                                                                    </c:when> 
+                                                                                    
+                                                                                    <c:otherwise>
+                                                                                        <li>${travelPlanDetail.ACCOM_NAME}</li>
+                                                                                    </c:otherwise>
+                                                                                </c:choose>
+                                                                            </c:if>
                                                                         </c:forEach>
                                                                     </ul>
                                                                 </div>

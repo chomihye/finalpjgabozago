@@ -242,13 +242,7 @@ function getPlanWishlist(currPage){
                     nickname = list[i].travelPlan.NICKNAME;
                     likes = list[i].travelPlan.LIKES;
                     totalDays = list[i].travelPlan.TOTAL_DAYS;
-                    DAY1 = list[i].travelPlanDetail.DAY1;
-                    DAY2 = list[i].travelPlanDetail.DAY2;
-                    DAY3 = list[i].travelPlanDetail.DAY3;
-                    DAY4 = list[i].travelPlanDetail.DAY4;
-                    DAY5 = list[i].travelPlanDetail.DAY5;
-                    DAY6 = list[i].travelPlanDetail.DAY6;
-                    DAY7 = list[i].travelPlanDetail.DAY7;
+                    travelPlanDetail = list[i].travelPlanDetail;
 
                     let num = i + 1;
                     
@@ -274,17 +268,18 @@ function getPlanWishlist(currPage){
                         particleStr += '<img src="/resources/common/img/list.png" width="">';
                         particleStr += '<ul>';
 
-                        let temp = eval("DAY" + j);
-                        let seqCount = temp.length; 
+                        for(var k = 0 ; k < travelPlanDetail.length ; k++){
 
-                        for(var k = 0 ; k < seqCount ; k++){   //  시퀀스
-                            if(temp[k].PLACE_TYPE == 'T'){
-                                particleStr += '<li>' + temp[k].PLACE_NAME + '</li>';
-                            }else if(temp[k].PLACE_TYPE == 'A'){
-                                particleStr += '<li>' + temp[k].ACCOM_NAME + '</li>';
-                            }else{
-                                particleStr += '<li></li>';
-                            } // if-else
+                            if(travelPlanDetail[k].DAY == j){  // 데이터가 j와 같은 날짜면,
+
+                                if(travelPlanDetail[k].PLACE_TYPE == 'T'){
+                                    particleStr += '<li>' + travelPlanDetail[k].PLACE_NAME + '</li>';
+                                }else if(travelPlanDetail[k].PLACE_TYPE == 'A'){
+                                    particleStr += '<li>' + travelPlanDetail[k].ACCOM_NAME + '</li>';
+                                } // if-else
+    
+                            } // if
+
                         } // for
                         
                         particleStr += '</ul>';

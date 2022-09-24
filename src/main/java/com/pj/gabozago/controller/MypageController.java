@@ -74,8 +74,8 @@ public class MypageController {
 		
 		try {			
 			// 메인페이지 로드시
-			this.reserService.modifyReserStatus(member);			// 예약상태 체크(날짜에 따라 상태 업데이트 필요하면 수정)
-			this.planPointWriteService.getUserCurrentPoint(member);		// 회원의 현재 포인트 업데이트
+			this.reserService.modifyReserStatus(member);				// 예약상태 체크(날짜에 따라 상태 업데이트 필요하면 수정)
+			this.planPointWriteService.updateMemberPoint(member);		// 회원의 현재 포인트 업데이트
 			
 			// 회원의 사용일 임박순 숙소예약내역 2건을 가져오는 메소드
 			List<LinkedHashMap<String, Object>> accomList = this.memberService.getReserOrderOfUseDate(member);
@@ -258,7 +258,8 @@ public class MypageController {
 	public String loadReservationPage(Criteria cri, @SessionAttribute(SharedScopeKeys.USER_KEY) MemberVO member, Model model) throws ControllerException{
 		
 		try {
-			this.reserService.modifyReserStatus(member);	// 예약상태 체크(날짜에 따라 상태 업데이트 필요하면 수정)
+			// 속도 개선을 위해 업데이트는 막아둠
+//			this.reserService.modifyReserStatus(member);	// 예약상태 체크(날짜에 따라 상태 업데이트 필요하면 수정)
 			
 			List<LinkedHashMap<String, Object>> list = this.reserService.getUserReserList(cri, member);
 			model.addAttribute(SharedScopeKeys.LIST_KEY, list);
@@ -285,8 +286,12 @@ public class MypageController {
 			Map<String, Object> map = this.reserService.getOneReserDetail(reser, member);		// 예약정보
 			model.addAttribute(SharedScopeKeys.MAP_KEY, map);
 			
-			RefundVO refund = this.reserService.getRefundInfo(reser);		// 환불정보
-			model.addAttribute(SharedScopeKeys.RESULT_KEY, refund);
+			String status = String.valueOf(map.get("STATUS"));
+			
+			if(status.equals("CD")) {
+				RefundVO refund = this.reserService.getRefundInfo(reser);		// 환불정보
+				model.addAttribute(SharedScopeKeys.RESULT_KEY, refund);
+			} // if
 		} catch (ServiceException e) {
 			throw new ControllerException(e);
 		} // try-catch
@@ -474,7 +479,7 @@ public class MypageController {
 			cri.setAmount(10);
 			
 			List<PointHistoryVO> list = this.planPointWriteService.getUserPointList(cri, member);
-			int userCurrentPoint = this.planPointWriteService.getUserCurrentPoint(member);		// 회원의 현재 총 포인트
+			int userCurrentPoint = this.planPointWriteService.getCurrentPoint(member);		// 회원의 현재 총 포인트(속도 개선을 위해 업데이트는 막아둠)
 			
 			model.addAttribute(SharedScopeKeys.LIST_KEY, list);
 			model.addAttribute(SharedScopeKeys.RESULT_KEY, userCurrentPoint);

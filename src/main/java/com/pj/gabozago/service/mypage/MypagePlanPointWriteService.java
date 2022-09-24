@@ -35,6 +35,12 @@ public interface MypagePlanPointWriteService {		// 여행일정, 마이포인트
 	// 특정 회원의 현재 포인트를 가져오는 메소드
 	public abstract Integer getUserCurrentPoint(MemberVO member) throws ServiceException;
 	
+	// 포인트만 업데이트 하는 메소드
+	public abstract void updateMemberPoint(MemberVO member) throws ServiceException;
+	
+	// 회원의 현재포인트를 가져오는 메소드
+	public abstract Integer getCurrentPoint(MemberVO member) throws ServiceException;
+	
 	
 //	============================================== 작성 글 ============================================== //
 	

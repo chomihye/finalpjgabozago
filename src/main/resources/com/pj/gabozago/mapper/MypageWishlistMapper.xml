@@ -23,8 +23,8 @@
         FROM 
             tbl_wishlist_accom wa,
             tbl_accom_images ai,
-            tbl_accom a,
-            tbl_large_area la
+            (SELECT idx, accom_name, large_area_idx FROM tbl_accom) a,
+            (SELECT idx, large_area_name FROM tbl_large_area) la
         WHERE 
             wa.accom_idx = a.idx 
             AND ai.accom_idx = a.idx
@@ -50,9 +50,9 @@
             tp.days as total_days
         FROM 
             tbl_wishlist_plan wp,
-            tbl_travel_plan tp,
-            tbl_large_area la,
-            tbl_member m
+            (SELECT idx, large_area_idx, member_idx, is_public, likes, days FROM tbl_travel_plan) tp,
+            (SELECT idx, large_area_name FROM tbl_large_area) la,
+            (SELECT idx, nickname FROM tbl_member) m
         WHERE 
             wp.travel_plan_idx = tp.idx
             AND tp.large_area_idx = la.idx
@@ -68,30 +68,28 @@
 
     <select 
         id="selectPlanDetail" 
-        resultType="java.util.LinkedHashMap">
+        resultType="java.util.LinkedHashMap"
+        fetchSize="100">
         
         SELECT
-            <!-- tpd.day, -->
+            tpd.day,
             tpd.place_type,
             a.accom_name,
             tpd.place_name,
             tpd.place_seq
         FROM
             tbl_travel_plan_detail tpd,
-            tbl_reservation r,
-            tbl_accom_room ar,
-            tbl_accom a,
-            tbl_travel_plan tp
+            (SELECT idx, accom_room_idx FROM tbl_reservation) r,
+            (SELECT idx, accom_idx FROM tbl_accom_room) ar,
+            (SELECT idx, accom_name FROM tbl_accom) a,
+            (SELECT idx, is_public FROM tbl_travel_plan) tp
         WHERE
             tpd.reservation_idx = r.idx (+)
             AND r.accom_room_idx = ar.idx (+)
             AND ar.accom_idx = a.idx (+)
             AND tp.idx = tpd.travel_plan_idx (+)
             AND travel_plan_idx = #{travelPlanIdx}
-            AND tpd.day = #{day}
             AND tp.is_public = 'Y'
-        ORDER BY
-            tpd.place_seq
 
     </select>
 

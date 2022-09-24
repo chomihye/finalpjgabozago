@@ -75,17 +75,16 @@ public class MypagePlanPointWriteServiceImpl implements MypagePlanPointWriteServ
 			
 				// travelPlanDetail & eachDays
 				Object travelPlanIdx = tempList.get(i).get("TRAVEL_PLAN_IDX");
+				finalMap.put("travelPlanDetail", this.mapper.selectPlanDetail(travelPlanIdx));
+				
 				int days = Integer.parseInt(String.valueOf(tempList.get(i).get("DAYS")));
 				
-				LinkedHashMap<String, Object> dayMap = new LinkedHashMap<String, Object>();
 				List<Integer> eachDays = new ArrayList<Integer>();
 				
 				for(int j = 1 ; j <= days ; j++) {
-					dayMap.put("DAY" + j, this.mapper.selectPlanDetail(travelPlanIdx, j));
 					eachDays.add(j);
 				} // inner-for
 				
-				finalMap.put("travelPlanDetail", dayMap);
 				finalMap.put("eachDays", eachDays);
 				
 				finalList.add(finalMap);	
@@ -140,6 +139,25 @@ public class MypagePlanPointWriteServiceImpl implements MypagePlanPointWriteServ
 			throw new ServiceException(e); 
 		} // try-catch
 	} // getUserCurrentPoint
+	
+	
+	// 포인트만 업데이트 하는 메소드
+	@Override
+	public void updateMemberPoint(MemberVO member) throws ServiceException {
+		try { 
+			try { this.mapper.updateMemberPoint(member); }		// 포인트 내역이 없어 업데이트를 할 수 없는 신규회원은,
+			catch (UncategorizedSQLException e) { ;; }			// inner try-catch(Pass)
+		} catch (Exception e) { 
+			throw new ServiceException(e); 
+		} // try-catch
+	} // updateMemberPoint
+	
+	// 회원의 현재포인트를 가져오는 메소드
+	@Override
+	public Integer getCurrentPoint(MemberVO member) throws ServiceException {
+		try { return this.mapper.selectUserCurrentPoint(member); } 
+		catch (Exception e) { throw new ServiceException(e); } // try-catch
+	} // getCurrentPoint
 	
 	
 //	============================================== 작성 글 ============================================== //

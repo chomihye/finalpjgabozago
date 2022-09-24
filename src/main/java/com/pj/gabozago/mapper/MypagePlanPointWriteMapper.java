@@ -27,7 +27,7 @@ public interface MypagePlanPointWriteMapper {		// 여행일정, 마이포인트,
 	public abstract List<LinkedHashMap<String, Object>> selectPlanList(@Param("cri") Criteria cri, @Param("member") MemberVO member) throws DAOException;
 	
 	// 일정의 상세일정 내용을 가져오는 메소드
-	public abstract List<LinkedHashMap<String, Object>> selectPlanDetail(@Param("travelPlanIdx") Object travelPlanIdx, @Param("day") int day) throws DAOException;
+	public abstract List<LinkedHashMap<String, Object>> selectPlanDetail(@Param("travelPlanIdx") Object travelPlanIdx) throws DAOException;
 	
 	// 여행일정 삭제 메소드
 	@Delete("DELETE FROM tbl_travel_plan WHERE idx = #{idx}")
