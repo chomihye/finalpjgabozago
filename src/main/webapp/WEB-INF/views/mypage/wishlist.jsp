@@ -56,7 +56,6 @@
     <link rel="stylesheet" href="/resources/mypage/css/paginationForAjax.css">
     <link rel="stylesheet" href="/resources/common/css/best_plan_reset.css">
     <link rel="stylesheet" href="/resources/mypage/css/slide_plan.css">
-    <link rel="stylesheet" href="/resources/mypage/css/modal.css">
 
     <!-- script -->
     <script src="/resources/mypage/js/6-12.mypage_wishlist.js"></script> 
@@ -90,11 +89,9 @@
 
     <jsp:include page="/WEB-INF/views/common/footer.jsp" flush="false" />
 
-    <!-- 로딩중 모달 -->
-    <div class="modal" id="loadingModal">
-        <div class="modal_Content">
-            <p class="center simpleTextSpaceAdd">로딩 중입니다. 잠시만 기다려주세요.</p>
-        </div>
+    <!-- 로딩중 gif -->
+    <div id="wrap-loading" >
+        <img src="/resources/mypage/img/loading.gif" class="loading" style="width:50px;">
     </div>
 </body>
 </html>

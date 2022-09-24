@@ -120,7 +120,7 @@ public class MypageWishlistMapperTests {
 	void testSelectPlanDetail() throws DAOException {
 		log.trace("testSelectPlanDetail() invoked.");
 		
-		List<LinkedHashMap<String, Object>> list = this.mapper.selectPlanDetail(185, 7);
+		List<LinkedHashMap<String, Object>> list = this.mapper.selectPlanDetail("185", 7);
 		
 		list.forEach(log::info);
 	} // testSelectPlanDetail

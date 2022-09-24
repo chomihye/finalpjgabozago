@@ -35,7 +35,7 @@ public interface MypageWishlistMapper {		// 위시리스트 페이지 관련 map
 	public abstract List<LinkedHashMap<String, Object>> selectPlanWishlist(@Param("cri") Criteria cri, @Param("member") MemberVO member) throws DAOException;
 	
 	// 일정의 상세일정 내용을 가져오는 메소드
-	public abstract List<LinkedHashMap<String, Object>> selectPlanDetail(@Param("travelPlanIdx")int travelPlanIdx, @Param("day")int day) throws DAOException;
+	public abstract List<LinkedHashMap<String, Object>> selectPlanDetail(@Param("travelPlanIdx")Object travelPlanIdx, @Param("day")int day) throws DAOException;
 	
 	// 일정 위시리스트 삭제
 	@Delete("DELETE FROM tbl_wishlist_plan WHERE idx IN (${idx})")

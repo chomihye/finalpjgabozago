@@ -2,6 +2,7 @@ package com.pj.gabozago.service.mypage;
 
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -21,6 +22,9 @@ public interface MypageMainMemberService {		// 마이페이지 메인과 회원�
 	
 	// 닉네임 중복검사용
 	public abstract boolean checkDoubleNickname(String nickname) throws ServiceException;
+	
+	// 휴대폰 번호 인증
+	public abstract Map<String, Object> verifyPhoneNumber(String oldNumber, String newNumber) throws ServiceException;
 	
 	// 회원 수정 로직
 	public abstract MemberVO modifyMemberInfo(HttpServletRequest req, MemberDTO dto, MemberVO vo) throws ServiceException;

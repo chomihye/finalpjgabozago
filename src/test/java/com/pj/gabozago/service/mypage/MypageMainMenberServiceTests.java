@@ -1,13 +1,10 @@
 package com.pj.gabozago.service.mypage;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
@@ -21,10 +18,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import com.pj.gabozago.domain.Criteria;
 import com.pj.gabozago.domain.MemberVO;
-import com.pj.gabozago.domain.PointHistoryVO;
 import com.pj.gabozago.exception.ServiceException;
+import com.pj.gabozago.service.MessageService;
 
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -45,14 +41,17 @@ public class MypageMainMenberServiceTests {
 	@Setter(onMethod_ = {@Autowired})
 	private MypageMainMemberService service;
 	
+	@Setter(onMethod_= {@Autowired})
+	private MessageService messageService;
 	
-	@BeforeAll
-	void beforeAll() {
-		log.trace("BeforeAll() invoked.");
-		
-		assertNotNull(this.service);
-		log.info("\t+ this.service : {}", this.service);
-	} // beforeAll
+	
+//	@BeforeAll
+//	void beforeAll() {
+//		log.trace("BeforeAll() invoked.");
+//		
+//		assertNotNull(this.service);
+//		log.info("\t+ this.service : {}", this.service);
+//	} // beforeAll
 	
 	
 	@Test
@@ -70,5 +69,35 @@ public class MypageMainMenberServiceTests {
 		list.forEach(log::info);
 	} // testGetReserOrderOfUseDate
 	
+	
+	// 랜덤 번호 만들기
+	@Test
+	@Order(2)
+	@DisplayName("2. testGetRandomNumber")
+	@Timeout(value = 10, unit = TimeUnit.SECONDS)
+	void testGetRandomNumber() throws ServiceException {
+		log.trace("testGetRandomNumber() invoked.");
+		
+		Double doubleNum = ((Math.random()) * (999999 - 111111 + 1)) + 111111;
+		int intNum = doubleNum.intValue();
+		String randomNumber = String.valueOf(intNum);
+		
+//		this.messageService.sendMessageforModifyPhone("010-8904-0777", randomNumber);		// 메시지 보내는 메소드
+		
+		log.info("======================= 랜덤넘버 : [{}]", randomNumber);
+	} // testGetRandomNumber
+	
+	
+//	// 휴대폰 인증 관련
+//	@Test
+//	@Order(3)
+//	@DisplayName("3. testCheckDoublePhone")
+//	@Timeout(value = 10, unit = TimeUnit.SECONDS)
+//	void testCheckDoublePhone() throws ServiceException {
+//		log.trace("testCheckDoublePhone() invoked.");
+//		
+//		boolean isDouble = this.service.checkDoublePhone("010-8904-0777");
+//		log.info(">>>>>>>>>>>>>>>>> isDouble : {}", isDouble);
+//	} // testCheckDoublePhone
 	
 } // end class

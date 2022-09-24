@@ -44,11 +44,11 @@ public class MypagePlanPointWriteServiceImpl implements MypagePlanPointWriteServ
 		try { return this.mapper.countTotalOfPlan(cri, member); } 
 		catch (DAOException e) { throw new ServiceException(e); }
 	} // getTotalOfPlan
-		
+	
 	// 회원이 작성한 여행일정 리스트를 가져오는 메소드
 	@Override
 	public List<LinkedHashMap<String, Object>> getPlanList(Criteria cri, MemberVO member) throws ServiceException{
-		log.trace("getPlanList() invoked.");
+//		log.trace("getPlanList() invoked.");
 		
 		try { 
 			List<LinkedHashMap<String, Object>> finalList = new ArrayList<LinkedHashMap<String,Object>>();		// 최종데이터
@@ -57,31 +57,35 @@ public class MypagePlanPointWriteServiceImpl implements MypagePlanPointWriteServ
 			for(int i = 0 ; i < tempList.size() ; i++) {
 				LinkedHashMap<String, Object> finalMap = new LinkedHashMap<String, Object>();
 
-				int travelPlanIdx = Integer.parseInt(String.valueOf(tempList.get(i).get("TRAVEL_PLAN_IDX")));
-				int days = Integer.parseInt(String.valueOf(tempList.get(i).get("DAYS")));
-				
+				// 아이템 넘버
 				finalMap.put("itemNumber", i+1);
-				finalMap.put("travelPlanIdx", travelPlanIdx);
-				finalMap.put("isPublic", tempList.get(i).get("IS_PUBLIC"));
-				finalMap.put("largeAreaName", tempList.get(i).get("LARGE_AREA_NAME"));
-				finalMap.put("startDate", tempList.get(i).get("START_DATE"));
-				finalMap.put("endDate", tempList.get(i).get("END_DATE"));
-				finalMap.put("days", days);
 				
+				// 마지막 수정 날짜
 				if(tempList.get(i).get("UPDATE_TS") == null) {
 					finalMap.put("lastUpdate", tempList.get(i).get("INSERT_TS"));
 				}else {
 					finalMap.put("lastUpdate", tempList.get(i).get("UPDATE_TS"));
 				} // if-else
 				
+				tempList.get(i).remove("INSERT_TS");
+				tempList.get(i).remove("UPDATE_TS");
+				
+				// travelPlan
+				finalMap.put("travelPlan", tempList.get(i));
+			
+				// travelPlanDetail & eachDays
+				Object travelPlanIdx = tempList.get(i).get("TRAVEL_PLAN_IDX");
+				int days = Integer.parseInt(String.valueOf(tempList.get(i).get("DAYS")));
+				
+				LinkedHashMap<String, Object> dayMap = new LinkedHashMap<String, Object>();
 				List<Integer> eachDays = new ArrayList<Integer>();
 				
 				for(int j = 1 ; j <= days ; j++) {
-					List<LinkedHashMap<String, Object>> tempPlanDetail = this.mapper.selectPlanDetail(travelPlanIdx, j);
-					finalMap.put("DAY" + j, tempPlanDetail);
+					dayMap.put("DAY" + j, this.mapper.selectPlanDetail(travelPlanIdx, j));
 					eachDays.add(j);
 				} // inner-for
 				
+				finalMap.put("travelPlanDetail", dayMap);
 				finalMap.put("eachDays", eachDays);
 				
 				finalList.add(finalMap);	

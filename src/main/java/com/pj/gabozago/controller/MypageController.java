@@ -169,6 +169,31 @@ public class MypageController {
 
 	} // checkNickname
 	
+	
+	// 회원정보 업데이트 전 휴대폰 번호 인증 관련 ajax
+	@PostMapping(value = "myInfo/modify/phoneCheck")
+	public void verifyPhoneNumber(@SessionAttribute(SharedScopeKeys.USER_KEY) MemberVO member, 
+			HttpServletRequest req, HttpServletResponse res) throws ControllerException {
+		log.trace(">>>>>>>>>>>>>>>>>>>> checkPhoneNumber() invoked.");
+		
+		try {
+			String oldNumber = member.getPhone();
+			String newNumber = req.getParameter("newNumber");
+			
+			Map<String, Object> resultMap = this.memberService.verifyPhoneNumber(oldNumber, newNumber);
+			
+			Gson gson = new Gson();
+			String json = gson.toJson(resultMap);
+			log.trace(json);
+			
+			@Cleanup
+		    PrintWriter out = res.getWriter();
+		    out.print(json);	
+		} catch (Exception e) {
+			throw new ControllerException(e);
+		} // try-catch
+	} // checkPhoneNumber
+	
 
 	// 회원정보 업데이트
 	@PostMapping(path = "/myInfo/modify.do")
@@ -198,7 +223,7 @@ public class MypageController {
 	@GetMapping(path = "/plan")
 	public String loadMyPlanPage(Criteria cri, @SessionAttribute(SharedScopeKeys.USER_KEY) MemberVO member, Model model) 
 			throws ControllerException {
-		log.trace(">>>>>>>>>>>>>>>>>>>> loadMyPlanPage() invoked.");
+//		log.trace(">>>>>>>>>>>>>>>>>>>> loadMyPlanPage() invoked.");
 		
 		try {
 			cri.setAmount(4);
@@ -219,17 +244,11 @@ public class MypageController {
 	
 	
 	@PostMapping(path = "/plan/delete")
-	public String deleteTravelPlan(Criteria cri, int idx, RedirectAttributes rttrs) throws ControllerException {
-		log.trace(">>>>>>>>>>>>>>>>>>>> deleteTravelPlan() invoked.");
+	public String deleteTravelPlan(Criteria cri, int idx) throws ControllerException {
+//		log.trace(">>>>>>>>>>>>>>>>>>>> deleteTravelPlan() invoked.");
 		
-		try {
-			this.planPointWriteService.deletePlan(idx);
-			
-			rttrs.addFlashAttribute(SharedScopeKeys.RESULT_KEY, "success");
-		} catch (Exception e) {
-			rttrs.addFlashAttribute(SharedScopeKeys.RESULT_KEY, "failed");
-			throw new ControllerException(e);
-		} // try-catch
+		try { this.planPointWriteService.deletePlan(idx); } 
+		catch (Exception e) { throw new ControllerException(e); } // try-catch
 		
 		return "redirect:/mypage/plan?currPage=" + cri.getCurrPage();
 	} // deleteTravelPlan
@@ -382,7 +401,7 @@ public class MypageController {
 	@ResponseBody
 	public void getPlanWishlist(Criteria cri, @SessionAttribute(SharedScopeKeys.USER_KEY) MemberVO member, 
 			HttpServletResponse res) throws ControllerException {
-		log.trace(">>>>>>>>>>>>>>>>>>>> getPlanWishlist() invoked.");
+//		log.trace(">>>>>>>>>>>>>>>>>>>> getPlanWishlist() invoked.");
 		
 		try {
 			cri.setAmount(4);
@@ -399,7 +418,7 @@ public class MypageController {
 			
 			Gson gson = new Gson();
 			String mapToJson = gson.toJson(map);
-			log.trace(mapToJson);
+//			log.info(mapToJson);
 			
 			@Cleanup
 		    PrintWriter out = res.getWriter();
@@ -441,6 +460,7 @@ public class MypageController {
 				idx += String.format("%s  %s",  ", ", itemIdxArray[i]);
 			} // for
 
+//			log.info("========================================== idx : {} 삭제 요청", idx);
 			this.wishlistService.deletePlanWishlist(idx);
 		}catch(Exception e) {
 			throw new ControllerException(e);

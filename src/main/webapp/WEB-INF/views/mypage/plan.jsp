@@ -89,17 +89,17 @@
                                             <ul>
                                                 <div class="firstLine">
                                                     <c:choose>
-                                                        <c:when test="${list.isPublic == 'Y'}"> 
-                                                            <li class="title">${list.largeAreaName}</li>
+                                                        <c:when test="${list.travelPlan.IS_PUBLIC == 'Y'}"> 
+                                                            <li class="title">${list.travelPlan.LARGE_AREA_NAME}</li>
                                                         </c:when>    
                                                         <c:otherwise>
-                                                            <li class="title"><i class="bi bi-lock"></i> ${list.largeAreaName}</li>
+                                                            <li class="title"><i class="bi bi-lock"></i> ${list.travelPlan.LARGE_AREA_NAME}</li>
                                                         </c:otherwise>
                                                     </c:choose>
                                                     
                                                     <div class="modifyBtn modifyBtn${list.itemNumber}">
-                                                        <input type="hidden" id="tempIdx" value="${list.travelPlanIdx}">
-                                                        <a href="javascript:void(0);"><i class="bi bi-pencil"></i></a>
+                                                        <input type="hidden" id="tempIdx" value="${list.travelPlan.TRAVEL_PLAN_IDX}">
+                                                        <!-- <a href="javascript:void(0);"><i class="bi bi-pencil"></i></a> -->
                                                         <a href="javascript:void(0);" class="btnCancel"><i class="bi bi-trash3"></i></a>
                                                     </div>
                                                 </div>
@@ -107,7 +107,7 @@
                                                 <li class="travelDays">
                                                     여행기간 : 
                                                     <span>
-                                                        ${list.startDate} ~ ${list.endDate}
+                                                        ${list.travelPlan.START_DATE} ~ ${list.travelPlan.END_DATE}
                                                     </span>
                                                 </li>
                                             </ul>
@@ -126,7 +126,7 @@
                                                                 <div class="areaList">
                                                                     <img src="/resources/common/img/list.png" width="">
                                                                     <ul>
-                                                                        <c:forEach var="dayNum" items="${list[DAY]}">
+                                                                        <c:forEach var="dayNum" items="${list.travelPlanDetail[DAY]}">
                                                                             <c:choose>
                                                                                 <c:when test="${dayNum.PLACE_TYPE == 'T'}"> 
                                                                                     <li>${dayNum.PLACE_NAME}</li>
@@ -149,7 +149,7 @@
                                                                 <div class="areaList">
                                                                     <img src="/resources/common/img/list.png">
                                                                     <ul>
-                                                                        <c:forEach var="dayNum" items="${list[DAY]}">
+                                                                        <c:forEach var="dayNum" items="${list.travelPlanDetail[DAY]}">
                                                                             <c:choose>
                                                                                 <c:when test="${dayNum.PLACE_TYPE == 'T'}"> 
                                                                                     <li>${dayNum.PLACE_NAME}</li>

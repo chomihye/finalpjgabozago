@@ -188,7 +188,7 @@ function getAccomWishlist(currPage){
  */
 function getPlanWishlist(currPage){
 
-    showLoadingModal();
+    showLoadingImg();
 
     $.ajax({
         type: "POST",
@@ -199,7 +199,7 @@ function getPlanWishlist(currPage){
         cache : false,
         error : function(error) {
             console.log("error");
-            hideLoadingModal();
+            hideLoadingImg();
         },
         success : function(resp) {
             console.log("success");
@@ -217,7 +217,7 @@ function getPlanWishlist(currPage){
             if(pageDTO.totalAmount == 0){       // 레코드가 아무것도 없다면,
                 particleStr = '<div id="no_get">일정 위시리스트가 없습니다.</div>';
                 $(".wishlist_item").append(particleStr);
-                hideLoadingModal();
+                hideLoadingImg();
                 return;
             }else{                              // 레코드가 1개 이상이면,
                 // checkbox load
@@ -236,19 +236,19 @@ function getPlanWishlist(currPage){
                 particleStr += '<div class="planBoxWrap">';
 
                 for(var i = 0 ; i < list.length ; i++){
-                    wishPlanIdx = list[i].wishlistIdx;
-                    travelPlanIdx = list[i].travelPlanIdx;
-                    largeAreaName = list[i].largeAreaName;
-                    nickname = list[i].nickname;
-                    likes = list[i].likes;
-                    totalDays = list[i].totalDays;
-                    DAY1 = list[i].DAY1;
-                    DAY2 = list[i].DAY2;
-                    DAY3 = list[i].DAY3;
-                    DAY4 = list[i].DAY4;
-                    DAY5 = list[i].DAY5;
-                    DAY6 = list[i].DAY6;
-                    DAY7 = list[i].DAY7;
+                    wishPlanIdx = list[i].travelPlan.IDX;
+                    travelPlanIdx = list[i].travelPlan.TRAVEL_PLAN_IDX;
+                    largeAreaName = list[i].travelPlan.LARGE_AREA_NAME;
+                    nickname = list[i].travelPlan.NICKNAME;
+                    likes = list[i].travelPlan.LIKES;
+                    totalDays = list[i].travelPlan.TOTAL_DAYS;
+                    DAY1 = list[i].travelPlanDetail.DAY1;
+                    DAY2 = list[i].travelPlanDetail.DAY2;
+                    DAY3 = list[i].travelPlanDetail.DAY3;
+                    DAY4 = list[i].travelPlanDetail.DAY4;
+                    DAY5 = list[i].travelPlanDetail.DAY5;
+                    DAY6 = list[i].travelPlanDetail.DAY6;
+                    DAY7 = list[i].travelPlanDetail.DAY7;
 
                     let num = i + 1;
                     
@@ -302,7 +302,7 @@ function getPlanWishlist(currPage){
                     particleStr += 'data-target="#plan' + num + '" data-slide="next">';
                     particleStr += '<span class="bi bi-arrow-right-circle-fill" aria-hidden="true"></span>';
                     particleStr += '</button>';
-                    particleStr += '<button class="planAdd" onclick="">일정에 추가</button>';
+                    // particleStr += '<button class="planAdd" onclick="">일정에 추가</button>';
                     particleStr += '</div>';
                     particleStr += '</div>';
                     particleStr += '</div>';
@@ -368,7 +368,7 @@ function getPlanWishlist(currPage){
                     getPlanWishlist(pageDTO.realEndPage);
                 }); 
 
-                hideLoadingModal();
+                hideLoadingImg();
             } // outer if-else
         } // success
     }); // ajax
@@ -457,12 +457,12 @@ function deleteAccomWishlist(itemIdxArray, currPage){
 
 
 /**
- * @desc 로딩 모달
+ * @desc 로딩 화면
  */
-function showLoadingModal() {
-    $("#loadingModal").css('display', 'block');
+function showLoadingImg() {
+    $('#wrap-loading').show();
 }
     
-function hideLoadingModal() {
-    $("#loadingModal").css('display', 'none');
+function hideLoadingImg() {
+    $('#wrap-loading').hide();
 }

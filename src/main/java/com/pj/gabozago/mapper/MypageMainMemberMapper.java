@@ -2,7 +2,6 @@ package com.pj.gabozago.mapper;
 
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Select;
@@ -24,6 +23,10 @@ public interface MypageMainMemberMapper {		// 마이페이지 메인과 회원�
 	// 닉네임 중복검사용
 	@Select("SELECT count(idx) FROM tbl_member WHERE nickname = #{nickname}")
 	public abstract boolean selectDoubleNickname(String nickname) throws DAOException;
+	
+	// 휴대폰번호 중복검사용
+	@Select("SELECT count(idx) FROM tbl_member WHERE phone = #{phoneNumber}")
+	public abstract boolean selectDoublePhone(String phoneNumber) throws DAOException;
 	
 	// 회원 수정 로직
 	public abstract void updateMemberInfo(MemberDTO member) throws DAOException;

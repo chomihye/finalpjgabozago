@@ -30,7 +30,9 @@ i.bi.bi-lock, i.bi.bi-pencil, i.bi.bi-trash3{
     color: #333333;
 }
 i.bi.bi-trash3{
-    margin-left: 10px;
+    /* 수정버튼 숨기며 margin 값 변경 */
+    /* margin-left: 10px; */
+    margin-left: 33px;
 }
 .lastModify{
     margin-top: 15px;

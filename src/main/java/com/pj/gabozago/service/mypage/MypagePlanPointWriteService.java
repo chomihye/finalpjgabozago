@@ -3,14 +3,10 @@ package com.pj.gabozago.service.mypage;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Select;
-
 import com.pj.gabozago.domain.CommunityVO;
 import com.pj.gabozago.domain.Criteria;
 import com.pj.gabozago.domain.MemberVO;
 import com.pj.gabozago.domain.PointHistoryVO;
-import com.pj.gabozago.exception.DAOException;
 import com.pj.gabozago.exception.ServiceException;
 
 
