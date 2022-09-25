@@ -68,12 +68,13 @@ public interface AccomMapper {
 	@Select("SELECT point FROM tbl_member WHERE idx = #{idx}")
 	public abstract Integer selectUserCurrentPoint(MemberVO member);
 	
+	//오늘 마지막 예약정보 조회
+	public abstract Integer getLastSeq() throws DAOException;
+	
 	//예약정보 DB에 저장
-//	public abstract Integer insertReservation(AccomReservationDTO reservation) throws DAOException;
-//	
-//	//결제정보 DB에 저장
-//	public abstract Integer insertPayment(AccomPaymentDTO payment) throws DAOException;
+	public abstract Integer insertReservation(AccomReservationDTO reservation) throws DAOException;
 	
-	
+	//결제정보 DB에 저장
+	public abstract Integer insertPayment(AccomPaymentDTO payment) throws DAOException;
 	
 } // end interface

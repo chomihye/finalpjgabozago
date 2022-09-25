@@ -149,6 +149,10 @@
                     finalPrice = hotelPrice - usePoint;
 
                     $(".final_payprice").text(finalPrice);
+
+                    $("[name=order_price]").val(hotelPrice);
+                    $("[name=use_point]").val(usePoint);
+                    $("[name=payment_price]").val(finalPrice);
                 }
 
             });
@@ -263,6 +267,9 @@
                             <div class="total_pay">
                                 <div>총 결제금액</div>
                                 <div class="final_price"><span class="final_payprice"></span>원</div>
+                                <input type="hidden" name="order_price">
+                                <input type="hidden" name="use_point">
+                                <input type="hidden" name="payment_price">
                             </div>
                         </div>
                     </div>
@@ -471,25 +478,33 @@
 
           function addPayment() {
             $.ajax({
-                  type: 'POST',
-                  url: '/reservation/payment',
-                  data: {
-                      accom_room_idx: '${accom.ACCOM_ROOM_IDX}',
-                      large_area_idx: '${accom.LARGE_AREA_IDX}',
-                      check_in_date: '${check_in_date}',
-                      check_out_date: '${check_out_date}',
-                      adult_count: '${adult_count}',
-                      child_count: '${child_count}',
-                  },
-                  dataType: 'json',
-                  success: function (response) {
-                      console.log(response);
-                    $("#pay_modal").css({ display: "block" });
-                  },
-                  error: function (error) {
-                      console.log(error);
-                  },
-              }); //ajax
+                type: 'POST',
+                url: '/reservation/payment',
+                data: {
+                    accom_room_idx: '${accom.ACCOM_ROOM_IDX}',
+                    large_area_idx: '${accom.LARGE_AREA_IDX}',
+                    check_in_date: '${check_in_date}',
+                    check_out_date: '${check_out_date}',
+                    adult_count: '${adult_count}',
+                    child_count: '${child_count}',
+                    order_price: $("[name=order_price]").val(),
+                    use_point: $("[name=use_point]").val(),
+                    payment_price: $("[name=payment_price]").val(),
+                    payment_type: "card",
+                },
+                dataType: 'json',
+                success: function (response) {
+                    if(response.code == 200) {
+                        $("#pay_modal").css({ display: "block" });
+                    } else {
+                        alert("결제에 실패했습니다.\n관리자에게 문의해주세요.");
+                        console.log(response);
+                    }
+                },
+                error: function (error) {
+                    console.log(error);
+                },
+            }); //ajax
           }
 		</script>
 

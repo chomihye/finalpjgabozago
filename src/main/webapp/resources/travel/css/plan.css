@@ -36,13 +36,14 @@ section {
 
     /* width: 100%; */
     background-color: white;
+   
 
 }
 
 footer {
     clear: both;
     height: 280px;
-    background-color: rgba(104, 174, 109, 1);
+   
 
     /* width: 100%; */
 }
@@ -126,17 +127,19 @@ footer {
     margin: auto !important;
     display: flex;
 }
-.place {
-    flex: auto;
+.place1, .place2, .place3, .place4, .place5, .place6, .place7 {
+    width: 140px;
 }
 .place_img {
-    padding-left: 25px;
+    padding-left: 12px;
     position: absolute;
 
     opacity: 90%;
     width: 120px;
     height: 120px;
     filter: brightness(70%); 
+}
+.place_img img {
     border-radius: 5%;
 }
 .place_name {
