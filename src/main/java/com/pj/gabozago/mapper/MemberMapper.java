@@ -5,6 +5,7 @@ import java.sql.Timestamp;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Update;
 
+import com.pj.gabozago.domain.GoogleDTO;
 import com.pj.gabozago.domain.JoinDTO;
 import com.pj.gabozago.domain.KakaoDTO;
 import com.pj.gabozago.domain.LoginDTO;
