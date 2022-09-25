@@ -576,6 +576,9 @@ img {
 .center.simpleTextSpaceAdd{ /* 스타일3 모달창 위아래 추가 여백으로 height 조정 */
     margin: 70px 0 50px 0;
 }
+.placeName {
+    text-align: center;
+}
 
 
 

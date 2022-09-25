@@ -86,7 +86,7 @@ public class TravelController implements InitializingBean {
 		
 		
 		try {
-			List<TravePlanlCreateVO> list = this.travelService.getList(241);
+			List<TravePlanlCreateVO> list = this.travelService.getList(434);
 			list.forEach(log::trace);
 			
 			model.addAttribute("__LIST__", list); 

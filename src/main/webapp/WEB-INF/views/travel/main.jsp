@@ -249,7 +249,7 @@
                     // dataType : "json", 
                     contentType: "application/json;charset=UTF-8",
                     success : function(data){   
-                        alert("ajax success!, data: " , data);
+                        alert("일정 생성을 완료하였습니다");
                      
                         self.location = "/travel/plan?planIdx=${planIdx}" 
 
@@ -888,7 +888,7 @@
          
             <div class="row">
                 <div class="col-sm-1" id="place1" draggable="true">
-                    <img src="http://tong.visitkorea.or.kr/cms/resource/48/705248_image2_1.jpg" alt="">
+                    <img src="http://tong.visitkorea.or.kr/cms/resource/24/2853024_image2_1.jpg" alt="">
                     2022 강남페스티벌
                 </div>
                 <div class="col-sm-1" id="place2"draggable="true">

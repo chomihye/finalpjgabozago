@@ -31,12 +31,15 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300&display=swap" rel="stylesheet">
 
     <!-- Customized Stylesheet -->
-    <link rel="stylesheet" type="text/css" href="${path}/resources/travel/css/plan.css?ver=1.3">
+    <link rel="stylesheet" type="text/css" href="${path}/resources/travel/css/plan.css?">
 
     <!-- map -->
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=31ac49eb45c2f47546120a0ea0a28dbe&libraries=services,clusterer,drawing"></script>
     <!-- <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=APIKEY&libraries=services"></script> -->
     
+    <style>
+        .selected { background-color:#68AE6D;  color: white;}
+    </style>
 
     <script>
     console.clear();
@@ -46,6 +49,9 @@
     //<<경로>> 버튼 클릭시 
     $(function() {
         $('#btn_plan_1').click(function() {
+            $('.btn_circle').removeClass("selected");
+            $(this).addClass("selected");
+            $(this).siblings().removeClass("selected");
             $("#map_all").hide();  
             $(".plan_days").show();    
         })  
@@ -53,33 +59,54 @@
     //<<지도>> 버튼 클릭시 
     $(function() {
         $('#btn_plan_2').click(function() {
+            $('.btn_circle').removeClass("selected");
+            $(this).addClass("selected");
+            $(this).siblings().removeClass("selected");
             $(".plan_days").hide();
-            var container = document.getElementById('map_all');
-            var options = {
-                center: new kakao.maps.LatLng(33.450701, 126.570667),
-                level: 2
-            };
+            // 지도 >> ALL 표시 
+            var mapContainer = document.getElementById('map_all'), // 지도를 표시할 div 
+            mapOption = { 
+                center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+                level: 3 // 지도의 확대 레벨
+            };  
 
-            var map = new kakao.maps.Map(container, options);
+            var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+            
+            //지도 위도 경도 가져오기 
+            var linePath = [];
+            // 지도를 재설정할 범위정보를 가지고 있을 LatLngBounds 
+            var bounds = new kakao.maps.LatLngBounds();  
+            var marker;
 
-            var linePath = [
-                new kakao.maps.LatLng(33.452344169439975, 126.56878163224233),
-                new kakao.maps.LatLng(33.452739313807456, 126.5709308145358),
-                new kakao.maps.LatLng(33.45178067090639, 126.5726886938753) 
-            ];
+            let rowLength = $(".row").length;
+            for(let i=1; i<=rowLength; i++) {
+                let placeId = ".place" + i + " .place_name";
+         
+                $(placeId).each(function(index,item){
+                    linePath.push(new kakao.maps.LatLng($(this).attr("longitude"), $(this).attr("latitude")))
+                    console.log("linePath>>",linePath)
 
+                    marker =  new kakao.maps.Marker({ position : new kakao.maps.LatLng($(this).attr("longitude"), $(this).attr("latitude")) });
+                    marker.setMap(map);
+                    bounds.extend(new kakao.maps.LatLng($(this).attr("longitude"), $(this).attr("latitude")));
+                });
+                
+            }//for 
+
+            map.setBounds(bounds);
+            
             // 지도에 표시할 선을 생성합니다
             var polyline = new kakao.maps.Polyline({
                 path: linePath, // 선을 구성하는 좌표배열 입니다
                 strokeWeight: 5, // 선의 두께 입니다
-                strokeColor: '#FFAE00', // 선의 색깔입니다
-                strokeOpacity: 0.7, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+                strokeColor: '#000080', // 선의 색깔입니다
+                strokeOpacity: 1, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
                 strokeStyle: 'solid' // 선의 스타일입니다
             });
 
             // 지도에 선을 표시합니다 
-            polyline.setMap(map); 
-
+            polyline.setMap(map);  
+           
             $("#map_all").show();  
         })  
     });
@@ -88,22 +115,60 @@
         $('#btn_all').click(function() {
             $(".plan_days").hide();
 
-            
-           
+
         })  
     });
-    //DAY 버튼 클릭시 
+    //DAYN  버튼 클릭시 
     $(function() {
-        $('#btn_day').click(function() {
+        $('.btn_circle').click(function() {
+            $(this).addClass("selected");
+            $(this).siblings().removeClass("selected");
+            $(".btn_plan_all").removeClass("selected");
+            
             $("#map_all").hide();
-            var container = document.getElementById('map_part');
-            var options = {
-                center: new kakao.maps.LatLng(33.450701, 126.570667),
-                level: 2
-            };
+            
+            var mapContainer = document.getElementById('map_part'), // 지도를 표시할 div 
+            mapOption = { 
+                center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+                level: 3 // 지도의 확대 레벨
+            };  
 
-            var map = new kakao.maps.Map(container, options);
+            var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+            
+            // 지도 위도 경도 가져오기 
+            var linePath = [];
+            // 지도를 재설정할 범위정보를 가지고 있을 LatLngBounds 
+            var bounds = new kakao.maps.LatLngBounds();  
+            var marker;
+
+            let btnId = $(this).attr("id");   //1,2...
+            let placeId = ".place" + btnId + " .place_name";
+        
+            $(placeId).each(function(index,item){
+                linePath.push(new kakao.maps.LatLng($(this).attr("longitude"), $(this).attr("latitude")))
+                console.log("linePath>>",linePath)
+
+                marker =  new kakao.maps.Marker({ position : new kakao.maps.LatLng($(this).attr("longitude"), $(this).attr("latitude")) });
+                marker.setMap(map);
+                bounds.extend(new kakao.maps.LatLng($(this).attr("longitude"), $(this).attr("latitude")));
+            });
+                
+            map.setBounds(bounds);
+            
+            // 지도에 표시할 선을 생성합니다
+            var polyline = new kakao.maps.Polyline({
+                path: linePath, // 선을 구성하는 좌표배열 입니다
+                strokeWeight: 5, // 선의 두께 입니다
+                strokeColor: '#000080', // 선의 색깔입니다
+                strokeOpacity: 1, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+                strokeStyle: 'solid' // 선의 스타일입니다
+            });
+
+            // 지도에 선을 표시합니다 
+            polyline.setMap(map);  
+
             $("#map_part").show();  
+           
         })  
     });
 
@@ -120,9 +185,9 @@
     <!-- *** navigation *** -->
     <nav>
         <!-- day버튼 -->
-        <button onclick="" class="btn_circle" id="btn_all">ALL</button>
+        <!-- <button onclick="" class="btn_circle" id="btn_all">ALL</button> -->
         <c:forEach items="${__LIST__}" begin="1" end="${__LIST__[0].days}" step="1" varStatus="status"> 
-            <button onclick="" class="btn_circle" id="btn_day">DAY${status.count}</button>
+            <button onclick="" class="btn_circle" id="${status.count}">DAY${status.count}</button>
         </c:forEach>
         
     </nav>
@@ -201,12 +266,9 @@
                                         <div class="col-sm-8">
                                             <c:forEach var="j" begin="${listCnt}" end="${day1-1}" varStatus="status">
                                             <c:set var="index" value="${status.index}"/>
-                                            <c:set var="latitude" value="0."/>
-                                            <div class="place">
+                                            <div class="place1">
                                                 <div class="place_img"><img src=${__LIST__[index].img} width="120px" height="120px"></div>
-                                                <div class="place_name" latitude="${__LIST__[index].latitude}" longitude="${__LIST__[index].longitude}">
-                                                    <fmt:formatNumber value="${__LIST__[index].latitude}" minFractionDigits="5" pattern="#,###.####"/>
-                                                    ${__LIST__[index].place_name},${__LIST__[index].latitude}</div>
+                                                <div class="place_name" latitude="${__LIST__[index].latitude}" longitude="${__LIST__[index].longitude}">${__LIST__[index].place_name}</div>
                                             </div>
                                             </c:forEach>
                                         </div>
@@ -216,7 +278,7 @@
                                         <div class="col-sm-8">
                                             <c:forEach var="j" begin="${day1}" end="${day1+day2-1}" varStatus="status">
                                             <c:set var="index" value="${status.index}"/>
-                                            <div class="place">
+                                            <div class="place2">
                                                 <div class="place_img"><img src=${__LIST__[index].img} width="120px" height="120px"></div>
                                                 <div class="place_name" latitude="${__LIST__[index].latitude}" longitude="${__LIST__[index].longitude}">${__LIST__[index].place_name}</div>
                                             </div>
@@ -229,7 +291,7 @@
                                         <div class="col-sm-8">
                                             <c:forEach var="j" begin="${day1+day2}" end="${day1+day2+day3-1}" varStatus="status">
                                             <c:set var="index" value="${status.index}"/>
-                                            <div class="place">
+                                            <div class="place3">
                                                 <div class="place_img"><img src=${__LIST__[index].img} width="120px" height="120px"></div>
                                                 <div class="place_name" latitude="${__LIST__[index].latitude}" longitude="${__LIST__[index].longitude}">${__LIST__[index].place_name}</div>
                                             </div>
@@ -242,7 +304,7 @@
                                         <div class="col-sm-8">
                                             <c:forEach var="j" begin="${day1+day2+day3}" end="${day1+day2+day3+day4-1}" varStatus="status">
                                             <c:set var="index" value="${status.index}"/>
-                                            <div class="place">
+                                            <div class="place4">
                                                 <div class="place_img"><img src=${__LIST__[index].img} width="120px" height="120px"></div>
                                                 <div class="place_name" latitude="${__LIST__[index].latitude}", longitude="${__LIST__[index].longitude}">${__LIST__[index].place_name}</div>
                                             </div>
@@ -255,7 +317,7 @@
                                         <div class="col-sm-8">
                                             <c:forEach var="j" begin="${day1+day2+day3+day4}" end="${day1+day2+day3+day4+day5-1}" varStatus="status">
                                             <c:set var="index" value="${status.index}"/>
-                                            <div class="place">
+                                            <div class="place5">
                                                 <div class="place_img"><img src=${__LIST__[index].img} width="120px" height="120px"></div>
                                                 <div class="place_name" latitude="${__LIST__[index].latitude}", longitude="${__LIST__[index].longitude}">${__LIST__[index].place_name}</div>
                                             </div>
@@ -268,7 +330,7 @@
                                         <div class="col-sm-8">
                                             <c:forEach var="j" begin="${day1+day2+day3+day4+day5}" end="${day1+day2+day3+day4+day5+day6-1}" varStatus="status">
                                             <c:set var="index" value="${status.index}"/>
-                                            <div class="place">
+                                            <div class="place6">
                                                 <div class="place_img"><img src=${__LIST__[index].img} width="120px" height="120px"></div>
                                                 <div class="place_name" latitude="${__LIST__[index].latitude}", longitude="${__LIST__[index].longitude}">${__LIST__[index].place_name}</div>
                                             </div>
@@ -281,7 +343,7 @@
                                         <div class="col-sm-8">
                                             <c:forEach var="j" begin="${day1+day2+day3+day4+day5+day6}" end="${day1+day2+day3+day4+day5+day6+day7-1}" varStatus="status">
                                             <c:set var="index" value="${status.index}"/>
-                                            <div class="place">
+                                            <div class="place7">
                                                 <div class="place_img"><img src=${__LIST__[index].img} width="120px" height="120px"}></div>
                                                 <div class="place_name" latitude="${__LIST__[index].latitude}", longitude="${__LIST__[index].longitude}">${__LIST__[index].place_name}</div>
                                             </div>
@@ -313,8 +375,8 @@
 
     <!-- *** footer *** -->
     <footer>
-        <div data-include-path="footer.html"></div>
-    </footer>
+        <jsp:include page="/WEB-INF/views/common/footer.jsp" flush="false" />
+   </footer>
 
 
 
@@ -350,8 +412,6 @@
 		// var map = new kakao.maps.Map(container, options);
 
 
-
-
         var container = document.getElementById('map_part');
 		var options = {
 			center: new kakao.maps.LatLng(33.450701, 126.570667),
@@ -364,22 +424,22 @@
     <!-- include -->
     <script>
  
-        window.addEventListener('load', function() {
-            var allElements = document.getElementsByTagName('*');
-            Array.prototype.forEach.call(allElements, function(el) {
-                var includePath = el.dataset.includePath;
-                if (includePath) {
-                    var xhttp = new XMLHttpRequest();
-                    xhttp.onreadystatechange = function () {
-                        if (this.readyState == 4 && this.status == 200) {
-                            el.outerHTML = this.responseText;
-                        }
-                    };
-                    xhttp.open('GET', includePath, true);
-                    xhttp.send();
-                }
-            });
-        });
+        // window.addEventListener('load', function() {
+        //     var allElements = document.getElementsByTagName('*');
+        //     Array.prototype.forEach.call(allElements, function(el) {
+        //         var includePath = el.dataset.includePath;
+        //         if (includePath) {
+        //             var xhttp = new XMLHttpRequest();
+        //             xhttp.onreadystatechange = function () {
+        //                 if (this.readyState == 4 && this.status == 200) {
+        //                     el.outerHTML = this.responseText;
+        //                 }
+        //             };
+        //             xhttp.open('GET', includePath, true);
+        //             xhttp.send();
+        //         }
+        //     });
+        // });
  
     </script>
 
