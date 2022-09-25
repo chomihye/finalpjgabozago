@@ -142,6 +142,8 @@
                 	${adult_count ne null && adult_count ne '' ? ('성인 - ' += adult_count += '명') : '인원을 입력하세요.'}
                 	${child_count ne null && child_count ne '' ? ('/ 유아 - ' += child_count += '명') : ''}
                	</button>
+                <input type="hidden" name="adult_count">
+                <input type="hidden" name="child_count">
               </div>
             </li>
           </ul>
@@ -269,12 +271,30 @@
               <div class="swiper-slide star_box">
 
                 <div class="star_box_wrap">
-                  <div class="star_name ">${list.NICKNAME}</div>
+                  <div class="star_name">${list.NICKNAME}</div>
                   <div class="review_room_type">룸 타입 : ${list.ROOM_NAME}</div>
                   <div class="np-box">
-                    <p class="star_review">청결도 ${list.GRADE1}</p>
-                    <p class="star_review">위치&nbsp;&nbsp;&nbsp;&nbsp; ${list.GRADE2}</p>
-                    <p class="star_review">만족도 ${list.GRADE3}</p>
+                    <div class="clean_review">청결도&nbsp;<p class="star_review1"> 
+	                    <i class="bi bi-star${list.GRADE1 >= 1 ? '-fill' : ''}"></i>
+	                    <i class="bi bi-star${list.GRADE1 >= 2 ? '-fill' : ''}"></i>
+	                    <i class="bi bi-star${list.GRADE1 >= 3 ? '-fill' : ''}"></i>
+	                    <i class="bi bi-star${list.GRADE1 >= 4 ? '-fill' : ''}"></i>
+	                    <i class="bi bi-star${list.GRADE1 >= 5 ? '-fill' : ''}"></i>
+                    </p></div>
+                    <div class="location_review">위치&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<p class="star_review">
+                    	<i class="bi bi-star${list.GRADE2 >= 1 ? '-fill' : ''}"></i>
+	                    <i class="bi bi-star${list.GRADE2 >= 2 ? '-fill' : ''}"></i>
+	                    <i class="bi bi-star${list.GRADE2 >= 3 ? '-fill' : ''}"></i>
+	                    <i class="bi bi-star${list.GRADE2 >= 4 ? '-fill' : ''}"></i>
+	                    <i class="bi bi-star${list.GRADE2 >= 5 ? '-fill' : ''}"></i>
+                    </p></div>
+                    <div class="last_review">만족도&nbsp;<p class="star_review">
+                    	<i class="bi bi-star${list.GRADE3 >= 1 ? '-fill' : ''}"></i>
+	                    <i class="bi bi-star${list.GRADE3 >= 2 ? '-fill' : ''}"></i>
+	                    <i class="bi bi-star${list.GRADE3 >= 3 ? '-fill' : ''}"></i>
+	                    <i class="bi bi-star${list.GRADE3 >= 4 ? '-fill' : ''}"></i>
+	                    <i class="bi bi-star${list.GRADE3 >= 5 ? '-fill' : ''}"></i>
+                    </p></div>
                   </div>
                 </div>
               </div>
@@ -402,8 +422,8 @@
       function moveToPaymentPage(idx) {
         let check_in_date = $('[name=checkInDate]').val();
         let check_out_date = $('[name=checkOutDate]').val();
-        let adult_count = $('[name=adultCount]').val();
-        let child_count = $('[name=childCount]').val();
+        let adult_count = $('[name=adult_count]').val();
+        let child_count = $('[name=child_count]').val();
    	
         const url = "/reservation/payment?room_idx="+idx+"&check_in_date="+check_in_date+"&check_out_date="+check_out_date+"&adult_count="+adult_count+"&child_count="+child_count;
         
@@ -413,11 +433,13 @@
       $(function () {
     	 $('input[name=checkInDate]').attr('value','${check_in_date}'); 
     	 $('input[name=checkOutDate]').attr('value','${check_out_date}');
-    	 $('input[name=adultCount]').attr('value','${adult_count}');
-    	 $('input[name=childCount]').attr('value','${child_count}');
+    	 $('input[name=adult_count]').attr('value','${adult_count}');
+    	 $('input[name=child_count]').attr('value','${child_count}');
     	
       });
     </script>
+
+
   </body>
 
   </html>

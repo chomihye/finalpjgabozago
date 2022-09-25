@@ -252,49 +252,49 @@
                     <button type="button" value="1">서울</button>
                 </li>
                 <li>
-                    <button type="button">인천</button>
+                    <button type="button" value="2">인천</button>
                 </li>
                 <li>
-                    <button type="button">대전</button>
+                    <button type="button" value="3">대전</button>
                 </li>
                 <li>
-                    <button type="button">대구</button>
+                    <button type="button" value="4">대구</button>
                 </li>
                 <li>
-                    <button type="button">광주</button>
+                    <button type="button" value="5">광주</button>
                 </li>
                 <li>
                     <button type="button" value="6">부산</button>
                 </li>
                 <li>
-                    <button type="button">울산</button>
+                    <button type="button" value="7">울산</button>
                 </li>
                 <li>
                     <button type="button" value="31">경기</button>
                 </li>
                 <li>
-                    <button type="button">강원</button>
+                    <button type="button" value="32">강원</button>
                 </li>
                 <li>
-                    <button type="button">충북</button>
+                    <button type="button" value="33">충북</button>
                 </li>
                 <li>
-                    <button type="button">충남</button>
+                    <button type="button" value="34">충남</button>
                 </li>
                 <li>
-                    <button type="button">경북</button>
+                    <button type="button" value="35">경북</button>
                 </li>
                 <li>
-                    <button type="button">경남</button>
+                    <button type="button" value="36">경남</button>
                 </li>
                 <li>
-                    <button type="button">전북</button>
+                    <button type="button" value="37">전북</button>
                 </li>
                 <li>
-                    <button type="button">전남</button>
+                    <button type="button" value="38">전남</button>
                 </li>
                 <li>
-                    <button type="button">제주</button>
+                    <button type="button" value="39">제주</button>
                 </li>
 
             </ul>

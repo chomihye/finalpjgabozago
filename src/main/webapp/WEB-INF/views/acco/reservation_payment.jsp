@@ -93,9 +93,7 @@
                     $("#terms_modal_sale").css({ display: "none" });
                 });
 
-                $(".btn_payment").click(function () {
-                    $("#pay_modal").css({ display: "block" });
-                }); // 결제창 모달
+           
                 $(".pay_okbtn").click(function () {
                     $("#pay_modal").css({ display: "none" });
                 });
@@ -184,6 +182,9 @@
                         <div class="room_name">${accom.ACCOM_NAME}</div>
                         <span class="book_date">${check_in_date} ~ ${check_out_date}</span>
                         <div class="person_count">성인 ${adult_count} 명, 유아 ${child_count}명 </div>
+                        <input type="hidden" name="adult_count">
+                		<input type="hidden" name="child_count">
+                        
                     </div>
                 </div>
 
@@ -294,7 +295,7 @@
                                         class="bi bi-chevron-right"></i></button>
                             </label>
                         </div>
-                        <button type="button" class="btn_payment"><span class="final_payprice">231,000</span>원 결제하기</button>
+                        <button type="button" class="btn_payment" onclick="addPayment()"><span class="final_payprice">231,000</span>원 결제하기</button>
                     </div>
 
                 </div>
@@ -458,7 +459,41 @@
 
 
          <jsp:include page="/WEB-INF/views/common/footer.jsp" flush="false" />
+	
+		<script>
+		 $(function () {
+	    	 $('input[name=checkInDate]').attr('value','${check_in_date}'); 
+	    	 $('input[name=checkOutDate]').attr('value','${check_out_date}');
+	    	 $('input[name=adultCount]').attr('value','${adult_count}');
+	    	 $('input[name=childCount]').attr('value','${child_count}');
+	    	
+	      });
 
+          function addPayment() {
+            $.ajax({
+                  type: 'POST',
+                  url: '/reservation/payment',
+                  data: {
+                      accom_room_idx: '${accom.ACCOM_ROOM_IDX}',
+                      large_area_idx: '${accom.LARGE_AREA_IDX}',
+                      check_in_date: '${check_in_date}',
+                      check_out_date: '${check_out_date}',
+                      adult_count: '${adult_count}',
+                      child_count: '${child_count}',
+                  },
+                  dataType: 'json',
+                  success: function (response) {
+                      console.log(response);
+                    $("#pay_modal").css({ display: "block" });
+                  },
+                  error: function (error) {
+                      console.log(error);
+                  },
+              }); //ajax
+          }
+		</script>
+
+        
     </body>
 
 
