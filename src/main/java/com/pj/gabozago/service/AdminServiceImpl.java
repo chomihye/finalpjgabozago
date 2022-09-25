@@ -79,6 +79,16 @@ public class AdminServiceImpl implements AdminService {
 	} // getReservInfo
 		
 	
+	// 예약 취소 정보
+	@Override
+	public List<Map<String, Object>> getCanReservInfo(Criteria cri, AccomReservationVO reserv) throws ServiceException {
+		try {
+			return this.reservMapper.selectReservInfo(cri, reserv);
+		} catch (DAOException e) {
+			throw new ServiceException(e);
+		}
+	} // getCanReservInfo
+		
 	
 	// 공지사항
 	@Override

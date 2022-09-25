@@ -25,13 +25,14 @@
        });
     </script>
     <link rel="stylesheet" href="/resources/admin/css/admin_reservation_cancel.css" />
+    <link rel="stylesheet" href="/resources/common/css/pagination.css">
 
 </head>
 
 <body>
     <!-- header -->
     <header>
-        <%-- <%@include file="/WEB-INF/views/common/header.jsp" %> --%>
+        <jsp:include page="/WEB-INF/views/common/header.jsp" flush="false" />
     </header>
 
     
@@ -95,100 +96,82 @@
         <div id="cancel">
           <div class="title">취소/환불 관리</div>
 
+			<div class="board-table-top">
             <table class="board_list cancel_table">
                   <thead>
                       <tr class="tr-list">
                           <th class="num">예약번호</th>
-                          <th class="location">지역</th>
-                          <th class="hotel">숙소명</th>
-                          <th class="date">이용날짜</th>
                           <th class="name">예약자명</th>
-                          <th class="number">연락처</th>
+                          <th class="hotel">숙소명</th>
+                          <th class="checkin">체크인 날짜</th>
+                          <th class="checkout">체크아웃 날짜</th>
                       </tr>
                   </thead>
                 
                     <tbody>
-                      <tr>
-                        <td class="num">
-                            <a href="/admin/reservation/detail">12345678</a>
-                        </td>
-                        <td class="location">서울</td>
-                        <td class="hotel">신라호텔</td>
-                        <td class="date">07/07 ~ 07/10</td>
-                        <td class="name">김혜진</td>
-                        <td class="number">010-xxxx-xxxx</td>
-                      </tr>
-                
-                      <tr>
-                        <td class="num">
-                            <a href="/admin/reservation/detail">23456789</a>
-                        </td>
-                        <td class="location">서울</td>
-                        <td class="hotel">롯데호텔</td>
-                        <td class="date">07/12 ~ 07/15</td>
-                        <td class="name">김지수</td>
-                        <td class="number">010-xxxx-xxxx</td>
-                      </tr>
-            
-                      <tr>
-                        <td class="num">
-                            <a href="/admin/reservation/detail">87654321</a>
-                        </td>
-                        <td class="location">부산</td>
-                        <td class="hotel">신라호텔</td>
-                        <td class="date">07/11 ~ 07/14</td>
-                        <td class="name">박성은</td>
-                        <td class="number">010-xxxx-xxxx</td>
-                      </tr>
-            
-                      <tr>
-                        <td class="num">
-                            <a href="/admin/reservation/detail">98765432</a>
-                        </td>
-                        <td class="location">부산</td>
-                        <td class="hotel">롯데호텔</td>
-                        <td class="date">07/27 ~ 07/28</td>
-                        <td class="name">배은정</td>
-                        <td class="number">010-xxxx-xxxx</td>
-                      </tr>
-            
-                      <tr>
-                        <td class="num">
-                            <a href="/admin/reservation/detail">74185296</a>
-                        </td>
-                        <td class="location">서울</td>
-                        <td class="hotel">신라호텔</td>
-                        <td class="date">07/17 ~ 07/19</td>
-                        <td class="name">이정선</td>
-                        <td class="number">010-xxxx-xxxx</td>
-                      </tr>
-
-                      <tr>
-                        <td class="num">
-                            <a href="/admin/reservation/detail">14725836</a>
-                        </td>
-                        <td class="location">서울</td>
-                        <td class="hotel">시그니엘</td>
-                        <td class="date">06/12 ~ 06/13</td>
-                        <td class="name">전채림</td>
-                        <td class="number">010-xxxx-xxxx</td>
-                      </tr>
-
-                      <tr>
-                        <td class="num">
-                            <a href="/admin/reservation/detail">96385274</a>
-                        </td>
-                        <td class="location">서울</td>
-                        <td class="hotel">워커힐</td>
-                        <td class="date">05/07 ~ 05/10</td>
-                        <td class="name">조미혜</td>
-                        <td class="number">010-xxxx-xxxx</td>
-                      </tr>
-
+                      <!-- var : 임시 EL 변수명, items : 공유속성 이름 -->
+                      <c:forEach var="item" items="${result.model}">
+                            <tr>
+                                <td class="num">
+                                    <a href="/admin/reservation/detail">${item.IDX}</a>
+                                </td>
+                                <td class="name">${item.NAME}</td>
+                                <td class="hotel">${item.ACCOM_NAME}</td>
+                                <td class="checkin">${item.CHECK_IN_DATE}</td>
+                                <td class="checkout">${item.CHECK_OUT_DATE}</td>
+                            </tr>
+                        </c:forEach>          
+                     
                     </tbody>
                   </table>
               </div>
-          </div>
+              
+              <!-- 페이지버튼 -->
+              <div id="pagination">
+                <form action="#" id="paginationForm">
+                    <!-- 1. 3가지 기준정보(criteria)는 hidden 정보로 제공 -->
+                    <input type="hidden" name="currPage">
+
+                    <!-- 2. PageDTO 객체의 정보를 이용해서, Pagenation 출력 -->
+                    <ul>
+                        <!-- Prev 처리 -->
+                        <li class="frontPage"><a href="/admin/reservation/cancel?currPage=1"><i class="bi bi-chevron-double-left"></i></a></li>
+
+                        <c:choose>
+                            <c:when test="${__PAGINATION__.prev}">
+                                <li class="prev"><a href="/admin/reservation/cancel?currPage=${__PAGINATION__.startPage - 1}"><i class="bi bi-chevron-left"></i></a></li>
+                            </c:when>
+                            <c:otherwise>
+                                <li class="prev"><a href="#"><i class="bi bi-chevron-left"></i></a></li>
+                            </c:otherwise>
+                        </c:choose>
+
+                        <!-- 현재 Pagination 범위에 속한 페이지 번호 목록 출력 -->
+                        <!-- begin부터 end까지 forEach(반복문) -->
+                        <c:forEach var="pageNum" begin="${__PAGINATION__.startPage}" end="${__PAGINATION__.endPage}">
+                            <li class="${pageNum == __PAGINATION__.cri.currPage ? 'currPage' : ''}">
+                                <a href="/admin/reservation/cancel?currPage=${pageNum}">
+                                    <strong>${pageNum}</strong>
+                                </a>
+                            </li>
+                        </c:forEach>
+
+                        <!-- Next 처리 -->
+                        <c:choose>
+                            <c:when test="${__PAGINATION__.next}">
+                                <li class="next"><a href="/admin/reservation/cancel?currPage=${__PAGINATION__.endPage + 1}"><i class="bi bi-chevron-right"></i></a></li>
+                            </c:when>
+                            <c:otherwise>
+                                <li class="next"><a href="#"><i class="bi bi-chevron-right"></i></a></li>
+                            </c:otherwise>
+                        </c:choose>
+
+                        <li class="backPage"><a href="/admin/reservation/cancel?currPage=${__PAGINATION__.realEndPage}"><i class="bi bi-chevron-double-right"></i></a></li>
+                    </ul>
+                </form>
+              </div> 
+      </div>   
+    </div>
 
     <!-- footer -->
     <footer>
