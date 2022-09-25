@@ -104,5 +104,52 @@
     	AND p.idx = #{idx}
     </select>
    
+   <!-- others plan -->
+    <select 
+        id="selectBestList" 
+        resultType="java.util.LinkedHashMap">
+
+
+        SELECT     
+            P.idx,
+            L.large_area_name,
+            M.nickname,
+            p.likes,
+            p.days
+        FROM 
+            (select p.idx,p.likes, ROW_NUMBER() OVER (order by p.LIKES DESC) as rnk
+            from 
+                (select idx,likes,IS_PUBLIC 
+                    from TBL_TRAVEL_PLAN 
+                    where IS_PUBLIC = 'Y') y , tbl_travel_plan p
+            where y.idx = p.idx ) r,
+                TBL_TRAVEL_PLAN p,
+                tbl_member m,
+                tbl_large_area l
+        WHERE p.idx = r.idx
+        AND p.MEMBER_IDX = m.IDX
+        AND p.LARGE_AREA_IDX = l.IDX
+        <![CDATA[
+        AND rnk <= 3
+        ]]>
+    
+    </select>
+
+    <select 
+        id="selectPlanDetail" 
+        resultType="java.util.LinkedHashMap">
+
+
+        SELECT     
+            place_name,
+            place_seq
+        FROM 
+           tbl_travel_plan_detail
+        WHERE 
+            travel_plan_idx = #{idx}
+            AND day = #{day}
+        ORDER BY
+            place_seq 
+    </select>
 
 </mapper>

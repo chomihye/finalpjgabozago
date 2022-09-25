@@ -28,443 +28,45 @@
 
   <div class="listOuter">
     <!-- Swiper 1 -->
-    <form class="recmdaOuter">
-      <div class="userInfo">
-        <ul>
-          <li class="title">${planList1[0].largeAreaVO.largeAreaName}여행</li>
-          <li class="username">${planList1[0].memberVO.nickname}</li>
-        </ul>
-        <!-- 좋아요 수 -->
-        
-        <p class="likeBtn bi bi-suit-heart">&nbsp;20</p>
-      </div>
+    <c:forEach var="list" items="${__LIST__}">
+      <form class="recmdaOuter" id="plan${list.itemNumber}">
+        <div class="userInfo">
+          <ul>
+            <li class="title">${list.largeAreaName}여행</li>
+            <li class="username">${list.nickname}</li>
+          </ul>
 
-      <div class="swiper mySwiper">
-        <div class="swiper-wrapper">
-          <div class="swiper-slide day1">
-
-            <div class="areaListOuter">
-              <h1>DAY1</h1>
-
-              <ul class="areaList">
-
-                <c:forEach items="${planList1}" var="planList1">
-                  <c:if test="${planList1.travelPlanDetailVO.day==1}">
-
-                    <li>${planList1.travelPlanDetailVO.placeName}</li>
-
-                  </c:if>
-                </c:forEach>
-              </ul>
-
-
-            </div>
-          </div>
-          <div class="swiper-slide day2">
-
-            <div class="areaListOuter">
-              <h1>DAY2</h1>
-
-              <ul class="areaList">
-                <c:forEach items="${planList1}" var="planList1">
-                  <c:if test="${planList1.travelPlanDetailVO.day==2}">
-
-                    <li>${planList1.travelPlanDetailVO.placeName}</li>
-
-                  </c:if>
-                </c:forEach>
-
-              </ul>
-            </div>
-          </div>
-          <div class="swiper-slide day3">
-
-            <div class="areaListOuter">
-              <h1>DAY3</h1>
-
-              <ul class="areaList">
-                <c:forEach items="${planList1}" var="planList1">
-                  <c:if test="${planList1.travelPlanDetailVO.day==3}">
-
-                    <li>${planList1.travelPlanDetailVO.placeName}</li>
-
-                  </c:if>
-                </c:forEach>
-
-              </ul>
-            </div>
-          </div>
-          <div class="swiper-slide day4">
-
-            <div class="areaListOuter">
-              <h1>DAY4</h1>
-
-              <ul class="areaList">
-                <c:forEach items="${planList1}" var="planList1">
-                  <c:if test="${planList1.travelPlanDetailVO.day==4}">
-
-                    <li>${planList1.travelPlanDetailVO.placeName}</li>
-
-                  </c:if>
-                </c:forEach>
-
-              </ul>
-            </div>
-          </div>
-          <div class="swiper-slide day5">
-
-            <div class="areaListOuter">
-              <h1>DAY5</h1>
-
-              <ul class="areaList">
-                <c:forEach items="${planList1}" var="planList1">
-                  <c:if test="${planList1.travelPlanDetailVO.day==5}">
-
-                    <li>${planList1.travelPlanDetailVO.placeName}</li>
-
-                  </c:if>
-                </c:forEach>
-
-              </ul>
-            </div>
-          </div>
-          <div class="swiper-slide day6">
-
-            <div class="areaListOuter">
-              <h1>DAY6</h1>
-
-              <ul class="areaList">
-                <c:forEach items="${planList1}" var="planList1">
-                  <c:if test="${planList1.travelPlanDetailVO.day==6}">
-
-                    <li>${planList1.travelPlanDetailVO.placeName}</li>
-
-                  </c:if>
-                </c:forEach>
-
-              </ul>
-            </div>
-          </div>
-          <div class="swiper-slide day7">
-
-            <div class="areaListOuter">
-              <h1>DAY7</h1>
-
-              <ul class="areaList">
-                <c:forEach items="${planList1}" var="planList1">
-                  <c:if test="${planList1.travelPlanDetailVO.day==7}">
-
-                    <li>${planList1.travelPlanDetailVO.placeName}</li>
-
-                  </c:if>
-                </c:forEach>
-
-              </ul>
-            </div>
-          </div>
+          <!-- 좋아요 수 -->
+          <p class="likeBtn bi bi-suit-heart">&nbsp;${list.likes}</p>
         </div>
 
-        <div class="swiper-button-next bi bi-arrow-right-circle-fill nextBtn"></div>
-        <div class="swiper-button-prev bi bi-arrow-left-circle-fill prevBtn"></div>
-      </div>
-      <button class="planAdd" type="button">일정에 추가</button>
-    </form>
-
-
-    <!-- Swiper 2 -->
-    <div class="recmdaOuter">
-      <div class="userInfo">
-        <ul>
-          <li class="title">${planList2[0].largeAreaVO.largeAreaName}여행</li>
-          <li class="username">${planList2[0].memberVO.nickname}</li>
-        </ul>
-        <!-- 좋아요 수 -->
-        <p class="likeBtn bi bi-suit-heart">&nbsp;20</p>
-      </div>
-
-      <div class="swiper mySwiper">
-        <div class="swiper-wrapper">
-
-          
-            <div class="swiper-slide day1">
-
-              <div class="areaListOuter">
-                <h1>DAY1</h1>
-
-
-                <ul class="areaList">
-
-                  <c:forEach items="${planList2}" var="planList2">
-                    <c:if test="${planList2.travelPlanDetailVO.day==1}">
-
-                      <li>${planList2.travelPlanDetailVO.placeName}</li>
-
-                    </c:if>
-                  </c:forEach>
-                </ul>
-
-
+        <div class="swiper mySwiper">
+          <div class="swiper-wrapper">
+            <c:forEach var="eachDays" items="${list.eachDays}">
+              <c:set var="DAY" value="DAY${eachDays}" />
+              <div class="swiper-slide">
+                <div class="areaListOuter">
+                  <h1>DAY${eachDays}</h1>
+                  <ul class="areaList">
+                    <c:forEach var="dayNum" items="${list[DAY]}">
+                      <li>${dayNum.PLACE_NAME}</li>
+                    </c:forEach>
+                  </ul>
+                </div>
               </div>
-            </div>
-          
+            </c:forEach>
 
 
-
-
-
-          <div class="swiper-slide day2">
-
-            <div class="areaListOuter">
-              <h1>DAY2</h1>
-
-              <ul class="areaList">
-                <c:forEach items="${planList2}" var="planList2">
-                  <c:if test="${planList2.travelPlanDetailVO.day==2}">
-
-                    <li>${planList2.travelPlanDetailVO.placeName}</li>
-
-                  </c:if>
-                </c:forEach>
-
-              </ul>
-            </div>
           </div>
-          <div class="swiper-slide day3">
 
-            <div class="areaListOuter">
-              <h1>DAY3</h1>
-
-              <ul class="areaList">
-                <c:forEach items="${planList2}" var="planList2">
-                  <c:if test="${planList2.travelPlanDetailVO.day==3}">
-
-                    <li>${planList2.travelPlanDetailVO.placeName}</li>
-
-                  </c:if>
-                </c:forEach>
-
-              </ul>
-            </div>
-          </div>
-          <div class="swiper-slide day4">
-
-            <div class="areaListOuter">
-              <h1>DAY4</h1>
-
-              <ul class="areaList">
-                <c:forEach items="${planList2}" var="planList2">
-                  <c:if test="${planList2.travelPlanDetailVO.day==4}">
-
-                    <li>${planList2.travelPlanDetailVO.placeName}</li>
-
-                  </c:if>
-                </c:forEach>
-
-              </ul>
-            </div>
-          </div>
-          <div class="swiper-slide day5">
-
-            <div class="areaListOuter">
-              <h1>DAY5</h1>
-
-              <ul class="areaList">
-                <c:forEach items="${planList2}" var="planList2">
-                  <c:if test="${planList2.travelPlanDetailVO.day==5}">
-
-                    <li>${planList2.travelPlanDetailVO.placeName}</li>
-
-                  </c:if>
-                </c:forEach>
-
-              </ul>
-            </div>
-          </div>
-          <div class="swiper-slide day6">
-
-            <div class="areaListOuter">
-              <h1>DAY6</h1>
-
-              <ul class="areaList">
-                <c:forEach items="${planList2}" var="planList2">
-                  <c:if test="${planList2.travelPlanDetailVO.day==6}">
-
-                    <li>${planList2.travelPlanDetailVO.placeName}</li>
-
-                  </c:if>
-                </c:forEach>
-              </ul>
-            </div>
-          </div>
-          <div class="swiper-slide day7">
-
-            <div class="areaListOuter">
-              <h1>DAY7</h1>
-
-              <ul class="areaList">
-                <c:forEach items="${planList2}" var="planList2">
-                  <c:if test="${planList2.travelPlanDetailVO.day==7}">
-
-                    <li>${planList2.travelPlanDetailVO.placeName}</li>
-
-                  </c:if>
-                </c:forEach>
-
-              </ul>
-            </div>
-          </div>
+          <div class="swiper-button-next bi bi-arrow-right-circle-fill nextBtn"></div>
+          <div class="swiper-button-prev bi bi-arrow-left-circle-fill prevBtn"></div>
         </div>
-
-        <div class="swiper-button-next bi bi-arrow-right-circle-fill nextBtn"></div>
-        <div class="swiper-button-prev bi bi-arrow-left-circle-fill prevBtn"></div>
-      </div>
-
-      <button class="planAdd" type="button">일정에 추가</button>
-    </div>
+        <button class="planAdd" type="button">일정에 추가</button>
+      </form>
+    </c:forEach>
 
 
-    <!-- Swiper 3 -->
-    <div class="recmdaOuter">
-      <div class="userInfo">
-        <ul>
-          <li class="title">${planList3[0].largeAreaVO.largeAreaName}여행</li>
-          <li class="username">${planList3[0].memberVO.nickname}</li>
-        </ul>
-        <!-- 좋아요 수 -->
-        <p class="likeBtn bi bi-suit-heart">&nbsp;20</p>
-      </div>
-
-      <div class="swiper mySwiper">
-        <div class="swiper-wrapper">
-          <div class="swiper-slide day1">
-
-            <div class="areaListOuter">
-              <h1>DAY1</h1>
-
-
-              <ul class="areaList">
-
-                <c:forEach items="${planList3}" var="planList3">
-                  <c:if test="${planList3.travelPlanDetailVO.day==1}">
-
-                    <li>${planList3.travelPlanDetailVO.placeName}</li>
-
-                  </c:if>
-                </c:forEach>
-              </ul>
-
-
-            </div>
-          </div>
-          <div class="swiper-slide day2">
-
-            <div class="areaListOuter">
-              <h1>DAY2</h1>
-
-              <ul class="areaList">
-                <c:forEach items="${planList3}" var="planList3">
-                  <c:if test="${planList3.travelPlanDetailVO.day==2}">
-
-                    <li>${planList3.travelPlanDetailVO.placeName}</li>
-
-                  </c:if>
-                </c:forEach>
-
-              </ul>
-            </div>
-          </div>
-          <div class="swiper-slide day3">
-
-            <div class="areaListOuter">
-              <h1>DAY3</h1>
-
-              <ul class="areaList">
-                <c:forEach items="${planList3}" var="planList3">
-                  <c:if test="${planList3.travelPlanDetailVO.day==3}">
-
-                    <li>${planList3.travelPlanDetailVO.placeName}</li>
-
-                  </c:if>
-                </c:forEach>
-
-              </ul>
-            </div>
-          </div>
-          <div class="swiper-slide day4">
-
-            <div class="areaListOuter">
-              <h1>DAY4</h1>
-
-              <ul class="areaList">
-                <c:forEach items="${planList3}" var="planList3">
-                  <c:if test="${planList3.travelPlanDetailVO.day==4}">
-
-                    <li>${planList3.travelPlanDetailVO.placeName}</li>
-
-                  </c:if>
-                </c:forEach>
-
-              </ul>
-            </div>
-          </div>
-          <div class="swiper-slide day5">
-
-            <div class="areaListOuter">
-              <h1>DAY5</h1>
-
-              <ul class="areaList">
-                <c:forEach items="${planList3}" var="planList3">
-                  <c:if test="${planList3.travelPlanDetailVO.day==5}">
-
-                    <li>${planList3.travelPlanDetailVO.placeName}</li>
-
-                  </c:if>
-                </c:forEach>
-
-              </ul>
-            </div>
-          </div>
-          <div class="swiper-slide day6">
-
-            <div class="areaListOuter">
-              <h1>DAY6</h1>
-
-              <ul class="areaList">
-                <c:forEach items="${planList3}" var="planList3">
-                  <c:if test="${planList3.travelPlanDetailVO.day==6}">
-
-                    <li>${planList3.travelPlanDetailVO.placeName}</li>
-
-                  </c:if>
-                </c:forEach>
-              </ul>
-            </div>
-          </div>
-          <div class="swiper-slide day7">
-
-            <div class="areaListOuter">
-              <h1>DAY7</h1>
-
-              <ul class="areaList">
-                <c:forEach items="${planList3}" var="planList3">
-                  <c:if test="${planList3.travelPlanDetailVO.day==7}">
-
-                    <li>${planList3.travelPlanDetailVO.placeName}</li>
-
-                  </c:if>
-                </c:forEach>
-
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <div class="swiper-button-next bi bi-arrow-right-circle-fill nextBtn"></div>
-        <div class="swiper-button-prev bi bi-arrow-left-circle-fill prevBtn"></div>
-      </div>
-
-      <button class="planAdd" type="button">일정에 추가</button>
-    </div>
   </div>
 
 
@@ -496,13 +98,13 @@
 
     function ajaxtest() {
       $.ajax({
-        url:"main",
-        type:"GET",
-        success:function(){alert("성공")},
-        error:function(){alert("실패")}
+        url: "main",
+        type: "GET",
+        success: function () { alert("성공") },
+        error: function () { alert("실패") }
       })
     }
-    
+
     $(function () {
       $('.likeBtn').click(function () {
 

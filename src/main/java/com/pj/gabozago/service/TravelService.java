@@ -1,5 +1,6 @@
 package com.pj.gabozago.service;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import com.pj.gabozago.domain.TravePlanlCreateVO;
@@ -21,6 +22,8 @@ public interface TravelService {
 	//3. 계획 조회 
 	public abstract List<TravePlanlCreateVO> getList(Integer idx) throws ServiceException;
 		
+	//4.인기 일정 조회
+	public abstract List<LinkedHashMap<String, Object>> getBestPlan() throws ServiceException;
 
 
 } // end interface 
