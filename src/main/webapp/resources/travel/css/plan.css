@@ -132,8 +132,12 @@ footer {
 .place_img {
     padding-left: 25px;
     position: absolute;
-    
-    
+
+    opacity: 90%;
+    width: 120px;
+    height: 120px;
+    filter: brightness(70%); 
+    border-radius: 5%;
 }
 .place_name {
     width: 100px;
@@ -153,14 +157,12 @@ footer {
     display: none;
     width: 1700px;
     height: 750px;
-    background-color: #a5a4a4c4;
     margin: auto; 
 }
 #map_part {
     display: none;
     width: 1700px;
     height: 750px;
-    background-color: #a5a4a4c4;
     margin: auto; 
 }
 
@@ -193,13 +195,6 @@ footer {
 .btn_circle:hover {
     background: #68AE6D;
     color: white;
-}
-img {
-    opacity: 90%;
-    width: 120px;
-    height: 120px;
-    filter: brightness(70%); 
-    border-radius: 5%;
 }
 
 

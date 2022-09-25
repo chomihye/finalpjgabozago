@@ -20,9 +20,6 @@ public interface AdminReservMapper {
 	public abstract List<Map<String, Object>> selectReservInfo(@Param("cri") Criteria cri, @Param("reserv") AccomReservationVO reserv) throws DAOException;
 		
 		
-	// 숙소 예약취소 정보를 가져오는 메소드
-	public abstract List<Map<String, Object>> selectCanReservInfo(@Param("cri") Criteria cri, @Param("reserv") AccomReservationVO reserv) throws DAOException;
-		
 		
 		
 }
