@@ -22,10 +22,6 @@ import com.pj.gabozago.exception.DAOException;
 public interface MypageReserMapper {		// 숙박예약내역 페이지 관련 mapper
 	
 	
-	// 총 레코드 건수를 반환하는 메소드(페이징 처리에 필요)
-	@Select("SELECT count(idx) FROM tbl_reservation WHERE member_idx = #{member.idx}")
-	public abstract Integer countTotalAmount(@Param("cri") Criteria cri, @Param("member") MemberVO member) throws DAOException;
-	
 	// 해당 회원의 숙소예약 리스트를 가져오는 메소드
 	public abstract List<LinkedHashMap<String, Object>> selectUserReserList(@Param("cri") Criteria cri, @Param("member") MemberVO member) throws DAOException;
 	

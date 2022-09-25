@@ -14,10 +14,6 @@ import com.pj.gabozago.exception.ServiceException;
 
 
 public interface MypageReserService {		// 숙소예약내역 페이지를 위한 서비스 객체
-
-	
-	// 총 레코드 건수를 반환하는 메소드(페이징 처리에 필요)
-	public abstract int getTotal(Criteria cri, MemberVO member) throws ServiceException;
 		
 		
 	// 특정 회원의 숙소예약내역 리스트를 가져오는 메소드

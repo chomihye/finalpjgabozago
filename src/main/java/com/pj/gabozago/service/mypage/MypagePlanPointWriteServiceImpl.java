@@ -36,15 +36,6 @@ public class MypagePlanPointWriteServiceImpl implements MypagePlanPointWriteServ
 	
 //	============================================== 여행일정 ============================================== //
 	
-	// 총 레코드 건수를 반환하는 메소드(페이징 처리에 필요)
-	@Override
-	public Integer getTotalOfPlan(Criteria cri, MemberVO member) throws ServiceException{
-		log.trace("getTotalOfPlan() invoked.");
-		
-		try { return this.mapper.countTotalOfPlan(cri, member); } 
-		catch (DAOException e) { throw new ServiceException(e); }
-	} // getTotalOfPlan
-	
 	// 회원이 작성한 여행일정 리스트를 가져오는 메소드
 	@Override
 	public List<LinkedHashMap<String, Object>> getPlanList(Criteria cri, MemberVO member) throws ServiceException{
@@ -107,16 +98,6 @@ public class MypagePlanPointWriteServiceImpl implements MypagePlanPointWriteServ
 	
 //	============================================== 마이포인트 ============================================== //
 	
-	// 총 레코드 건수를 반환하는 메소드(페이징 처리에 필요)
-	@Override
-	public int getTotalOfPoint(Criteria cri, MemberVO member) throws ServiceException {
-		log.trace("getTotal() invoked.");
-		
-		try { return this.mapper.countTotalOfPoint(cri, member); } 
-		catch (DAOException e) { throw new ServiceException(e); }
-	}  // getTotal
-	
-	
 	@Override
 	public List<PointHistoryVO> getUserPointList(Criteria cri, MemberVO member) throws ServiceException {
 		log.trace("getUserPointList({}) invoked.", cri);
@@ -160,16 +141,7 @@ public class MypagePlanPointWriteServiceImpl implements MypagePlanPointWriteServ
 	} // getCurrentPoint
 	
 	
-//	============================================== 작성 글 ============================================== //
-
-	// 총 레코드 건수를 반환하는 메소드(페이징 처리에 필요)
-	@Override
-	public Integer getTotalOfWrite(MemberVO member) throws ServiceException {
-		log.trace("getTotalOfWrite({}) invoked.");
-		
-		try { return this.mapper.countTotalOfWrite(member); } 
-		catch (DAOException e) { throw new ServiceException(e); }
-	} // getTotalOfWrite
+//	============================================== 작성 글/댓글 ============================================== //
 
 	// 작성글 리스트를 가져오는 메소드
 	@Override
@@ -181,17 +153,6 @@ public class MypagePlanPointWriteServiceImpl implements MypagePlanPointWriteServ
 	} // getWriteList
 	
 	
-//	============================================== 작성 댓글 ============================================== //
-
-	// 총 레코드 건수를 반환하는 메소드(페이징 처리에 필요)
-	@Override
-	public Integer getTotalOfComment(MemberVO member) throws ServiceException {
-		log.trace("getTotalOfComment({}) invoked.");
-		
-		try { return this.mapper.countTotalOfComment(member); } 
-		catch (DAOException e) { throw new ServiceException(e); }
-	} // getTotalOfComment
-
 	// 작성댓글 리스트를 가져오는 메소드
 	@Override
 	public List<LinkedHashMap<String, Object>> getCommentList(Criteria cri, MemberVO member) throws ServiceException {

@@ -230,7 +230,7 @@ public class MypageController {
 			List<LinkedHashMap<String, Object>> list = this.planPointWriteService.getPlanList(cri, member);
 			
 			// 총 레코드 건수를 반환
-			int total = this.planPointWriteService.getTotalOfPlan(cri, member);
+			int total = this.memberService.getTotalOfRecords(member, "tbl_travel_plan");
 			PageDTO pageDTO = new PageDTO(cri, total);
 						
 			model.addAttribute(SharedScopeKeys.LIST_KEY, list);
@@ -265,7 +265,7 @@ public class MypageController {
 			model.addAttribute(SharedScopeKeys.LIST_KEY, list);
 			
 			// 총 레코드 건수를 반환
-			int total = this.reserService.getTotal(cri, member);
+			int total = this.memberService.getTotalOfRecords(member, "tbl_reservation");
 			PageDTO pageDTO = new PageDTO(cri, total);
 			model.addAttribute(SharedScopeKeys.PAGINATION_KEY, pageDTO);
 
@@ -382,7 +382,7 @@ public class MypageController {
 			List<LinkedHashMap<String, Object>> list = this.wishlistService.getAccomWishlist(cri, member);
 			
 			// 총 레코드 건수를 반환
-			int total = this.wishlistService.getTotalOfAccom(cri, member);
+			int total = this.memberService.getTotalOfRecords(member, "tbl_wishlist_accom");
 			PageDTO pageDTO = new PageDTO(cri, total);
 						
 			Map<String, Object> map = new HashMap<String, Object>();
@@ -414,7 +414,7 @@ public class MypageController {
 			List<LinkedHashMap<String, Object>> list = this.wishlistService.getPlanWishlist(cri, member);
 			
 			// 총 레코드 건수를 반환
-			int total = this.wishlistService.getTotalOfPlan(cri, member);
+			int total = this.memberService.getTotalOfRecords(member, "tbl_wishlist_plan");
 			PageDTO pageDTO = new PageDTO(cri, total);
 						
 			Map<String, Object> map = new HashMap<String, Object>();
@@ -485,7 +485,7 @@ public class MypageController {
 			model.addAttribute(SharedScopeKeys.RESULT_KEY, userCurrentPoint);
 			
 			// 총 레코드 건수를 반환
-			int total = this.planPointWriteService.getTotalOfPoint(cri, member);
+			int total = this.memberService.getTotalOfRecords(member, "tbl_point_history");
 			PageDTO pageDTO = new PageDTO(cri, total);
 			model.addAttribute(SharedScopeKeys.PAGINATION_KEY, pageDTO);
 			
@@ -517,7 +517,7 @@ public class MypageController {
 			List<CommunityVO> list = this.planPointWriteService.getWriteList(cri, member);
 			
 			// 총 레코드 건수를 반환
-			int total = this.planPointWriteService.getTotalOfWrite(member);
+			int total = this.memberService.getTotalOfRecords(member, "tbl_community");
 			PageDTO pageDTO = new PageDTO(cri, total);
 						
 			Map<String, Object> map = new HashMap<String, Object>();
@@ -549,7 +549,7 @@ public class MypageController {
 			List<LinkedHashMap<String, Object>> list = this.planPointWriteService.getCommentList(cri, member);
 			
 			// 총 레코드 건수를 반환
-			int total = this.planPointWriteService.getTotalOfComment(member);
+			int total = this.memberService.getTotalOfRecords(member, "tbl_comment");
 			PageDTO pageDTO = new PageDTO(cri, total);
 						
 			Map<String, Object> map = new HashMap<String, Object>();

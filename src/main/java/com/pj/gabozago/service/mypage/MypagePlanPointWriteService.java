@@ -13,9 +13,6 @@ import com.pj.gabozago.exception.ServiceException;
 public interface MypagePlanPointWriteService {		// 여행일정, 마이포인트, 작성글/댓글 페이지 관련 service
 
 //	============================================== 여행일정 ============================================== //
-	
-	// 총 레코드 건수를 반환하는 메소드(페이징 처리에 필요)
-	public abstract Integer getTotalOfPlan(Criteria cri, MemberVO member) throws ServiceException;
 		
 	// 회원이 작성한 여행일정 리스트를 가져오는 메소드
 	public abstract List<LinkedHashMap<String, Object>> getPlanList(Criteria cri, MemberVO member) throws ServiceException;
@@ -25,9 +22,6 @@ public interface MypagePlanPointWriteService {		// 여행일정, 마이포인트
 	
 	
 //	============================================== 마이포인트 ============================================== //
-	
-	// 총 레코드 건수를 반환하는 메소드(페이징 처리에 필요)
-	public abstract int getTotalOfPoint(Criteria cri, MemberVO member) throws ServiceException;
 	
 	// 특정 회원의 마이포인트 리스트를 가져오는 메소드
 	public abstract List<PointHistoryVO> getUserPointList(Criteria cri, MemberVO member) throws ServiceException;
@@ -42,19 +36,10 @@ public interface MypagePlanPointWriteService {		// 여행일정, 마이포인트
 	public abstract Integer getCurrentPoint(MemberVO member) throws ServiceException;
 	
 	
-//	============================================== 작성 글 ============================================== //
-	
-	// 총 레코드 건수를 반환하는 메소드(페이징 처리에 필요)
-	public abstract Integer getTotalOfWrite(MemberVO member) throws ServiceException;
+//	============================================== 작성 글/댓글 ============================================== //
 	
 	// 작성글 리스트를 가져오는 메소드
 	public abstract List<CommunityVO> getWriteList(Criteria cri, MemberVO member) throws ServiceException;
-	
-	
-//	============================================== 작성 댓글 ============================================== //
-	
-	// 총 레코드 건수를 반환하는 메소드(페이징 처리에 필요)
-	public abstract Integer getTotalOfComment(MemberVO member) throws ServiceException;
 	
 	// 작성댓글 리스트를 가져오는 메소드
 	public abstract List<LinkedHashMap<String, Object>> getCommentList(Criteria cri, MemberVO member) throws ServiceException;

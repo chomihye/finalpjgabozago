@@ -6,13 +6,20 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
+
 import com.pj.gabozago.domain.MemberDTO;
 import com.pj.gabozago.domain.MemberVO;
+import com.pj.gabozago.exception.DAOException;
 import com.pj.gabozago.exception.ServiceException;
 
 
 public interface MypageMainMemberService {		// 마이페이지 메인과 회원정보수정 및 탈퇴 페이지 관련 service
 
+	
+	// [공통] 총 레코드 건수를 반환하는 메소드(페이징 처리에 필요)
+	public abstract Integer getTotalOfRecords(MemberVO member, String tableName) throws ServiceException;
 	
 	// 회원정보 업데이트가 필요한 경우, 다시 정보를 불러오는 메소드
 	public abstract MemberVO getMemberInfo(MemberVO member) throws ServiceException;

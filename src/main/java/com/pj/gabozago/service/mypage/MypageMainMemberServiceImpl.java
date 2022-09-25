@@ -40,6 +40,13 @@ public class MypageMainMemberServiceImpl implements MypageMainMemberService {
 	private MessageService messageService;
 	
 	
+	// [공통] 총 레코드 건수를 반환하는 메소드(페이징 처리에 필요)
+	public Integer getTotalOfRecords(MemberVO member, String tableName) throws ServiceException{
+		try { return this.mapper.countTotalOfRecords(member, tableName); } 
+		catch (DAOException e) { throw new ServiceException(e); }
+	} // getTotalOfRecords
+		
+	
 	// 회원정보 업데이트가 필요한 경우, 다시 정보를 불러오는 메소드
 	@Override
 	public MemberVO getMemberInfo(MemberVO member) throws ServiceException {

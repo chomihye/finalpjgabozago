@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
@@ -22,10 +21,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import com.pj.gabozago.domain.Criteria;
 import com.pj.gabozago.domain.MemberDTO;
 import com.pj.gabozago.domain.MemberVO;
-import com.pj.gabozago.domain.PointHistoryVO;
 import com.pj.gabozago.exception.DAOException;
 import com.pj.gabozago.mapper.MypageMainMemberMapper;
 
@@ -136,6 +133,21 @@ public class MypageMainMemberMapperTests {
 		
 		log.info(">>>>>>>>>>>>>>>>>>>> isDouble : {}", isDouble);
 	} // testSelectDoubleNickname
+	
+	
+	@Test
+	@Order(6)
+	@DisplayName("6. testCountTotalOfRecords")
+	@Timeout(value = 10, unit = TimeUnit.SECONDS)
+	void testCountTotalOfRecords() throws DAOException {
+		log.info("testCountTotalOfRecords() invoked.");
+		
+		MemberVO member = new MemberVO(53, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+		
+		Integer num = this.mapper.countTotalOfRecords(member, "tbl_travel_plan");
+		
+		log.info(">>>>>>>>>>>>>>>>>>>> num : {}", num);
+	} // testCountTotalOfRecords
 
 	
 } // end class

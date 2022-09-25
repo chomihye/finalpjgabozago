@@ -28,16 +28,6 @@ public class MypageWishlistServiceImpl implements MypageWishlistService {
 	
 	@Setter(onMethod_ = {@Autowired})
 	private MypageWishlistMapper mapper;
-	
-	
-	// 숙소 위시리스트의 총 레코드 건수를 반환하는 메소드(페이징 처리에 필요)
-	@Override
-	public int getTotalOfAccom(Criteria cri, MemberVO member) throws ServiceException {
-		log.trace("getTotalOfAccom() invoked.");
-		
-		try { return this.mapper.countTotalAmountOfAccom(cri, member); } 
-		catch (DAOException e) { throw new ServiceException(e); }
-	} // getTotalOfAccom
 
 
 	// 해당 회원의 숙소 위시리스트 내역을 가져오는 메소드
@@ -48,16 +38,6 @@ public class MypageWishlistServiceImpl implements MypageWishlistService {
 		try { return this.mapper.selectAccomWishlist(cri, member); } 
 		catch (DAOException e) { throw new ServiceException(e); }
 	} // getAccomWishlist
-
-
-	// 일정 위시리스트의 총 레코드 건수를 반환하는 메소드(페이징 처리에 필요)
-	@Override
-	public int getTotalOfPlan(Criteria cri, MemberVO member) throws ServiceException {
-		log.trace("getTotalOfPlan() invoked.");
-		
-		try { return this.mapper.countTotalAmountOfPlan(cri, member); } 
-		catch (DAOException e) { throw new ServiceException(e); }
-	} // getTotalOfPlan
 	
 	
 	// 해당 회원의 일정 위시리스트 내역을 가져오는 메소드
