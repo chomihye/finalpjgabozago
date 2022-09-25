@@ -19,8 +19,8 @@ public class TravePlanlCreateVO {
 	private Integer day;
 	private String place_name;	  //
 	private Integer place_seq;     //
-	private Long latitude;
-	private Long longitude;
+	private Double latitude;
+	private Double longitude;
 	private String img;
 	
 
