@@ -23,6 +23,10 @@ public interface AdminService {
 	// 예약 정보
 	public abstract List<Map<String, Object>> getReservInfo(Criteria cri, AccomReservationVO reserv) throws ServiceException;
 
+	// 예약 취소 정보
+	public abstract List<Map<String, Object>> getCanReservInfo(Criteria cri, AccomReservationVO reserv) throws ServiceException;
+
+	
 	// 공지사항
 	public abstract List<Map<String, Object>> getNotice(Criteria cri) throws ServiceException;
 	
