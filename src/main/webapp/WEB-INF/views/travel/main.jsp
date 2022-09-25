@@ -129,8 +129,9 @@
          $(function() {
             $('.small_area').click(function() {
                 smallAreaName = $(this).attr('value');
+                $('.small_area').removeClass("selected");
                 $(this).addClass("selected");
-                $(this).siblings().removeClass("selected");
+                //  $(this).siblings().removeClass("selected");
                 setPlaceList();
                 getPlaceList();
                 // setCenter();
@@ -152,6 +153,7 @@
                 $(".carousel-item").append(element);
             }
         });
+
 
         // $(function() {
         //     $(".row_num").addClass("selected2");
@@ -206,7 +208,7 @@
                 for(let i=1; i<=day; i++) {
                     let row = "#Day" + i + " .row";
                     let rowImg = "#Day" + i + " .row img";
-                    let rowInfo = "#Day" + i + " .row .col-2";
+                    let rowInfo = "#Day" + i + " .row .col-5";
                     let rowCnt = $(row).length;
 
                     for(let j=1; j<=rowCnt; j++) {
@@ -215,7 +217,7 @@
                         "day" : i,
                         "placeType" : "T",
                         "reservationIdx" : 32423,
-                        "placeName" : $(rowInfo).text(),
+                        "placeName" : $.trim($(rowInfo).first().text()),
                         "placeSeq" : j,
                         "latitude" : $(rowInfo).attr("latitude"),
                         "longitude" : $(rowInfo).attr("longitude"),
@@ -247,12 +249,14 @@
                     // dataType : "json", 
                     contentType: "application/json;charset=UTF-8",
                     success : function(data){   
-                        alert("ajax success!");
-                        self.location = "/travel/plan";
+                        alert("일정을 생성하였습니다.");
+                     
+                        self.location = "/travel/plan?planIdx=${planIdx}" 
 
                     },
                     error : function(request,error) {
-                        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+                    	 alert("일별당 일정 하나 이상 선택해주세요.");
+                         $("#myModal").hide();
                     }
                 }); //ajax 
 
@@ -448,7 +452,7 @@
                             <div id="collapse1" class="collapse hide" data-parent="#accordion">
                                 <hr> <h7>상세지역 선택 </h7>
                                 <div class="card-body">
-                                    <input type="button" class="small_area" value="강남구" id="강남"><br>
+                                    <input type="button" class="small_area" value="강남구"><br>
                                     <input type="button" class="small_area" value="도봉구"><br>
                                     <input type="button" class="small_area" value="동대문구"><br>
                                     <input type="button" class="small_area" value="동작구"><br>
@@ -772,7 +776,10 @@
             <button onclick="" class="button" id="btn_reservation">나의 숙소 찾기</button>
             <!-- 일정 구경 버튼 -->
             <button onclick="" class="button" id="btn_plan">일정 구경하기</button>
-            </div>
+           
+
+        </div>
+            
             <!-- 내 숙소 팝업  -->
             <div id="setupPop2" class="wrap_layerpop2">
                 <div class="layerpop2" >
@@ -809,7 +816,6 @@
                       </div>
                       
                    
-                
                     <button type="button" id="btn_reservation_cs" onclick="CategoryChange(this,10)">닫기</button>
                 </div>
             <div class="dimmed"></div></div>
@@ -882,36 +888,36 @@
          
             <div class="row">
                 <div class="col-sm-1" id="place1" draggable="true">
-                    <img src="https://picsum.photos/id/400/600/400" alt="">
-                    Guttannen1
+                    <img src="http://tong.visitkorea.or.kr/cms/resource/48/705248_image2_1.jpg" alt="">
+                    2022 강남페스티벌
                 </div>
                 <div class="col-sm-1" id="place2"draggable="true">
-                    <img src="https://picsum.photos/id/400/600/400" alt="">
-                    Guttannen2
+                    <img src="http://tong.visitkorea.or.kr/cms/resource/48/705248_image2_1.jpg" alt="">
+                    노보텔 앰배서더 강남
                 </div>
                 <div class="col-sm-1" id="place3" draggable="true">
-                    <img src="https://picsum.photos/id/400/600/400" alt="">
-                    Guttannen3
+                    <img src="http://tong.visitkorea.or.kr/cms/resource/86/2020186_image2_1.jpg" alt="">
+                    고투몰(강남터미널 지하도상가)
                 </div>
                 <div class="col-sm-1" id="place4" draggable="true">
-                    <img src="https://picsum.photos/id/400/600/400" alt="">
-                    Guttannen4
+                    <img src="http://tong.visitkorea.or.kr/cms/resource/13/2024213_image2_1.jpg" alt="">
+                    세븐럭카지노(강남코엑스점)
                 </div>
                 <div class="col-sm-1" id="place5" draggable="true">
-                    <img src="https://picsum.photos/id/400/600/400" alt="">
-                    Guttannen5
+                    <img src="http://tong.visitkorea.or.kr/cms/resource/08/1984608_image2_1.jpg" alt="">
+                    강남
                 </div>
                 <div class="col-sm-1" id="place6" draggable="true">
-                    <img src="https://picsum.photos/id/400/600/400" alt="">
-                    Guttannen6
+                    <img src="http://tong.visitkorea.or.kr/cms/resource/62/1923662_image2_1.jpg" alt="">
+                    서울특별시교육청 강남도서관
                 </div>
                 <div class="col-sm-1" id="place7" draggable="true">
-                    <img src="https://picsum.photos/id/400/600/400" alt="">
-                    Guttannen7
+                    <img src="http://tong.visitkorea.or.kr/cms/resource/23/2462023_image2_1.jpg" alt="">
+                    강남청소년수련관
                 </div>
                 <div class="col-sm-1" id="place8" draggable="true">
-                    <img src="https://picsum.photos/id/400/600/400" alt="">
-                    Guttannen8
+                    <img src="http://tong.visitkorea.or.kr/cms/resource/15/1807915_image2_1.jpg" alt="">
+                    바바인디아 강남역점
                 </div>
             </div>
 
@@ -1052,9 +1058,8 @@
                 let rowIndex = '<div class="row">' + 
                                 '<div class="col-1"><li class="row_num"></li></div>' + 
                                 '<div class="col-4"><img src="' + dataImg + ' " alt=""></div>' +
-                                '<div class="col-2" style="white-space:nowrap" latitude=' + latitude + ' longitude=' + longitude + '>' + dataText + '</div>' +
-                                '<div class="col-2"><button onlick="" class="row_btn">-</button></div>' + 
-                                '</div>';
+                                '<div class="col-5" style="white-space:nowrap" latitude=' + latitude + ' longitude=' + longitude + '>' + dataText + 
+                                '<div class="col-2"><button onlick="" class="row_btn">-</button></div></div>';
                     
                 containerId = e.target.id;
                 console.log("containerId:",containerId)
