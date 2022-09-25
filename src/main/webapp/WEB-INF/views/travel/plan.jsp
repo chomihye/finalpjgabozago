@@ -1,5 +1,3 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"
-%><%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -12,6 +10,7 @@
     <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-migrate/3.4.0/jquery-migrate.min.js" integrity="sha512-QDsjSX1mStBIAnNXx31dyvw4wVdHjonOwrkaIhpiIlzqGUCdsI62MwQtHpJF+Npy2SmSlGSROoNWQCOFpqbsOg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
   
     <!-- bootstrap -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
@@ -31,10 +30,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300&display=swap" rel="stylesheet">
 
     <!-- Customized Stylesheet -->
-    <link rel="stylesheet" type="text/css" href="${path}/resources/travel/css/plan.css?ver=1.3">
+    <link rel="stylesheet" type="text/css" href="${path}/resources/travel/css/plan.css?ver=1">
 
     <!-- map -->
-    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=31ac49eb45c2f47546120a0ea0a28dbe&libraries=services,clusterer,drawing"></script>
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=31ac49eb45c2f47546120a0ea0a28dbe&libraries=services"></script>
     <!-- <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=APIKEY&libraries=services"></script> -->
     
 
@@ -54,32 +53,6 @@
     $(function() {
         $('#btn_plan_2').click(function() {
             $(".plan_days").hide();
-            var container = document.getElementById('map_all');
-            var options = {
-                center: new kakao.maps.LatLng(33.450701, 126.570667),
-                level: 2
-            };
-
-            var map = new kakao.maps.Map(container, options);
-
-            var linePath = [
-                new kakao.maps.LatLng(33.452344169439975, 126.56878163224233),
-                new kakao.maps.LatLng(33.452739313807456, 126.5709308145358),
-                new kakao.maps.LatLng(33.45178067090639, 126.5726886938753) 
-            ];
-
-            // 지도에 표시할 선을 생성합니다
-            var polyline = new kakao.maps.Polyline({
-                path: linePath, // 선을 구성하는 좌표배열 입니다
-                strokeWeight: 5, // 선의 두께 입니다
-                strokeColor: '#FFAE00', // 선의 색깔입니다
-                strokeOpacity: 0.7, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
-                strokeStyle: 'solid' // 선의 스타일입니다
-            });
-
-            // 지도에 선을 표시합니다 
-            polyline.setMap(map); 
-
             $("#map_all").show();  
         })  
     });
@@ -88,7 +61,13 @@
         $('#btn_all').click(function() {
             $(".plan_days").hide();
 
-            
+            var container = document.getElementById('map_all');
+            var options = {
+                center: new kakao.maps.LatLng(33.450701, 126.570667),
+                level: 2
+            };
+
+            var map = new kakao.maps.Map(container, options);
            
         })  
     });
@@ -144,7 +123,6 @@
                    
                     <c:forEach var="i" begin="1" end="${__LIST__[0].days}" varStatus="days">
                     <c:set var="day" value="${days.count}"/>
-
                     <fmt:parseDate value="${__LIST__[0].start_date}" var="date" pattern="yyyy-MM-dd"/>
                     <c:set var="day1" value="0"/>
                     <c:set var="day2" value="0"/>
@@ -190,11 +168,7 @@
 
                         <!-- DAY n 별로 장소출력,,,,, -->
                         <div class="row">
-                            <c:set var="dayPlus" value="${dayIndex * 86400000}" />
-                            <c:set var="now" value="${date}" />
-                            <c:set target="${now}" property="time" value="${now.time + dayPlus}" />
-
-                            <div class="col-sm-4"><fmt:formatDate value="${now}" pattern="MM월 dd일" /> DAY ${day}</div>
+                            <div class="col-sm-4"><fmt:formatDate value="${date}" pattern="yyyy년 MM월 dd일"/> DAY ${day}</div>
 
                                 <c:choose>
                                     <c:when test="${day == 1}">
@@ -202,8 +176,8 @@
                                             <c:forEach var="j" begin="${listCnt}" end="${day1-1}" varStatus="status">
                                             <c:set var="index" value="${status.index}"/>
                                             <div class="place">
-                                                <div class="place_img"><img src=${__LIST__[index].img} width="120px" height="120px"></div>
-                                                <div class="place_name" latitude="${__LIST__[index].latitude}" longitude="${__LIST__[index].longitude}">${__LIST__[index].place_name}</div>
+                                                <div class="place_img"><img src=${__LIST__[index].img}></div>
+                                                <div class="place_name">${__LIST__[index].place_name}</div>
                                             </div>
                                             </c:forEach>
                                         </div>
@@ -214,8 +188,8 @@
                                             <c:forEach var="j" begin="${day1}" end="${day1+day2-1}" varStatus="status">
                                             <c:set var="index" value="${status.index}"/>
                                             <div class="place">
-                                                <div class="place_img"><img src=${__LIST__[index].img} width="120px" height="120px"></div>
-                                                <div class="place_name" latitude="${__LIST__[index].latitude}" longitude="${__LIST__[index].longitude}">${__LIST__[index].place_name}</div>
+                                                <div class="place_img"><img src=${__LIST__[index].img}></div>
+                                                <div class="place_name">${__LIST__[index].place_name}</div>
                                             </div>
                                             </c:forEach>
                                             <c:set var="listCnt" value="${day1+day2-1}" />
@@ -227,8 +201,8 @@
                                             <c:forEach var="j" begin="${day1+day2}" end="${day1+day2+day3-1}" varStatus="status">
                                             <c:set var="index" value="${status.index}"/>
                                             <div class="place">
-                                                <div class="place_img"><img src=${__LIST__[index].img} width="120px" height="120px"></div>
-                                                <div class="place_name" latitude="${__LIST__[index].latitude}" longitude="${__LIST__[index].longitude}">${__LIST__[index].place_name}</div>
+                                                <div class="place_img"><img src=${__LIST__[index].img}></div>
+                                                <div class="place_name">${__LIST__[index].place_name}</div>
                                             </div>
                                             </c:forEach>
                                             <c:set var="listCnt" value="${day1+day2-1}" />
@@ -240,8 +214,8 @@
                                             <c:forEach var="j" begin="${day1+day2+day3}" end="${day1+day2+day3+day4-1}" varStatus="status">
                                             <c:set var="index" value="${status.index}"/>
                                             <div class="place">
-                                                <div class="place_img"><img src=${__LIST__[index].img} width="120px" height="120px"></div>
-                                                <div class="place_name" latitude="${__LIST__[index].latitude}", longitude="${__LIST__[index].longitude}">${__LIST__[index].place_name}</div>
+                                                <div class="place_img"><img src=${__LIST__[index].img}></div>
+                                                <div class="place_name">${__LIST__[index].place_name}</div>
                                             </div>
                                             </c:forEach>
                                             <c:set var="listCnt" value="${listCnt+day1-1}" />
@@ -253,8 +227,8 @@
                                             <c:forEach var="j" begin="${day1+day2+day3+day4}" end="${day1+day2+day3+day4+day5-1}" varStatus="status">
                                             <c:set var="index" value="${status.index}"/>
                                             <div class="place">
-                                                <div class="place_img"><img src=${__LIST__[index].img} width="120px" height="120px"></div>
-                                                <div class="place_name" latitude="${__LIST__[index].latitude}", longitude="${__LIST__[index].longitude}">${__LIST__[index].place_name}</div>
+                                                <div class="place_img"><img src=${__LIST__[index].img}></div>
+                                                <div class="place_name">${__LIST__[index].place_name}</div>
                                             </div>
                                             </c:forEach>
                                             <c:set var="listCnt" value="${listCnt+day1-1}" />
@@ -266,8 +240,8 @@
                                             <c:forEach var="j" begin="${day1+day2+day3+day4+day5}" end="${day1+day2+day3+day4+day5+day6-1}" varStatus="status">
                                             <c:set var="index" value="${status.index}"/>
                                             <div class="place">
-                                                <div class="place_img"><img src=${__LIST__[index].img} width="120px" height="120px"></div>
-                                                <div class="place_name" latitude="${__LIST__[index].latitude}", longitude="${__LIST__[index].longitude}">${__LIST__[index].place_name}</div>
+                                                <div class="place_img"><img src=${__LIST__[index].img}></div>
+                                                <div class="place_name">${__LIST__[index].place_name}</div>
                                             </div>
                                             </c:forEach>
                                             <c:set var="listCnt" value="${listCnt+day1-1}" />
@@ -279,16 +253,21 @@
                                             <c:forEach var="j" begin="${day1+day2+day3+day4+day5+day6}" end="${day1+day2+day3+day4+day5+day6+day7-1}" varStatus="status">
                                             <c:set var="index" value="${status.index}"/>
                                             <div class="place">
-                                                <div class="place_img"><img src=${__LIST__[index].img} width="120px" height="120px"}></div>
-                                                <div class="place_name" latitude="${__LIST__[index].latitude}", longitude="${__LIST__[index].longitude}">${__LIST__[index].place_name}</div>
+                                                <div class="place_img"><img src=${__LIST__[index].img}></div>
+                                                <div class="place_name">${__LIST__[index].place_name}</div>
                                             </div>
                                             </c:forEach>
                                             <c:set var="listCnt" value="${listCnt+day1-1}" />
                                         </div>
                                     </c:when>
-                                </c:choose>   
+                                </c:choose>
 
+                                    
+
+                                    
                         </div>
+
+
                     </c:forEach>
                 </div>
 
@@ -296,10 +275,12 @@
                 <div class="map_map">
                 <!-- 지도 버튼 눌럿을때 >> ALL 버튼 클릭시 default노출-->
                     <div id="map_all">
+                        
                     </div>
 
                     <!-- 지도 버튼 눌렀을때  >> DAY 버튼 클릭시 각각 노출-->
                     <div id="map_part">
+                       
                     </div>
                 </div>
 
@@ -319,32 +300,13 @@
     <!-- kakao map  -->
     <!-- kakao map  -->
     <script>
-		// var container = document.getElementById('map_all');
-		// var options = {
-		// 	center: new kakao.maps.LatLng(33.450701, 126.570667),
-		// 	level: 2
-		// };
+		var container = document.getElementById('map_all');
+		var options = {
+			center: new kakao.maps.LatLng(33.450701, 126.570667),
+			level: 2
+		};
 
-        // var linePath = [
-        //     new kakao.maps.LatLng(33.452344169439975, 126.56878163224233),
-        //     new kakao.maps.LatLng(33.452739313807456, 126.5709308145358),
-        //     new kakao.maps.LatLng(33.45178067090639, 126.5726886938753) 
-        // ];
-
-        // // 지도에 표시할 선을 생성합니다
-        // var polyline = new kakao.maps.Polyline({
-        //     path: linePath, // 선을 구성하는 좌표배열 입니다
-        //     strokeWeight: 5, // 선의 두께 입니다
-        //     strokeColor: '#FFAE00', // 선의 색깔입니다
-        //     strokeOpacity: 0.7, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
-        //     strokeStyle: 'solid' // 선의 스타일입니다
-        // });
-
-        // // 지도에 선을 표시합니다 
-        // polyline.setMap(map);  
-
-
-		// var map = new kakao.maps.Map(container, options);
+		var map = new kakao.maps.Map(container, options);
 
 
 
