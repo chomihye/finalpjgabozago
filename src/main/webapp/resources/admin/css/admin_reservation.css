@@ -35,6 +35,10 @@ ul li {
     list-style: none;
 }
 
+header {
+    height: 140px;
+    width: 1920px;
+}
 
 #accordion {
     justify-content: center;
