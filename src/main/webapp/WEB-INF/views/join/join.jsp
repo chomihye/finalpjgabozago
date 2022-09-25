@@ -63,7 +63,6 @@
         <div id="body">        
             <div class="midHr">&nbsp;회원가입&nbsp;</div>
 
-            <!-- action="http://localhost:5050/join/joinProcess" --> 
             <form 
             action="join/joinProcess"
             
@@ -478,7 +477,6 @@
         </div>
         <jsp:include page="/WEB-INF/views/common/footer.jsp" flush="true"/>
     </div>
-
 
     <!-- 이메일 주소 인증 모달 -->
     <div class="modal" id="emailModal">

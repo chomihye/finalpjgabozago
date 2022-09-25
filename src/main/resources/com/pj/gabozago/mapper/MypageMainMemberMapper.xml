@@ -24,8 +24,8 @@
             r.check_out_date
         FROM
             tbl_reservation r,
-            tbl_accom_room ar,
-            tbl_accom a,
+            (SELECT idx, accom_idx, room_name FROM tbl_accom_room) ar,
+            (SELECT idx, accom_name FROM tbl_accom) a,
             tbl_accom_images ai
         WHERE
             r.accom_room_idx = ar.idx

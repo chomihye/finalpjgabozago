@@ -31,9 +31,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.google.gson.Gson;
 import com.pj.gabozago.common.SharedScopeKeys;
 import com.pj.gabozago.common.UUIDGenerator;
+import com.pj.gabozago.domain.GoogleDTO;
 import com.pj.gabozago.domain.JoinDTO;
 import com.pj.gabozago.domain.KakaoDTO;
-import com.pj.gabozago.domain.MemberVO;
 import com.pj.gabozago.domain.NaverDTO;
 import com.pj.gabozago.exception.ControllerException;
 import com.pj.gabozago.service.MemberService;
@@ -323,12 +323,6 @@ public class JoinController {
 	@PostMapping("/KakaojoinProcess")
 	public String kakaoJoinProcess(KakaoDTO dto, MultipartFile profileImg, HttpSession session, RedirectAttributes rttrs) throws ControllerException{
 		log.trace("KakaojoinProcess() invoked.");
-		log.info(">>>>>>>>>>>> dto 들어왔어염!!!!!!!!!!");
-		log.info(dto.getEmail());
-		log.info(dto.getName());
-		log.info(dto.getPhone());
-		log.info(dto.getBirthday());
-		log.info(dto.getNickname());
 
 		try {
 			String profilePath = "";
@@ -408,5 +402,99 @@ public class JoinController {
 		} catch (Exception e) {
 			throw new ControllerException(e);
 		}// try-catch
-	}// naverJoinProcess
+	}// kakaoJoinProcess
+	
+	
+	@GetMapping("/googleJoin")
+	public String googleJoin() {
+		log.trace("googleJoin() invoked.");
+
+		return "/join/googleJoin";
+	}// googleJoin
+	
+	// 구글 회원가입
+	@PostMapping("/GooglejoinProcess")
+	public String googleJoinProcess(GoogleDTO dto, MultipartFile profileImg, HttpSession session, RedirectAttributes rttrs) throws ControllerException{
+		log.trace("googleJoinProcess() invoked.");
+
+		try {
+			String profilePath = "";
+
+			GoogleDTO dtoFromGoogle = (GoogleDTO) session.getAttribute(SharedScopeKeys.GOOGLE_JOIN_KEY);
+						
+			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+			
+			String cipheredPw = encoder.encode(dto.getPassword() + "__SALT__");
+			
+			dtoFromGoogle.setName(dto.getName());
+			dtoFromGoogle.setPassword(cipheredPw);
+			dtoFromGoogle.setEmail(dto.getEmail());
+			dtoFromGoogle.setNickname(dto.getNickname());
+			dtoFromGoogle.setPhone(dto.getPhone());
+			dtoFromGoogle.setBirthday(dto.getBirthday());
+
+			// 프로필 사진을 업로드한 경우
+			if(profileImg.getSize() != 0) {
+				String targetDir = System.getProperty("user.home") + "/finalgabozago/profile/";
+
+				Date today = new Date();
+				SimpleDateFormat changer = new SimpleDateFormat("yyyyMMdd");
+				String dateName = changer.format(today);
+				
+				log.info("getOriginalFilename: {}", profileImg.getOriginalFilename());
+				log.info("getSize: {}", profileImg.getSize());
+
+				targetDir += dateName + "/";
+
+				File dir = new File(targetDir);
+				
+				if(!dir.exists()) {
+					dir.mkdirs();
+				}// if
+				
+				String fileFullName = profileImg.getOriginalFilename();
+				String targetFile = targetDir + UUIDGenerator.generateUniqueKeysWithUUIDAndMessageDigest()
+					+ fileFullName.substring(fileFullName.lastIndexOf("."));
+								
+				profilePath = targetFile;
+								
+				InputStream is = profileImg.getInputStream();
+				BufferedInputStream bis = new BufferedInputStream(is);
+				
+				FileOutputStream fos = new FileOutputStream(targetFile);
+				BufferedOutputStream bos = new BufferedOutputStream(fos);
+				
+				try(is; bis; fos; bos;){
+					byte[] buf = new byte[300];
+					
+					int readBytes = 0;
+					
+					while((readBytes = bis.read(buf)) != -1) {
+						bos.write(buf, 0, readBytes);
+					}// while
+					
+					bos.flush();
+					log.info("파일 업로드 완료");
+				}// try-with-resources
+			
+				dtoFromGoogle.setProfilePath(profilePath);
+			}// if
+				
+			if(this.service.createUserForGoogleLogin(dtoFromGoogle)) {
+				// 회원가입 성공				
+				rttrs.addFlashAttribute(SharedScopeKeys.RESULT_KEY, "구글 회원가입이 성공하였습니다. 신규 가입 기념 포인트 3,000P가 지급되었습니다.");
+				session.removeAttribute(SharedScopeKeys.GOOGLE_JOIN_KEY);
+
+				return "redirect:/login";
+			} else {
+				// 회원가입 실패
+				rttrs.addFlashAttribute(SharedScopeKeys.RESULT_KEY, "구글 회원가입이 실패하였습니다.");
+				return "redirect:/main";
+			}// if-else
+		
+		} catch (Exception e) {
+			throw new ControllerException(e);
+		}// try-catch
+	}// googleJoinProcess
+
 }// end class

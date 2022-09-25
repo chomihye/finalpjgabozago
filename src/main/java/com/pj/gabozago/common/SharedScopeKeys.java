@@ -17,5 +17,6 @@ public final class SharedScopeKeys {		// model 공유영역에 담을 key의 이
 	public static final String ORIGINAL_URI_KEY = "__URI__";
 	public static final String NAVER_JOIN_KEY = "__NAVER__";
 	public static final String KAKAO_JOIN_KEY = "__KAKAO__";
+	public static final String GOOGLE_JOIN_KEY = "__GOOGLE__";
 
 } // end class

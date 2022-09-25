@@ -101,8 +101,9 @@ public class AccoController {
 			model.addAttribute("_REVIEW_", reviewMap);
 
 			map.put("room_list", room_list);
-			model.addAttribute("_ACCOM_", map);
 			map.put("review_list", review_list);
+			model.addAttribute("_ACCOM_", map);
+			
 
 			model.addAttribute("check_in_date", check_in_date);
 			model.addAttribute("check_out_date", check_out_date);
@@ -157,11 +158,12 @@ public class AccoController {
 		return result;
 	} // searchHotelList
 
-	// 결제를 위한 정보 넘기기
+	// 결제를 위한 정보 넘기기 (결제페이지 열기)
 	@GetMapping("/payment")
 	public String loadUser(@SessionAttribute(name = SharedScopeKeys.USER_KEY, required = true) MemberVO member,
 			@RequestParam("room_idx") Integer room_idx, @RequestParam("check_in_date") String check_in_date,
-			@RequestParam("check_out_date") String check_out_date,
+			@RequestParam("check_out_date") String check_out_date, @RequestParam("adult_count") String adult_count,
+			@RequestParam("child_count") String child_count,
 
 			AccomRoomDTO room, AccomReservationDTO reser, Model model) throws ControllerException, ServiceException {
 
@@ -176,13 +178,30 @@ public class AccoController {
 
 		model.addAttribute("check_in_date", check_in_date);
 		model.addAttribute("check_out_date", check_out_date);
-		// model.addAttribute("adult_count",adult_count);
-		// model.addAttribute("child_count",child_count);
-		// @RequestParam("adult_count") Integer adult_count,
-		// @RequestParam("child_count") Integer child_count,
+		model.addAttribute("adult_count",adult_count);
+		model.addAttribute("child_count",child_count);
+		
 		return "acco/reservation_payment";
 	} // loadUser
+	
+	
+	// 결제 DB에 저장
+//	@RequestMapping(value = "payment", method = RequestMethod.POST)
+//	@ResponseBody
+//	public HashMap<String, Object> addPaymentInfo(@SessionAttribute(name = SharedScopeKeys.USER_KEY, required = false) MemberVO member, HttpServletRequest request)
+//			throws ControllerException, ServiceException {
+//		
+//		log.info(request.getParameter("accom_room_idx"));
+//		
+//		HashMap<String, Object> result = new HashMap<String, Object>();
+//		
+//		
+//		
+//		return null;
+//	}
+	
 
+	
 	// 위시리스트 추가/삭제
 	@RequestMapping(value = "wishlist", method = RequestMethod.POST)
 	@ResponseBody
@@ -229,17 +248,6 @@ public class AccoController {
 		return result;
 	}
 
-	// 결제 ..
-//	@GetMapping("/payment")
-//	public String getMemberInfo(@RequestParam("member_idx") Integer member_idx, MemberDTO member, Model model)
-//			throws ControllerException, ServiceException {
-//
-//		member.setIdx(member_idx);
-//		Map<String, Object> map = this.accomService.getOneMemberInfo(member);
-//
-//		model.addAttribute("_MEMBER_", map);
-//
-//		return "acco/reservation_room";
-//	}
+
 
 }// end class

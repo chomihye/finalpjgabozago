@@ -1,7 +1,10 @@
 package com.pj.gabozago.controller;
 
+import java.util.Collections;
+
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -13,12 +16,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.github.scribejava.core.model.OAuth2AccessToken;
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken.Payload;
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
+import com.google.api.client.googleapis.util.Utils;
+import com.google.api.client.http.HttpTransport;
+import com.google.api.client.json.JsonFactory;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.pj.gabozago.common.SharedScopeKeys;
 import com.pj.gabozago.common.UUIDGenerator;
+import com.pj.gabozago.domain.GoogleDTO;
 import com.pj.gabozago.domain.KakaoDTO;
 import com.pj.gabozago.domain.LoginDTO;
 import com.pj.gabozago.domain.MemberVO;
@@ -148,7 +158,7 @@ public class LoginController {
         	String access_Token = KakaoLoginService.getAccessToken(code);
             KakaoDTO dto = KakaoLoginService.getUserInfo(access_Token);
 
-            MemberVO vo = this.service.kakaoLogin(dto.getEmail()); // 조건: provider == kakao, DB email로 가입된 회원인지 조회
+            MemberVO vo = this.service.kakaoLogin(dto.getEmail()); 
 			
 			if(vo == null) { // 가입 정보 없는 회원 DB 저장
 				dto.setUidnum("kakao_" + UUIDGenerator.generateUniqueKeysWithUUIDAndMessageDigest().substring(0, 43)); // 임의로 uid 생성 후 저장
@@ -162,7 +172,7 @@ public class LoginController {
 					session.setAttribute(SharedScopeKeys.USER_KEY, vo);
 					
 					return "redirect:/main";					
-				} else {
+				} else { // provider kakao 아닌 경우
 					rttrs.addFlashAttribute(SharedScopeKeys.RESULT_KEY, "이미 가보자고에 가입된 회원입니다. 아이디/비밀번호 찾기를 통해 회원 정보를 확인하세요.");
 					
 					return "redirect:/login";					
@@ -173,5 +183,68 @@ public class LoginController {
 			throw new ControllerException(e);
 		}// try-catch        
     }// loginPOSTKakao
+	
+	@PostMapping("/google/auth")
+	public String loginPOSTGoogle(@RequestParam("idtoken") String idtoken, HttpSession session, RedirectAttributes rttrs) throws ControllerException {
+        log.info("callback - loginPOSTGoogle() invoked.");
+        
+        try {
+        	HttpTransport transport = Utils.getDefaultTransport();
+        	JsonFactory jsonFactory = Utils.getDefaultJsonFactory();
+        		
+        	GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(transport, jsonFactory)
+        			.setAudience(Collections.singletonList("1060014750380-ebmvnebj7u5oipfrl1in6lc14klblgmc.apps.googleusercontent.com")).build();
+        	
+        	log.info("idtoken: {}", idtoken);
+        	
+        	JSONObject json = new JSONObject();
+        	
+        	GoogleIdToken googleIdToken = verifier.verify(idtoken);
+        	log.info("googleIdToken: {}", googleIdToken);
+
+			// if (googleIdToken != null) { 
+        	Payload payload = googleIdToken.getPayload();
+        	log.info("!!!!!!!!!!!!!!! payload: {}", payload);
+        	log.info("!!!!!!!!!!!!!!! payload.get(\"email\"): {}", payload.get("email"));
+        	
+        	GoogleDTO dto = new GoogleDTO();
+				  
+        	dto.setName((String) payload.get("name"));
+        	dto.setEmail((String) payload.get("email")); 
+        	dto.setNickname((String)payload.get("given_name")); 
+        	// dto.setProfilePath((String) payload.get("picture")); 
+			// dto.setAccess_token(idtoken);
+        	
+        	MemberVO vo = this.service.googleLogin(dto.getEmail()); // 이메일로 조회, provider = google
+
+        	if(vo == null) { // 가입 정보 없는 회원 DB 저장
+        		log.info("가입 정보 없는 회원 DB 저장");
+        		
+				dto.setUidnum("google_" + UUIDGenerator.generateUniqueKeysWithUUIDAndMessageDigest().substring(0, 43)); // 임의로 uid 생성 후 저장
+				session.setAttribute(SharedScopeKeys.GOOGLE_JOIN_KEY, dto);
+				
+				return "redirect:/join/googleJoin";
+			} else {
+	    		log.info("vo: {}", vo);
+
+				if(vo.getProvider().equals("google")) {
+	        		log.info("google provider");
+
+					rttrs.addFlashAttribute(SharedScopeKeys.RESULT_KEY, "구글 로그인이 성공하였습니다.");
+					session.setAttribute(SharedScopeKeys.USER_KEY, vo);
+					
+					return "redirect:/main";					
+				} else {
+	        		log.info("not google provider");
+
+					rttrs.addFlashAttribute(SharedScopeKeys.RESULT_KEY, "이미 가보자고에 가입된 회원입니다. 아이디/비밀번호 찾기를 통해 회원 정보를 확인하세요.");
+					
+					return "redirect:/login";					
+				}// if-else
+			} // if-else       
+        } catch (Exception e) {
+			throw new ControllerException(e);
+		}// try-catch        
+    }// loginPOSTGoogle
 	
 }// end class

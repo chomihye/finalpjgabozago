@@ -209,3 +209,29 @@ article.wishlist_plan{
 .carousel-inner li{
     width: 250px;
 }
+
+/* 내역이 없는 사람을 위한 용도 */
+#no_get{
+    border-top: none;
+    text-align: center;
+    height: 400px;
+    line-height: 400px;
+}
+
+/* 로딩 gif 관련 */
+#wrap-loading { 
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    display: none;
+}
+
+.loading { /*로딩 이미지*/
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-left: -21px;
+    margin-top: -21px;
+}

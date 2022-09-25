@@ -700,11 +700,35 @@ button {
   font-weight: 500;
 }
 
-.star_review{
+.clean_review{
+  display: flex;
   font-size: 15px;
   font-weight: 400;
   color: #333;
+  align-items: center;
 }
+
+.location_review{
+  display: flex;
+  font-size: 15px;
+  font-weight: 400;
+  color: #333;
+  align-items: center;
+}
+
+.last_review{
+  display: flex;
+  font-size: 15px;
+  font-weight: 400;
+  color: #333;
+  align-items: center;
+}
+
+/* .star_review{
+  font-size: 15px;
+  font-weight: 400;
+  color: #333;
+} */
 
 .review_room_type {
   font-size: 13px;

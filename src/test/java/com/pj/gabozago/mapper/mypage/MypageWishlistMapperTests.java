@@ -73,25 +73,6 @@ public class MypageWishlistMapperTests {
 		Objects.requireNonNull(list);
 		list.forEach(log::info);
 	} // testSelectAccomWishlist
-	
-	
-	@Test
-	@Order(2)
-	@DisplayName("2. testCountTotalAmountOfAccom")
-	@Timeout(value = 10, unit = TimeUnit.SECONDS)
-	void testCountTotalAmountOfAccom() throws DAOException {
-		log.trace("testCountTotalAmountOfAccom() invoked.");
-		
-		Criteria cri = new Criteria();
-		cri.setAmount(10);
-//		cri.setCurrPage(2);
-		
-		MemberVO member = new MemberVO(53, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-		
-		Integer num = this.mapper.countTotalAmountOfAccom(cri, member);
-		
-		log.info(">>>>>>>>>>>>>>>> 총 레코드 갯수 : {}", num);
-	} // testCountTotalAmountOfAccom
 
 	
 	@Test
@@ -113,17 +94,17 @@ public class MypageWishlistMapperTests {
 	} // testSelectPlanWishlist
 	
 	
-	@Test
-	@Order(4)
-	@DisplayName("4. testSelectPlanDetail")
-	@Timeout(value = 10, unit = TimeUnit.SECONDS)
-	void testSelectPlanDetail() throws DAOException {
-		log.trace("testSelectPlanDetail() invoked.");
-		
-		List<LinkedHashMap<String, Object>> list = this.mapper.selectPlanDetail(185, 7);
-		
-		list.forEach(log::info);
-	} // testSelectPlanDetail
+//	@Test
+//	@Order(4)
+//	@DisplayName("4. testSelectPlanDetail")
+//	@Timeout(value = 10, unit = TimeUnit.SECONDS)
+//	void testSelectPlanDetail() throws DAOException {
+//		log.trace("testSelectPlanDetail() invoked.");
+//		
+//		List<LinkedHashMap<String, Object>> list = this.mapper.selectPlanDetail("185", 7);
+//		
+//		list.forEach(log::info);
+//	} // testSelectPlanDetail
 	
 	
 	@Test

@@ -42,8 +42,6 @@
     <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
 
     <script type="text/javascript">
-        $(function(){
-        });
 
     </script>
 </head>
@@ -72,15 +70,8 @@
 	                    <input type="button" value="돌아가기" onClick="/findInfo/id'">
 	                    <input type="button" value="회원가입" onClick="location.href='/join'">
 	                </div>
-                <%} else { 
-                	// int domainLastIndex = email.lastIndexOf('@');
-                	
-                	// String domain = email.substring(domainLastIndex, email.length());
-                	
-                	// String hashedEmail = email.substring(0, 4);
-                
+                <%} else {                 
                 	String[] emailArr = email.split("@");
-                	// emailArr[0].lastIndexOf(0, 3);
                 	
 	               	StringBuilder sb = new StringBuilder();
                 	
@@ -91,7 +82,6 @@
 	               	}// for
                 	
                 	String hashedEmailFront = sb.toString();
-                	
                 %>
 	                <div class="mainForm" id="idfindResultSucceed">
                 	<p>고객님의 아이디는 <%= hashedEmailFront %>@<%= emailArr[1] %> 입니다.<br>

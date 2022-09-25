@@ -95,24 +95,6 @@ public class MypagePlanPointWriteMapperTests {
 	
 	
 	@Test
-	@Order(3)
-	@DisplayName("3. testCountTotalAmount")
-	@Timeout(value = 10, unit = TimeUnit.SECONDS)
-	void testCountTotalAmount() throws DAOException {
-		log.trace("testCountTotalAmount() invoked.");
-		
-		Criteria cri = new Criteria();
-		
-		MemberVO member = new MemberVO(53, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-		
-		Integer num = this.mapper.countTotalOfPoint(cri, member);
-		
-		Objects.requireNonNull(num);
-		log.info("\t+ 총 레코드 건수 : {}", num);
-	} // testCountTotalAmount
-	
-	
-	@Test
 	@Order(4)
 	@DisplayName("4. testUpdateMemberPoint")
 	@Timeout(value = 10, unit = TimeUnit.SECONDS)
@@ -160,23 +142,6 @@ public class MypagePlanPointWriteMapperTests {
 	
 	
 	@Test
-	@Order(7)
-	@DisplayName("7. testCountTotalOfWrite")
-	@Timeout(value = 10, unit = TimeUnit.SECONDS)
-	void testCountTotalOfWrite() throws DAOException {
-		log.trace("testCountTotalOfWrite() invoked.");
-		
-		Criteria cri = new Criteria();
-		cri.setAmount(10);
-		
-		MemberVO member = new MemberVO(53, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-		
-		int num = this.mapper.countTotalOfWrite(member);
-		log.info("=================================== : {}", num);
-	} // testCountTotalOfWrite
-	
-	
-	@Test
 	@Order(8)
 	@DisplayName("8. testSelectCommentList")
 	@Timeout(value = 10, unit = TimeUnit.SECONDS)
@@ -191,20 +156,6 @@ public class MypagePlanPointWriteMapperTests {
 		List<LinkedHashMap<String, Object>> list = this.mapper.selectCommentList(cri, member);
 		list.forEach(log::info);
 	} // testSelectCommentList
-	
-	
-	@Test
-	@Order(9)
-	@DisplayName("9. testCountTotalOfComment")
-	@Timeout(value = 10, unit = TimeUnit.SECONDS)
-	void testCountTotalOfComment() throws DAOException {
-		log.trace("testCountTotalOfComment() invoked.");
-		
-		MemberVO member = new MemberVO(53, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-		
-		int num = this.mapper.countTotalOfComment(member);
-		log.info("=================================== num : {}", num);
-	} // testCountTotalOfComment
 	
 	
 } // end class

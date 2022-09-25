@@ -144,6 +144,17 @@ public class AccomServiceImpl implements AccomService {
 			throw new ServiceException(e);
 		}
 	}// getOneRoomInfo
+	
+	
+//	//예약 정보 저장
+//	@Override
+//	public Map<String, Object> 
+//	
+//	
+//	//결제 정보 저장
+//	@Override 
+	
+	
 
 	// 위시리스트
 	@Override

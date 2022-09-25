@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import com.pj.gabozago.domain.AccomDTO;
+import com.pj.gabozago.domain.AccomPaymentDTO;
 import com.pj.gabozago.domain.AccomReservationDTO;
 import com.pj.gabozago.domain.AccomRoomDTO;
 import com.pj.gabozago.domain.Criteria;
@@ -66,6 +67,12 @@ public interface AccomMapper {
 	// 특정 회원의 현재 포인트를 가져오는 메소드
 	@Select("SELECT point FROM tbl_member WHERE idx = #{idx}")
 	public abstract Integer selectUserCurrentPoint(MemberVO member);
+	
+	//예약정보 DB에 저장
+//	public abstract Integer insertReservation(AccomReservationDTO reservation) throws DAOException;
+//	
+//	//결제정보 DB에 저장
+//	public abstract Integer insertPayment(AccomPaymentDTO payment) throws DAOException;
 	
 	
 	

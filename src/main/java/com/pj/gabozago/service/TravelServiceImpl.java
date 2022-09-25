@@ -1,5 +1,7 @@
 package com.pj.gabozago.service;
 
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Objects;
 
@@ -72,6 +74,48 @@ public class TravelServiceImpl
 		log.info("\t+ this.mapper: {}", this.mapper);
 	}//afterPropertiesSet
 
+	
+//	others Plan ------------------------------------
+	@Override
+	public List<LinkedHashMap<String, Object>> getBestPlan() throws ServiceException {
+
+		log.trace("getBestPlan() invoked.");
+		
+		try { 
+			List<LinkedHashMap<String, Object>> finalList = new ArrayList<LinkedHashMap<String,Object>>();		// 최종데이터
+			List<LinkedHashMap<String, Object>> tempList = this.mapper.selectBestList(); 		// 임시데이터
+			
+			for(int i = 0 ; i < tempList.size() ; i++) {
+				LinkedHashMap<String, Object> finalMap = new LinkedHashMap<String, Object>();
+
+				int idx = Integer.parseInt(String.valueOf(tempList.get(i).get("IDX")));
+				int days = Integer.parseInt(String.valueOf(tempList.get(i).get("DAYS")));
+				
+				finalMap.put("itemNumber", i+1);
+				finalMap.put("idx", idx);
+				finalMap.put("largeAreaName", tempList.get(i).get("LARGE_AREA_NAME"));
+				finalMap.put("nickname", tempList.get(i).get("NICKNAME"));
+				finalMap.put("likes", tempList.get(i).get("LIKES"));
+				finalMap.put("days", days);
+				
+				List<Integer> eachDays = new ArrayList<Integer>();
+				
+				for(int j = 1 ; j <= days ; j++) {
+					List<LinkedHashMap<String, Object>> tempPlanDetail = this.mapper.selectPlanDetail(idx, j);
+					finalMap.put("DAY" + j, tempPlanDetail);
+					eachDays.add(j);
+				} // inner-for
+				
+				finalMap.put("eachDays", eachDays);
+				finalList.add(finalMap);	
+			} // outer-for
+			
+			return finalList;
+		} catch (DAOException e) { 
+			throw new ServiceException(e); 
+		} // try-catch
+		
+	}
 
 
 	@Override

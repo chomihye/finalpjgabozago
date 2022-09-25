@@ -74,8 +74,8 @@ public class MypageController {
 		
 		try {			
 			// 메인페이지 로드시
-			this.reserService.modifyReserStatus(member);			// 예약상태 체크(날짜에 따라 상태 업데이트 필요하면 수정)
-			this.planPointWriteService.getUserCurrentPoint(member);		// 회원의 현재 포인트 업데이트
+			this.reserService.modifyReserStatus(member);				// 예약상태 체크(날짜에 따라 상태 업데이트 필요하면 수정)
+			this.planPointWriteService.updateMemberPoint(member);		// 회원의 현재 포인트 업데이트
 			
 			// 회원의 사용일 임박순 숙소예약내역 2건을 가져오는 메소드
 			List<LinkedHashMap<String, Object>> accomList = this.memberService.getReserOrderOfUseDate(member);
@@ -141,13 +141,20 @@ public class MypageController {
 	
 	// 회원정보 업데이트 전 닉네임 중복검사(ajax)
 	@PostMapping(value = "myInfo/modify/nickCheck")
-	public void checkNickname(HttpServletRequest req, HttpServletResponse res) throws ControllerException {
+	public void checkNickname(@SessionAttribute(SharedScopeKeys.USER_KEY) MemberVO member, 
+			HttpServletRequest req, HttpServletResponse res) throws ControllerException {
 		log.trace(">>>>>>>>>>>>>>>>>>>> checkNickname() invoked.");
 		
 		String nickname = req.getParameter("nickname");
 		
 		try {
-			boolean isDouble = this.memberService.checkDoubleNickname(nickname);
+			boolean isDouble;
+			
+			if(nickname.equals(member.getNickname())) {		// 변경하려는 닉네임이 기존과 동일한 경우,
+				isDouble = false;
+			}else {
+				isDouble = this.memberService.checkDoubleNickname(nickname);
+			} // if-else
 			
 			Gson gson = new Gson();
 			String json = gson.toJson(isDouble);
@@ -162,6 +169,31 @@ public class MypageController {
 
 	} // checkNickname
 	
+	
+	// 회원정보 업데이트 전 휴대폰 번호 인증 관련 ajax
+	@PostMapping(value = "myInfo/modify/phoneCheck")
+	public void verifyPhoneNumber(@SessionAttribute(SharedScopeKeys.USER_KEY) MemberVO member, 
+			HttpServletRequest req, HttpServletResponse res) throws ControllerException {
+		log.trace(">>>>>>>>>>>>>>>>>>>> checkPhoneNumber() invoked.");
+		
+		try {
+			String oldNumber = member.getPhone();
+			String newNumber = req.getParameter("newNumber");
+			
+			Map<String, Object> resultMap = this.memberService.verifyPhoneNumber(oldNumber, newNumber);
+			
+			Gson gson = new Gson();
+			String json = gson.toJson(resultMap);
+			log.trace(json);
+			
+			@Cleanup
+		    PrintWriter out = res.getWriter();
+		    out.print(json);	
+		} catch (Exception e) {
+			throw new ControllerException(e);
+		} // try-catch
+	} // checkPhoneNumber
+	
 
 	// 회원정보 업데이트
 	@PostMapping(path = "/myInfo/modify.do")
@@ -174,7 +206,7 @@ public class MypageController {
 			MemberVO vo = (MemberVO) session.getAttribute(SharedScopeKeys.USER_KEY);
 			
 			// 회원정보를 수정하는 서비스 메소드 호출
-			MemberVO newInfo = this.memberService.modifyMemberInfo(dto, vo);		
+			MemberVO newInfo = this.memberService.modifyMemberInfo(req, dto, vo);		
 			
 			// 회원정보 수정 후, Session Scope에 회원정보 업데이트
 			session.setAttribute(SharedScopeKeys.USER_KEY, newInfo);
@@ -191,14 +223,14 @@ public class MypageController {
 	@GetMapping(path = "/plan")
 	public String loadMyPlanPage(Criteria cri, @SessionAttribute(SharedScopeKeys.USER_KEY) MemberVO member, Model model) 
 			throws ControllerException {
-		log.trace(">>>>>>>>>>>>>>>>>>>> loadMyPlanPage() invoked.");
+//		log.trace(">>>>>>>>>>>>>>>>>>>> loadMyPlanPage() invoked.");
 		
 		try {
 			cri.setAmount(4);
 			List<LinkedHashMap<String, Object>> list = this.planPointWriteService.getPlanList(cri, member);
 			
 			// 총 레코드 건수를 반환
-			int total = this.planPointWriteService.getTotalOfPlan(cri, member);
+			int total = this.memberService.getTotalOfRecords(member, "tbl_travel_plan");
 			PageDTO pageDTO = new PageDTO(cri, total);
 						
 			model.addAttribute(SharedScopeKeys.LIST_KEY, list);
@@ -212,17 +244,11 @@ public class MypageController {
 	
 	
 	@PostMapping(path = "/plan/delete")
-	public String deleteTravelPlan(Criteria cri, int idx, RedirectAttributes rttrs) throws ControllerException {
-		log.trace(">>>>>>>>>>>>>>>>>>>> deleteTravelPlan() invoked.");
+	public String deleteTravelPlan(Criteria cri, int idx) throws ControllerException {
+//		log.trace(">>>>>>>>>>>>>>>>>>>> deleteTravelPlan() invoked.");
 		
-		try {
-			this.planPointWriteService.deletePlan(idx);
-			
-			rttrs.addFlashAttribute(SharedScopeKeys.RESULT_KEY, "success");
-		} catch (Exception e) {
-			rttrs.addFlashAttribute(SharedScopeKeys.RESULT_KEY, "failed");
-			throw new ControllerException(e);
-		} // try-catch
+		try { this.planPointWriteService.deletePlan(idx); } 
+		catch (Exception e) { throw new ControllerException(e); } // try-catch
 		
 		return "redirect:/mypage/plan?currPage=" + cri.getCurrPage();
 	} // deleteTravelPlan
@@ -232,13 +258,14 @@ public class MypageController {
 	public String loadReservationPage(Criteria cri, @SessionAttribute(SharedScopeKeys.USER_KEY) MemberVO member, Model model) throws ControllerException{
 		
 		try {
-			this.reserService.modifyReserStatus(member);	// 예약상태 체크(날짜에 따라 상태 업데이트 필요하면 수정)
+			// 속도 개선을 위해 업데이트는 막아둠
+//			this.reserService.modifyReserStatus(member);	// 예약상태 체크(날짜에 따라 상태 업데이트 필요하면 수정)
 			
 			List<LinkedHashMap<String, Object>> list = this.reserService.getUserReserList(cri, member);
 			model.addAttribute(SharedScopeKeys.LIST_KEY, list);
 			
 			// 총 레코드 건수를 반환
-			int total = this.reserService.getTotal(cri, member);
+			int total = this.memberService.getTotalOfRecords(member, "tbl_reservation");
 			PageDTO pageDTO = new PageDTO(cri, total);
 			model.addAttribute(SharedScopeKeys.PAGINATION_KEY, pageDTO);
 
@@ -259,8 +286,12 @@ public class MypageController {
 			Map<String, Object> map = this.reserService.getOneReserDetail(reser, member);		// 예약정보
 			model.addAttribute(SharedScopeKeys.MAP_KEY, map);
 			
-			RefundVO refund = this.reserService.getRefundInfo(reser);		// 환불정보
-			model.addAttribute(SharedScopeKeys.RESULT_KEY, refund);
+			String status = String.valueOf(map.get("STATUS"));
+			
+			if(status.equals("CD")) {
+				RefundVO refund = this.reserService.getRefundInfo(reser);		// 환불정보
+				model.addAttribute(SharedScopeKeys.RESULT_KEY, refund);
+			} // if
 		} catch (ServiceException e) {
 			throw new ControllerException(e);
 		} // try-catch
@@ -351,7 +382,7 @@ public class MypageController {
 			List<LinkedHashMap<String, Object>> list = this.wishlistService.getAccomWishlist(cri, member);
 			
 			// 총 레코드 건수를 반환
-			int total = this.wishlistService.getTotalOfAccom(cri, member);
+			int total = this.memberService.getTotalOfRecords(member, "tbl_wishlist_accom");
 			PageDTO pageDTO = new PageDTO(cri, total);
 						
 			Map<String, Object> map = new HashMap<String, Object>();
@@ -375,7 +406,7 @@ public class MypageController {
 	@ResponseBody
 	public void getPlanWishlist(Criteria cri, @SessionAttribute(SharedScopeKeys.USER_KEY) MemberVO member, 
 			HttpServletResponse res) throws ControllerException {
-		log.trace(">>>>>>>>>>>>>>>>>>>> getPlanWishlist() invoked.");
+//		log.trace(">>>>>>>>>>>>>>>>>>>> getPlanWishlist() invoked.");
 		
 		try {
 			cri.setAmount(4);
@@ -383,7 +414,7 @@ public class MypageController {
 			List<LinkedHashMap<String, Object>> list = this.wishlistService.getPlanWishlist(cri, member);
 			
 			// 총 레코드 건수를 반환
-			int total = this.wishlistService.getTotalOfPlan(cri, member);
+			int total = this.memberService.getTotalOfRecords(member, "tbl_wishlist_plan");
 			PageDTO pageDTO = new PageDTO(cri, total);
 						
 			Map<String, Object> map = new HashMap<String, Object>();
@@ -392,7 +423,7 @@ public class MypageController {
 			
 			Gson gson = new Gson();
 			String mapToJson = gson.toJson(map);
-			log.trace(mapToJson);
+//			log.info(mapToJson);
 			
 			@Cleanup
 		    PrintWriter out = res.getWriter();
@@ -434,6 +465,7 @@ public class MypageController {
 				idx += String.format("%s  %s",  ", ", itemIdxArray[i]);
 			} // for
 
+//			log.info("========================================== idx : {} 삭제 요청", idx);
 			this.wishlistService.deletePlanWishlist(idx);
 		}catch(Exception e) {
 			throw new ControllerException(e);
@@ -447,13 +479,13 @@ public class MypageController {
 			cri.setAmount(10);
 			
 			List<PointHistoryVO> list = this.planPointWriteService.getUserPointList(cri, member);
-			int userCurrentPoint = this.planPointWriteService.getUserCurrentPoint(member);		// 회원의 현재 총 포인트
+			int userCurrentPoint = this.planPointWriteService.getCurrentPoint(member);		// 회원의 현재 총 포인트(속도 개선을 위해 업데이트는 막아둠)
 			
 			model.addAttribute(SharedScopeKeys.LIST_KEY, list);
 			model.addAttribute(SharedScopeKeys.RESULT_KEY, userCurrentPoint);
 			
 			// 총 레코드 건수를 반환
-			int total = this.planPointWriteService.getTotalOfPoint(cri, member);
+			int total = this.memberService.getTotalOfRecords(member, "tbl_point_history");
 			PageDTO pageDTO = new PageDTO(cri, total);
 			model.addAttribute(SharedScopeKeys.PAGINATION_KEY, pageDTO);
 			
@@ -485,7 +517,7 @@ public class MypageController {
 			List<CommunityVO> list = this.planPointWriteService.getWriteList(cri, member);
 			
 			// 총 레코드 건수를 반환
-			int total = this.planPointWriteService.getTotalOfWrite(member);
+			int total = this.memberService.getTotalOfRecords(member, "tbl_community");
 			PageDTO pageDTO = new PageDTO(cri, total);
 						
 			Map<String, Object> map = new HashMap<String, Object>();
@@ -517,7 +549,7 @@ public class MypageController {
 			List<LinkedHashMap<String, Object>> list = this.planPointWriteService.getCommentList(cri, member);
 			
 			// 총 레코드 건수를 반환
-			int total = this.planPointWriteService.getTotalOfComment(member);
+			int total = this.memberService.getTotalOfRecords(member, "tbl_comment");
 			PageDTO pageDTO = new PageDTO(cri, total);
 						
 			Map<String, Object> map = new HashMap<String, Object>();

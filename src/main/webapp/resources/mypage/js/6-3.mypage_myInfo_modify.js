@@ -6,7 +6,7 @@
  let pwdCheckSuccess = true;
  let validNick = true;              // 유효한 닉네임인지
  let doubleCheckSuccess = true;     // 중복확인 했는지
- let phoneCertifySuccess = true;    // 폰인증
+ let phoneVerifySuccess = true;    // 폰인증 여부
 
 
 /**
@@ -205,53 +205,77 @@ function checkDoucle(){
  * @desc 휴대폰 번호 수정 관련
  */
 function changePhoneNumFnc(){
-    let changePhoneNum = null;
-    changePhoneNum = $("#phone").val();
+    let newNumber = null;
+    newNumber = $("#phone").val();
 
-    if(!changePhoneNum){        // 바뀐 값이 없으면,
-        phoneCertifySuccess = true;
-    }else{                      // 바뀐 값이 있으면,
-        phoneCertifySuccess = false;   
+    if(!newNumber){             // 들어온 값이 없으면,
+        phoneVerifySuccess = true;
+    }else{                      // 들어온 값이 있으면,
+        phoneVerifySuccess = false;   
     } // if-else
 } // 휴대폰 번호 입력값 있는지 체크
 
-function certifyPhone(){
+let randomNumber;
+function clickVerifyBtn(){
     $("#phoneValidationNumInput").val('');      // 기존 인증번호 값 초기화
 
     let changePhoneNum = null;
     changePhoneNum = $("#phone").val();
 
-    if(changePhoneNum.length == 13){        // 새로운 휴대폰 번호 입력이 들어온 경우에만,
-        $("#phoneNum").text(changePhoneNum);
-        $("#phoneModal").css({display: "block"});
-        CountDownTimer('#certifyTime');     // 인증 시간 카운트
-    }else{
+    if(changePhoneNum.length != 13){
         return;
-    } // if
+    }else{      // 13자리 휴대폰 번호 입력이 들어온 경우에만,
+        $.ajax({
+            type: "POST",
+            url: "modify/phoneCheck",
+            data:{
+                "newNumber" : changePhoneNum
+            },
+            cache : false,
+            error : function(error) {
+                console.log("error");
+            },
+            success : function(resp) {
+                console.log("success");
+
+                const map = JSON.parse(resp);
+                const isDouble = map.isDouble;
+                randomNumber = map.randomNumber;
+                
+                // console.log("isDouble : ", isDouble);
+                // console.log("randomNumber", randomNumber);
+
+                if(isDouble){       // 중복이면,
+                    $("#phoneDoubleModal").css({display: "block"});
+                }else{              // 중복이 아니면,
+                    $("#phoneNum").text(changePhoneNum);
+                    $("#phoneModal").css({display: "block"});
+                    CountDownTimer('#verifyTime');     // 인증창 실행
+                } // if-else
+            } // success
+        }); // ajax    
+    } // outer if-else
 } // 인증버튼 클릭시
 
 let timer;
+let limitTime;
 function CountDownTimer(id) {
+    // 초기화 부분
     clearInterval(timer);
     $(id).css('font-size', '24px').css('color', '#333333');
 
     let setTime = 180;     // 3분을 초단위로
-    // let setTime = 7;     // 임시확인용
-    let distance = setTime;
+    // let setTime = 10;     // 임시확인용
+    limitTime = setTime;
     
     function showRemaining() {
         let secondsStr = "초문자열";
         
-        distance -= 1;
-        let minutes = parseInt(distance / 60);
-        let seconds = distance - (minutes * 60);   
+        limitTime -= 1;
+        let minutes = parseInt(limitTime / 60);
+        let seconds = limitTime - (minutes * 60);   
 
-        $("#phoneValidationNumBtn").click(function(){
-            clearInterval(timer);
-            checkCertifyNum(distance);
-        }); // 인증 확인버튼 click
-
-        if(distance < 0) {
+        if(limitTime < 0) {
             $(id).css('font-size', '14px').css('color', 'red');
             $(id).html("인증 시간이 만료되었습니다.<br> 재전송 버튼을 눌러 다시 인증해주세요.");
             clearInterval(timer);
@@ -263,12 +287,12 @@ function CountDownTimer(id) {
         
         $(id).text("0" + minutes + " : " + secondsStr);
 
-        console.log("showRemaining() 함수");
+        // console.log("showRemaining() 함수");
     } // showRemaining
 
     timer = setInterval(showRemaining, 1000);
     $(id).empty();
-    console.log("CountDownTimer() 함수");
+    // console.log("CountDownTimer() 함수");
 
     $("#closeBtn").click(function(){
         clearInterval(timer);
@@ -277,41 +301,32 @@ function CountDownTimer(id) {
 } // 인증 시간 카운트 함수(3분)
    
 function repeat(){
-    CountDownTimer('#certifyTime');
+    CountDownTimer('#verifyTime');
 } // 재전송
 
-function checkCertifyNum(distance){
-    
-    // 시간이 초과된 경우
-    if(distance < 0){
-        $("#phoneValidationFailedModal").css({display: "block"});
-        phoneCertifySuccess = false;
-        return;
-    } // if
+function checkVerifyNum(){
 
-    // 인증 통과
-    let certifyNum = null;
-    certifyNum = $("#phoneValidationNumInput").val();
+    let verifyNum = null;
+    verifyNum = $("#phoneValidationNumInput").val();
 
     // 인증번호가 들어왔는지 여부 체크
-    if(!certifyNum){    // 인증번호가 없으면,
+    if(!verifyNum){    // 인증번호가 없으면,
         return;         // 해당 함수 끝냄
     } // if
 
-    // 숫자만 있는지 확인
-    let numRegex = /^[0-9]+$/;
-
-    if(certifyNum.length == 6 && numRegex.test(certifyNum)){       // 인증이 유효한 경우
+    if(verifyNum == randomNumber && limitTime >= 0){       // 제한시간 안에 인증 번호가 일치하면,
         $("#phoneValidationSucceedModal").css({display: "block"});
-        phoneCertifySuccess = true;
-        console.log("성공");
+        phoneVerifySuccess = true;
+        console.log("success");
     }else{                                      
         $("#phoneValidationFailedModal").css({display: "block"});
-        phoneCertifySuccess = false;
-        console.log("실패");
+        phoneVerifySuccess = false;
+        console.log("failed");
     } // if-else
+
+    clearInterval(timer);       // 타이머 중지
     
-} // 인증번호 체크
+} // 인증번호 체크(인증창 확인버튼 클릭시 이벤트)
 
 
 /**
@@ -370,7 +385,7 @@ function modal(){
             $("#pwdMismatchModal").css({display: "block"});
         }else if(!doubleCheckSuccess){
             $("#requestDoubleCheckModal").css({display: "block"});
-        }else if(!phoneCertifySuccess){
+        }else if(!phoneVerifySuccess){
             $("#phoneValidationModal").css({display: "block"});
         }else{
             $("#form").unbind();    // 최종으로 아무것도 문제가 없으면, 버튼 활성화

@@ -36,19 +36,10 @@ public class MypagePlanPointWriteServiceImpl implements MypagePlanPointWriteServ
 	
 //	============================================== 여행일정 ============================================== //
 	
-	// 총 레코드 건수를 반환하는 메소드(페이징 처리에 필요)
-	@Override
-	public Integer getTotalOfPlan(Criteria cri, MemberVO member) throws ServiceException{
-		log.trace("getTotalOfPlan() invoked.");
-		
-		try { return this.mapper.countTotalOfPlan(cri, member); } 
-		catch (DAOException e) { throw new ServiceException(e); }
-	} // getTotalOfPlan
-		
 	// 회원이 작성한 여행일정 리스트를 가져오는 메소드
 	@Override
 	public List<LinkedHashMap<String, Object>> getPlanList(Criteria cri, MemberVO member) throws ServiceException{
-		log.trace("getPlanList() invoked.");
+//		log.trace("getPlanList() invoked.");
 		
 		try { 
 			List<LinkedHashMap<String, Object>> finalList = new ArrayList<LinkedHashMap<String,Object>>();		// 최종데이터
@@ -57,28 +48,31 @@ public class MypagePlanPointWriteServiceImpl implements MypagePlanPointWriteServ
 			for(int i = 0 ; i < tempList.size() ; i++) {
 				LinkedHashMap<String, Object> finalMap = new LinkedHashMap<String, Object>();
 
-				int travelPlanIdx = Integer.parseInt(String.valueOf(tempList.get(i).get("TRAVEL_PLAN_IDX")));
-				int days = Integer.parseInt(String.valueOf(tempList.get(i).get("DAYS")));
-				
+				// 아이템 넘버
 				finalMap.put("itemNumber", i+1);
-				finalMap.put("travelPlanIdx", travelPlanIdx);
-				finalMap.put("isPublic", tempList.get(i).get("IS_PUBLIC"));
-				finalMap.put("largeAreaName", tempList.get(i).get("LARGE_AREA_NAME"));
-				finalMap.put("startDate", tempList.get(i).get("START_DATE"));
-				finalMap.put("endDate", tempList.get(i).get("END_DATE"));
-				finalMap.put("days", days);
 				
+				// 마지막 수정 날짜
 				if(tempList.get(i).get("UPDATE_TS") == null) {
 					finalMap.put("lastUpdate", tempList.get(i).get("INSERT_TS"));
 				}else {
 					finalMap.put("lastUpdate", tempList.get(i).get("UPDATE_TS"));
 				} // if-else
 				
+				tempList.get(i).remove("INSERT_TS");
+				tempList.get(i).remove("UPDATE_TS");
+				
+				// travelPlan
+				finalMap.put("travelPlan", tempList.get(i));
+			
+				// travelPlanDetail & eachDays
+				Object travelPlanIdx = tempList.get(i).get("TRAVEL_PLAN_IDX");
+				finalMap.put("travelPlanDetail", this.mapper.selectPlanDetail(travelPlanIdx));
+				
+				int days = Integer.parseInt(String.valueOf(tempList.get(i).get("DAYS")));
+				
 				List<Integer> eachDays = new ArrayList<Integer>();
 				
 				for(int j = 1 ; j <= days ; j++) {
-					List<LinkedHashMap<String, Object>> tempPlanDetail = this.mapper.selectPlanDetail(travelPlanIdx, j);
-					finalMap.put("DAY" + j, tempPlanDetail);
 					eachDays.add(j);
 				} // inner-for
 				
@@ -104,16 +98,6 @@ public class MypagePlanPointWriteServiceImpl implements MypagePlanPointWriteServ
 	
 //	============================================== 마이포인트 ============================================== //
 	
-	// 총 레코드 건수를 반환하는 메소드(페이징 처리에 필요)
-	@Override
-	public int getTotalOfPoint(Criteria cri, MemberVO member) throws ServiceException {
-		log.trace("getTotal() invoked.");
-		
-		try { return this.mapper.countTotalOfPoint(cri, member); } 
-		catch (DAOException e) { throw new ServiceException(e); }
-	}  // getTotal
-	
-	
 	@Override
 	public List<PointHistoryVO> getUserPointList(Criteria cri, MemberVO member) throws ServiceException {
 		log.trace("getUserPointList({}) invoked.", cri);
@@ -138,16 +122,26 @@ public class MypagePlanPointWriteServiceImpl implements MypagePlanPointWriteServ
 	} // getUserCurrentPoint
 	
 	
-//	============================================== 작성 글 ============================================== //
-
-	// 총 레코드 건수를 반환하는 메소드(페이징 처리에 필요)
+	// 포인트만 업데이트 하는 메소드
 	@Override
-	public Integer getTotalOfWrite(MemberVO member) throws ServiceException {
-		log.trace("getTotalOfWrite({}) invoked.");
-		
-		try { return this.mapper.countTotalOfWrite(member); } 
-		catch (DAOException e) { throw new ServiceException(e); }
-	} // getTotalOfWrite
+	public void updateMemberPoint(MemberVO member) throws ServiceException {
+		try { 
+			try { this.mapper.updateMemberPoint(member); }		// 포인트 내역이 없어 업데이트를 할 수 없는 신규회원은,
+			catch (UncategorizedSQLException e) { ;; }			// inner try-catch(Pass)
+		} catch (Exception e) { 
+			throw new ServiceException(e); 
+		} // try-catch
+	} // updateMemberPoint
+	
+	// 회원의 현재포인트를 가져오는 메소드
+	@Override
+	public Integer getCurrentPoint(MemberVO member) throws ServiceException {
+		try { return this.mapper.selectUserCurrentPoint(member); } 
+		catch (Exception e) { throw new ServiceException(e); } // try-catch
+	} // getCurrentPoint
+	
+	
+//	============================================== 작성 글/댓글 ============================================== //
 
 	// 작성글 리스트를 가져오는 메소드
 	@Override
@@ -159,17 +153,6 @@ public class MypagePlanPointWriteServiceImpl implements MypagePlanPointWriteServ
 	} // getWriteList
 	
 	
-//	============================================== 작성 댓글 ============================================== //
-
-	// 총 레코드 건수를 반환하는 메소드(페이징 처리에 필요)
-	@Override
-	public Integer getTotalOfComment(MemberVO member) throws ServiceException {
-		log.trace("getTotalOfComment({}) invoked.");
-		
-		try { return this.mapper.countTotalOfComment(member); } 
-		catch (DAOException e) { throw new ServiceException(e); }
-	} // getTotalOfComment
-
 	// 작성댓글 리스트를 가져오는 메소드
 	@Override
 	public List<LinkedHashMap<String, Object>> getCommentList(Criteria cri, MemberVO member) throws ServiceException {

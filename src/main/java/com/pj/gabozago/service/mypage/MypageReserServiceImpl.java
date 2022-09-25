@@ -36,16 +36,6 @@ public class MypageReserServiceImpl implements MypageReserService {
 	private MypageReserMapper mapper;
 	
 	
-	// 총 레코드 건수를 반환하는 메소드(페이징 처리에 필요)
-	@Override
-	public int getTotal(Criteria cri, MemberVO member) throws ServiceException {
-		log.trace("getTotal() invoked.");
-		
-		try { return this.mapper.countTotalAmount(cri, member); } 
-		catch (DAOException e) { throw new ServiceException(e); }
-	} // getTotal
-	
-	
 	// 특정 회원의 숙소예약내역 리스트를 가져오는 메소드
 	@Override
 	public List<LinkedHashMap<String, Object>> getUserReserList(Criteria cri, MemberVO member) throws ServiceException {

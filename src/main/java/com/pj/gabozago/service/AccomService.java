@@ -45,6 +45,9 @@ public interface AccomService {
 	//결제 페이지에 선택한 숙소 정보 가져오기
 	public abstract Map<String, Object> getOneRoomInfo(AccomRoomDTO room) throws ServiceException;
 
+	
+	
+	
 	//위시리스트
 	public abstract Map<String, Object> setHotelLike(WishlistAccomDTO wishaccom) throws ServiceException, DAOException;
 	

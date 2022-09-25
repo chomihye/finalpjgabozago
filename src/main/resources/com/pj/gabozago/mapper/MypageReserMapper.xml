@@ -12,7 +12,8 @@
     <!-- parameterType="java.util.Map" 은 생략이 가능함 -->
     <select 
         id="selectUserReserList" 
-        resultType="java.util.LinkedHashMap">
+        resultType="java.util.LinkedHashMap"
+        fetchSize="50">
         
         SELECT 
             r.idx, 
@@ -28,9 +29,9 @@
             ai.file_name
         FROM 
             tbl_reservation r,
-            tbl_accom a,
-            tbl_accom_room ar,
-            tbl_large_area la,
+            (SELECT idx, accom_name, large_area_idx FROM tbl_accom) a,
+            (SELECT idx, accom_idx, room_name FROM tbl_accom_room) ar,
+            (SELECT idx, large_area_name FROM tbl_large_area) la,
             tbl_accom_images ai
         WHERE 
             r.accom_room_idx = ar.idx 
@@ -91,10 +92,10 @@
             ar.idx AS accom_room_idx
         FROM 
             tbl_reservation r,
-            tbl_accom a,
-            tbl_accom_room ar,
-            tbl_member m,
-            tbl_payment p,
+            (SELECT idx, accom_name FROM tbl_accom) a,
+            (SELECT idx, accom_idx, room_name FROM tbl_accom_room) ar,
+            (SELECT idx, name, phone, email FROM tbl_member) m,
+            (SELECT reservation_idx, order_price, use_point, payment_price, insert_ts FROM tbl_payment) p,
             tbl_accom_images ai
         WHERE
             r.accom_room_idx = ar.idx
@@ -130,8 +131,8 @@
             rf.refund_point, 
             rf.insert_ts 
         FROM 
-            tbl_reservation rv,
-            tbl_payment p,
+            (SELECT idx FROM tbl_reservation) rv,
+            (SELECT idx, reservation_idx FROM tbl_payment) p,
             tbl_refund rf
         WHERE 
             rv.idx = p.reservation_idx
@@ -150,9 +151,9 @@
             ar.room_name,
             ai.file_name
         FROM 
-            tbl_reservation r,
-            tbl_accom a,
-            tbl_accom_room ar,
+            (SELECT idx, member_idx, accom_room_idx FROM tbl_reservation) r,
+            (SELECT idx, accom_name FROM tbl_accom) a,
+            (SELECT idx, accom_idx, room_name FROM tbl_accom_room) ar,
             tbl_accom_images ai
         WHERE 
             r.accom_room_idx = ar.idx

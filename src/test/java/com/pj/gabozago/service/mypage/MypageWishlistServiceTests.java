@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.jupiter.api.BeforeAll;
@@ -21,12 +20,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import com.pj.gabozago.domain.AccomReservationDTO;
-import com.pj.gabozago.domain.AccomReviewDTO;
-import com.pj.gabozago.domain.AccomReviewVO;
 import com.pj.gabozago.domain.Criteria;
 import com.pj.gabozago.domain.MemberVO;
-import com.pj.gabozago.domain.RefundVO;
 import com.pj.gabozago.exception.ServiceException;
 
 import lombok.NoArgsConstructor;
@@ -73,23 +68,6 @@ public class MypageWishlistServiceTests {
 		
 		this.service.getAccomWishlist(cri, member);
 	} // testGetAccomWishlist
-	
-	
-	@Test
-	@Order(2)
-	@DisplayName("2. testGetTotalOfAccom")
-	@Timeout(value = 10, unit = TimeUnit.SECONDS)
-	void testGetTotalOfAccom() throws ServiceException {
-		log.trace("testGetTotalOfAccom() invoked.");
-		
-		Criteria cri = new Criteria();
-		cri.setAmount(10);
-//		cri.setCurrPage(1);
-		
-		MemberVO member = new MemberVO(53, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-		
-		this.service.getTotalOfAccom(cri, member);
-	} // testGetTotalOfAccom
 	
 	
 	@Test

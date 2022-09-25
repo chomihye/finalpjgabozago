@@ -24,7 +24,7 @@ public interface MemberMapper {
 	public abstract Integer insertUserForKakaoLogin(KakaoDTO dto) throws MemberException;
 	
 	// 구글 로그인 회원 저장
-	// public abstract Integer insertUserForGoogleLogin(GoogleDTO dto) throws MemberException;
+	public abstract Integer insertUserForGoogleLogin(GoogleDTO dto) throws MemberException;
 	
 	// 네이버 로그인
 	public abstract MemberVO selectUserForNaverLogin(String uid_num) throws MemberException;
@@ -33,7 +33,7 @@ public interface MemberMapper {
 	public abstract MemberVO selectUserForKakaoLogin(String email) throws MemberException;
 
 	// 구글 로그인
-	// public abstract MemberVO selectUserForGoogleLogin(String email) throws MemberException;
+	public abstract MemberVO selectUserForGoogleLogin(String email) throws MemberException;
 	
 	// 회원가입 시 닉네임 중복확인
 	public abstract Integer selectUserforNickCheck(String nickname) throws MemberException;

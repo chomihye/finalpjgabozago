@@ -163,6 +163,7 @@
         SELECT 
             r.idx AS accom_idx,
             r.accom_name,
+            r.large_area_idx,
             ar.idx AS accom_room_idx,
             ar.price,
             ar.room_name,
@@ -242,6 +243,17 @@
             AND is_plus = 'N')) 
         WHERE idx = #{idx}
     </update>
+    
+    <insert id="insertReservation">
+    	INSERT INTO tbl_reservation(idx, member_idx, accom_room_idx, large_area_idx, check_in_date, check_out_date, adult_count, child_count, status, insert_ts)
+		VALUES (#{idx}, #{member_idx},#{accom_room_idx}, #{large_area_idx}, #{check_in_date}, #{check_out_date}, #{adult_count}, #{child_count}, #{status}, #{insert_ts})
+	</insert>
+	
+	<insert id="insertPayment">
+    	INSERT INTO tbl_payment(idx, reservation_idx, member_idx, order_price, use_point, payment_price, payment_type, insert_ts)
+		VALUES (#{idx}, #{reservation_idx},#{member_idx}, #{order_price}, #{use_point}, #{payment_price}, #{payment_type}, #{insert_ts})
+	</insert>
+    
 	
 	
     <resultMap type="com.pj.gabozago.domain.AccomDTO" id="AccomDTO">

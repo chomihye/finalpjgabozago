@@ -1,6 +1,7 @@
 package com.pj.gabozago.mapper;
 
 
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
@@ -23,7 +24,13 @@ public interface TravelMapper {
 	//일정 GET 
 	public abstract List<TravePlanlCreateVO> selectList(@Param("idx") Integer idx) throws DAOException;
 	
+	//베스트 일정(3위까지)
+	public abstract List<LinkedHashMap<String, Object>> selectBestList() throws DAOException;
 	
+	//일정 상세
+	public abstract List<LinkedHashMap<String, Object>> selectPlanDetail(@Param("idx")int idx,@Param("day")int day) throws DAOException;
+	
+		
 	
 		
 	
