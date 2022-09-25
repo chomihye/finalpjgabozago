@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.pj.gabozago.common.EmailSender;
 import com.pj.gabozago.domain.EmailDTO;
+import com.pj.gabozago.domain.GoogleDTO;
 import com.pj.gabozago.domain.JoinDTO;
 import com.pj.gabozago.domain.KakaoDTO;
 import com.pj.gabozago.domain.LoginDTO;
@@ -42,7 +43,6 @@ public class MemberServiceImpl implements MemberService {
 		log.trace("create() invoked.");
 
 		try {
-			// 비밀번호 해시처리
 			String pw = dto.getPassword() + "__SALT__";
 			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 			
@@ -55,7 +55,6 @@ public class MemberServiceImpl implements MemberService {
 		} catch (MemberException e) {
 			throw new ServiceException(e);
 		}// try-catch
-		
 	}// create
 
 	@Override
@@ -129,7 +128,6 @@ public class MemberServiceImpl implements MemberService {
 		log.trace("modifyUserforFindPwWithEmail({}, {}) invoked.", email, password);
 		
 		try {
-			
 			boolean isFoundSuccess = this.mapper.updateUserforFindPwWithEmail(email, password) == 1;
 			
 			if(isFoundSuccess) {
@@ -151,7 +149,6 @@ public class MemberServiceImpl implements MemberService {
 		}// try-catch	
 	}// modifyUserforFindPwWithEmail
 
-	
 	@Override
 	public boolean modifyUserforFindPwWithPhone(String phone, String uid, String password) throws ServiceException {
 		log.trace("modifyUserforFindPwWithPhone({}, {}) invoked.", phone, password);
@@ -215,7 +212,6 @@ public class MemberServiceImpl implements MemberService {
 		log.trace("findUserforPhoneCheck({}, {}) invoked.", phone, uid);
 		
 		try {
-			
 			int checkNum = this.mapper.selectUserforPhoneCheck(phone, uid);
 			
 			if(checkNum == 0) { // 이미 가입된 휴대폰 번호가 아닌 경우 휴대폰 인증을 위한 uid 인증번호 발송
@@ -263,6 +259,17 @@ public class MemberServiceImpl implements MemberService {
 	}// kakaoLogin
 
 	@Override
+	public MemberVO googleLogin(String email) throws ServiceException {
+		log.trace("kakaoLogin() invoked.");
+		
+		try {						
+			return this.mapper.selectUserForGoogleLogin(email);
+		} catch (MemberException e) {
+			throw new ServiceException(e);
+		}// try-catch
+	}// kakaoLogin
+	
+	@Override
 	public boolean createUserForKakaoLogin(KakaoDTO dto) throws ServiceException {
 		log.trace("createUserForKakaoLogin() invoked.");
 
@@ -272,5 +279,16 @@ public class MemberServiceImpl implements MemberService {
 			throw new ServiceException(e);
 		}// try-catch
 	}// createUserForKakaoLogin
+	
+	@Override
+	public boolean createUserForGoogleLogin(GoogleDTO dto) throws ServiceException {
+		log.trace("createUserForGoogleLogin() invoked.");
+
+		try {
+			return this.mapper.insertUserForGoogleLogin(dto) == 1;
+		} catch (MemberException e) {
+			throw new ServiceException(e);
+		}// try-catch
+	}// createUserForGoogleLogin
 	
 }// end class

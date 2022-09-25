@@ -2,6 +2,7 @@ package com.pj.gabozago.service;
 
 import java.sql.Timestamp;
 
+import com.pj.gabozago.domain.GoogleDTO;
 import com.pj.gabozago.domain.JoinDTO;
 import com.pj.gabozago.domain.KakaoDTO;
 import com.pj.gabozago.domain.LoginDTO;
@@ -20,6 +21,9 @@ public interface MemberService {
 	// 카카오 로그인 DB 저장
 	public abstract boolean createUserForKakaoLogin(KakaoDTO dto) throws ServiceException;
 	
+	// 구글 로그인 DB 저장
+	public abstract boolean createUserForGoogleLogin(GoogleDTO dto) throws ServiceException;
+	
 	// 회원가입 시 닉네임 중복 확인
 	public abstract int findUserforNicknameCheck(String nickname) throws ServiceException;
 	
@@ -36,6 +40,8 @@ public interface MemberService {
 	
 	public abstract MemberVO kakaoLogin(String email) throws ServiceException;
 	
+	public abstract MemberVO googleLogin(String email) throws ServiceException;
+
 	public abstract boolean modifyUserWithRememberMe(Integer idx, String rememberMe, Timestamp rememberAge) throws ServiceException;
 	
 	public abstract MemberVO findUserByRememberMe(String rememberMe) throws ServiceException;

@@ -14,7 +14,6 @@
 <body>
 
 	<%
-		
 		String originalUri = (String) session.getAttribute("__URI__");
 		session.removeAttribute("__URI__");
 	
@@ -22,7 +21,7 @@
 			response.sendRedirect(originalUri);		// AUTH Interceptor에 의해 로그인창 도달했다면 원래 URI 이동
 		} else {
 			response.sendRedirect("/main");			// 로그인 버튼 눌러서 직접 로그인창 도달했다면
-		}
+		}// if-else
 	%>
 
 </body>

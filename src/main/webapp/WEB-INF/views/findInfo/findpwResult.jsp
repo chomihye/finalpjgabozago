@@ -40,8 +40,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-migrate/3.4.0/jquery-migrate.min.js"></script>
 
     <script>
-        $(function(){
-        });
+      
     </script>
 </head>
 
@@ -50,7 +49,6 @@
         <jsp:include page="/WEB-INF/views/common/header.jsp" flush="true"/>
         
         <div id="body">
-
             <section id="introSection">
                 <img src="/resources/member/img/8726129_map_marker_question_icon.png" alt="" id="questionMarkImg">
                 <h3>아이디 혹은 비밀번호를 잊어버리셨나요?</h3>
@@ -61,9 +59,8 @@
                 <button type="button" onclick="location.href='/findInfo/id'">아이디 찾기</button>
                 <button type="button" onclick="location.href='/findInfo/pw'">비밀번호 찾기</button>
                                
-                               
-                <% String userInfo = (String) session.getAttribute("__PW_INFO__"); 
-                
+                <% 
+                	String userInfo = (String) session.getAttribute("__PW_INFO__"); 
                 	if(userInfo == null || userInfo.length() == 0){
                 %>
                 <div class="mainForm" id="pwfindResultFailed">
@@ -78,7 +75,6 @@
 	                <input type="button" value="로그인하러 가기" onClick="location.href='/login'">
                 </div>
                 <% session.removeAttribute("__PW_INFO__"); } %>
-                               
             </section>
         </div>
         
