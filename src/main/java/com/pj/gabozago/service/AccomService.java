@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.pj.gabozago.domain.AccomDTO;
+import com.pj.gabozago.domain.AccomPaymentDTO;
 import com.pj.gabozago.domain.AccomReservationDTO;
 import com.pj.gabozago.domain.AccomRoomDTO;
 import com.pj.gabozago.domain.Criteria;
@@ -45,9 +46,9 @@ public interface AccomService {
 	//결제 페이지에 선택한 숙소 정보 가져오기
 	public abstract Map<String, Object> getOneRoomInfo(AccomRoomDTO room) throws ServiceException;
 
-	
-	
-	
+	//예약&결제정보 저장
+	public abstract Integer addReservation(AccomReservationDTO reservation, AccomPaymentDTO payment) throws ServiceException, DAOException;
+
 	//위시리스트
 	public abstract Map<String, Object> setHotelLike(WishlistAccomDTO wishaccom) throws ServiceException, DAOException;
 	
