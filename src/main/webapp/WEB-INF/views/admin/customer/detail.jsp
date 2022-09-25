@@ -31,7 +31,7 @@
 <body>
     <!-- header -->
     <header>
-        <jsp:include page="/WEB-INF/views/common/header.jsp" flush="false" />
+        <%-- <%@include file="/WEB-INF/views/common/header.jsp" %> --%>
     </header>
 
    

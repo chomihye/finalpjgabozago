@@ -43,7 +43,7 @@ header{
 
 #accordion {
     justify-content: center;
-    margin: 85px 30px auto 0px;
+    margin: 85px 30px auto 50px;
 }
 
 .card {
@@ -93,17 +93,12 @@ table {
     border-spacing: 0;
 }
 
-.board-table-top {
-    padding-bottom: 50px;
-}
-
 .board_list {
     width: 920px;
-    padding: 20px 0 35px 0;
+    /* padding: 20px 0 35px 0; */
     position: relative;
     border-top: 3px solid #68ae6d;
     table-layout: fixed;
-    margin: 0 auto;
     border-collapse: collapse;
 }
 
@@ -146,7 +141,7 @@ td {
 }
 
 .cancel_table thead .num {
-    width: 190px;
+    width: 102px;
 }
 
 .board_list th {
@@ -180,22 +175,21 @@ td {
     height: 14px;
 }
 
-.notice_table thead .name {
-    width: 160px;
+.cancel_table thead .hotel {
+    width: 178px;
 }
 
-.notice_table thead .hotel {
-    width: 260px;
+.cancel_table thead .date {
+    width: 205px;
 }
 
-.notice_table thead .checkin {
-    width: 140px;
+.cancel_table thead .name {
+    width: 130px;
 }
 
-.notice_table thead .checkout {
-    width: 170px;
+.cancel_table thead .number {
+    width: 210px;
 }
-
 
 .cancel_table tbody td {
     padding: 23px 0 24px;
