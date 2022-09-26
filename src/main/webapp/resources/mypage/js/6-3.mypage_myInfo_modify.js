@@ -243,7 +243,7 @@ function clickVerifyBtn(){
                 randomNumber = map.randomNumber;
                 
                 // console.log("isDouble : ", isDouble);
-                // console.log("randomNumber", randomNumber);
+                console.log("휴대폰 인증번호 : ", randomNumber);
 
                 if(isDouble){       // 중복이면,
                     $("#phoneDoubleModal").css({display: "block"});
