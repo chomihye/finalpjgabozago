@@ -30,6 +30,7 @@ import com.pj.gabozago.domain.Criteria;
 import com.pj.gabozago.domain.MemberVO;
 import com.pj.gabozago.domain.RefundVO;
 import com.pj.gabozago.exception.DAOException;
+import com.pj.gabozago.mapper.AdminReservMapper;
 import com.pj.gabozago.mapper.MypageReserMapper;
 
 import lombok.NoArgsConstructor;
@@ -50,6 +51,9 @@ public class MypageReserMapperTests {
 	
 	@Setter(onMethod_ = {@Autowired})
 	private MypageReserMapper mapper;
+	
+	@Setter(onMethod_ = {@Autowired})
+	private AdminReservMapper adminMapper;
 	
 	
 	@BeforeAll
@@ -295,6 +299,23 @@ public class MypageReserMapperTests {
 
 		this.mapper.updateStatusUcrnToUcry(member);
 	} // testUpdateStatusUcrnToUcrn
+	
+	
+//	@Test
+//	@Order(16)
+//	@DisplayName("16. testSelectReservInfo")
+//	@Timeout(value = 10, unit = TimeUnit.SECONDS)
+//	void testSelectReservInfo() throws DAOException {
+//		log.trace("testSelectReservInfo() invoked.");
+//		
+//		Criteria cri = new Criteria();
+//		cri.setAmount(10);
+//		cri.setCurrPage(3);
+//		
+//		List<Map<String, Object>> list = this.adminMapper.selectReservInfo(cri);
+//		list.forEach(log::info);
+//		
+//	} // testSelectReservInfo
 	
 	
 } // end class
