@@ -22,6 +22,7 @@
             m.phone
         FROM 
             tbl_member m
+		ORDER BY m.idx asc
         OFFSET (#{currPage} -1) * #{amount} ROWS
         FETCH NEXT #{amount} ROWS ONLY
     </select>
