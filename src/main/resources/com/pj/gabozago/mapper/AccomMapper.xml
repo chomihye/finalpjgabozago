@@ -245,14 +245,15 @@
     </update>
     
     <select id="getLastSeq" resultType="int">
-    	SELECT seq
-    	FROM tbl_reservation
-    	<![CDATA[
-    		WHERE TO_CHAR(insert_ts, 'yyyyMMdd') <= TO_CHAR(sysdate, 'yyyyMMdd') 
-    		AND TO_CHAR(insert_ts, 'yyyyMMdd') >= TO_CHAR(sysdate, 'yyyyMMdd')
-    		AND ROWNUM = 1
-    	]]>
-    	ORDER BY seq DESC
+		SELECT seq
+		FROM (
+	    	SELECT seq
+	    	FROM tbl_reservation
+	    	<![CDATA[
+	    		WHERE TO_CHAR(insert_ts,'YYYYMMDD') = TO_CHAR(SYSDATE,'YYYYMMDD')
+	    	]]>
+	    	ORDER BY seq DESC
+		) WHERE ROWNUM = 1
     </select>
     
     <insert id="insertReservation">

@@ -212,11 +212,12 @@ public class AccoController {
 		HashMap<String, Object> result = new HashMap<String, Object>();
 		
 		try {
-			Integer add_result = accomService.addReservation(reservation, payment);
+			Map<String, Object> add_result = accomService.addReservation(reservation, payment);
 			log.info(add_result);
-			if (add_result == 1) {
+			if ((int) add_result.get("success") == 1) {
 				result.put("code", 200);
 				result.put("msg", "성공");
+				result.put("reservation_idx", add_result.get("reservationIdx"));
 			} else {
 				result.put("code", 500);
 				result.put("msg", "실패");

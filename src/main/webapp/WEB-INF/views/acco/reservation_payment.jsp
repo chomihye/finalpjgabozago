@@ -86,9 +86,9 @@
                     $("#terms_modal_sale").css({ display: "none" });
                 }); // 약관3 닫기
 
-                $(".btn_payment").click(function () {
-                    $("#pay_modal").css({ display: "block" });
-                }); // 약관 3
+                //$(".btn_payment").click(function () {
+                    //$("#pay_modal").css({ display: "block" });
+                //}); // 약관 3
                 $(".okBtn").click(function () {
                     $("#terms_modal_sale").css({ display: "none" });
                 });
@@ -450,11 +450,11 @@
         <div class="modal" id="pay_modal">
             <div class="modal_Content">
                 <h3><i class="fas fa-check"></i>결제가 완료되었습니다</h3>
-                <p>예약 번호 202200803001</p>
+                <p>예약 번호 <span id="reservation_idx" style="margin-left:12px;"></span></p>
                 <p>아래 예약내역 확인 버튼을 눌러 상세 예약 내역을 확인하세요</p>
 
                 <div class="pay_wrap">
-                    <a href="/mypage/reservation/detail">
+                    <a href="javascript:void(0);" onclick="moveToReservationDetail();">
                         <div class="check_btn">예약내역확인</div>
                     </a>
                     <a href="/reservation/">
@@ -468,44 +468,52 @@
          <jsp:include page="/WEB-INF/views/common/footer.jsp" flush="false" />
 	
 		<script>
-		 $(function () {
-	    	 $('input[name=checkInDate]').attr('value','${check_in_date}'); 
-	    	 $('input[name=checkOutDate]').attr('value','${check_out_date}');
-	    	 $('input[name=adultCount]').attr('value','${adult_count}');
-	    	 $('input[name=childCount]').attr('value','${child_count}');
-	    	
-	      });
-
-          function addPayment() {
-            $.ajax({
-                type: 'POST',
-                url: '/reservation/payment',
-                data: {
-                    accom_room_idx: '${accom.ACCOM_ROOM_IDX}',
-                    large_area_idx: '${accom.LARGE_AREA_IDX}',
-                    check_in_date: '${check_in_date}',
-                    check_out_date: '${check_out_date}',
-                    adult_count: '${adult_count}',
-                    child_count: '${child_count}',
-                    order_price: $("[name=order_price]").val(),
-                    use_point: $("[name=use_point]").val(),
-                    payment_price: $("[name=payment_price]").val(),
-                    payment_type: "card",
-                },
-                dataType: 'json',
-                success: function (response) {
-                    if(response.code == 200) {
-                        $("#pay_modal").css({ display: "block" });
-                    } else {
-                        alert("결제에 실패했습니다.\n관리자에게 문의해주세요.");
-                        console.log(response);
-                    }
-                },
-                error: function (error) {
-                    console.log(error);
-                },
-            }); //ajax
-          }
+			let reservation_idx = 0;
+			
+			 $(function () {
+		    	 $('input[name=checkInDate]').attr('value','${check_in_date}'); 
+		    	 $('input[name=checkOutDate]').attr('value','${check_out_date}');
+		    	 $('input[name=adultCount]').attr('value','${adult_count}');
+		    	 $('input[name=childCount]').attr('value','${child_count}');
+		    	
+		      });
+	
+	          function addPayment() {
+	            $.ajax({
+	                type: 'POST',
+	                url: '/reservation/payment',
+	                data: {
+	                    accom_room_idx: '${accom.ACCOM_ROOM_IDX}',
+	                    large_area_idx: '${accom.LARGE_AREA_IDX}',
+	                    check_in_date: '${check_in_date}',
+	                    check_out_date: '${check_out_date}',
+	                    adult_count: '${adult_count}',
+	                    child_count: '${child_count}',
+	                    order_price: $("[name=order_price]").val(),
+	                    use_point: $("[name=use_point]").val(),
+	                    payment_price: $("[name=payment_price]").val(),
+	                    payment_type: "card",
+	                },
+	                dataType: 'json',
+	                success: function (response) {
+	                    if(response.code == 200) {
+	                    	reservation_idx = response.reservation_idx;
+	                        $("#reservation_idx").text(response.reservation_idx);
+	                        $("#pay_modal").css({ display: "block" });
+	                    } else {
+	                        alert("결제에 실패했습니다.\n관리자에게 문의해주세요.");
+	                        console.log(response);
+	                    }
+	                },
+	                error: function (error) {
+	                    console.log(error);
+	                },
+	            }); //ajax
+	          }
+	          
+	          function moveToReservationDetail() {
+	        	  location.href = "/mypage/reservation/detail?idx=" + reservation_idx;
+	          }
 		</script>
 
         

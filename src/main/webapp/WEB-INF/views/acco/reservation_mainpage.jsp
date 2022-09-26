@@ -86,10 +86,10 @@
                 <img src="/resources/acco/img/main_hotel.jpg" width="100%" class="d-block w-100" alt="...">
             </div>
             <div class="carousel-item" data-bs-interval="3000">
-                <img src="/resources/acco/img/hotel.jpg" class="d-block w-100" alt="...">
+                <img src="/resources/acco/img/main_hotel3.jpg" class="d-block w-100" alt="...">
             </div>
             <div class="carousel-item" data-bs-interval="3000">
-                <img src="/resources/acco/img/room2.jpg" class="d-block w-100" alt="...">
+                <img src="/resources/acco/img/main_hotel2.jpg" class="d-block w-100" alt="...">
             </div>
         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"

@@ -152,8 +152,10 @@ public class AccomServiceImpl implements AccomService {
 	//예약 정보 저장
 	@Transactional
 	@Override
-	public Integer addReservation(AccomReservationDTO reservation, AccomPaymentDTO payment) throws ServiceException, DAOException {
+	public Map<String, Object> addReservation(AccomReservationDTO reservation, AccomPaymentDTO payment) throws ServiceException, DAOException {
 		try {			
+			Map<String, Object> result = new HashMap<String, Object>();
+			
 			String pattern = "yyyyMMdd";
 			SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
 			String today = simpleDateFormat.format(new Date());
@@ -163,27 +165,32 @@ public class AccomServiceImpl implements AccomService {
 			if (lastSeq != null) seq = lastSeq + 1;
 			
 			String seqTxt = String.format("%04d", seq);
-			Long reservationIdx =Long.parseLong(today + seqTxt);
+			Long reservationIdx = Long.parseLong(today + seqTxt);
 			
 			log.info(reservationIdx);
 			log.info(lastSeq);
 			log.info(seq);
+			log.info(today);
 			
 			reservation.setIdx(reservationIdx);
 			reservation.setSeq(seq);
 			
 			Integer result_add_reservation = 0;
 			
-			log.info(reservation);
 			result_add_reservation = this.mapper.insertReservation(reservation); 
 			
 			if (result_add_reservation == 1) {
 				payment.setReservationIdx(reservationIdx);
-				log.info(payment);
-				return this.mapper.insertPayment(payment);
+				
+				Integer result_add_payment = this.mapper.insertPayment(payment);
+				result.put("success", result_add_payment);
+				result.put("reservationIdx", reservationIdx);
+				
+				return result;
 			} else {
 				throw new ServiceException("예약정보 저장 실패");				
 			}
+
 		} catch (DAOException e) {
 			throw new ServiceException(e);
 		}

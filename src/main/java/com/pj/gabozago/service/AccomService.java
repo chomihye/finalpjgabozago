@@ -47,7 +47,7 @@ public interface AccomService {
 	public abstract Map<String, Object> getOneRoomInfo(AccomRoomDTO room) throws ServiceException;
 
 	//예약&결제정보 저장
-	public abstract Integer addReservation(AccomReservationDTO reservation, AccomPaymentDTO payment) throws ServiceException, DAOException;
+	public abstract Map<String, Object> addReservation(AccomReservationDTO reservation, AccomPaymentDTO payment) throws ServiceException, DAOException;
 
 	//위시리스트
 	public abstract Map<String, Object> setHotelLike(WishlistAccomDTO wishaccom) throws ServiceException, DAOException;
