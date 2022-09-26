@@ -724,36 +724,3 @@ td {
     font-size: 0;
     text-align: center;
 } */
-.wrap .page_box {
-    margin-top: 15px;
-    text-align: center;
-
-}
-
-.wrap .page_box a {
-    display: inline-block;
-    font-size: 18px;
-    padding: 8px 16px;
-    margin-left: 8px;
-}
-
-.wrap .page_box a svg {
-    color: #999;
-}
-
-.wrap .page_box a.num {
-    border: 3px solid rgb(202, 202, 202);
-    border-radius: 100px;
-
-}
-
-.wrap .page_box a.num.on {
-    color: #faf9f9;
-    border: 3px solid #68ae6d;
-    background: #68ae6d;
-}
-
-a.num:hover {
-    background: rgb(202, 202, 202);
-}
-

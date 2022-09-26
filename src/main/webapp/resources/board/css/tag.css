@@ -690,7 +690,7 @@ td {
 }
 
 .notice_table tbody tr:hover {
-    background: rgba(249, 235, 195, 0.668);
+    background: rgba(243, 245, 236, 0.668);
 }
 
 .notice_table tbody .box {
@@ -730,35 +730,3 @@ td {
     font-size: 0;
     text-align: center;
 } */
-.wrap .page_box {
-    margin-top: 15px;
-    text-align: center;
-
-}
-
-.wrap .page_box a {
-    display: inline-block;
-    font-size: 18px;
-    padding: 8px 16px;
-    margin-left: 8px;
-}
-
-.wrap .page_box a svg {
-    color: #999;
-}
-
-.wrap .page_box a.num {
-    border: 3px solid rgb(202, 202, 202);
-    border-radius: 100px;
-
-}
-
-.wrap .page_box a.num.on {
-    color: #faf9f9;
-    border: 3px solid #68ae6d;
-    background: #68ae6d;
-}
-
-a.num:hover {
-    background: rgb(202, 202, 202);
-}

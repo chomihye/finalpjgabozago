@@ -119,7 +119,7 @@
                                 <a href="/board/qna/secret">문의드립니다.</a>
                             </td>
                             <td class="name">김*수</td>
-                            <td class="date">2022-07-10</td>
+                            <td class="date">2022-09-19</td>
                             <td class="an">
                                 <div class="box_f">접수중</div>
                             </td>
@@ -128,10 +128,10 @@
                         <tr>
                             <td class="num">4</td>
                             <td class="title_N">
-                                <a href="./Question2.html">문의드립니다.</a>
+                                <a href="/board/qna/read2">문의드립니다.</a>
                             </td>
                             <td class="name">정*현</td>
-                            <td class="date">2022-07-10</td>
+                            <td class="date">2022-09-15</td>
                             <td class="an">
                                 <div class="box">답변완료</div>
                             </td>
@@ -142,7 +142,7 @@
                                 <a href="">문의드립니다.</a>
                             </td>
                             <td class="name">김*우</td>
-                            <td class="date">2022-07-10</td>
+                            <td class="date">2022-09-12</td>
                             <td class="an">
                                 <div class="box">답변완료</div>
                             </td>
@@ -153,7 +153,7 @@
                                 <a href="">문의드립니다.</a>
                             </td>
                             <td class="name">이*혁</td>
-                            <td class="date">2022-07-10</td>
+                            <td class="date">2022-09-12</td>
                             <td class="an">
                                 <div class="box">답변완료</div>
                             </td>
@@ -164,7 +164,7 @@
                                 <a href="">문의드립니다.</a>
                             </td>
                             <td class="name">문*일</td>
-                            <td class="date">2022-07-10</td>
+                            <td class="date">2022-09-10</td>
                             <td class="an">
                                 <div class="box">답변완료</div>
                             </td>

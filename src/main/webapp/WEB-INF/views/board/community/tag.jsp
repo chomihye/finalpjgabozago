@@ -345,68 +345,68 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td class="num">15</td>
+                        <td class="num">7</td>
                         <td class="title_N">
-                            <a href="#">후기글 제목</a>
+                            <a href="/board/community/read">서울의 랜드마크를 만나다</a>
                         </td>
-                        <td class="name">닉네임</td>
-                        <td class="date">2022-07-10</td>
-                        <td class="views">26</td>
+                        <td class="name">백설기</td>
+                        <td class="date">2022-09-13</td>
+                        <td class="views">684</td>
                     </tr>
 
                     <tr>
-                        <td class="num">15</td>
+                        <td class="num">6</td>
                         <td class="title_N">
-                            <a href="#">후기글 제목</a>
+                            <a href="#">걸어서 고궁 속으로, 서울 고궁 투어</a>
                         </td>
-                        <td class="name">닉네임</td>
-                        <td class="date">2022-07-10</td>
-                        <td class="views">26</td>
+                        <td class="name">댕기옷</td>
+                        <td class="date">2022-09-01</td>
+                        <td class="views">758</td>
                     </tr>
                     <tr>
-                        <td class="num">15</td>
+                        <td class="num">5</td>
                         <td class="title_N">
-                            <a href="">후기글 제목</a>
+                            <a href="">서울에서 기차 여행 서울 기차 컨셉 카페</a>
                         </td>
-                        <td class="name">닉네임</td>
-                        <td class="date">2022-07-10</td>
-                        <td class="views">26</td>
+                        <td class="name">천축기</td>
+                        <td class="date">2022-08-27</td>
+                        <td class="views">625</td>
                     </tr>
                     <tr>
-                        <td class="num">15</td>
+                        <td class="num">4</td>
                         <td class="title_N">
-                            <a href="">후기글 제목</a>
+                            <a href="">비 와도 괜찮은 주말 데이트를 책임질 서울 문화공간</a>
                         </td>
-                        <td class="name">닉네임</td>
-                        <td class="date">2022-07-10</td>
-                        <td class="views">26</td>
+                        <td class="name">턱찌끼</td>
+                        <td class="date">2022-08-27</td>
+                        <td class="views">457</td>
                     </tr>
                     <tr>
-                        <td class="num">15</td>
+                        <td class="num">3</td>
                         <td class="title_N">
-                            <a href="">후기글 제목</a>
+                            <a href="">서울 도심 속 작은 유럽여행</a>
                         </td>
-                        <td class="name">닉네임</td>
-                        <td class="date">2022-07-10</td>
-                        <td class="views">26</td>
+                        <td class="name">원주율</td>
+                        <td class="date">2022-08-20</td>
+                        <td class="views">967</td>
                     </tr>
                     <tr>
-                        <td class="num">15</td>
+                        <td class="num">2</td>
                         <td class="title_N">
-                            <a href="">후기글 제목</a>
+                            <a href="">2022서울무형문화축제후기</a>
                         </td>
-                        <td class="name">닉네임</td>
-                        <td class="date">2022-07-10</td>
-                        <td class="views">26</td>
+                        <td class="name">우차공</td>
+                        <td class="date">2022-08-16</td>
+                        <td class="views">863</td>
                     </tr>
                     <tr>
-                        <td class="num">15</td>
+                        <td class="num">1</td>
                         <td class="title_N">
-                            <a href="">후기글 제목</a>
+                            <a href="">서울 2박3일투어여행</a>
                         </td>
-                        <td class="name">닉네임</td>
-                        <td class="date">2022-07-10</td>
-                        <td class="views">26</td>
+                        <td class="name">나들통</td>
+                        <td class="date">2022-08-10</td>
+                        <td class="views">546</td>
                     </tr>
                 </tbody>
 

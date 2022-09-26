@@ -52,15 +52,12 @@
             <div class="w_box">
                 <h2>문의드립니다.</h2>
                 <div class="I_box">
-                    <div class="date">2022-07-10</div>
+                    <div class="date">2022-09-19</div>
                     <div class="name">김*수</div>
                 </div>
                 <hr width="990px">
                 <div class="R">
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora saepe repellat eos, <br>magni
-                        aliquid accusantium sed molestiae error quia sapiente eaque corporis <br>officia nesciunt,
-                        dolorem
-                        maxime, facilis nihil libero? Placeat.?</p>
+                    <p>호텔예약 결제를 완료했는데요 결제를 다시 다른카드로 변경하고 싶은데 가능한가요??</p>
                 </div>
                 <div class="F">
                     <input type="button" value="수정" id="C">

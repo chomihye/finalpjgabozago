@@ -54,6 +54,12 @@ public class BoardController {
 		return "board/qna/read";
 	} // qnaread
 	
+	@GetMapping("/qna/read2")
+	public String qnaqread2() {
+
+		return "board/qna/read2";
+	} // qnaread
+	
 	@GetMapping("/qna/write")
 	public String qnaqwrite() {
 

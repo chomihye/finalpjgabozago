@@ -53,7 +53,7 @@
                     <span class="img">
                         <img src="/resources/board/img/프로필사진1.jpg" alt="">
                     </span>
-                    <span class="nname">감자</span>
+                    <span class="nname">백설기</span>
                 </div>
                 <div class="titl">
                     <h2>
