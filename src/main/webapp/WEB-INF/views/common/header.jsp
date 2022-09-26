@@ -22,7 +22,7 @@
     <!-- 외부 css,js -->
     <link rel="stylesheet" href="/resources/common/css/headerReset.css">
     <link rel="stylesheet" href="/resources/common/css/header.css">
-    <script src="/main/js/header.js"></script>
+    
 
     <!-- 폰트어썸, 부트스트랩 -->
     <script src="https://kit.fontawesome.com/39d2c0da6a.js" crossorigin="anonymous"></script>

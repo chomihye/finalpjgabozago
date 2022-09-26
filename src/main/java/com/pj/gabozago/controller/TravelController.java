@@ -3,6 +3,7 @@ package com.pj.gabozago.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.pj.gabozago.common.SharedScopeKeys;
 import com.pj.gabozago.domain.TravePlanlCreateVO;
 import com.pj.gabozago.domain.TravePlanlDetailDTO;
 import com.pj.gabozago.domain.TravelPlanDTO;
@@ -42,8 +44,20 @@ public class TravelController implements InitializingBean {
 	
 
 	@GetMapping("/main")
-	public String main() {
+	public String main(Model model) throws ControllerException{
 		log.trace(">>>>>>main() invoked.");
+		
+		//일정구경하기
+		try {
+				
+			List<LinkedHashMap<String, Object>> list = this.travelService.getBestPlan();
+			
+						
+			model.addAttribute(SharedScopeKeys.LIST_KEY, list);
+		} catch (Exception e) {
+			throw new ControllerException(e);
+		} // try-catch
+		
 		
 		return "travel/main";
 	}//main

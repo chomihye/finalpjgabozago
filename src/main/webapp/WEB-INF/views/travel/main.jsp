@@ -924,6 +924,12 @@
                 
         </div>
 
+        <!-- othersPlanModel -->
+        <div id="othersPlanModal">
+            <div id="opWrapper">
+                <jsp:include page="../travel/others_plan.jsp" flush="true" /> 
+            </div>
+        </div>
     </section>
 
 

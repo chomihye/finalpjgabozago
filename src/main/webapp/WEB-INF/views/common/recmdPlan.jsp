@@ -25,63 +25,62 @@
 
 <body>
 
+  <div id="othersPlanWrapper">
 
-  <div class="listOuter">
-    <!-- Swiper 1 -->
-    <c:forEach var="list" items="${__LIST__}">
-      <form class="recmdaOuter" id="plan${list.itemNumber}">
-        <div class="userInfo">
-          <ul>
-            <li class="title">${list.largeAreaName}여행</li>
-            <li class="username">${list.nickname}</li>
-          </ul>
+    <div class="listOuter">
+      <!-- Swiper 1 -->
+      <c:forEach var="list" items="${__LIST__}">
+        <form class="recmdaOuter" id="plan${list.itemNumber}">
+          <div class="userInfo">
+            <ul>
+              <li class="title">${list.largeAreaName}여행</li>
+              <li class="username">${list.nickname}</li>
+            </ul>
 
-          <!-- 좋아요 수 -->
-          <p class="likeBtn bi bi-suit-heart">&nbsp;${list.likes}</p>
-        </div>
-
-        <div class="swiper mySwiper">
-          <div class="swiper-wrapper">
-            <c:forEach var="eachDays" items="${list.eachDays}">
-              <c:set var="DAY" value="DAY${eachDays}" />
-              <div class="swiper-slide">
-                <div class="areaListOuter">
-                  <h1>DAY${eachDays}</h1>
-                  <ul class="areaList">
-                    <c:forEach var="dayNum" items="${list[DAY]}">
-                      <li>${dayNum.PLACE_NAME}</li>
-                    </c:forEach>
-                  </ul>
-                </div>
-              </div>
-            </c:forEach>
-
-
+            <!-- 좋아요 수 -->
+            <p class="likeBtn bi bi-suit-heart">&nbsp;${list.likes}</p>
           </div>
 
-          <div class="swiper-button-next bi bi-arrow-right-circle-fill nextBtn"></div>
-          <div class="swiper-button-prev bi bi-arrow-left-circle-fill prevBtn"></div>
-        </div>
-        <button class="planAdd" type="button">일정에 추가</button>
-      </form>
-    </c:forEach>
+          <div class="swiper mySwiper">
+            <div class="swiper-wrapper">
+              <c:forEach var="eachDays" items="${list.eachDays}">
+                <c:set var="DAY" value="DAY${eachDays}" />
+                <div class="swiper-slide">
+                  <div class="areaListOuter">
+                    <h1>DAY${eachDays}</h1>
+                    <ul class="areaList">
+                      <c:forEach var="dayNum" items="${list[DAY]}">
+                        <li>${dayNum.PLACE_NAME}</li>
+                      </c:forEach>
+                    </ul>
+                  </div>
+                </div>
+              </c:forEach>
 
 
-  </div>
+            </div>
+
+            <div class="swiper-button-next bi bi-arrow-right-circle-fill nextBtn"></div>
+            <div class="swiper-button-prev bi bi-arrow-left-circle-fill prevBtn"></div>
+          </div>
+          <button class="planAdd" type="button">일정에 추가</button>
+        </form>
+      </c:forEach>
 
 
-  <div id="planAddModal">
-    <div class="modalInner">
-      <p>해당 일정을 추가하시겠습니까?</p>
-      <div class="addController">
-        <button class="closeBtn">취소</button>
-        <button class="addOkBtn" type="submit">확인</button>
-      </div>
     </div>
 
 
+    <div id="planAddModal">
+      <div class="modalInner">
+        <p>해당 일정을 추가하시겠습니까?</p>
+        <div class="addController">
+          <button class="closeBtn">취소</button>
+          <button class="addOkBtn" type="submit">확인</button>
+        </div>
+      </div>
+    </div>
   </div>
-
 
 
   <!-- Swiper JS -->

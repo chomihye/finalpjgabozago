@@ -1,0 +1,277 @@
+@charset "utf-8";
+
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css");
+@import url('https://fonts.googleapis.com/css2?family=Kanit&family=Mulish:wght@500&family=Nanum+Myeongjo&family=Noto+Sans+KR:wght@100;300;400;500;700;900&family=Orbitron:wght@500&display=swap');
+
+
+#othersplaWrapper {
+    margin: 0;
+    padding: 0;
+    height: 900px;
+    font-family: 'Noto Sans KR', sans-serif;
+    box-sizing: border-box;
+    position: relative;
+}
+
+#othersplaWrapper ul {
+    list-style: none;
+}
+
+#othersplaWrapper a {
+    text-decoration: none;
+    outline: 0;
+    color: #333333;
+}
+
+body {
+    width: 1920px;
+    /* 공백 없앨 시 조정하기 */
+}
+
+#footer {
+    clear: both;
+}
+
+/* 임시 설정 */
+nav {
+    width: 400px;
+    height: 900px;
+    margin-right: 5px;
+    float: left;
+
+    background-color: rgba(218, 232, 218, 1);
+}
+
+
+/* 일정 구경하기 */
+#othersplaWrapper section {
+    width: 1500px;
+    height: 900px;
+
+    background-color: rgba(218, 232, 218, 1);
+}
+
+.best_plan {
+    width: 100%;
+    height: 85%;
+
+}
+
+.bestPlanTitle {
+    text-align: center;
+    padding-top: 60px;
+    margin: 0 auto;
+}
+
+.bestPlanOutter {
+    position: relative;
+    height: 100%;
+}
+
+.bestPlanTitle>h1 {
+    color: #333333;
+
+    font-size: 30px;
+    font-weight: 500;
+
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+/* 일정 슬라이드  */
+.best_plan {
+    position: absolute;
+    top:20%;
+}
+
+.bestPlanSlide-outer {
+    height: 100%;
+}
+
+.bestPlanSlide-inner {
+    width: 90%;
+    height: 100%;
+}
+
+.bestPlanList {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.areaPlan {
+    margin-right: 30px;
+}
+
+/* 모달 */
+
+#othersPlanModalWrapper {
+    margin: 0;
+    padding: 0;
+    font-family: 'Noto Sans KR', sans-serif;
+    box-sizing: border-box;
+
+    position: absolute;
+    display: none;
+
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 20;
+}
+
+#othersPlanModalWrapper ul,
+ol {
+    list-style: none;
+}
+
+#othersPlanModalWrapper a {
+    text-decoration: none;
+    outline: 0;
+    color: #000000;
+}
+
+#othersPlanModalWrapper {
+    width: 90%;
+    height: 90%;
+
+    background-color: #e2e2e2;
+}
+
+#othersPlanModalWrapper li {
+    display: inline;
+}
+
+#othersPlanModalWrapper .plan_modal {
+    width: 100%;
+    height: 100%;
+
+    position: relative;
+
+
+}
+
+#othersPlanModalWrapper .dayList {
+    width: 90%;
+    height: 90%;
+
+    margin: auto auto;
+
+    overflow: auto;
+
+}
+
+#othersPlanModalWrapper .daylistOutter {
+    width: 99%;
+    height: 151px;
+
+    margin-top: 38px;
+    background-color: #ffffff;
+    border-radius: 20px;
+}
+
+#othersPlanModalWrapper .dayListInner {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.planModelCotroller {
+    position: absolute;
+    bottom: 2%;
+    left: 40%;
+}
+
+.planModelCotroller button {
+    font-size: 20px;
+    text-align: center;
+
+    font-weight: 700;
+
+    padding: 8px 40px;
+
+    box-shadow: 8px 2px 20px 1px rgba(0, 197, 0, 0.262);
+
+    border: none;
+    border-radius: 20px;
+
+    color: #ffffff;
+    background-color: #68AE6D;
+}
+.planModelCotroller button:first-child {
+    margin-right: 30px;
+}
+
+#othersPlanModalWrapper h3 {
+    font-size: 24px;
+
+    color: #68AE6D;
+}
+
+#othersPlanModalWrapper li {
+    font-size: 20px;
+}
+
+#othersPlanModalWrapper li:nth-child(odd) {
+    font-weight: 600;
+}
+
+#othersPlanModalWrapper li:last-child {
+    display: none;
+}
+
+.dayAddWrapper button {
+    background: none;
+    border: none;
+}
+
+.dayAddWrapper input {
+    text-align: center;
+    font-size: 18px;
+    font-weight: 700;
+
+    padding: 8px 15px;
+
+    box-shadow: 8px 2px 20px 1px rgba(0, 197, 0, 0.262);
+
+    border: 3px solid #68AE6D;
+    border-radius: 20px;
+
+    color: #68AE6D;
+}
+
+.dayAddWrapper input:focus {
+    outline-color: #68AE6D;
+}
+
+.dayListInner .areaList {
+    padding: 0;
+    width: 600px;
+    text-align: center;
+}
+
+
+/* ************************************************************************ */
+#othersplaWrapper {
+    position: absolute;
+}
+#othersplanWrapper section {
+    margin-left: 405px;
+    position: absolute;
+}
+.areaListOuter h1 {
+    margin: 20px 0px;
+}
+#othersplanWrapper .planAdd {
+    top:568px !important;
+}
+.userInfo ul{
+    margin: 20px 0px;
+}
+.userInfo .likeBtn {
+    margin: 20px 0px;
+}
