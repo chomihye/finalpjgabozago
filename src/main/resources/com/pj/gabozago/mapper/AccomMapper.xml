@@ -253,6 +253,37 @@
     	INSERT INTO tbl_payment(idx, reservation_idx, member_idx, order_price, use_point, payment_price, payment_type, insert_ts)
 		VALUES (#{idx}, #{reservation_idx},#{member_idx}, #{order_price}, #{use_point}, #{payment_price}, #{payment_type}, #{insert_ts})
 	</insert>
+
+        <!--************************* hearder search part end ************************  -->
+        <select id="selectSearchKeyword" resultMap="AccomDTO" >
+            SELECT
+                -1 wishlist_idx,
+                r.idx,
+                r.accom_name,
+                r.large_area_idx,
+                a.large_area_name,  
+                (select max(price) from tbl_accom_room where accom_idx = r.idx) as max_price,
+                (select min(price) from tbl_accom_room where accom_idx = r.idx) as min_price,
+                (select ai.file_name from tbl_accom_images ai where r.idx = ai.idx) as file_name
+            FROM tbl_accom r ,tbl_large_area a
+            WHERE r.large_area_idx = a.idx
+            AND (r.accom_name LIKE '%'||#{keyword}||'%' OR a.large_area_name LIKE '%'||#{keyword}||'%') 
+            ORDER BY r.idx asc
+            OFFSET (#{cri.currPage} -1) * #{cri.amount} ROWS
+            FETCH NEXT #{cri.amount} ROWS ONLY
+    
+            
+        </select>
+        
+        <!-- 헤더 검색 총 레코드 건수 반환 -->
+        <select id="getTotalKeywordSearch" resultType="int">
+            SELECT count(a.idx)
+            FROM tbl_accom r ,tbl_large_area a
+            WHERE r.large_area_idx = a.idx
+            AND (r.accom_name LIKE '%'||#{keyword}||'%' OR a.large_area_name LIKE '%'||#{keyword}||'%')
+            
+        </select>
+        <!--************************* hearder search part end ************************  -->
     
 	
 	
