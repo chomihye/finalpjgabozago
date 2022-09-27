@@ -79,14 +79,15 @@ public class AdminController {
 	
 	
 	@GetMapping("/customer/detail")
-	public String showCustomerDetail(@RequestParam("idx") Integer idx, MemberDTO member, Model model) throws ControllerException, ServiceException {
-		
-		log.trace("showCustomerDetail() invoked.");
-		
-		member.setIdx(idx);
-		Map<String, Object> map = this.service.getMemberInfoDetail(member);
-		
-		model.addAttribute("_MEMBER_", map);
+	public String showCustomerDetail(MemberDTO member, Model model) throws ControllerException {
+
+		try {
+			Map<String, Object> map = this.service.getMemberInfoDetail(member);	
+			model.addAttribute(SharedScopeKeys.MAP_KEY, map);
+			
+		} catch (ServiceException e) {
+			throw new ControllerException(e);
+		} // try-catch
 		
 		return "admin/customer/detail";
 	} // showCustomerDetail

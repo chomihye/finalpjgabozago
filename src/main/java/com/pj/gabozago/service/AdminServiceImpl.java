@@ -60,12 +60,14 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public Map<String, Object> getMemberInfoDetail(MemberDTO member) throws ServiceException {
 		try {
-			return mapper.getMemberInfoDetail(member);
+			return this.mapper.selectMemberInfoDetail(member);
 		} catch (DAOException e) {
 			throw new ServiceException(e);
 		}
 	} // getMemberInfoDetail
-	
+
+
+
 	
 	@Setter(onMethod_= {@Autowired})
 	private AdminReservMapper reservMapper;

@@ -22,10 +22,10 @@ public interface AdminMapper {
 	public abstract List<Map<String, Object>> selectMemberInfo(Criteria cri) throws DAOException;
 
 	// 회원 상세 정보를 가져오는 메소드
-	public abstract Map<String, Object> getMemberInfoDetail(MemberDTO member) throws DAOException;
+	public abstract Map<String, Object> selectMemberInfoDetail(MemberDTO member) throws DAOException;
 	
 	// 공지사항을 가져오는 메소드
 	public abstract List<Map<String, Object>> selectNotice(@Param("cri") Criteria cri, @Param("notice") NoticeVO notice) throws DAOException;
-	
+
 			
 } // end interface

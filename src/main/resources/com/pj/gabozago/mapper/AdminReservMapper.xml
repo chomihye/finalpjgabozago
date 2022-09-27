@@ -95,6 +95,25 @@
     </select>
     
     
+    <!-- 숙소 예약 취소 건 상세 정보 -->
+    <select 
+        id="selectRefundInfo"
+        resultType="com.pj.gabozago.domain.RefundVO">
+        SELECT 
+            rf.idx, 
+            rf.payment_idx, 
+            rf.refund_price, 
+            rf.refund_point, 
+            rf.insert_ts 
+        FROM 
+            (SELECT idx FROM tbl_reservation) rv,
+            (SELECT idx, reservation_idx FROM tbl_payment) p,
+            tbl_refund rf
+        WHERE 
+            rv.idx = p.reservation_idx
+            AND p.idx = rf.payment_idx
+            AND rv.idx = #{idx}
+    </select>
     
 
 </mapper>
