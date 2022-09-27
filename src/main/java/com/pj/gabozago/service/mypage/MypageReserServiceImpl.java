@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.UncategorizedSQLException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -74,7 +75,8 @@ public class MypageReserServiceImpl implements MypageReserService {
 			AccomPaymentVO vo = this.mapper.selectPaymentInfo(reser); 	// (1) 결제정보 select
 			this.mapper.insertRefund(vo);								// (2) 환불정보 insert (***)
 			this.mapper.insertRefundPointHistory(vo);					// (3) 포인트 환불내역 insert (***)
-			this.mapper.updateMemberPoint(vo); 							// (4) 회원테이블 포인트 update
+			try { this.mapper.updateMemberPoint(vo); }					// (4) 회원테이블 포인트 update
+			catch (UncategorizedSQLException e) { ;; }	
 			this.mapper.updateReserStatus(reser);						// (5) reservation 테이블 예약상태 update (***)
 			return this.mapper.selectRefundInfo(reser);					// (6) 최종으로 환불정보 반환
 		} catch (DAOException e) { 
@@ -107,7 +109,8 @@ public class MypageReserServiceImpl implements MypageReserService {
 			this.mapper.insertNewReview(review);  				// (1) 리뷰 테이블 insert (***)
 			this.mapper.updateReserStatusAfterReview(review);   // (2) reservation 테이블 예약상태 update (***)
 			this.mapper.insertReviewPointHistory(review); 		// (3) 리뷰작성 포인트 적립 insert (***)
-			this.mapper.updateMemberPoint(review); 				// (4) 회원테이블 포인트 update
+			try { this.mapper.updateMemberPoint(review); }		// (4) 회원테이블 포인트 update
+			catch (UncategorizedSQLException e) { ;; }
 		} catch (DAOException e) { 
 			throw new ServiceException(e); 
 		} // try-catch
