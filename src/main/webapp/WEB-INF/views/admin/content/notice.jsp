@@ -114,7 +114,7 @@
                             <tr>
                                 <td class="num">${item.IDX}</td>
                                 <td class="title_N">
-                                    <a href="./notice2.html">${item.TITLE}</a>
+                                    <a href="/board/notice/read">${item.TITLE}</a>
                                 </td>
                                 <td class="date"><fmt:formatDate pattern="yyyy-MM-dd" value="${item.CREATED_AT}" /></td>
                                 <td class="views">${item.VIEW_COUNT}</td>
@@ -136,11 +136,11 @@
                     <!-- 2. PageDTO 객체의 정보를 이용해서, Pagenation 출력 -->
                     <ul>
                         <!-- Prev 처리 -->
-                        <li class="frontPage"><a href="/admin/customer?currPage=1"><i class="bi bi-chevron-double-left"></i></a></li>
+                        <li class="frontPage"><a href="/admin/content/notice?currPage=1"><i class="bi bi-chevron-double-left"></i></a></li>
 
                         <c:choose>
                             <c:when test="${__PAGINATION__.prev}">
-                                <li class="prev"><a href="/admin/customer?currPage=${__PAGINATION__.startPage - 1}"><i class="bi bi-chevron-left"></i></a></li>
+                                <li class="prev"><a href="/admin/content/notice?currPage=${__PAGINATION__.startPage - 1}"><i class="bi bi-chevron-left"></i></a></li>
                             </c:when>
                             <c:otherwise>
                                 <li class="prev"><a href="#"><i class="bi bi-chevron-left"></i></a></li>
@@ -151,7 +151,7 @@
                         <!-- begin부터 end까지 forEach(반복문) -->
                         <c:forEach var="pageNum" begin="${__PAGINATION__.startPage}" end="${__PAGINATION__.endPage}">
                             <li class="${pageNum == __PAGINATION__.cri.currPage ? 'currPage' : ''}">
-                                <a href="/admin/customer?currPage=${pageNum}">
+                                <a href="/admin/content/notice?currPage=${pageNum}">
                                     <strong>${pageNum}</strong>
                                 </a>
                             </li>
@@ -160,7 +160,7 @@
                         <!-- Next 처리 -->
                         <c:choose>
                             <c:when test="${__PAGINATION__.next}">
-                                <li class="next"><a href="/admin/customer?currPage=${__PAGINATION__.endPage + 1}"><i class="bi bi-chevron-right"></i></a></li>
+                                <li class="next"><a href="/admin/content/notice?currPage=${__PAGINATION__.endPage + 1}"><i class="bi bi-chevron-right"></i></a></li>
                             </c:when>
                             <c:otherwise>
                                 <li class="next"><a href="#"><i class="bi bi-chevron-right"></i></a></li>

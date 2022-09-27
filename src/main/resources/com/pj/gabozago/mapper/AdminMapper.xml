@@ -44,18 +44,32 @@
         WHERE
         	idx = #{idx}
     </select>
+        
+        
+    <select 
+        id="selectDashNotice"
+        resultType="java.util.Map">
+        SELECT
+            title
+        FROM 
+            tbl_notice
+        OFFSET (#{cri.currPage} -1) * #{cri.amount} ROWS
+        FETCH NEXT #{cri.amount} ROWS ONLY
+    </select>
     
     
     <select 
         id="selectNotice"
         resultType="java.util.Map">
         SELECT
-        	n.idx,
-            n.title,
-            n.created_at, 
-            n.view_count
+        	idx,
+            title,
+            created_at, 
+            view_count
         FROM 
-            tbl_notice n
+            tbl_notice
+        ORDER BY
+        	idx desc
         OFFSET (#{cri.currPage} -1) * #{cri.amount} ROWS
         FETCH NEXT #{cri.amount} ROWS ONLY
     </select>

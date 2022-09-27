@@ -49,9 +49,9 @@
                 <div id="rightMenu">
 
                     <% MemberVO vo=(MemberVO) session.getAttribute("__MEMBER__"); if(vo==null){ %>
-                        <button class="loginBtn" onclick="location.href ='/login'" id="loginBtn">LOGIN</button>
+                        <button class="loginBtn" onclick="location.href ='/admin/login'" id="loginBtn">LOGIN</button>
                         <% } else { %>
-                            <button class="loginBtn" onclick="location.href ='/login/logoutProcess'"
+                            <button class="loginBtn" onclick="location.href ='/admin/logoutProcess'"
                                 id="logoutBtn">LOGOUT</button>
                             <% } %>
                 </div>

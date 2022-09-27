@@ -144,10 +144,6 @@ td {
     width: 100%;
 }
 
-.notice_table thead .num {
-    width: 160px;
-}
-
 .board_list th {
     padding: 23px 0;
     position: relative;
@@ -173,6 +169,10 @@ td {
 
 .notice_table th:before {
     height: 14px;
+}
+
+.notice_table thead .num {
+    width: 160px;
 }
 
 .notice_table thead .name {

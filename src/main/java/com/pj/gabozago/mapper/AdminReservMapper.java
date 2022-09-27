@@ -22,6 +22,9 @@ public interface AdminReservMapper {
 	// 숙소 예약 정보를 가져오는 메소드
 	public abstract List<Map<String, Object>> selectReservInfo(@Param("cri") Criteria cri, @Param("reserv") AccomReservationVO reserv) throws DAOException;
 	
+	// 숙소 예약 정보를 가져오는 메소드
+	public abstract List<Map<String, Object>> selectCanReservInfo(@Param("cri") Criteria cri, @Param("reserv") AccomReservationVO reserv) throws DAOException;	
+		
 	// 환불정보 불러오는 메소드 => cancelReservaion 서비스 트랜잭션 끝
 	public abstract RefundVO selectRefundInfo(AccomReservationDTO reserv) throws DAOException;
 		

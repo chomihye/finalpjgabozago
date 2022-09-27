@@ -1,22 +1,28 @@
 package com.pj.gabozago.service;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.pj.gabozago.domain.AccomReservationDTO;
 import com.pj.gabozago.domain.AccomReservationVO;
 import com.pj.gabozago.domain.Criteria;
+import com.pj.gabozago.domain.JoinDTO;
+import com.pj.gabozago.domain.LoginDTO;
 import com.pj.gabozago.domain.MemberDTO;
 import com.pj.gabozago.domain.MemberVO;
 import com.pj.gabozago.domain.NoticeVO;
 import com.pj.gabozago.domain.RefundVO;
 import com.pj.gabozago.exception.DAOException;
+import com.pj.gabozago.exception.MemberException;
 import com.pj.gabozago.exception.ServiceException;
 import com.pj.gabozago.mapper.AdminMapper;
 import com.pj.gabozago.mapper.AdminReservMapper;
+import com.pj.gabozago.mapper.MemberMapper;
 
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -88,7 +94,7 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public List<Map<String, Object>> getCanReservInfo(Criteria cri, AccomReservationVO reserv) throws ServiceException {
 		try {
-			return this.reservMapper.selectReservInfo(cri, reserv);
+			return this.reservMapper.selectCanReservInfo(cri, reserv);
 		} catch (DAOException e) {
 			throw new ServiceException(e);
 		}
@@ -111,6 +117,16 @@ public class AdminServiceImpl implements AdminService {
 	} // getOneReserDetail
 	
 	
+
+	// 대쉬보드 공지사항
+	@Override
+	public List<Map<String, Object>> getDashNotice(Criteria cri, NoticeVO notice) throws ServiceException {
+		try {
+			return this.mapper.selectDashNotice(cri, notice);
+		} catch (DAOException e) {
+			throw new ServiceException(e);
+		}
+	} // getNotice
 	
 	
 	// 공지사항
@@ -122,6 +138,47 @@ public class AdminServiceImpl implements AdminService {
 			throw new ServiceException(e);
 		}
 	} // getNotice
+	
+	
+	
+	@Setter(onMethod_=@Autowired)
+	private MemberMapper memmapper;
+
+	
+	// 로그인
+	@Override
+	public MemberVO login(LoginDTO dto) throws ServiceException {
+		log.trace("login() invoked.");
+		
+		try {						
+			return this.memmapper.selectUser(dto);
+		} catch (MemberException e) {
+			throw new ServiceException(e);
+		}// try-catch
+	}// login
+
+	@Override
+	public boolean modifyUserWithRememberMe(Integer idx, String rememberMe, Timestamp rememberAge) throws ServiceException {
+		log.trace("modifyUserWithRememberMe() invoked.");
+		
+		try {
+			return this.memmapper.updateUserWithRememberMe(idx, rememberMe, rememberAge) == 1;		
+		} catch (MemberException e) {
+			throw new ServiceException(e);
+		}// try-catch
+	}
+
+
+	@Override
+	public MemberVO findUserByRememberMe(String rememberMe) throws ServiceException {
+		log.trace("findUserByRememberMe({}) invoked.", rememberMe);
+		
+		try {
+			return this.memmapper.selectUserByRememberMe(rememberMe);
+		} catch (Exception e) {
+			throw new ServiceException(e);
+		}// try-catch
+	}// findUserByRememberMe
 	
 	
 	

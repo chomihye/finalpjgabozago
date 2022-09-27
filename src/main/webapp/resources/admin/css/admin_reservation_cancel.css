@@ -92,6 +92,10 @@ table {
     border-spacing: 0;
 }
 
+.board-table-top {
+    padding-bottom: 50px;
+}
+
 .board_list {
     width: 920px;
     /* padding: 20px 0 35px 0; */
@@ -154,10 +158,6 @@ td {
     border-bottom: 2px solid #ddd;
 }
 
-.cancel_table thead .location {
-    width: 95px;
-}
-
 .board_list th:before {
     content: '';
     display: block;
@@ -174,20 +174,28 @@ td {
     height: 14px;
 }
 
-.cancel_table thead .hotel {
-    width: 178px;
-}
-
-.cancel_table thead .date {
-    width: 205px;
+.cancel_table thead .num {
+    width: 160px;
 }
 
 .cancel_table thead .name {
+    width: 160px;
+}
+
+.cancel_table thead .hotel {
+    width: 180px;
+}
+
+.cancel_table thead .checkin {
     width: 130px;
 }
 
-.cancel_table thead .number {
-    width: 210px;
+.cancel_table thead .checkout {
+    width: 160px;
+}
+
+.cancel_table thead .status {
+    width: 130px;
 }
 
 .cancel_table tbody td {

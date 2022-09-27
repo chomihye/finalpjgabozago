@@ -1,11 +1,14 @@
 package com.pj.gabozago.service;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 
 import com.pj.gabozago.domain.AccomReservationDTO;
 import com.pj.gabozago.domain.AccomReservationVO;
 import com.pj.gabozago.domain.Criteria;
+import com.pj.gabozago.domain.JoinDTO;
+import com.pj.gabozago.domain.LoginDTO;
 import com.pj.gabozago.domain.MemberDTO;
 import com.pj.gabozago.domain.MemberVO;
 import com.pj.gabozago.domain.NoticeVO;
@@ -34,11 +37,23 @@ public interface AdminService {
 	
 	// 숙소예약내역 상세 정보 
 	public abstract Map<String, Object> getOneReserDetail(AccomReservationDTO reserv) throws ServiceException;
-		
+
+	// 대쉬보드 공지사항
+	public abstract List<Map<String, Object>> getDashNotice(Criteria cri, NoticeVO notice) throws ServiceException;
+
 	// 공지사항
 	public abstract List<Map<String, Object>> getNotice(Criteria cri, NoticeVO notice) throws ServiceException;
 
+	// 일반 로그인
+	public abstract MemberVO login(LoginDTO dto) throws ServiceException;
+
+	// 자동로그인 설정
+	public abstract boolean modifyUserWithRememberMe(Integer idx, String rememberMe, Timestamp rememberAge) throws ServiceException;
 	
+	// 자동로그인
+	public abstract MemberVO findUserByRememberMe(String rememberMe) throws ServiceException;
+
+
 
 	
 	

@@ -177,11 +177,9 @@
                             <th class="admin-title">관리자 작성 글</th>
                         </thead>
                         <tbody>
-                            <td><a href="#!">Lorem ipsum dolor sit amet consectetur.</a></td>
-                            <td><a href="#!">Lorem ipsum dolor sit amet consectetur.</a></td>
-                            <td><a href="#!">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quaerat?</a></td>
-                            <td><a href="#!">Lorem ipsum dolor sit amet.</a></td>
-                            <td><a href="#!">Lorem ipsum dolor sit amet.</a></td>
+                        <c:forEach var="item" items="${result.model}">
+                            <td><a href="/board/notice/read">${item.TITLE}</a></td>
+                        </c:forEach>
                         </tbody>
                     </table>
                 </div>

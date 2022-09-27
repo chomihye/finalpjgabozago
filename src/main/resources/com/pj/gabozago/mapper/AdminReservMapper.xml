@@ -48,9 +48,17 @@
             r.check_out_date, 
             r.status
         FROM
+            tbl_reservation r,
+            tbl_member m,
+            tbl_accom_room ar,
+            tbl_accom a
+        WHERE
             r.member_idx = m.idx
             AND ar.idx = r.accom_room_idx
             AND ar.accom_idx = a.idx
+            AND r.status = 'CD'
+        ORDER BY 
+			r.idx desc
         OFFSET (#{cri.currPage} -1) * #{cri.amount} ROWS
         FETCH NEXT #{cri.amount} ROWS ONLY
     </select>
