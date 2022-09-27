@@ -8,14 +8,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
+import com.pj.gabozago.common.SharedScopeKeys;
+import com.pj.gabozago.domain.AccomReservationDTO;
 import com.pj.gabozago.domain.AccomReservationVO;
 import com.pj.gabozago.domain.Criteria;
 import com.pj.gabozago.domain.MemberDTO;
+import com.pj.gabozago.domain.MemberVO;
 import com.pj.gabozago.domain.NoticeVO;
 import com.pj.gabozago.domain.PageDTO;
+import com.pj.gabozago.domain.RefundVO;
 import com.pj.gabozago.exception.ControllerException;
 import com.pj.gabozago.exception.ServiceException;
 import com.pj.gabozago.service.AdminService;
@@ -114,11 +120,27 @@ public class AdminController {
 	
 	
 	@GetMapping("/reservation/detail")
-	public String showReservationDetail() {
-		log.trace("showReservationDetail() invoked.");
+	public String showReservationDetail(
+			AccomReservationDTO reserv, Model model) throws ControllerException {
 		
+		try {
+			Map<String, Object> map = this.service.getOneReserDetail(reserv);		// 예약정보
+			model.addAttribute(SharedScopeKeys.MAP_KEY, map);
+			
+			String status = String.valueOf(map.get("STATUS"));
+			
+			if(status.equals("CD")) {
+				RefundVO refund = this.service.getRefundInfo(reserv);		// 환불정보
+				model.addAttribute(SharedScopeKeys.RESULT_KEY, refund);
+			} // if
+		} catch (ServiceException e) {
+			throw new ControllerException(e);
+		} // try-catch
+	
 		return "admin/reservation/detail";
 	} // showReservationDetail
+	
+	
 	
 	
 	@GetMapping("/reservation/cancel")

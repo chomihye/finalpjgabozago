@@ -97,44 +97,72 @@
 
       <section class="reservation_info">
           <div class="header">
-              <!-- <a href="#"><i class="fas fa-angle-left"></i></a> -->
+               <a href="#"><i class="fas fa-angle-left"></i></a>
               <h1>예약 관리</h1>
           </div>
 
+		  <c:set var="item" value="${__MAP__}" />
           <article class="infoBox">
               <div class="reser_info">
                   <h1>예약 정보</h1>
                   <div class="accom_info">
-                      <a href="#"><img src="https://picsum.photos/id/684/80/80" alt="accom image"></a>
-                      <div class="accom_info_letter">
-                          <h3><a href="#">숙소명</a></h3>
-                          <p><a href="#">Room Type</a></p>
+                      <a href="/reservation/datail?accom_idx=${item.ACCOM_IDX}"><img src="/resources/acco/img/himg/${item.FILE_NAME}" alt="accom image"></a>
+                        <div class="accom_info_letter">
+                          <h3><a href="/reservation/datail?accom_idx=${item.ACCOM_IDX}">${item.ACCOM_NAME}</a></h3>
+                          <p><a href="/reservation/room?room_idx=${item.ACCOM_ROOM_IDX}">${item.ROOM_NAME}</a></p>
                       </div>
                   </div>
                   <div class="date_info">
                       <h3>날짜</h3>
-                      <p>2000.00.00 ~ 2000.00.00</p>
+                        <p>${item.CHECK_IN_DATE} ~ ${item.CHECK_OUT_DATE}</p>
                   </div>
                   <h3>인원</h3>
-                  <p>성인 2명</p>
+                  <p>
+                      성인 ${item.ADULT_COUNT}인
+                      <c:if test="${item.CHILD_COUNT != 0}">
+                          , 유아 ${item.CHILD_COUNT}인
+                      </c:if>
+                    </p>
               </div>
               <div class="member_info">
                   <h1>예약자 정보</h1>
-                  <h3>예약자 이름</h3><p>홍길동</p>
-                  <h3>연락처</h3><p>010-0000-0000</p>
-                  <h3>이메일 주소</h3><p>gabojago12345678@gabojago.com</p>
+                  <h3>예약자 이름</h3><p>${item.NAME}</p>
+                  <h3>연락처</h3><p>${item.PHONE}</p>
+                  <h3>이메일 주소</h3><p>${item.EMAIL}</p>
               </div>
               <div class="payment_info">
                   <h1>결제 정보</h1>
-                  <h3>주문금액</h3><p><span>200,000</span> 원</p>
-                  <h3>포인트 사용</h3><p><span>-3,000</span> P</p>
-                  <h3>총 결제 금액</h3><p class="total"><span>197,000</span> 원</p>
+                  <h3>주문금액</h3><p><fmt:formatNumber pattern="#,###,###,###" value="${item.ORDER_PRICE}" /> 원</p>
+                  <h3>포인트 사용</h3><p>-<fmt:formatNumber pattern="#,###,###,###" value="${item.USE_POINT}" /> P</p>
+                  <h3>총 결제 금액</h3><p class="total"><fmt:formatNumber pattern="#,###,###,###" value="${item.PAYMENT_PRICE}" /> 원</p>
                   <div class="card_info">
-                      <div>카드결제(결제방법)</div>
-                      <div>신한(0000-0000-0000-0000) 일시불(카드정보)</div>
-                      <div>(<span>2000.00.00 AM 00:00(결제일시)</span>)</div>
+                      <div>카드결제</div>
+                      <div><fmt:formatDate pattern="(yyyy-MM-dd HH:mm:ss)" value="${item.INSERT_TS}" /></div>
                   </div>
               </div>
+              
+              <c:choose>
+                    <c:when test="${item.STATUS eq 'CA'}">
+                        <!-- status가 CA(취소가능)인 경우, 예약취소 버튼 활성화 -->
+                        <div class="cancel">
+                            <button type="button" class="btnCancel">예약 취소</button>
+                        </div>
+                    </c:when>
+                    <c:when test="${item.STATUS eq 'CD'}">
+                        <!-- status가 CD(취소완료)인 경우, 환불정보 활성화 -->
+                        <div class="refund_info">
+                            <h1>환불 정보</h1>
+                            <h3>환불 일자</h3><p><fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${__RESULT__.insertTs}" /></p>
+                            <h3>환불 금액</h3><p class="total"><fmt:formatNumber pattern="#,###,###,###" value="${__RESULT__.refundPrice}" /> 원</p>
+                            <h3>환불 수단</h3><p>신용카드 결제 취소</p>
+                            <h3>환불 처리 상태</h3><p>환불 완료</p>
+                            <h3>포인트 복원 내역</h3><p><fmt:formatNumber pattern="#,###,###,###" value="${__RESULT__.refundPoint}" /> P</p>
+                        </div>
+                    </c:when>
+                    <c:otherwise>
+                        <!-- 정상적으로 이용완료된 상태이면 아무것도 표시하지 않는다. -->
+                    </c:otherwise>
+                </c:choose>
               
               <div class="back">
                   <a href="/admin/reservation" class="btnBack">돌아가기</a>

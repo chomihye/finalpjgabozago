@@ -30,6 +30,8 @@
             r.member_idx = m.idx
             AND ar.idx = r.accom_room_idx
             AND ar.accom_idx = a.idx
+		ORDER BY 
+			r.idx desc
         OFFSET (#{cri.currPage} -1) * #{cri.amount} ROWS
         FETCH NEXT #{cri.amount} ROWS ONLY
     </select>
@@ -51,8 +53,49 @@
             AND ar.accom_idx = a.idx
         OFFSET (#{cri.currPage} -1) * #{cri.amount} ROWS
         FETCH NEXT #{cri.amount} ROWS ONLY
-        	
     </select>
+    
+    <!-- 숙소 예약 상세 정보 -->
+    <select 
+        id="selectOneReserDetail"
+        resultType="java.util.Map">
+        SELECT
+            r.idx,
+            a.accom_name,
+            ar.room_name,
+            r.check_in_date,
+            r.check_out_date,
+            r.adult_count,
+            r.child_count,
+            m.name,
+            m.phone,
+            m.email,
+            p.order_price,
+            p.use_point,
+            p.payment_price,
+            p.insert_ts,
+            r.status,
+            ai.file_name,
+            a.idx AS accom_idx,
+            ar.idx AS accom_room_idx
+        FROM 
+            tbl_reservation r,
+            (SELECT idx, accom_name FROM tbl_accom) a,
+            (SELECT idx, accom_idx, room_name FROM tbl_accom_room) ar,
+            (SELECT idx, name, phone, email FROM tbl_member) m,
+            (SELECT reservation_idx, order_price, use_point, payment_price, insert_ts FROM tbl_payment) p,
+            tbl_accom_images ai
+        WHERE
+            r.accom_room_idx = ar.idx
+            AND ar.accom_idx = a.idx
+            AND r.member_idx = m.idx
+            AND r.idx = p.reservation_idx
+            AND a.idx = ai.accom_idx
+            AND r.idx = #{reserv.idx}
+            AND r.member_idx = #{member.idx}
+    </select>
+    
+    
     
 
 </mapper>

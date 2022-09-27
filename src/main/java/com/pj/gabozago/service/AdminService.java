@@ -3,10 +3,13 @@ package com.pj.gabozago.service;
 import java.util.List;
 import java.util.Map;
 
+import com.pj.gabozago.domain.AccomReservationDTO;
 import com.pj.gabozago.domain.AccomReservationVO;
 import com.pj.gabozago.domain.Criteria;
 import com.pj.gabozago.domain.MemberDTO;
+import com.pj.gabozago.domain.MemberVO;
 import com.pj.gabozago.domain.NoticeVO;
+import com.pj.gabozago.domain.RefundVO;
 import com.pj.gabozago.exception.ServiceException;
 
 public interface AdminService {
@@ -25,7 +28,13 @@ public interface AdminService {
 
 	// 예약 취소 정보
 	public abstract List<Map<String, Object>> getCanReservInfo(Criteria cri, AccomReservationVO reserv) throws ServiceException;
-
+	
+	// 이미 취소되어있는 환불정보 불러오는 메소드
+	public abstract RefundVO getRefundInfo(AccomReservationDTO reserv) throws ServiceException;
+	
+	// 숙소예약내역 상세 정보 
+	public abstract Map<String, Object> getOneReserDetail(AccomReservationDTO reserv) throws ServiceException;
+		
 	// 공지사항
 	public abstract List<Map<String, Object>> getNotice(Criteria cri, NoticeVO notice) throws ServiceException;
 
