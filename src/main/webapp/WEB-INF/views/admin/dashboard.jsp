@@ -32,7 +32,7 @@
 <body>
     <!-- header -->
     <header>
-        <%-- <%@include file="/WEB-INF/views/common/header.jsp" %> --%>
+    	<jsp:include page="/WEB-INF/views/common/header.jsp" flush="false" />
     </header>
 
     <!-- section -->
@@ -108,47 +108,47 @@
             
                 <tbody>
                     <tr>
-                        <td class="num">1</td>
+                        <td class="num">7</td>
                         <td class="title">
-                            <a href="#!">Lorem, ipsum dolor.</a>
+                            <a href="/board/community/read">서울의 랜드마크를 만나다</a>
                         </td>
-                        <td class="writer">아아</td>
-                        <td class="date">2022/07/07</td>
+                        <td class="writer">백설기</td>
+                        <td class="date">2022-07-10</td>
             
                     <tr>
-                        <td class="num">2</td>
+                        <td class="num">6</td>
                         <td class="title">
-                            <a href="#!">Lorem ipsum dolor sit amet.</a>
+                            <a href="/board/community/read">서울의 랜드마크를 만나다</a>
                         </td>
-                        <td class="writer">라떼</td>
-                        <td class="date">2022/07/07</td>
-                    </tr>
-            
-                    <tr>
-                        <td class="num">3</td>
-                        <td class="title">
-                            <a href="#!">Lorem ipsum dolor sit amet.</a>
-                        </td>
-                        <td class="writer">핫초코</td>
-                        <td class="date">2022/07/07</td>
-                    </tr>
-            
-                    <tr>
-                        <td class="num">4</td>
-                        <td class="title">
-                            <a href="#!">Lorem ipsum dolor sit amet consectetur adipisicing elit.</a>
-                        </td>
-                        <td class="writer">홍차</td>
-                        <td dateclass="writer">2022/07/07</td>
+                        <td class="writer">백설기</td>
+                        <td class="date">2022-07-10</td>
                     </tr>
             
                     <tr>
                         <td class="num">5</td>
                         <td class="title">
-                            <a href="#!">Lorem ipsum dolor sit amet.</a>
+                            <a href="/board/community/read">춘천에서 청정 & 낭만 에너지를 채우다</a>
                         </td>
-                        <td class="writer">아이스초코</td>
-                        <td class="date">2022/07/07</td>
+                        <td class="writer">골멩이</td>
+                        <td class="date">2022-07-10</td>
+                    </tr>
+            
+                    <tr>
+                        <td class="num">4</td>
+                        <td class="title">
+                            <a href="/board/community/read">자전거와 함께하는 풍경여행</a>
+                        </td>
+                        <td class="writer">납평치</td>
+                        <td dateclass="writer">2022-07-10</td>
+                    </tr>
+            
+                    <tr>
+                        <td class="num">3</td>
+                        <td class="title">
+                            <a href="/board/community/read">온몸으로 즐기는 대구 2박 3일 코스 여행</a>
+                        </td>
+                        <td class="writer">토런스</td>
+                        <td class="date">2022-07-10</td>
                     </tr>
                 </tbody>
             </table>
@@ -161,11 +161,11 @@
                             <th class="ask-title">문의</th>
                         </thead>
                         <tbody>
-                            <td><a href="#!">Lorem ipsum dolor sit amet consectetur adipisicing.</a></td>  
-                            <td><a href="#!">Lorem ipsum dolor sit amet consectetur.</a></td> 
-                            <td><a href="#!">Lorem ipsum dolor sit amet consectetur.</a></td>
-                            <td><a href="#!">Lorem ipsum dolor sit amet.</a></td> 
-                            <td><a href="#!">Lorem ipsum dolor sit amet.</a></td>
+                            <td><a href="#!">문의 드립니다</a></td>  
+                            <td><a href="#!">문의 드립니다</a></td> 
+                            <td><a href="#!">문의 드립니다</a></td>
+                            <td><a href="#!">문의 드립니다</a></td> 
+                            <td><a href="#!">문의 드립니다</a></td>
                         </tbody>
                     </table>
                 </div>
