@@ -488,13 +488,13 @@ img {
 	cursor:pointer;
     padding: auto;
 
-	color:#666666;
+	color: #fafafa;
 	font-size:15px;
-	opacity: 70%;
+    opacity: 70%;
 }
 .row_btn:hover {
 	background-color : #e3e0e0;
-   	opacity: 80%;
+    opacity: 80%;
 }
 .row_btn:active {
 	position:relative;
@@ -580,34 +580,6 @@ img {
 .placeName {
     text-align: center;
 }
-
-
-/* >>>>>>>>>>>>>>>>>>>>>>>>>>>>othersPlanModal<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< */
-#othersPlanModal {
-    display: none;
-    height: 900px;
-    margin-left: 405px;
-}
-#othersplaWrapper {
-    position: absolute;
-}
-#othersplanWrapper section {
-    margin-left: 405px;
-    position: absolute;
-}
-#othersplanWrapper .best_plan {
-    top:20%;
-}
-#othersplanWrapper .userInfo {
-    margin: 20px 0px;
-}
-.areaListOuter h1 {
-    margin: 20px 0px;
-}
-#othersplanWrapper .planAdd {
-    top:568px
-}
-
 
 
 

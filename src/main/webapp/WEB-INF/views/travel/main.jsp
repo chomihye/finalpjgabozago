@@ -87,6 +87,7 @@
             top: 38px;
 
         }
+        
     </style>
 
     <script>
@@ -152,7 +153,7 @@
             }) 
         });
 
-        // //예약 내역 팝업 
+        //예약 내역 팝업 
         // $(function() {  
         //     for(let i=0; i<2; i++) {
         //         let element = $(".carousel-item").html();
@@ -255,8 +256,8 @@
                     // data :  data,  //위의 변수에 담긴 데이터를 전송해준다.
                     // dataType : "json", 
                     contentType: "application/json;charset=UTF-8",
-                    success : function(data){   
-                        alert("일정 생성을 완료하였습니다");
+                    success : function(data,textStatus){   
+                        alert("일정 생성을 완료하였습니다.",data);
                      
                         self.location = "/travel/plan?planIdx=" 
 
@@ -266,6 +267,9 @@
                          $("#myModal").hide();
                     }
                 }); //ajax 
+
+                
+
             });//c e
 
         });
@@ -791,7 +795,6 @@
 
                     <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="false">
                         
-                        
                         <!-- The slideshow -->
                         <div class="carousel-inner">
                             <div class="carousel-item active">
@@ -864,7 +867,8 @@
                                 </div>
                             </div>
                           </div>
-                        
+    
+                   
                         </div>
                         
                         <!-- Left and right controls -->
@@ -876,8 +880,10 @@
                         </a>
 
                         <button type="button" id="btn_reservation_cs" onclick="CategoryChange(this,10)">닫기</button>
-                    </div>
+                </div>
                       
+                   
+                   
                 </div>
             <div class="dimmed"></div></div>
         </div>
@@ -981,16 +987,18 @@
                     바바인디아 강남역점
                 </div>
             </div>
-
-                
         </div>
 
+        
         <!-- othersPlanModel -->
         <div id="othersPlanModal">
             <div id="opWrapper">
                 <jsp:include page="../travel/others_plan.jsp" flush="true" /> 
             </div>
-        </div>
+        </div> 
+
+
+
     </section>
 
 
@@ -1138,6 +1146,8 @@
                 
                 e.target.querySelector(".row_index").append(createElementFromHTML(rowIndex));
                 $("button.row_btn").css({'position': 'absolute', 'z-index': '3', 'left': '25px', 'top': '38px'})
+
+                // $("button.row_btn").addClass("r");
                 // e.target.querySelector(".row_index").html(rowIndex);
                 
             
@@ -1161,7 +1171,6 @@
                         $(this).closest(".row").remove();
                         console.log("dayTextClassID",dayTextClassID);
                         height2 = 0;
-                    
                     }) 
                 }); // rowDelete();
 
