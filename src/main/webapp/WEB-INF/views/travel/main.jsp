@@ -87,7 +87,6 @@
             top: 38px;
 
         }
-        
     </style>
 
     <script>
@@ -153,7 +152,7 @@
             }) 
         });
 
-        //예약 내역 팝업 
+        // //예약 내역 팝업 
         // $(function() {  
         //     for(let i=0; i<2; i++) {
         //         let element = $(".carousel-item").html();
@@ -256,8 +255,8 @@
                     // data :  data,  //위의 변수에 담긴 데이터를 전송해준다.
                     // dataType : "json", 
                     contentType: "application/json;charset=UTF-8",
-                    success : function(data,textStatus){   
-                        alert("일정 생성을 완료하였습니다.",data);
+                    success : function(data){   
+                        alert("일정 생성을 완료하였습니다");
                      
                         self.location = "/travel/plan?planIdx=" 
 
@@ -267,9 +266,6 @@
                          $("#myModal").hide();
                     }
                 }); //ajax 
-
-                
-
             });//c e
 
         });
@@ -795,6 +791,7 @@
 
                     <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="false">
                         
+                        
                         <!-- The slideshow -->
                         <div class="carousel-inner">
                             <div class="carousel-item active">
@@ -867,8 +864,7 @@
                                 </div>
                             </div>
                           </div>
-    
-                   
+                        
                         </div>
                         
                         <!-- Left and right controls -->
@@ -880,10 +876,8 @@
                         </a>
 
                         <button type="button" id="btn_reservation_cs" onclick="CategoryChange(this,10)">닫기</button>
-                </div>
+                    </div>
                       
-                   
-                   
                 </div>
             <div class="dimmed"></div></div>
         </div>
@@ -955,50 +949,40 @@
          
             <div class="row">
                 <div class="col-sm-1" id="place1" draggable="true">
-                    <img src="http://tong.visitkorea.or.kr/cms/resource/24/2853024_image2_1.jpg" alt="">
-                    2022 강남페스티벌
+                    <img src="http://tong.visitkorea.or.kr/cms/resource/24/2853024_image2_1.jpg" alt="">2022 강남페스티벌
                 </div>
                 <div class="col-sm-1" id="place2"draggable="true">
-                    <img src="http://tong.visitkorea.or.kr/cms/resource/48/705248_image2_1.jpg" alt="">
-                    노보텔 앰배서더 강남
+                    <img src="http://tong.visitkorea.or.kr/cms/resource/48/705248_image2_1.jpg" alt="">노보텔 앰배서더 강남
                 </div>
                 <div class="col-sm-1" id="place3" draggable="true">
-                    <img src="http://tong.visitkorea.or.kr/cms/resource/86/2020186_image2_1.jpg" alt="">
-                    고투몰(강남터미널 지하도상가)
+                    <img src="http://tong.visitkorea.or.kr/cms/resource/86/2020186_image2_1.jpg" alt="">고투몰(강남터미널 지하도상가)
                 </div>
                 <div class="col-sm-1" id="place4" draggable="true">
-                    <img src="http://tong.visitkorea.or.kr/cms/resource/13/2024213_image2_1.jpg" alt="">
-                    세븐럭카지노(강남코엑스점)
+                    <img src="http://tong.visitkorea.or.kr/cms/resource/13/2024213_image2_1.jpg" alt="">세븐럭카지노(강남코엑스점)
                 </div>
                 <div class="col-sm-1" id="place5" draggable="true">
-                    <img src="http://tong.visitkorea.or.kr/cms/resource/08/1984608_image2_1.jpg" alt="">
-                    강남
+                    <img src="http://tong.visitkorea.or.kr/cms/resource/08/1984608_image2_1.jpg" alt="">강남
                 </div>
                 <div class="col-sm-1" id="place6" draggable="true">
-                    <img src="http://tong.visitkorea.or.kr/cms/resource/62/1923662_image2_1.jpg" alt="">
-                    서울특별시교육청 강남도서관
+                    <img src="http://tong.visitkorea.or.kr/cms/resource/62/1923662_image2_1.jpg" alt="">서울특별시교육청 강남도서관
                 </div>
                 <div class="col-sm-1" id="place7" draggable="true">
-                    <img src="http://tong.visitkorea.or.kr/cms/resource/23/2462023_image2_1.jpg" alt="">
-                    강남청소년수련관
+                    <img src="http://tong.visitkorea.or.kr/cms/resource/23/2462023_image2_1.jpg" alt="">강남청소년수련관
                 </div>
                 <div class="col-sm-1" id="place8" draggable="true">
-                    <img src="http://tong.visitkorea.or.kr/cms/resource/15/1807915_image2_1.jpg" alt="">
-                    바바인디아 강남역점
+                    <img src="http://tong.visitkorea.or.kr/cms/resource/15/1807915_image2_1.jpg" alt="">바바인디아 강남역점
                 </div>
             </div>
+
+                
         </div>
 
-        
         <!-- othersPlanModel -->
         <div id="othersPlanModal">
             <div id="opWrapper">
                 <jsp:include page="../travel/others_plan.jsp" flush="true" /> 
             </div>
-        </div> 
-
-
-
+        </div>
     </section>
 
 
@@ -1146,8 +1130,6 @@
                 
                 e.target.querySelector(".row_index").append(createElementFromHTML(rowIndex));
                 $("button.row_btn").css({'position': 'absolute', 'z-index': '3', 'left': '25px', 'top': '38px'})
-
-                // $("button.row_btn").addClass("r");
                 // e.target.querySelector(".row_index").html(rowIndex);
                 
             
@@ -1171,6 +1153,7 @@
                         $(this).closest(".row").remove();
                         console.log("dayTextClassID",dayTextClassID);
                         height2 = 0;
+                    
                     }) 
                 }); // rowDelete();
 
