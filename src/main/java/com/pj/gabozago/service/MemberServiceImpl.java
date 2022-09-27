@@ -50,7 +50,6 @@ public class MemberServiceImpl implements MemberService {
 			
 			dto.setPassword(cipherPw);
 			
-			// 프로필 사진 업로드			
 			return this.mapper.insert(dto) == 1;
 		} catch (MemberException e) {
 			throw new ServiceException(e);
@@ -121,7 +120,7 @@ public class MemberServiceImpl implements MemberService {
 		} catch (MemberException e) {
 			throw new ServiceException(e);
 		}// try-catch	
-	}
+	}// findUserPwByPhone
 
 	@Override
 	public boolean modifyUserforFindPwWithEmail(String email, String uid, String password) throws ServiceException {
@@ -164,7 +163,7 @@ public class MemberServiceImpl implements MemberService {
 		} catch (Exception e) {
 			throw new ServiceException(e);
 		}// try-catch	
-	}
+	}// modifyUserforFindPwWithPhone
 
 	@Override
 	public int findUserforNicknameCheck(String nickname) throws ServiceException {
@@ -175,7 +174,6 @@ public class MemberServiceImpl implements MemberService {
 		} catch (MemberException e) {
 			throw new ServiceException(e);
 		}// try-catch
-		
 	}// findUserforNicknameCheck
 
 	@Override
@@ -183,7 +181,6 @@ public class MemberServiceImpl implements MemberService {
 		log.trace("findUserforEmailCheck({}, {}) invoked.", email, uid);
 		
 		try {
-			
 			int checkNum = this.mapper.selectUserforEmailCheck(email, uid);
 			
 			if(checkNum == 0) { // 이미 가입된 이메일이 아닌 경우 이메일 인증을 위한 uid 인증번호 발송
@@ -198,13 +195,11 @@ public class MemberServiceImpl implements MemberService {
 				
 				emailSender.SendEmail(mail);				
 			}// if
-			
 			return checkNum;
 			
 		} catch (Exception e) {
 			throw new ServiceException(e);
 		}// try-catch
-		
 	}// findUserforEmailCheck
 
 	@Override
@@ -223,7 +218,7 @@ public class MemberServiceImpl implements MemberService {
 		} catch (Exception e) {
 			throw new ServiceException(e);
 		}// try-catch
-	}
+	}// findUserforPhoneCheck
 
 	@Override
 	public MemberVO naverLogin(String uid_num) throws ServiceException {
@@ -238,7 +233,7 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public boolean createUserForNaverLogin(NaverDTO dto) throws ServiceException {
-		log.trace("create() invoked.");
+		log.trace("createUserForNaverLogin() invoked.");
 
 		try {
 			return this.mapper.insertUserForNaverLogin(dto) == 1;
@@ -260,7 +255,7 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public MemberVO googleLogin(String email) throws ServiceException {
-		log.trace("kakaoLogin() invoked.");
+		log.trace("googleLogin() invoked.");
 		
 		try {						
 			return this.mapper.selectUserForGoogleLogin(email);

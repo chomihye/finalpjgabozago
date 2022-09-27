@@ -15,7 +15,7 @@ import com.pj.gabozago.exception.MemberException;
 
 public interface MemberMapper {
 
-	// 새로운 멤버 회원가입 시 저장
+	// 일반 회원 저장
 	public abstract Integer insert(JoinDTO dto) throws MemberException;
 	
 	// 네이버 로그인 회원 저장
@@ -27,6 +27,9 @@ public interface MemberMapper {
 	// 구글 로그인 회원 저장
 	public abstract Integer insertUserForGoogleLogin(GoogleDTO dto) throws MemberException;
 	
+	// 일반 로그인
+	public abstract MemberVO selectUser(LoginDTO dto) throws MemberException;
+
 	// 네이버 로그인
 	public abstract MemberVO selectUserForNaverLogin(String uid_num) throws MemberException;
 	
@@ -45,10 +48,10 @@ public interface MemberMapper {
 	// 회원가입 시 휴대폰 번호 중복확인
 	public abstract Integer selectUserforPhoneCheck(@Param("phone")String phone, @Param("uid")String uid) throws MemberException;	
 	
-	public abstract MemberVO selectUser(LoginDTO dto) throws MemberException;
-	
+	// 자동로그인 설정
 	public abstract Integer updateUserWithRememberMe(@Param("idx")Integer idx, @Param("rememberMe") String rememberMe, @Param("rememberAge")Timestamp rememberAge) throws MemberException;
 	
+	// 자동로그인
 	public abstract MemberVO selectUserByRememberMe(String rememberMe) throws MemberException;
 	
 	// 아이디 찾기

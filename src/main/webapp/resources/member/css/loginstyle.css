@@ -141,6 +141,7 @@ body #body{
     background-position: 10px center;
     padding-left: 50px;
 }
+
 #body #loginBox input[type=submit]{
     color: #ffffff;
 }
@@ -191,7 +192,9 @@ body #body{
 #body #loginBox #joinText{
     color: #68AE6D;
 }
-
+#body #customBtn:hover {
+    cursor: pointer;
+}
 /* 공통 속성 */
 .center{
     text-align: center;

@@ -97,7 +97,7 @@
                 <div class="sections">
                     <h4>닉네임<span class="redStar">*</span></h4>
                     <p class="ruleTexts">한문, 특수문자, 공백 제외 8자 이내</p>
-                    <input type="text" name="nickname" id="nickname" placeholder="" maxlength="8">
+                    <input type="text" name="nickname" id="nickname" placeholder="" maxlength="8" value="${__GOOGLE__.nickname}">
                     <button type="button" class="formCheckBox" id="doubleCheckBtn" onclick="doubleCheckNickname()">중복 확인</button>
                     <div id="nicknameRulesError" class="validationRulesError">닉네임 양식에 맞게 작성해주세요.</div>
                 </div>

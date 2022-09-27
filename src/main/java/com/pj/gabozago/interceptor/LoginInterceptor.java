@@ -31,9 +31,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 	@Override
 	public boolean preHandle(HttpServletRequest req, HttpServletResponse res, Object handler)
 			throws Exception {
-		log.trace("==================================================");
-		log.trace("1. preHandle(req, res, handler) invoked."); 
-		log.trace("==================================================");		
+		log.trace("LoginInterceptor preHandle(req, res, handler) invoked."); 
 		
 		HttpSession session = req.getSession(); 
 		log.info("\t+ Current Session: {}", session.getId());
@@ -54,9 +52,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 	@Override
 	public void postHandle(HttpServletRequest req, HttpServletResponse res, Object handler,
 			ModelAndView modelAndView) throws Exception {
-		log.trace("==================================================");
-		log.trace("2. postHandle(req, res, handler, {}) invoked.", modelAndView); 
-		log.trace("==================================================");
+		log.trace("LoginInterceptor postHandle(req, res, handler, {}) invoked.", modelAndView); 
 		
 		ModelMap modelMap = modelAndView.getModelMap();
 		
@@ -88,22 +84,14 @@ public class LoginInterceptor implements HandlerInterceptor {
 				
 				Timestamp expireTs = new Timestamp(expireTime);
 								
-				log.info(">>>>>>>>>>>>>>>>>> rememberMe: {}", rememberMeCookie.getValue());
+				log.info("rememberMe: {}", rememberMeCookie.getValue());
 				boolean isUpdated = this.userService.modifyUserWithRememberMe(vo.getIdx(), rememberMeCookie.getValue(), expireTs);
 
 				log.info("\t+ isUpdated: {}", isUpdated);
-				
 			}// if: 자동로그인 기능 체크 여부
-			
 		}// if: 로그인 성공 여부
-		
 	}// preHandle
 
-	@Override
-	public void afterCompletion(HttpServletRequest req, HttpServletResponse res, Object handler, Exception e)
-			throws Exception {
-	}// preHandle
-	
 	private boolean checkRememberMeOption(HttpServletRequest req) {
 		log.trace("checkRememberMeOption() invoked.");
 		

@@ -51,7 +51,6 @@
     
     <!-- 구글 로그인 -->
 	<script src="https://apis.google.com/js/platform.js" async defer></script> 
-	<!-- <script src="https://apis.google.com/js/platform.js?onload=init" async defer></script>-->
 	<meta name="google-signin-client_id" content="1060014750380-ebmvnebj7u5oipfrl1in6lc14klblgmc.apps.googleusercontent.com">
 
     <script type="text/javascript">
@@ -68,33 +67,42 @@
       });
     };// startApp 
     
-    function attachSignin(element) {
-        console.log(element.id);
-        auth2.attachClickHandler(element, {},
-            function(googleUser) {
-        		var profile = googleUser.getBasicProfile();
-        	  	var id_token = googleUser.getAuthResponse().id_token;
-        		  $.ajax({
+      
+      function attachSignin(element) {
+          console.log(element.id);
+          auth2.attachClickHandler(element, {},
+              function(googleUser) {
+        	  	  var profile = googleUser.getBasicProfile();
+        	  	  var id_token = googleUser.getAuthResponse().id_token;
+        	      console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+        	      console.log('Name: ' + profile.getName());
+        	      console.log('Image URL: ' + profile.getImageUrl());
+        	      console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.		    	  
+        	      $.ajax({
         			  url: 'http://localhost:8080/login/google/auth',
         			  type: 'POST',
         			  data: 'idtoken=' + id_token, 
         			  dataType: 'JSON',
-        			  beforeSend : function(xhr){
-        				  xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-        			  },
-        			  success: function() {
-        				  alert("성공");
-        				  // location.href = "http://localhost:8080/" + res;
+        			  success: function(json) {
+        				  if(json.login_result == "loginSucceed"){
+        					  alert("구글 로그인이 성공하였습니다.");
+	        				  location.href = "http://localhost:8080/main";        					  
+        				  } else if(json.login_result == "alreadyJoined"){
+        					  alert("이미 가보자고에 가입된 회원입니다. 아이디/비밀번호 찾기를 통해 회원 정보를 확인하세요.");
+	        				  location.href = "http://localhost:8080/login";        					  
+        				  } else if(json.login_result == "joinNeeded"){
+	        				  location.href = "http://localhost:8080/join/googleJoin";        					  
+        				  }
         	          }//success  
-        		  });//ajax                    
-              }, 
-              function(error) {
-                alert(JSON.stringify(error, undefined, 2));
-              }
-        );
-      }// attachSignin
+                  });
+            }, 
+		    function(error) {
+		        alert(JSON.stringify(error, undefined, 2));
+		    }
+          );
+    }// attachSignin
 
-      $(function(){
+    $(function(){
     	startApp();
     	  
         var resultMsg = '${__RESULT__}'
@@ -102,10 +110,10 @@
         if(resultMsg != null && resultMsg.length > 0){
           alert(resultMsg);
         }// if
-      });
+    });
       
       // 아이디 저장 쿠키
-      $(document).ready(function(){
+    $(document).ready(function(){
         // 저장된 쿠키값을 가져와서 ID 입력창에 넣고 없으면 공백
         var userid = getCookie("userid");
 
@@ -131,7 +139,7 @@
                 setCookie("userid", userid, 7); // 쿠키 보관(7일)
             }// if
         });// onkeyup
-      });
+    });
  
       function setCookie(cookieName, value, exdays){
           var exdate = new Date();
@@ -161,12 +169,6 @@
           return unescape(cookieValue);
       }// getCookie
     </script>
-    
-    <style type="text/css">
-        #customBtn:hover {
-        cursor: pointer;
-        }
-  </style>
 </head>
 
 <body>
@@ -183,7 +185,6 @@
 	
     <div id="wrapper">
         <jsp:include page="/WEB-INF/views/common/header.jsp" flush="true"/>
-
 
         <div id="imgSection">
             <div id="imgSection_img">

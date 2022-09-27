@@ -12,16 +12,16 @@ import com.pj.gabozago.exception.ServiceException;
 
 public interface MemberService {
 
-	// 멤버 회원가입
+	// 일반 회원가입
 	public abstract boolean create(JoinDTO dto) throws ServiceException;
 	
-	// 네이버 로그인 DB 저장
+	// 네이버 로그인 회원가입
 	public abstract boolean createUserForNaverLogin(NaverDTO dto) throws ServiceException;
 	
-	// 카카오 로그인 DB 저장
+	// 카카오 로그인 회원가입
 	public abstract boolean createUserForKakaoLogin(KakaoDTO dto) throws ServiceException;
 	
-	// 구글 로그인 DB 저장
+	// 구글 로그인 회원가입
 	public abstract boolean createUserForGoogleLogin(GoogleDTO dto) throws ServiceException;
 	
 	// 회원가입 시 닉네임 중복 확인
@@ -33,17 +33,22 @@ public interface MemberService {
 	// 회원가입 시 이메일 중복 확인과 인증번호 발송
 	public abstract int findUserforPhoneCheck(String phone, String uid) throws ServiceException;
 
-	// 로그인
+	// 일반 로그인
 	public abstract MemberVO login(LoginDTO dto) throws ServiceException;
 	
+	// 네이버 로그인
 	public abstract MemberVO naverLogin(String uid_num) throws ServiceException;
 	
+	// 카카오 로그인
 	public abstract MemberVO kakaoLogin(String email) throws ServiceException;
 	
+	// 구글 로그인
 	public abstract MemberVO googleLogin(String email) throws ServiceException;
 
+	// 자동로그인 설정
 	public abstract boolean modifyUserWithRememberMe(Integer idx, String rememberMe, Timestamp rememberAge) throws ServiceException;
 	
+	// 자동로그인
 	public abstract MemberVO findUserByRememberMe(String rememberMe) throws ServiceException;
 	
 	// 휴대폰 번호로 아이디 찾기
