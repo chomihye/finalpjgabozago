@@ -31,18 +31,18 @@
         id="selectMemberInfoDetail"
         resultType="java.util.Map">
         SELECT
-        	m.idx,
-            m.name, 
-            m.nickname, 
-            m.email, 
-            m.phone, 
-            m.birthday, 
-            m.point, 
-            m.insert_ts
+        	idx,
+        	name,
+        	nickname, 
+			email,
+            phone,
+            birthday, 
+            point, 
+            insert_ts
         FROM 
-            tbl_member m
+            tbl_member
         WHERE
-        	r.idx = #{idx}
+        	idx = #{idx}
     </select>
     
     

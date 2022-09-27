@@ -115,7 +115,7 @@
                             <tr>
                             	<td class="idx">${item.IDX}</td>
                                 <td class="name">
-                            		<a href="/admin/customer/detail">${item.NAME}</a>
+                            		<a href="/admin/customer/detail?idx=${item.IDX}">${item.NAME}</a>
                             	</td>
                                 <td class="id">${item.EMAIL}</td>
                                 <td class="point"><fmt:formatNumber pattern="#,###,###,###" value="${item.POINT}" />P</td>

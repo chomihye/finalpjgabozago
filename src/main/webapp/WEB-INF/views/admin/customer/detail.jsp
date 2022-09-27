@@ -117,22 +117,21 @@
                     </ul>
 
                     <ul id="detailed">
-                    <!-- var : 임시 EL 변수명, items : 공유속성 이름 -->
-                    	<c:forEach var="item" items= "${result.model}">
+                        <c:set var="item" value="${__MAP__}" />
 	                        <li>[${item.IDX}] ${item.NAME}</li>
 	                        <li>&nbsp;&nbsp;&nbsp;</li>
 	                        <li>${item.NICKNAME}</li>
-	                        <li>&nbsp;&nbsp;&nbsp;</li>
+	                        <li>&nbsp;&nbsp;&nbsp;</li> 
 	                        <li>${item.EMAIL}</li>
 	                        <li>&nbsp;&nbsp;&nbsp;</li> 
 	                        <li>${item.PHONE}</li>
 	                        <li>&nbsp;&nbsp;&nbsp;</li>
-	                        <li><fmt:formatDate pattern="yyyy-MM-dd" value="${item.BIRTHDAY}" /></li>
+	                        <li>${item.BIRTHDAY}</li>
 	                        <li>&nbsp;&nbsp;&nbsp;</li>
 	                        <li><fmt:formatNumber pattern="#,###,###,###" value="${item.POINT}" />P</li>
 	                        <li>&nbsp;&nbsp;&nbsp;</li>
 	                        <li><fmt:formatDate pattern="yyyy-MM-dd" value="${item.INSERT_TS}" /></li>
-                        </c:forEach>
+                        
                     </ul>
 
                     <div class="back">
