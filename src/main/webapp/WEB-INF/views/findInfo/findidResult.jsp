@@ -67,7 +67,7 @@
                 %>
 	                <div class="mainForm" id="idfindResultFailed">
 	                    <p>입력하신 회원 정보와 일치하는 계정이 없습니다.</p>
-	                    <input type="button" value="돌아가기" onClick="/findInfo/id'">
+	                    <input type="button" value="돌아가기" onClick="location.href='/findInfo/id'">
 	                    <input type="button" value="회원가입" onClick="location.href='/join'">
 	                </div>
                 <%} else {                 
