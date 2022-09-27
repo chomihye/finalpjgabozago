@@ -581,5 +581,30 @@ img {
     text-align: center;
 }
 
+/* >>>>>>>>>>>>>>>>>>>>>>>>>>>>othersPlanModal<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< */
+#othersPlanModal {
+    display: none;
+    height: 900px;
+    margin-left: 405px;
+}
+#othersplaWrapper {
+    position: absolute;
+}
+#othersplanWrapper section {
+    margin-left: 405px;
+    position: absolute;
+}
+#othersplanWrapper .best_plan {
+    top:20%;
+}
+#othersplanWrapper .userInfo {
+    margin: 20px 0px;
+}
+.areaListOuter h1 {
+    margin: 20px 0px;
+}
+#othersplanWrapper .planAdd {
+    top:568px
+}
 
 
