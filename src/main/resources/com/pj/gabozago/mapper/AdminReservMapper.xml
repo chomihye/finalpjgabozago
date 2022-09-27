@@ -91,8 +91,7 @@
             AND r.member_idx = m.idx
             AND r.idx = p.reservation_idx
             AND a.idx = ai.accom_idx
-            AND r.idx = #{reserv.idx}
-            AND r.member_idx = #{member.idx}
+            AND r.idx = #{idx}
     </select>
     
     

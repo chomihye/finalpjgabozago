@@ -115,7 +115,7 @@
                       <c:forEach var="item" items="${result.model}">
                             <tr>
                                 <td class="num">
-                                    <a href="/admin/reservation/detail">${item.IDX}</a>
+                                    <a href="/admin/reservation/detail?idx=${item.IDX}">${item.IDX}</a>
                                 </td>
                                 <td class="name">${item.NAME}</td>
                                 <td class="hotel">${item.ACCOM_NAME}</td>
