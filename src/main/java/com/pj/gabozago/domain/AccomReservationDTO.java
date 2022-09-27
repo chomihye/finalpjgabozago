@@ -20,6 +20,7 @@ public class AccomReservationDTO {
 	private Integer adultCount;
 	private Integer childCount;
 	private String status;	
+	private Integer seq;
 	private Date insertTs;
 	private Date updateTs;
 }

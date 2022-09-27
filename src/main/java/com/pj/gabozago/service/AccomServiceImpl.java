@@ -1,5 +1,7 @@
 package com.pj.gabozago.service;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -12,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 
 import com.pj.gabozago.domain.AccomDTO;
+import com.pj.gabozago.domain.AccomPaymentDTO;
 import com.pj.gabozago.domain.AccomReservationDTO;
 import com.pj.gabozago.domain.AccomRoomDTO;
 import com.pj.gabozago.domain.AccomRoomVO;
@@ -146,13 +149,52 @@ public class AccomServiceImpl implements AccomService {
 	}// getOneRoomInfo
 	
 	
-//	//예약 정보 저장
-//	@Override
-//	public Map<String, Object> 
-//	
-//	
-//	//결제 정보 저장
-//	@Override 
+	//예약 정보 저장
+		@Transactional
+		@Override
+		public Map<String, Object> addReservation(AccomReservationDTO reservation, AccomPaymentDTO payment) throws ServiceException, DAOException {
+			try {			
+				Map<String, Object> result = new HashMap<String, Object>();
+				
+				String pattern = "yyyyMMdd";
+				SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+				String today = simpleDateFormat.format(new Date());
+				
+				Integer seq = 1;
+				Integer lastSeq = this.mapper.getLastSeq();
+				if (lastSeq != null) seq = lastSeq + 1;
+				
+				String seqTxt = String.format("%04d", seq);
+				Long reservationIdx = Long.parseLong(today + seqTxt);
+				
+				log.info(reservationIdx);
+				log.info(lastSeq);
+				log.info(seq);
+				log.info(today);
+				
+				reservation.setIdx(reservationIdx);
+				reservation.setSeq(seq);
+				
+				Integer result_add_reservation = 0;
+				
+				result_add_reservation = this.mapper.insertReservation(reservation); 
+				
+				if (result_add_reservation == 1) {
+					payment.setReservationIdx(reservationIdx);
+					
+					Integer result_add_payment = this.mapper.insertPayment(payment);
+					result.put("success", result_add_payment);
+					result.put("reservationIdx", reservationIdx);
+					
+					return result;
+				} else {
+					throw new ServiceException("예약정보 저장 실패");				
+				}
+
+			} catch (DAOException e) {
+				throw new ServiceException(e);
+			}
+		}
 	
 	
 

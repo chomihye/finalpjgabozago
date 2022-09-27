@@ -244,14 +244,27 @@
         WHERE idx = #{idx}
     </update>
     
+     <select id="getLastSeq" resultType="int">
+        SELECT seq
+		FROM (
+	    	SELECT seq
+	    	FROM tbl_reservation
+        <![CDATA[
+	    		WHERE TO_CHAR(insert_ts,'YYYYMMDD') = TO_CHAR(SYSDATE,'YYYYMMDD')
+	    	]]>
+        ORDER BY seq DESC
+		) WHERE ROWNUM = 1
+    </select>
+    
+    
     <insert id="insertReservation">
-    	INSERT INTO tbl_reservation(idx, member_idx, accom_room_idx, large_area_idx, check_in_date, check_out_date, adult_count, child_count, status, insert_ts)
-		VALUES (#{idx}, #{member_idx},#{accom_room_idx}, #{large_area_idx}, #{check_in_date}, #{check_out_date}, #{adult_count}, #{child_count}, #{status}, #{insert_ts})
+    	INSERT INTO tbl_reservation(idx, member_idx, accom_room_idx, large_area_idx, check_in_date, check_out_date, adult_count, child_count, status, seq, insert_ts)
+		VALUES (#{idx}, #{memberIdx}, #{accomRoomIdx}, #{largeAreaIdx}, #{checkInDate}, #{checkOutDate}, #{adultCount}, #{childCount}, #{status}, #{seq}, sysdate)
 	</insert>
-	
-	<insert id="insertPayment">
+
+    <insert id="insertPayment">
     	INSERT INTO tbl_payment(idx, reservation_idx, member_idx, order_price, use_point, payment_price, payment_type, insert_ts)
-		VALUES (#{idx}, #{reservation_idx},#{member_idx}, #{order_price}, #{use_point}, #{payment_price}, #{payment_type}, #{insert_ts})
+		VALUES ((SELECT NVL(MAX(idx), 0) + 1 FROM tbl_payment), #{reservationIdx},#{memberIdx}, #{orderPrice}, #{usePoint}, #{paymentPrice}, #{paymentType}, sysdate)
 	</insert>
 
         <!--************************* hearder search part end ************************  -->

@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.pj.gabozago.common.SharedScopeKeys;
 import com.pj.gabozago.domain.AccomDTO;
+import com.pj.gabozago.domain.AccomPaymentDTO;
 import com.pj.gabozago.domain.AccomReservationDTO;
 import com.pj.gabozago.domain.AccomReservationVO;
 import com.pj.gabozago.domain.AccomRoomDTO;
@@ -65,12 +66,12 @@ public class AccoController {
 
 		if (member == null) { // member -> null -> getList출력
 			list = this.accomService.getList(cri);
+			return "redirect:/login";
 		} else {
 			list = this.accomService.getListWithMember(cri, member);
 		}
 		model.addAttribute("_ACCOM_", list);
-		
-		log.info("asdfasdfasdfasdfasdfasdfasdf");
+	
 		
 		// 총 레코드 건수를 반환
 		int total = this.accomService.getTotal(accom);
@@ -186,19 +187,49 @@ public class AccoController {
 	
 	
 	// 결제 DB에 저장
-//	@RequestMapping(value = "payment", method = RequestMethod.POST)
-//	@ResponseBody
-//	public HashMap<String, Object> addPaymentInfo(@SessionAttribute(name = SharedScopeKeys.USER_KEY, required = false) MemberVO member, HttpServletRequest request)
-//			throws ControllerException, ServiceException {
-//		
-//		log.info(request.getParameter("accom_room_idx"));
-//		
-//		HashMap<String, Object> result = new HashMap<String, Object>();
-//		
-//		
-//		
-//		return null;
-//	}
+		@RequestMapping(value = "payment", method = RequestMethod.POST)
+		@ResponseBody
+		public HashMap<String, Object> addPaymentInfo(@SessionAttribute(name = SharedScopeKeys.USER_KEY, required = false) MemberVO member, HttpServletRequest request, AccomReservationDTO reservation, AccomPaymentDTO payment)
+				throws ControllerException, ServiceException {
+			
+			//예약정보
+			reservation.setMemberIdx(member.getIdx());
+			reservation.setAccomRoomIdx(Integer.valueOf((String) request.getParameter("accom_room_idx")));
+			reservation.setLargeAreaIdx(Integer.valueOf((String) request.getParameter("large_area_idx")));
+			reservation.setCheckInDate(request.getParameter("check_in_date"));
+			reservation.setCheckOutDate(request.getParameter("check_out_date"));
+			reservation.setAdultCount(Integer.valueOf((String) request.getParameter("adult_count")));
+			reservation.setChildCount(Integer.valueOf((String) request.getParameter("child_count")));
+			reservation.setStatus("CA");
+			
+			//결제정보
+			payment.setMemberIdx(member.getIdx());
+			payment.setOrderPrice(Integer.valueOf((String) request.getParameter("order_price")));
+			payment.setUsePoint(Integer.valueOf((String) request.getParameter("use_point")));
+			payment.setPaymentPrice(Integer.valueOf((String) request.getParameter("payment_price")));
+			payment.setPaymentType(request.getParameter("payment_type"));
+			
+			HashMap<String, Object> result = new HashMap<String, Object>();
+			
+			try {
+				Map<String, Object> add_result = accomService.addReservation(reservation, payment);
+				log.info(add_result);
+				if ((int) add_result.get("success") == 1) {
+					result.put("code", 200);
+					result.put("msg", "성공");
+					result.put("reservation_idx", add_result.get("reservationIdx"));
+				} else {
+					result.put("code", 500);
+					result.put("msg", "실패");
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				result.put("code", 500);
+				result.put("msg", e.getMessage());
+			}
+			
+			return result;
+		}
 	
 
 	

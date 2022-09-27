@@ -62,29 +62,29 @@
 
 
     <!-- 헤더 html가져오기 -->
-    <script>
+    <!-- <script>
         $(function () {
 
-            // $('.header').load("header.html");
-            // $('.footer').load("footer.html");
+            $('.header').load("header.html");
+            $('.footer').load("footer.html");
 
-            // $(".person_btn").click(function () {
-            //     $("#personModal").css({ display: "block" });
-            // }); //인원 선택시 모달창 열림
+            $(".person_btn").click(function () {
+                $("#personModal").css({ display: "block" });
+            }); //인원 선택시 모달창 열림
 
-            // $(".person_apply_btn").click(function () {
-            //     $("#personModal").css({ display: "none" });
-            // }); //인원 적용하기 선택시 모달창 닫기
+            $(".person_apply_btn").click(function () {
+                $("#personModal").css({ display: "none" });
+            }); //인원 적용하기 선택시 모달창 닫기
 
-            // $(".room_img_first").click(function () {
-            //     $("#change_info_img").attr("src", "../img/room1.jpg")
-            // })
+            $(".room_img_first").click(function () {
+                $("#change_info_img").attr("src", "../img/room1.jpg")
+            })
 
-            // $(".room_img_second").click(function () {
-            //     $("#change_info_img").attr("src", "../img/room2.jpg")
-            // })
-        });
-    </script>
+            $(".room_img_second").click(function () {
+                $("#change_info_img").attr("src", "../img/room2.jpg")
+            })
+      });
+    </script> -->
 
 </head>
 
@@ -101,9 +101,9 @@
                     <span>${_ACCOM_.ROOM_DESC}</span>
                 </div>
                 <div class="np-box">
-                    <a href="/reservation/payment?room_idx=${_ACCOM_.IDX}">
+                    <!-- <a href="/reservation/payment?room_idx=${_ACCOM_.IDX}">
                         <button type="button" class="detail_reserve_btn">예약하기</button>
-                    </a>
+                    </a> -->
                     <p>체크인 ${_ACCOM_.CHECK_IN} / 체크아웃 ${_ACCOM_.CHECK_OUT}</p>
                     <p>기준 인원 ${_ACCOM_.DEFAULT_COUNT}명 (최대 인원 ${_ACCOM_.MAX_COUNT}명)</p>
                     <p>객실면적 ${_ACCOM_.ROOM_AREA}㎡</p>
@@ -147,17 +147,8 @@
                         <span class="visually-hidden">Next</span>
                     </button>
                 </div>
-
-
-
             </div>
-
-            <!-- <div class="info_img">
-        <img src="../img/room1.jpg" alt="" class="change_info_img">
-      </div> -->
         </div>
-
-
     </div>
 
 
