@@ -26,16 +26,14 @@ public class LogoutInterceptor implements HandlerInterceptor{
 	
 	@Override
 	public boolean preHandle(HttpServletRequest req, HttpServletResponse res, Object handler) throws Exception {
-		log.trace("==================================================");
-		log.trace("1. preHandle(req, res, handler) invoked."); 
-		log.trace("==================================================");		
+		log.trace("LogoutInterceptor preHandle(req, res, handler) invoked."); 
 		
 
 		HttpSession session = req.getSession();
 		String sessionId = session.getId();
 		MemberVO vo = (MemberVO) session.getAttribute(SharedScopeKeys.USER_KEY);
 		
-		log.info(">>>>>>>>>> vo: {}", vo);
+		log.info("vo: {}", vo);
 		
 		Integer idx = vo.getIdx();
 		

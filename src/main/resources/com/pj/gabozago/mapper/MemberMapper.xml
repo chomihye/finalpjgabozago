@@ -75,9 +75,11 @@
     </select>
     
     <select id="selectUserByRememberMe" resultType="com.pj.gabozago.domain.MemberVO">
-        SELECT idx, email, password, name, nickname, phone, birthday, provider, uid_num, profile_img, point, rememberme, rememberage, insert_ts, update_ts, is_secession
-        FROM tbl_member
-        WHERE rememberme = #{rememberMe} AND rememberage > current_date
+        <![CDATA[ 
+	        SELECT idx, email, password, name, nickname, phone, birthday, provider, uid_num, profile_img, point, rememberme, rememberage, insert_ts, update_ts, is_secession
+	        FROM tbl_member
+	        WHERE rememberme = #{rememberMe} AND rememberage > current_date
+        ]]>
     </select>
 
 

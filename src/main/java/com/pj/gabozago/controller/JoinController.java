@@ -63,13 +63,8 @@ public class JoinController {
 
 	// 회원가입
 	@PostMapping("/joinProcess")
-	public String joinProcess(
-			JoinDTO dto, // 사용자 정보 일반 전송 파라미터
-			MultipartFile profileImg, // 사용자 프로필 이미지
-			RedirectAttributes rttrs, 
-			HttpServletRequest req) throws ControllerException { 
-		
-		log.info("joinProcess({}, {}, {}, {}) invoked.", dto, profileImg, rttrs, req);
+	public String joinProcess(JoinDTO dto, MultipartFile profileImg, RedirectAttributes rttrs, HttpServletRequest req) throws ControllerException { 
+		log.info("joinProcess() invoked.");
 		
 		String profilePath = "";
 		

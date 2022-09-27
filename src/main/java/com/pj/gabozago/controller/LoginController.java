@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.github.scribejava.core.model.OAuth2AccessToken;
@@ -87,17 +88,17 @@ public class LoginController {
 					model.addAttribute(SharedScopeKeys.LOGIN_KEY, vo); 
 					session.setAttribute(SharedScopeKeys.RESULT_KEY, "로그인에 성공하였습니다.");
 						
-					return "login/loginProcess"; // 1) 로그인 성공
+					return "login/loginProcess"; // 로그인 성공
 				} else { 
 					rttrs.addFlashAttribute(SharedScopeKeys.RESULT_KEY, "로그인에 실패하였습니다. 다시 시도해주세요.");
 					
-					return "redirect:/login"; // 2) 로그인 실패 - 비밀번호 불일치
+					return "redirect:/login"; // 로그인 실패 - 비밀번호 불일치
 				}// if-else	
 			
 			} else {
 				rttrs.addFlashAttribute(SharedScopeKeys.RESULT_KEY, "로그인에 실패하였습니다. 다시 시도해주세요.");
 				
-				return "redirect:/login"; // 3) 로그인 실패 - 아이디 불일치
+				return "redirect:/login"; // 로그인 실패 - 아이디 불일치
 			}// if-else	
 		}catch(Exception e) {
 			throw new ControllerException(e);
@@ -130,7 +131,7 @@ public class LoginController {
 
 			log.info("dto: {}", dto);
 
-			MemberVO vo = this.service.naverLogin("naver_" + dto.getId()); // DB uid_num로 가입된 회원인지 조회
+			MemberVO vo = this.service.naverLogin("naver_" + dto.getId()); // DB uid_num로 가입 회원 조회
 			
 			if(vo == null) { // 가입 정보 없는 회원 DB 저장
 				dto.setId("naver_" + dto.getId());
@@ -185,9 +186,12 @@ public class LoginController {
     }// loginPOSTKakao
 	
 	@PostMapping("/google/auth")
+	@ResponseBody
 	public String loginPOSTGoogle(@RequestParam("idtoken") String idtoken, HttpSession session, RedirectAttributes rttrs) throws ControllerException {
         log.info("callback - loginPOSTGoogle() invoked.");
         
+    	JSONObject json = new JSONObject();
+
         try {
         	HttpTransport transport = Utils.getDefaultTransport();
         	JsonFactory jsonFactory = Utils.getDefaultJsonFactory();
@@ -197,54 +201,58 @@ public class LoginController {
         	
         	log.info("idtoken: {}", idtoken);
         	
-        	JSONObject json = new JSONObject();
-        	
         	GoogleIdToken googleIdToken = verifier.verify(idtoken);
         	log.info("googleIdToken: {}", googleIdToken);
 
-			// if (googleIdToken != null) { 
         	Payload payload = googleIdToken.getPayload();
-        	log.info("!!!!!!!!!!!!!!! payload: {}", payload);
-        	log.info("!!!!!!!!!!!!!!! payload.get(\"email\"): {}", payload.get("email"));
+        	log.info("payload: {}", payload);
+        	log.info("payload.get(\"email\"): {}", payload.get("email"));
         	
         	GoogleDTO dto = new GoogleDTO();
 				  
-        	dto.setName((String) payload.get("name"));
-        	dto.setEmail((String) payload.get("email")); 
-        	dto.setNickname((String)payload.get("given_name")); 
-        	// dto.setProfilePath((String) payload.get("picture")); 
-			// dto.setAccess_token(idtoken);
+        	String nameAndNickname = (String) payload.get("name");
         	
-        	MemberVO vo = this.service.googleLogin(dto.getEmail()); // 이메일로 조회, provider = google
-
-        	if(vo == null) { // 가입 정보 없는 회원 DB 저장
-        		log.info("가입 정보 없는 회원 DB 저장");
+        	int lastIndex = nameAndNickname.lastIndexOf("(");
+        	
+        	if(lastIndex != -1) {
+        		String nickname = nameAndNickname.substring(lastIndex);
+        		String name = nameAndNickname.replaceAll(nickname, "");
+        		name = name.replaceAll("\\s\\(", "");
+        		name = name.replaceAll("\\)", "");
         		
+        		
+        		nickname = nickname.replaceAll("\\(", "");
+        		nickname = nickname.replaceAll("\\)", "");        		
+
+        		dto.setNickname(nickname);
+        		dto.setName(name);
+        	} else {
+        		dto.setName(nameAndNickname);
+        	}// if-else
+        	
+        	dto.setEmail((String) payload.get("email")); 
+        	
+        	MemberVO vo = this.service.googleLogin(dto.getEmail()); // 이메일로 조회
+
+        	if(vo == null) { // 가입 정보 없는 회원 DB 저장        		
 				dto.setUidnum("google_" + UUIDGenerator.generateUniqueKeysWithUUIDAndMessageDigest().substring(0, 43)); // 임의로 uid 생성 후 저장
 				session.setAttribute(SharedScopeKeys.GOOGLE_JOIN_KEY, dto);
 				
-				return "redirect:/join/googleJoin";
+				json.put("login_result", "joinNeeded");
 			} else {
-	    		log.info("vo: {}", vo);
-
-				if(vo.getProvider().equals("google")) {
-	        		log.info("google provider");
-
-					rttrs.addFlashAttribute(SharedScopeKeys.RESULT_KEY, "구글 로그인이 성공하였습니다.");
+				if(vo.getProvider().equals("google")) { // google provider
 					session.setAttribute(SharedScopeKeys.USER_KEY, vo);
 					
-					return "redirect:/main";					
-				} else {
-	        		log.info("not google provider");
-
-					rttrs.addFlashAttribute(SharedScopeKeys.RESULT_KEY, "이미 가보자고에 가입된 회원입니다. 아이디/비밀번호 찾기를 통해 회원 정보를 확인하세요.");
-					
-					return "redirect:/login";					
+					json.put("login_result", "loginSucceed");
+				} else { // not google provider	        		
+					json.put("login_result", "alreadyJoined");
 				}// if-else
 			} // if-else       
         } catch (Exception e) {
 			throw new ControllerException(e);
 		}// try-catch        
+        
+		return json.toJSONString();
     }// loginPOSTGoogle
 	
 }// end class
