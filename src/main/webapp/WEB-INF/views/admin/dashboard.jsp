@@ -161,11 +161,11 @@
                             <th class="ask-title">문의</th>
                         </thead>
                         <tbody>
-                            <td><a href="#!">문의 드립니다</a></td>  
-                            <td><a href="#!">문의 드립니다</a></td> 
-                            <td><a href="#!">문의 드립니다</a></td>
-                            <td><a href="#!">문의 드립니다</a></td> 
-                            <td><a href="#!">문의 드립니다</a></td>
+                            <td><a href="/board/qna/read">문의드립니다.</a></td>  
+                            <td><a href="/board/qna/read2">문의드립니다.</a></td> 
+                            <td><a href="/board/qna/read2">문의드립니다.</a></td>
+                            <td><a href="/board/qna/read2">문의드립니다.</a></td> 
+                            <td><a href="/board/qna/read2">문의드립니다.</a></td>
                         </tbody>
                     </table>
                 </div>

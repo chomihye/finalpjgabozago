@@ -101,5 +101,4 @@ public class AdminServiceImpl implements AdminService {
 	} // getNotice
 	
 	
-	
 } // end class

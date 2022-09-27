@@ -4,21 +4,30 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.pj.gabozago.common.SharedScopeKeys;
 import com.pj.gabozago.domain.AccomReservationVO;
 import com.pj.gabozago.domain.Criteria;
+import com.pj.gabozago.domain.LoginDTO;
 import com.pj.gabozago.domain.MemberDTO;
+import com.pj.gabozago.domain.MemberVO;
 import com.pj.gabozago.domain.NoticeVO;
 import com.pj.gabozago.domain.PageDTO;
 import com.pj.gabozago.exception.ControllerException;
 import com.pj.gabozago.exception.ServiceException;
 import com.pj.gabozago.service.AdminService;
+import com.pj.gabozago.service.MemberService;
 
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -34,7 +43,59 @@ public class AdminController {
 	
 	@Setter(onMethod_ = {@Autowired})
 	private AdminService service;
+	
+	@Setter(onMethod_ = @Autowired)
+	private MemberService memservice;
+	
+	
+	@GetMapping("/login")
+	public String showLogin() {
+		log.trace("showLogin() invoked.");
+		
+		return "admin/login";
+	} // showLogin
+	
+	
+	@PostMapping("/loginProcess")
+	public String loginProcess(LoginDTO dto, RedirectAttributes rttrs, Model model, HttpSession session) throws ControllerException {
+		log.info("loginProcess() invoked.", dto);
+		
+		try { 
+			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+			MemberVO vo = this.memservice.login(dto); 
+						
+			if(vo != null && vo.getProvider().equals("gabozago")) { // 입력한 아이디값 일치하는 가보자고 회원이 있다면
+				String cipherPw = vo.getPassword(); // DB 비밀번호값(해시처리) 얻기
+				boolean isHashed = encoder.matches(dto.getPassword() + "__SALT__", cipherPw);
 
+				if(isHashed) { // 사용자가 현재 입력한 값과 해시값 비교
+					model.addAttribute(SharedScopeKeys.LOGIN_KEY, vo); 
+					session.setAttribute(SharedScopeKeys.RESULT_KEY, "로그인에 성공하였습니다.");
+						
+					return "admin/loginProcess"; // 1) 로그인 성공
+				} else { 
+					rttrs.addFlashAttribute(SharedScopeKeys.RESULT_KEY, "로그인에 실패하였습니다. 다시 시도해주세요.");
+					
+					return "/admin/login"; // 2) 로그인 실패 - 비밀번호 불일치
+				}// if-else	
+			
+			} else {
+				rttrs.addFlashAttribute(SharedScopeKeys.RESULT_KEY, "로그인에 실패하였습니다. 다시 시도해주세요.");
+				
+				return "redirect:/admin/login"; // 3) 로그인 실패 - 아이디 불일치
+			}// if-else	
+		}catch(Exception e) {
+			throw new ControllerException(e);
+		}// try-catch
+	}// loginProcess
+	
+	@GetMapping("/logoutProcess")
+	public String logout() throws ControllerException {
+		log.trace("logout() invoked.");
+		
+		return "/admin/logoutProcess";
+	}// logout
+	
 	
 	@GetMapping(path={"/dashboard", ""})
 	public String showDashboard() {

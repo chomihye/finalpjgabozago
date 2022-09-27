@@ -59,5 +59,6 @@
         OFFSET (#{cri.currPage} -1) * #{cri.amount} ROWS
         FETCH NEXT #{cri.amount} ROWS ONLY
     </select>
-
+    
+  
 </mapper>

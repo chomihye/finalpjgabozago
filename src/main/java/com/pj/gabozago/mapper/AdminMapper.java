@@ -27,5 +27,6 @@ public interface AdminMapper {
 	// 공지사항을 가져오는 메소드
 	public abstract List<Map<String, Object>> selectNotice(@Param("cri") Criteria cri, @Param("notice") NoticeVO notice) throws DAOException;
 	
+	
 			
 } // end interface

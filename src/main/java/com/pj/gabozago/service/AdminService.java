@@ -29,7 +29,6 @@ public interface AdminService {
 	// 공지사항
 	public abstract List<Map<String, Object>> getNotice(Criteria cri, NoticeVO notice) throws ServiceException;
 
-	
 
 	
 	
