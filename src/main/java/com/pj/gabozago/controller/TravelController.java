@@ -67,12 +67,12 @@ public class TravelController implements InitializingBean {
 		log.trace("\t + >>>>>>>>>> register({}) invoked.", dto);
 		
 		TravelPlanDTO planParams = new TravelPlanDTO(null,dto.getMemberIdx(),dto.getStartDate(),dto.getEndDate(),dto.getIsPublic(),dto.getLargeAreaIdx(),dto.getDays());
-		log.info("\t + >>>>>>>>>> planParams({}) invoked.", planParams);
+//		log.info("\t + >>>>>>>>>> planParams({}) invoked.", planParams);
 		
 		
 		List<TravePlanlDetailDTO> detailParams = new ArrayList();
 		detailParams.addAll(dto.getDetailDto());
-		log.info("\t + >>>>>>>>>> detailParams({}) invoked.", detailParams);
+//		log.info("\t + >>>>>>>>>> detailParams({}) invoked.", detailParams);
 		
 		try {
 			
@@ -93,14 +93,13 @@ public class TravelController implements InitializingBean {
 	
 	
 	@GetMapping("/plan")
-//	@RequestParam("planIdx") Integer planIdx,
-	public String selectPlan(Model model,RedirectAttributes rttrs) throws ControllerException {
+	public String selectPlan(@RequestParam("planIdx") Integer planIdx, Model model,RedirectAttributes rttrs) throws ControllerException {
 		log.trace(">>>>>>plan() invoked.");
 		
 		
 		try {
-			List<TravePlanlCreateVO> list = this.travelService.getList(434);
-			list.forEach(log::trace);
+			List<TravePlanlCreateVO> list = this.travelService.getList(planIdx);
+//			list.forEach(log::trace);
 			
 			model.addAttribute("__LIST__", list); 
 		} catch(Exception e) {

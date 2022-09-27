@@ -60,6 +60,9 @@
 			<mapping path="/mypage" />
 			<mapping path="/mypage/**" /> <!-- 로그인 필요한 서비스 -->
 			
+			<mapping path="/reservation/"/>
+			<mapping path="/reservation/**"/>
+			
 			<mapping path="/travel/"/>
 			<mapping path="/travel/**"/>
 
