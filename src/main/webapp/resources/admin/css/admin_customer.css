@@ -262,10 +262,10 @@ footer{
     clear: both;
 }
 
-/* i {
-    padding-left: 15px;
+i {
+    padding-right: 15px;
     font-size: 20px;
-} */
+} 
 
 .wrap {
     display: flex;

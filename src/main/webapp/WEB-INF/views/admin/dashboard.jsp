@@ -32,7 +32,7 @@
 <body>
     <!-- header -->
     <header>
-    	<jsp:include page="/WEB-INF/views/common/header.jsp" flush="false" />
+    	<jsp:include page="/WEB-INF/views/common/header_admin.jsp" flush="false" />
     </header>
 
     <!-- section -->
@@ -44,7 +44,7 @@
             <div class="card-header" id="headingOne">
                 <h5 class="mb-0">
                 <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                    <a href="/admin/dashboard">대시보드</a>
+                    <a href="/admin/dashboard"><i class="bi bi-grid"></i>대시보드</a>
                 </button>
                 </h5>
             </div>
@@ -53,7 +53,7 @@
             <div class="card-header" id="headingTwo">
                 <h5 class="mb-0">
                 <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                    <a href="/admin/customer">회원관리</a>
+                    <a href="/admin/customer"><i class="bi bi-person"></i>회원관리</a>
                 </button>
                 </h5>
           	 </div>
@@ -62,7 +62,7 @@
               <div class="card-header" id="headingThree">
                 <h5 class="mb-0">
                   <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                    예약관리
+                    <i class="bi bi-calendar-date"></i>예약관리
                   </button>
                 </h5>
               </div>
@@ -77,7 +77,7 @@
               <div class="card-header" id="headingFour">
                 <h5 class="mb-0">
                   <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-                    컨텐츠관리
+                    <i class="bi bi-card-text"></i>컨텐츠관리
                   </button>
                 </h5>
               </div>
@@ -113,43 +113,44 @@
                             <a href="/board/community/read">서울의 랜드마크를 만나다</a>
                         </td>
                         <td class="writer">백설기</td>
-                        <td class="date">2022-07-10</td>
+                        <td class="date">2022-09-13</td>
             
                     <tr>
                         <td class="num">6</td>
                         <td class="title">
-                            <a href="/board/community/read">서울의 랜드마크를 만나다</a>
+                            <a href="/board/community/read">춘천에서 청정 & 낭만 에너지를 채우다</a>
                         </td>
-                        <td class="writer">백설기</td>
-                        <td class="date">2022-07-10</td>
+                        <td class="writer">골멩이</td>
+                        <td class="date">2022-09-11</td>
                     </tr>
             
                     <tr>
                         <td class="num">5</td>
                         <td class="title">
-                            <a href="/board/community/read">춘천에서 청정 & 낭만 에너지를 채우다</a>
+                            <a href="/board/community/read">자전거와 함께하는 풍경여행</a>
                         </td>
-                        <td class="writer">골멩이</td>
-                        <td class="date">2022-07-10</td>
+                        <td class="writer">납평치</td>
+                        <td dateclass="writer">2022-09-10</td>
                     </tr>
             
                     <tr>
                         <td class="num">4</td>
                         <td class="title">
-                            <a href="/board/community/read">자전거와 함께하는 풍경여행</a>
-                        </td>
-                        <td class="writer">납평치</td>
-                        <td dateclass="writer">2022-07-10</td>
-                    </tr>
-            
-                    <tr>
-                        <td class="num">3</td>
-                        <td class="title">
                             <a href="/board/community/read">온몸으로 즐기는 대구 2박 3일 코스 여행</a>
                         </td>
                         <td class="writer">토런스</td>
-                        <td class="date">2022-07-10</td>
+                        <td class="date">2022-09-06</td>
                     </tr>
+                    
+                    <tr>
+                        <td class="num">3</td>
+                        <td class="title">
+                            <a href="/board/community/read">3/1 운동의 정신을 느껴보는 서울 여행</a>
+                        </td>
+                        <td class="writer">모도리</td>
+                        <td class="date">2022-09-03</td>
+                    </tr>
+            
                 </tbody>
             </table>
 

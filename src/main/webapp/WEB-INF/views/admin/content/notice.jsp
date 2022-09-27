@@ -32,7 +32,7 @@
 <body>
     <!-- header -->
     <header>
-        <jsp:include page="/WEB-INF/views/common/header.jsp" flush="false" />
+        <jsp:include page="/WEB-INF/views/common/header_admin.jsp" flush="false" />
     </header>
 
    
@@ -44,7 +44,7 @@
             <div class="card-header" id="headingOne">
                 <h5 class="mb-0">
                 <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                    <a href="/admin/dashboard">대시보드</a>
+                    <a href="/admin/dashboard"><i class="bi bi-grid"></i>대시보드</a>
                 </button>
                 </h5>
             </div>
@@ -53,7 +53,7 @@
             <div class="card-header" id="headingTwo">
                 <h5 class="mb-0">
                 <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                    <a href="/admin/customer">회원관리</a>
+                    <a href="/admin/customer"><i class="bi bi-person"></i>회원관리</a>
                 </button>
                 </h5>
           	 </div>
@@ -62,7 +62,7 @@
               <div class="card-header" id="headingThree">
                 <h5 class="mb-0">
                   <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                    예약관리
+                    <i class="bi bi-calendar-date"></i>예약관리
                   </button>
                 </h5>
               </div>
@@ -77,7 +77,7 @@
               <div class="card-header" id="headingFour">
                 <h5 class="mb-0">
                   <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-                    컨텐츠관리
+                    <i class="bi bi-card-text"></i>컨텐츠관리
                   </button>
                 </h5>
               </div>
