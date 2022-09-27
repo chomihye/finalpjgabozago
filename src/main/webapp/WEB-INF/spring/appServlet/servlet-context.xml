@@ -59,6 +59,9 @@
 		<interceptor>
 			<mapping path="/mypage" />
 			<mapping path="/mypage/**" /> <!-- 로그인 필요한 서비스 -->
+			
+			<mapping path="/travel/"/>
+			<mapping path="/travel/**"/>
 
 			<beans:ref bean="authInterceptor"/>
 		</interceptor>

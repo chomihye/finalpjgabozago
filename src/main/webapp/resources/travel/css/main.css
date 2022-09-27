@@ -483,17 +483,18 @@ img {
     height: 25px;
 	background-color:transparent;
 	border-radius:50px;
-	border:1.5px solid #666666;
+	border:1.5px solid #fafafa;
 	display:inline-block;
 	cursor:pointer;
     padding: auto;
 
-	color:#666666;
+	color: #fafafa;
 	font-size:15px;
+    opacity: 70%;
 }
 .row_btn:hover {
 	background-color : #e3e0e0;
-    opacity: 65%;
+    opacity: 80%;
 }
 .row_btn:active {
 	position:relative;
@@ -579,7 +580,6 @@ img {
 .placeName {
     text-align: center;
 }
-
 
 
 
