@@ -253,7 +253,7 @@ function getPlanWishlist(currPage){
                     particleStr += '<div id="plan' + num + '" class="carousel slide" data-touch="false" data-interval="false">';
                     particleStr += '<div class="userInfo">';
                     particleStr += '<ul>';
-                    particleStr += '<li class="title">' + largeAreaName + '</li>';
+                    particleStr += '<li class="title">' + largeAreaName + '여행</li>';
                     particleStr += '<li class="username">' + nickname + '</li>';
                     particleStr += '</ul>';
                     particleStr += '<p><i class="bi bi-suit-heart-fill"></i> ' + likes + '</p>';

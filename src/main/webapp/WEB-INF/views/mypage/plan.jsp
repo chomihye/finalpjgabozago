@@ -90,10 +90,10 @@
                                                 <div class="firstLine">
                                                     <c:choose>
                                                         <c:when test="${list.travelPlan.IS_PUBLIC == 'Y'}"> 
-                                                            <li class="title">${list.travelPlan.LARGE_AREA_NAME}</li>
+                                                            <li class="title">${list.travelPlan.LARGE_AREA_NAME}여행</li>
                                                         </c:when>    
                                                         <c:otherwise>
-                                                            <li class="title"><i class="bi bi-lock"></i> ${list.travelPlan.LARGE_AREA_NAME}</li>
+                                                            <li class="title"><i class="bi bi-lock"></i> ${list.travelPlan.LARGE_AREA_NAME}여행</li>
                                                         </c:otherwise>
                                                     </c:choose>
                                                     
