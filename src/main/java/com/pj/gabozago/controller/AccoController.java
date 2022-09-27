@@ -66,12 +66,12 @@ public class AccoController {
 
 		if (member == null) { // member -> null -> getList출력
 			list = this.accomService.getList(cri);
+			return "redirect:/mypage/main";
 		} else {
 			list = this.accomService.getListWithMember(cri, member);
 		}
 		model.addAttribute("_ACCOM_", list);
-		
-		log.info("asdfasdfasdfasdfasdfasdfasdf");
+	
 		
 		// 총 레코드 건수를 반환
 		int total = this.accomService.getTotal(accom);
