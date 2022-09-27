@@ -38,7 +38,7 @@
     <script src="https://npmcdn.com/flatpickr/dist/l10n/ko.js"></script>
     
     <!-- Customized Stylesheet -->
-    <link rel="stylesheet" type="text/css" href="${path}/resources/travel/css/main.css?ver=1.1">
+    <link rel="stylesheet" type="text/css" href="${path}/resources/travel/css/main.css?after">
 
     <!-- JSTL -->
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -67,7 +67,7 @@
     
     <style>
         .selected { background-color : #6DCC76}
-        .q {
+        .selected2 {
             display: flexbox;
             color: green;
             box-sizing: border-box;
@@ -79,13 +79,6 @@
             border-radius: 33px;
 
             margin-left: -20px;
-        }
-        .r {
-            position: absolute;
-            z-index: 3;
-            left: 25px;
-            top: 38px;
-
         }
         
     </style>
@@ -154,12 +147,12 @@
         });
 
         //예약 내역 팝업 
-        // $(function() {  
-        //     for(let i=0; i<2; i++) {
-        //         let element = $(".carousel-item").html();
-        //         $(".carousel-item").append(element);
-        //     }
-        // });
+        $(function() {  
+            for(let i=0; i<2; i++) {
+                let element = $(".carousel-item").html();
+                $(".carousel-item").append(element);
+            }
+        });
 
 
         // $(function() {
@@ -215,7 +208,7 @@
                 for(let i=1; i<=day; i++) {
                     let row = "#Day" + i + " .row";
                     let rowImg = "#Day" + i + " .row img";
-                    let rowInfo = "#Day" + i + " .row .col-6";
+                    let rowInfo = "#Day" + i + " .row .col-5";
                     let rowCnt = $(row).length;
 
                     for(let j=1; j<=rowCnt; j++) {
@@ -256,7 +249,7 @@
                     // dataType : "json", 
                     contentType: "application/json;charset=UTF-8",
                     success : function(data){   
-                        alert("ajax success!, data: " , data);
+                        alert("일정 생성을 완료하였습니다");
                      
                         self.location = "/travel/plan?planIdx=${planIdx}" 
 
@@ -796,78 +789,21 @@
                         
                         <!-- The slideshow -->
                         <div class="carousel-inner">
-                            <div class="carousel-item active">
-                               <div class="card_reservation" id="rs_item">
-                                <img src="https://lh3.googleusercontent.com/proxy/mo2S7suoEWndBIxeZrtlej_zi2EPfrp7J3RJ-dxjzKWfhns9UpRaQMQCMjML5IhofG3feaXJjBdcVipY60cjFKsCrbMcSU7edA67o2sFe7uExQ76jAq3mLpGu3pYwROcDXyAV5gCQ_JAmI3AEcScLRmshwkOMdM=w960-h720-n-k-rw-no-v1" alt="예약이미지">
+                          <div class="carousel-item active" id="target">
+                            <div class="card_reservation" id="rs_item1">
+                                <img src="https://picsum.photos/id/684/600/400" alt="예약이미지">
                                 <p>
-                                    <span>그랜드 워커힐 서울</span> 
-                                    <span>2020-01-11 ~ 2020-01-15</span>
+                                    <span>Pragser Wildsee</span> 
+                                    <span>15-18 July 2022</span>
                                 </p>
-                            </div>   
-                            <div class="card_reservation" id="rs_item">
-                                <img src="https://pix8.agoda.net/hotelImages/1810284/-1/5963e6d453ffcd17d4593e3d75c7f986.jpg?ca=28&ce=0&s=1024x768" alt="예약이미지">
-                                <p>
-                                    <span>나인트리 프리미어 호텔 명동</span> 
-                                    <span>2020-02-11 ~ 2020-02-14</span>
-                                </p>
-                            </div>   
-                            <div class="card_reservation" id="rs_item">
-                                <img src="https://images.trvl-media.com/hotels/1000000/980000/975000/974958/e572aebd.jpg?impolicy=resizecrop&rw=1200&ra=fit" alt="예약이미지">
-                                <p>
-                                    <span>호텔 피제이 명동</span> 
-                                    <span>2020-02-15 ~ 2020-02-16</span>
-                                </p>
-                            </div>   
-                            </div>
-                            <div class="carousel-item">
-                                <div class="card_reservation" id="rs_item">
-                                    <img src="https://images.trvl-media.com/hotels/9000000/8750000/8749800/8749747/221d5eb9.jpg?impolicy=resizecrop&rw=1200&ra=fit" alt="예약이미지">
-                                    <p>
-                                        <span>목시 서울 인사동</span> 
-                                        <span>2020-01-11 ~ 2020-01-15</span>
-                                    </p>
-                                </div>   
-                                <div class="card_reservation" id="rs_item">
-                                    <img src="https://images.trvl-media.com/hotels/13000000/12620000/12615800/12615733/4f522439.jpg?impolicy=resizecrop&rw=1200&ra=fit" alt="예약이미지">
-                                    <p>
-                                        <span>롯데시티 호텔 명동</span> 
-                                        <span>2020-02-11 ~ 2020-02-14</span>
-                                    </p>
-                                </div>   
-                                <div class="card_reservation" id="rs_item">
-                                    <img src="https://images.trvl-media.com/hotels/13000000/12520000/12511700/12511672/54514914.jpg?impolicy=resizecrop&rw=1200&ra=fit" alt="예약이미지">
-                                    <p>
-                                        <span>L7 명동 바이 롯데</span> 
-                                        <span>2020-02-15 ~ 2020-02-16</span>
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="carousel-item">
-                                <div class="card_reservation" id="rs_item">
-                                    <img src="https://lh3.googleusercontent.com/proxy/mo2S7suoEWndBIxeZrtlej_zi2EPfrp7J3RJ-dxjzKWfhns9UpRaQMQCMjML5IhofG3feaXJjBdcVipY60cjFKsCrbMcSU7edA67o2sFe7uExQ76jAq3mLpGu3pYwROcDXyAV5gCQ_JAmI3AEcScLRmshwkOMdM=w960-h720-n-k-rw-no-v1" alt="예약이미지">
-                                    <p>
-                                        <span>그랜드 워커힐 서울</span> 
-                                        <span>2020-01-11 ~ 2020-01-15</span>
-                                    </p>
-                                </div>   
-                                <div class="card_reservation" id="rs_item">
-                                    <img src="https://images.trvl-media.com/hotels/45000000/44220000/44216700/44216632/13fe0158.jpg?impolicy=resizecrop&rw=1200&ra=fit" alt="예약이미지">
-                                    <p>
-                                        <span>나인트리 호텔 동대문</span> 
-                                        <span>2020-02-11 ~ 2020-02-14</span>
-                                    </p>
-                                </div>   
-                                <div class="card_reservation" id="rs_item">
-                                    <img src="https://images.trvl-media.com/hotels/22000000/21520000/21518500/21518483/2b6295d7.jpg?impolicy=resizecrop&rw=1200&ra=fit" alt="예약이미지">
-                                    <p>
-                                        <span>ENA 스위트 호텔 남대문</span> 
-                                        <span>2020-02-15 ~ 2020-02-16</span>
-                                    </p>
-                                </div>
-                            </div>
+                            </div>    
                           </div>
-    
-                   
+
+                          <div class="carousel-item">
+                          </div>
+                          <div class="carousel-item">
+                            
+                          </div>
                         </div>
                         
                         <!-- Left and right controls -->
@@ -877,12 +813,10 @@
                         <a class="carousel-control-next" href="#myCarousel" data-slide="next">
                           <span class="carousel-control-next-icon"></span>
                         </a>
-
-                        <button type="button" id="btn_reservation_cs" onclick="CategoryChange(this,10)">닫기</button>
-                </div>
+                      </div>
                       
                    
-                   
+                    <button type="button" id="btn_reservation_cs" onclick="CategoryChange(this,10)">닫기</button>
                 </div>
             <div class="dimmed"></div></div>
         </div>
@@ -990,6 +924,12 @@
                 
         </div>
 
+        <!-- othersPlanModel -->
+        <div id="othersPlanModal">
+            <div id="opWrapper">
+                <jsp:include page="../travel/others_plan.jsp" flush="true" /> 
+            </div>
+        </div>
     </section>
 
 
@@ -1123,9 +1063,9 @@
                 
                 let rowIndex = '<div class="row">' + 
                                 '<div class="col-1"><li class="row_num"></li></div>' + 
-                                '<div class="col-5"><button onlick="" class="row_btn">-</button><img src="' + dataImg + ' " alt=""></div>' +
-                                '<div class="col-6" style="white-space:pre-line" latitude=' + latitude + ' longitude=' + longitude + '>' + dataText + 
-                                '</div></div>';
+                                '<div class="col-4"><img src="' + dataImg + ' " alt=""></div>' +
+                                '<div class="col-5" style="white-space:nowrap" latitude=' + latitude + ' longitude=' + longitude + '>' + dataText + 
+                                '<div class="col-2"><button onlick="" class="row_btn">-</button></div></div>';
                     
                 containerId = e.target.id;
                 console.log("containerId:",containerId)
@@ -1136,8 +1076,6 @@
                 height = 0;
                 
                 e.target.querySelector(".row_index").append(createElementFromHTML(rowIndex));
-                $("button.row_btn").css({'position': 'absolute', 'z-index': '3', 'left': '25px', 'top': '38px'})
-                // $("button.row_btn").addClass("r");
                 // e.target.querySelector(".row_index").html(rowIndex);
                 
             
