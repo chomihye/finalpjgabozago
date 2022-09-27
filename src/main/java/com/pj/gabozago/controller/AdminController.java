@@ -195,12 +195,20 @@ public class AdminController {
 	
 	@GetMapping("/content")
 	public String showContent() {
-		log.trace("showeContent() invoked.");
+		log.trace("showContent() invoked.");
 		
 		return "admin/content";
 	} // showContent
+		
 	
+	@GetMapping("/content/read")
+	public String showReadingContent() {
+		log.trace("showReadingContent() invoked.");
+		
+		return "admin/content/read";
+	} // showReadingContent
 	
+
 	@GetMapping("/content/notice")
 	public String showNotice(Criteria cri, NoticeVO notice, Model model) throws ControllerException {
 		log.trace("showContentNotice() invoked.");
@@ -228,6 +236,15 @@ public class AdminController {
 	} // showContentNotice
 	
 	
+	@GetMapping("/content/noticeRead")
+	public String showReadingNotice() {
+		log.trace("showReadingNotice() invoked.");
+		
+		return "admin/content/noticeRead";
+	} // showReadingNotice
+		
+	
+	
 	@GetMapping("/content/question")
 	public String showContentQuestion() {
 		log.trace("showeContentQuestion() invoked.");
@@ -235,7 +252,23 @@ public class AdminController {
 		return "admin/content/question";
 	} // showContentQuestion
 	
+		
+	@GetMapping("/content/qnaRead")
+	public String showReadingQuestion() {
+		log.trace("showReadingQuestion() invoked.");
+		
+		return "admin/content/qnaRead";
+	} // showReadingQuestion
 	
+	
+	@GetMapping("/content/qnaRead2")
+	public String showReading2Question() {
+		log.trace("showReading2Question() invoked.");
+		
+		return "admin/content/qnaRead2";
+	} // showReading2Question
+
+
 
 	@Setter(onMethod_ = @Autowired)
 	private MemberService memservice;

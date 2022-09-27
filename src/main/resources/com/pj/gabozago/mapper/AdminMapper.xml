@@ -74,4 +74,19 @@
         FETCH NEXT #{cri.amount} ROWS ONLY
     </select>
 
+    <select 
+        id="selectNoticeReading"
+        resultType="java.util.Map">
+        SELECT
+        	idx,
+            title,
+            created_at, 
+            view_count,
+            content
+        FROM 
+            tbl_notice
+        WHERE
+        	idx = #{idx}
+    </select>
+
 </mapper>

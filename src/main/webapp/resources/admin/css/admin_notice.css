@@ -79,6 +79,35 @@ button {
 }
 
 
+.bottom .button {
+    float: right;
+}
+
+.bottom .button input#W {
+    width: 70px;
+    height: 30px;
+    background-color: #68ae6d;
+    color: #FFFFFF;
+    cursor: pointer;
+    font-size: 16px;
+    border: none;
+    border-radius: 3px;
+}
+
+.B::after {
+    content: '';
+    display: block;
+    clear: both;
+}
+
+.bottom .B {
+    position: relative;
+    top: 0;
+    margin: 50px 0 18px;
+    padding-bottom: 10px;
+}
+
+
 .title {
     margin: 0 0 15px 30px;
     font-size: 20px;

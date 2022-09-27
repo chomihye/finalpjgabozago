@@ -44,6 +44,9 @@ public interface AdminService {
 	// 공지사항
 	public abstract List<Map<String, Object>> getNotice(Criteria cri, NoticeVO notice) throws ServiceException;
 
+	// 공지사항 내용
+	public abstract Map<String, Object> getNoticeReading(NoticeVO notice) throws ServiceException;
+
 	// 일반 로그인
 	public abstract MemberVO login(LoginDTO dto) throws ServiceException;
 

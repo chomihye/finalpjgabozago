@@ -124,7 +124,13 @@
                     </tbody>
 
                 </table>  
-                
+                <div class="bottom">
+	                <div class="B">
+	                    <div class="button">
+	                        <input type="button" name="글 쓰기" value="글 쓰기" id="W">
+	                    </div>
+	                </div>
+	        	</div>          
             </div>      
         
             <!-- 페이지버튼 -->

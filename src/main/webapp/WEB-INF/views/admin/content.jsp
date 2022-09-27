@@ -111,7 +111,7 @@
                 <tr>
                     <td class="num">7</td>
                     <td class="title_N">
-                        <a href="/board/community/read">서울의 랜드마크를 만나다</a>
+                        <a href="/admin/content/read">서울의 랜드마크를 만나다</a>
                     </td>
                     <td class="name">백설기</td>
                     <td class="date">2022-07-10</td>
@@ -120,7 +120,7 @@
                 <tr>
                     <td class="num">6</td>
                     <td class="title_N">
-                        <a href="/board/community/read">춘천에서 청정 & 낭만 에너지를 채우다</a>
+                        <a href="/admin/content/read">춘천에서 청정 & 낭만 에너지를 채우다</a>
                     </td>
                     <td class="name">골멩이</td>
                     <td class="date">2022-07-10</td>
@@ -129,7 +129,7 @@
                 <tr>
                     <td class="num">5</td>
                     <td class="title_N">
-                        <a href="/board/community/read">자전거와 함께하는 풍경여행</a>
+                        <a href="/admin/content/read">자전거와 함께하는 풍경여행</a>
                     </td>
                     <td class="name">납평치</td>
                     <td class="date">2022-07-10</td>
@@ -138,7 +138,7 @@
                 <tr>
                     <td class="num">4</td>
                     <td class="title_N">
-                        <a href="/board/community/read">온몸으로 즐기는 대구 2박 3일 코스 여행</a>
+                        <a href="/admin/content/read">온몸으로 즐기는 대구 2박 3일 코스 여행</a>
                     </td>
                     <td class="name">토런스</td>
                     <td class="date">2022-07-10</td>
@@ -147,7 +147,7 @@
                 <tr>
                     <td class="num">3</td>
                     <td class="title_N">
-                        <a href="/board/community/read">3/1 운동의 정신을 느껴보는 서울 여행</a>
+                        <a href="/admin/content/read">3/1 운동의 정신을 느껴보는 서울 여행</a>
                     </td>
                     <td class="name">모도리</td>
                     <td class="date">2022-07-10</td>
@@ -156,7 +156,7 @@
                 <tr>
                     <td class="num">2</td>
                     <td class="title_N">
-                        <a href="/board/community/read">안산과 강화도를 한 번에 즐길 수 있는 경기도 1박 2일 여행코스</a>
+                        <a href="/admin/content/read">안산과 강화도를 한 번에 즐길 수 있는 경기도 1박 2일 여행코스</a>
                     </td>
                     <td class="name">홍합죽</td>
                     <td class="date">2022-07-10</td>
@@ -165,7 +165,7 @@
                 <tr>
                     <td class="num">1</td>
                     <td class="title_N">
-                        <a href="/board/community/read">시원하고 짜릿하게 즐기는 동해 1박 2일 여행코스</a>
+                        <a href="/admin/content/read">시원하고 짜릿하게 즐기는 동해 1박 2일 여행코스</a>
                     </td>
                     <td class="name">목구구</td>
                     <td class="date">2022-07-10</td>

@@ -138,6 +138,16 @@ public class AdminServiceImpl implements AdminService {
 			throw new ServiceException(e);
 		}
 	} // getNotice
+
+	// 공지사항 내용
+	@Override
+	public Map<String, Object> getNoticeReading(NoticeVO notice) throws ServiceException {
+		try {
+			return this.mapper.selectNoticeReading(notice);
+		} catch (DAOException e) {
+			throw new ServiceException(e);
+		}
+	} // getNoticeReading
 	
 	
 	

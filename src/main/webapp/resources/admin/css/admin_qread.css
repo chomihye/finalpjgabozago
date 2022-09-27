@@ -1,0 +1,144 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    /* text-align: center; */
+}
+
+section {
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 150px;
+}
+
+.head {
+    width: 1240px;
+    text-align: center;
+}
+
+
+.title {
+    font-size: 32px;
+    font-family: 'Binggrae', sans-serif;
+    margin-top: 80px;
+    color: #68ae6d;
+}
+
+.desc {
+    margin-bottom: 70px;
+    font-weight: 300;
+    letter-spacing: -0.05em;
+    line-height: 1.7;
+    color: #68ae6d;
+}
+
+.w_box {
+    width: 990px;
+    height: 560px;
+    margin-top: 50px;
+    /* border: 1px solid #333; */
+    display: inline-block;
+}
+
+.w_box h2 {
+    color: #333;
+    font-size: 30px;
+}
+
+.w_box .I_box {
+    display: flex;
+}
+
+.I_box div {
+    margin: 10px 20px 20px 0;
+    color: #333;
+}
+
+.w_box p {
+    height: 300px;
+    margin-top: 20px;
+    text-align: left;
+}
+
+.w_box .F {
+    float: right;
+    margin-bottom: 6px;
+}
+
+.w_box input {
+    width: 60px;
+    height: 35px;
+    border: none;
+    border-radius: 3px;
+}
+
+
+.w_box p {
+    color: #333;
+}
+
+.w_box input#C {
+    background-color: #e2e2e2;
+    cursor: pointer;
+}
+
+.w_box input#D {
+    background-color: #68ae6d;
+    color: #FFFFFF;
+    cursor: pointer;
+}
+
+.comm_box {
+    height: auto;
+    background: #f7f7f7;
+    border: 1px solid #e5e5e5;
+    padding: 14px 0;
+    text-align: center;
+}
+
+.comm_box input[type=text] {
+    width: 880px;
+    height: 130px;
+    border: 1px solid #e5e5e5;
+    /* border-radius: 3px; */
+}
+
+.comm_box .sa_b {
+    text-align: right;
+    margin-right: 55px;
+}
+
+.comm_box input#save {
+    width: 50px;
+    height: 30px;
+    background-color: #68ae6d;
+    color: #FFFFFF;
+    cursor: pointer;
+    font-size: 16px;
+    border: none;
+    border-radius: 3px;
+    margin-top: 5px;
+}
+
+.w_box .L {
+    text-align: center;
+    margin-top: 50px;
+}
+
+.w_box input#B {
+    width: 100px;
+    height: 40px;
+    background-color: #68ae6d;
+    color: #FFFFFF;
+    cursor: pointer;
+    font-size: 16px;
+}

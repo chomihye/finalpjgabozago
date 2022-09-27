@@ -114,7 +114,7 @@
                         <tr>
                             <td class="num">15</td>
                             <td class="title_N">
-                                <a href="/board/qna/read">문의드립니다.</a>
+                                <a href="/admin/content/qnaRead">문의드립니다.</a>
                             </td>
                             <td class="name">김*수</td>
                             <td class="date">2022-07-10</td>
@@ -126,7 +126,7 @@
                         <tr>
                             <td class="num">14</td>
                             <td class="title_N">
-                                <a href="/board/qna/read2">문의드립니다.</a>
+                                <a href="/admin/content/qnaRead2">문의드립니다.</a>
                             </td>
                             <td class="name">정*현</td>
                             <td class="date">2022-07-10</td>
@@ -137,7 +137,7 @@
                         <tr>
                             <td class="num">13</td>
                             <td class="title_N">
-                                <a href="/board/qna/read2">문의드립니다.</a>
+                                <a href="/admin/content/qnaRead2">문의드립니다.</a>
                             </td>
                             <td class="name">김*우</td>
                             <td class="date">2022-07-10</td>
@@ -148,7 +148,7 @@
                         <tr>
                             <td class="num">12</td>
                             <td class="title_N">
-                                <a href="/board/qna/read2">문의드립니다.</a>
+                                <a href="/admin/content/qnaRead2">문의드립니다.</a>
                             </td>
                             <td class="name">이*혁</td>
                             <td class="date">2022-07-10</td>
@@ -159,7 +159,7 @@
                         <tr>
                             <td class="num">11</td>
                             <td class="title_N">
-                                <a href="/board/qna/read2">문의드립니다.</a>
+                                <a href="/admin/content/qnaRead2">문의드립니다.</a>
                             </td>
                             <td class="name">문*정</td>
                             <td class="date">2022-07-10</td>
@@ -170,7 +170,7 @@
                         <tr>
                             <td class="num">10</td>
                             <td class="title_N">
-                                <a href="/board/qna/read2">문의드립니다.</a>
+                                <a href="/admin/content/qnaRead2">문의드립니다.</a>
                             </td>
                             <td class="name">손*연</td>
                             <td class="date">2022-07-10</td>
@@ -181,7 +181,7 @@
                         <tr>
                             <td class="num">9</td>
                             <td class="title_N">
-                                <a href="/board/qna/read2">문의드립니다.</a>
+                                <a href="/admin/content/qnaRead2">문의드립니다.</a>
                             </td>
                             <td class="name">이*일</td>
                             <td class="date">2022-07-10</td>
@@ -192,7 +192,7 @@
                         <tr>
                             <td class="num">8</td>
                             <td class="title_N">
-                                <a href="/board/qna/read2">문의드립니다.</a>
+                                <a href="/admin/content/qnaRead2">문의드립니다.</a>
                             </td>
                             <td class="name">박*빈</td>
                             <td class="date">2022-07-10</td>
@@ -203,7 +203,7 @@
                         <tr>
                             <td class="num">7</td>
                             <td class="title_N">
-                                <a href="/board/qna/read2">문의드립니다.</a>
+                                <a href="/admin/content/qnaRead2">문의드립니다.</a>
                             </td>
                             <td class="name">김*정</td>
                             <td class="date">2022-07-10</td>
@@ -214,7 +214,7 @@
                         <tr>
                             <td class="num">6</td>
                             <td class="title_N">
-                                <a href="/board/qna/read2">문의드립니다.</a>
+                                <a href="/admin/content/qnaRead2">문의드립니다.</a>
                             </td>
                             <td class="name">김*연</td>
                             <td class="date">2022-07-10</td>

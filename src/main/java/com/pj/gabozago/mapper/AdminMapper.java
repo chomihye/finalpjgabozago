@@ -31,6 +31,9 @@ public interface AdminMapper {
 	
 	// 공지사항을 가져오는 메소드
 	public abstract List<Map<String, Object>> selectNotice(@Param("cri") Criteria cri, @Param("notice") NoticeVO notice) throws DAOException;
+	
+	// 공지사항 내용을 가져오는 메소드
+	public abstract Map<String, Object> selectNoticeReading(NoticeVO notice) throws DAOException;
 
 	// 대쉬보드 공지사항을 가져오는 메소드
 	public abstract List<Map<String, Object>> selectDashNotice(@Param("cri") Criteria cri, @Param("notice") NoticeVO notice) throws DAOException;
