@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.pj.gabozago.domain.AccomReservationVO;
 import com.pj.gabozago.domain.Criteria;
 import com.pj.gabozago.domain.MemberDTO;
+import com.pj.gabozago.domain.NoticeVO;
 import com.pj.gabozago.domain.PageDTO;
 import com.pj.gabozago.exception.ControllerException;
 import com.pj.gabozago.exception.ServiceException;
@@ -121,8 +122,27 @@ public class AdminController {
 	
 	
 	@GetMapping("/reservation/cancel")
-	public String showReservationCancel() {
+	public String showReservationCancel(Criteria cri, AccomReservationVO reserv, Model model) throws ControllerException {
 		log.trace("showReservationCancel() invoked.");
+		
+		try {
+			cri.setAmount(10);
+			
+			List<Map<String, Object>> list = this.service.getCanReservInfo(cri, reserv);
+			
+			Map<String, Object> map = new HashMap<String, Object>();
+			
+			map.put("model", list);
+			model.addAttribute("result", map);
+			
+			// 총 레코드 건수를 반환
+	        int total = this.service.getTotal(cri);
+	        PageDTO pageDTO = new PageDTO(cri, total);
+	        model.addAttribute("__PAGINATION__", pageDTO);
+			
+		} catch (ServiceException e) {
+			throw new ControllerException(e);
+		}
 		
 		return "admin/reservation/cancel";
 	} // showReservationDetail
@@ -137,13 +157,13 @@ public class AdminController {
 	
 	
 	@GetMapping("/content/notice")
-	public String showNotice(Criteria cri, Model model) throws ControllerException {
-		log.trace("showeContentNotice() invoked.");
+	public String showNotice(Criteria cri, NoticeVO notice, Model model) throws ControllerException {
+		log.trace("showContentNotice() invoked.");
 		
 		try {
 			cri.setAmount(10);
 			
-			List<Map<String, Object>> list = this.service.getMemberInfo(cri);
+			List<Map<String, Object>> list = this.service.getNotice(cri, notice);
 			
 			Map<String, Object> map = new HashMap<String, Object>();
 			

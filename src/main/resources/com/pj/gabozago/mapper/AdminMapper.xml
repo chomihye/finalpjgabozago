@@ -22,6 +22,7 @@
             m.phone
         FROM 
             tbl_member m
+		ORDER BY m.idx asc
         OFFSET (#{currPage} -1) * #{amount} ROWS
         FETCH NEXT #{amount} ROWS ONLY
     </select>
@@ -55,8 +56,8 @@
             n.view_count
         FROM 
             tbl_notice n
-        OFFSET (#{currPage} -1) * #{amount} ROWS
-        FETCH NEXT #{amount} ROWS ONLY
+        OFFSET (#{cri.currPage} -1) * #{cri.amount} ROWS
+        FETCH NEXT #{cri.amount} ROWS ONLY
     </select>
 
 </mapper>

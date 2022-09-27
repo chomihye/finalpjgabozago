@@ -10,6 +10,7 @@
 
     <!-- id : 메소드명 -->
     <!-- parameterType="java.util.Map" 은 생략이 가능함 -->
+    <!-- 숙소 예약 정보 -->
     <select 
         id="selectReservInfo"
         resultType="java.util.Map">
@@ -21,11 +22,36 @@
             r.check_out_date, 
             r.status
         FROM
-            tbl_reservation r
-           	LEFT OUTER JOIN tbl_member m ON r.member_idx = m.idx
-           	LEFT OUTER JOIN tbl_accom a ON r.accom_room_idx = a.idx
+            tbl_reservation r,
+            tbl_member m,
+            tbl_accom_room ar,
+            tbl_accom a
+        WHERE
+            r.member_idx = m.idx
+            AND ar.idx = r.accom_room_idx
+            AND ar.accom_idx = a.idx
         OFFSET (#{cri.currPage} -1) * #{cri.amount} ROWS
         FETCH NEXT #{cri.amount} ROWS ONLY
+    </select>
+    
+    <!-- 숙소 예약 취소 정보 -->
+    <select 
+        id="selectCanReservInfo"
+        resultType="java.util.Map">
+        SELECT
+            r.idx, 
+            m.name, 
+            a.accom_name, 
+            r.check_in_date, 
+            r.check_out_date, 
+            r.status
+        FROM
+            r.member_idx = m.idx
+            AND ar.idx = r.accom_room_idx
+            AND ar.accom_idx = a.idx
+        OFFSET (#{cri.currPage} -1) * #{cri.amount} ROWS
+        FETCH NEXT #{cri.amount} ROWS ONLY
+        	
     </select>
     
 

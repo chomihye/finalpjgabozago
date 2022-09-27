@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
+import com.pj.gabozago.domain.AccomReservationVO;
 import com.pj.gabozago.domain.Criteria;
 import com.pj.gabozago.domain.MemberDTO;
 import com.pj.gabozago.domain.NoticeVO;
@@ -24,6 +25,7 @@ public interface AdminMapper {
 	public abstract Map<String, Object> getMemberInfoDetail(MemberDTO member) throws DAOException;
 	
 	// 공지사항을 가져오는 메소드
-	public abstract List<Map<String, Object>> getNotice(Criteria cri) throws DAOException;
+	public abstract List<Map<String, Object>> selectNotice(@Param("cri") Criteria cri, @Param("notice") NoticeVO notice) throws DAOException;
+	
 			
 } // end interface
