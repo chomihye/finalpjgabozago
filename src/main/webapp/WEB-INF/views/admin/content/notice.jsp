@@ -32,8 +32,7 @@
 <body>
     <!-- header -->
     <header>
-        <%-- <%@include file="/WEB-INF/views/common/header.jsp" %> --%>
-        <%-- <jsp:include page="/WEB-INF/views/common/header.jsp" flush="false" /> --%>
+        <jsp:include page="/WEB-INF/views/common/header.jsp" flush="false" />
     </header>
 
    
@@ -117,7 +116,7 @@
                                 <td class="title_N">
                                     <a href="./notice2.html">${item.TITLE}</a>
                                 </td>
-                                <td class="date">${item.CREATED_AT}</td>
+                                <td class="date"><fmt:formatDate pattern="yyyy-MM-dd" value="${item.CREATED_AT}" /></td>
                                 <td class="views">${item.VIEW_COUNT}</td>
                             </tr>
                         </c:forEach>
