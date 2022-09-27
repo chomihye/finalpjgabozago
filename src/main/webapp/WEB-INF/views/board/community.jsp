@@ -348,8 +348,8 @@
                         <td class="title_N">
                             <a href="/board/community/read">서울의 랜드마크를 만나다</a>
                         </td>
-                        <td class="name">닉네임</td>
-                        <td class="date">2022-07-10</td>
+                        <td class="name">백설기</td>
+                        <td class="date">2022-09-13</td>
                         <td class="views">684</td>
                     </tr>
 
@@ -358,8 +358,8 @@
                         <td class="title_N">
                             <a href="#">춘천에서 청정&낭만 에너지를 꽉 채우다!</a>
                         </td>
-                        <td class="name">닉네임</td>
-                        <td class="date">2022-07-10</td>
+                        <td class="name">골멩이</td>
+                        <td class="date">2022-09-11</td>
                         <td class="views">308</td>
                     </tr>
                     <tr>
@@ -367,8 +367,8 @@
                         <td class="title_N">
                             <a href="">자전거와 함께하는 풍경여행</a>
                         </td>
-                        <td class="name">닉네임</td>
-                        <td class="date">2022-07-10</td>
+                        <td class="name">납평치</td>
+                        <td class="date">2022-09-10</td>
                         <td class="views">857</td>
                     </tr>
                     <tr>
@@ -376,8 +376,8 @@
                         <td class="title_N">
                             <a href="">온몸으로 즐기는 대구 2박 3일 코스 여행!</a>
                         </td>
-                        <td class="name">닉네임</td>
-                        <td class="date">2022-07-10</td>
+                        <td class="name">토런스</td>
+                        <td class="date">2022-09-06</td>
                         <td class="views">755</td>
                     </tr>
                     <tr>
@@ -385,8 +385,8 @@
                         <td class="title_N">
                             <a href="">3·1운동의 정신을 느껴보는 서울 여행</a>
                         </td>
-                        <td class="name">닉네임</td>
-                        <td class="date">2022-07-10</td>
+                        <td class="name">모도리</td>
+                        <td class="date">2022-09-03</td>
                         <td class="views">1004</td>
                     </tr>
                     <tr>
@@ -394,8 +394,8 @@
                         <td class="title_N">
                             <a href="">안산과 강화도를 한번에 즐길 수 있는 경기도 1박2일 여행코스</a>
                         </td>
-                        <td class="name">닉네임</td>
-                        <td class="date">2022-07-10</td>
+                        <td class="name">홍합죽</td>
+                        <td class="date">2022-09-03</td>
                         <td class="views">557</td>
                     </tr>
                     <tr>
@@ -403,8 +403,8 @@
                         <td class="title_N">
                             <a href="">시원하고 짜릿하게 즐기는 동해 1박2일 여행코스</a>
                         </td>
-                        <td class="name">닉네임</td>
-                        <td class="date">2022-07-10</td>
+                        <td class="name">옥구구</td>
+                        <td class="date">2022-09-02</td>
                         <td class="views">729</td>
                     </tr>
                 </tbody>

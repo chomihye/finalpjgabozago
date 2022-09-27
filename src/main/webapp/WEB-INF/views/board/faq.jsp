@@ -43,7 +43,7 @@
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="msapplication-TileImage" content="/resources/common/ico/ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
-    
+
 
 
 </head>
@@ -109,7 +109,7 @@
                         <div class="accordion_item">
                             <button class="accordion_title">
                                 <span class="front">Q</span>
-                                <span class="question">Lorem ipsum dolor sit amet.?</span>
+                                <span class="question">[예약확인] 예약은 어디서 확인할 수 있나요?</span>
                                 <div class="control">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                         class="bi bi-caret-down" viewBox="0 0 16 16">
@@ -126,11 +126,23 @@
                                 <div class="answer_box">
                                     <div class="front">A</div>
                                     <div class="answer_text">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.<br> Voluptate, eum
-                                            nisi
-                                            vitae maxime modi non similique odit minus cum cumque amet,<br> soluta
-                                            dolorem
-                                            perferendis? Assumenda dolorum et totam vel. Optio?</p>
+                                        <p>예약번호는 각 예약의 상세 페이지 에서 확인 가능합니다.
+
+                                            가보자Go 웹/앱 로그인후 예약내역에서 예약 번호를 확인하실 수 있습니다.<br><br><br>
+
+
+
+                                            * 항공권의 예약번호는 항공권예약내역에서 확인 가능합니다.
+
+                                            자세한 확인 방법은 [국제선] MRT/항공사 예약번호는 어디서 확인하나요? 를 참고해주시기 바랍니다.<br><br><br>
+
+
+
+                                            예약 번호 확인 예시<br><br>
+
+
+                                            투어&티켓/숙박/패키지의 예약번호는 영문2자리+숫자7자리로 부여됩니다.<br>
+                                        </p>
                                     </div>
 
 
@@ -140,7 +152,7 @@
                         <div class="accordion_item">
                             <button class="accordion_title">
                                 <span class="front">Q</span>
-                                <span class="question">Lorem ipsum dolor sit amet.?</span>
+                                <span class="question">[예약문의] 예약하려는 날짜가 선택이 되지 않습니다. 예약 불가한가요?</span>
                                 <div class="control">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                         class="bi bi-caret-down" viewBox="0 0 16 16">
@@ -154,11 +166,12 @@
                                 <div class="answer_box">
                                     <div class="front">A</div>
                                     <div class="answer_text">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.<br> Voluptate, eum
-                                            nisi
-                                            vitae maxime modi non similique odit minus cum cumque amet,<br> soluta
-                                            dolorem
-                                            perferendis? Assumenda dolorum et totam vel. Optio?</p>
+                                        <p>캘린더 상 선택이 되지 않는 날짜는 예약이 불가합니다. <br><br>
+
+                                            파트너 혹은 업체 사정 상 투어진행이 불가한 경우 파트너에 의해 날짜 선택이 제한되며, 조정된 날짜는 캘린더 상 음영처리 또는 선택불가
+                                            일정으로 표시됩니다. <br>
+                                            마이리얼트립 내에서 예약하고자 하셨던 상품을 다른 판매자를 통해 구매하실 수도 있으니, 상품 검색을 통해 동일상품 판매여부를 확인해보시기
+                                            바랍니다.<br> </p>
                                     </div>
 
 
@@ -168,7 +181,7 @@
                         <div class="accordion_item">
                             <button class="accordion_title">
                                 <span class="front">Q</span>
-                                <span class="question">Lorem ipsum dolor sit amet.?</span>
+                                <span class="question">[결제방법] 가보자Go에서는 예약만 진행, 현지에서 가서 결제가 가능한가요?</span>
                                 <div class="control">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                         class="bi bi-caret-down" viewBox="0 0 16 16">
@@ -182,11 +195,12 @@
                                 <div class="answer_box">
                                     <div class="front">A</div>
                                     <div class="answer_text">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.<br> Voluptate, eum
-                                            nisi
-                                            vitae maxime modi non similique odit minus cum cumque amet,<br> soluta
-                                            dolorem
-                                            perferendis? Assumenda dolorum et totam vel. Optio?</p>
+                                        <p>가보자Go의 상품은 반드시 웹 및 어플에서 예약과 결제를 진행 완료하신 후 이용하실 수 있습니다.
+                                            따라서 가보자Go에서는 예약만 진행, 현지에 가이드에 직접 결제하는 것은 불가능합니다.<br><br>
+
+                                            현지에서 별도 지불이 필요한 비용(불포함 사항, 개인지출)을 제외한 기본적인 상품금액은 가보자Go 내 결제프로세스를 통하여 사전
+                                            결제해주셔야 합니다.<br>
+                                        </p>
                                     </div>
 
 
@@ -196,7 +210,7 @@
                         <div class="accordion_item">
                             <button class="accordion_title">
                                 <span class="front">Q</span>
-                                <span class="question">Lorem ipsum dolor sit amet.?</span>
+                                <span class="question">[예약취소] 가보자Go 통해서 진행한 호텔 예약 변경 또는 취소는 어떻게 하나요?</span>
                                 <div class="control">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                         class="bi bi-caret-down" viewBox="0 0 16 16">
@@ -210,11 +224,12 @@
                                 <div class="answer_box">
                                     <div class="front">A</div>
                                     <div class="answer_text">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.<br> Voluptate, eum
-                                            nisi
-                                            vitae maxime modi non similique odit minus cum cumque amet,<br> soluta
-                                            dolorem
-                                            perferendis? Assumenda dolorum et totam vel. Optio?</p>
+                                        <p>[가보자Go 호캉스] <br><br>
+
+                                            가보자Go 호캉스 호텔의 경우 상품 별 규정에 따라 변경/취소를 진행하고 있습니다.<br><br>
+                                            
+                                            상품별 취소 환불 규정을 꼭 먼저 확인하시고, 내 예약내 변경/취소가 불가하다면 가보자Go 고객지원실(1670-8208) 혹은 1:1 채팅상담으로 문의주시기 바랍니다.<br>
+                                        </p>
                                     </div>
 
 
@@ -224,7 +239,7 @@
                         <div class="accordion_item">
                             <button class="accordion_title">
                                 <span class="front">Q</span>
-                                <span class="question">Lorem ipsum dolor sit amet.?</span>
+                                <span class="question">[취소철회] 신청된 예약 취소는 철회 가능한가요?</span>
                                 <div class="control">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                         class="bi bi-caret-down" viewBox="0 0 16 16">
@@ -238,11 +253,20 @@
                                 <div class="answer_box">
                                     <div class="front">A</div>
                                     <div class="answer_text">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.<br> Voluptate, eum
-                                            nisi
-                                            vitae maxime modi non similique odit minus cum cumque amet,<br> soluta
-                                            dolorem
-                                            perferendis? Assumenda dolorum et totam vel. Optio?</p>
+                                        <p>가보자Go 앱/웹 상에서 이미 취소요청 버튼을 클릭 하셨다면, 시스템 상 취소 번복은 불가합니다<br><br>
+
+                                            해당 상품을 이용하고 싶으시다면, 동일한 조건으로 재예약 부탁드립니다.<br><br>
+                                            
+                                            다만, 특정 상품의 경우 취소요청 신청 후 처리까지 소요되는 기간동안 취소 철회가 가능할 수 있으니 '1:1 채팅 상담' 또는 고객지원실을 통해 문의해주시기 바랍니다.<br><br><br>
+                                            
+                                             
+                                            
+                                            [취소 완료 확인하고 싶어요]<br><br>
+                                            
+                                            다만, 특정 상품의 경우 취소요청 신청 이후 최종 처리까지 2~3일이 소요되어 취소 완료에 대한 메일/카카오톡 발송이 늦어지는 경우도 있습니다.<br><br>
+                                            
+                                            취소 완료 내역을 확인하고 싶으신 경우, '1:1 채팅 상담' 또는 고객지원실을 통해 문의해주시기 바랍니다.<br>
+                                        </p>
                                     </div>
 
 
