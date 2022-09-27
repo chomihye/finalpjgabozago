@@ -22,6 +22,13 @@ import com.pj.gabozago.exception.DAOException;
 // 마이바티스의 Mapper Interface로서의 역할 수행하도록 구현
 public interface AccomMapper {
 	
+	//헤더 검색 기능
+	public abstract List<AccomDTO> selectSearchKeyword(@Param("cri") Criteria cri,@Param("keyword")String keyword) throws DAOException;
+
+	//헤더 검색 결과 총 레코드 건수 반환
+	public abstract Integer getTotalKeywordSearch(@Param("keyword")String keyword,AccomDTO accom) throws DAOException;
+		
+	//-----------------------------------------------------------------------------------------------------------	
 
 	// 전체 목록을 반환
 	public abstract List<AccomDTO> getList(@Param("cri") Criteria cri) throws DAOException;

@@ -18,6 +18,13 @@ import com.pj.gabozago.exception.ServiceException;
 
 public interface AccomService {
 	
+	//헤더 검색
+	public abstract List<AccomDTO> searchList(Criteria cri,String keyword) throws ServiceException;
+
+	//헤더 검색 결과 총 레코드 건수를 반환하는 메소드(페이징 처리에 필요)
+	public abstract int searchLIsttotal(String keyword,AccomDTO accom) throws ServiceException;
+	
+//	--------------------------------------------------------------------------------------------
 
 	//숙소 전체목록 조회
 	public abstract List<AccomDTO> getList(Criteria cri) throws ServiceException;

@@ -253,6 +253,28 @@ public class AccomServiceImpl implements AccomService {
 			throw new ServiceException(e);
 		}
 	}
+	
+	@Override
+	public List<AccomDTO> searchList(Criteria cri, String keyword) throws ServiceException {
+		
+		try {
+			return this.mapper.selectSearchKeyword(cri,keyword);
+		} catch (DAOException e) {
+			throw new ServiceException(e);
+		}
+		
+	}
+
+	@Override
+	public int searchLIsttotal(String keyword,AccomDTO accom) throws ServiceException {
+		log.trace("getTotal() invoked.");
+		try {
+			return this.mapper.getTotalKeywordSearch(keyword,accom);
+		} catch (DAOException e) {
+			throw new ServiceException(e);
+		}
+	}
+
 
 	
 

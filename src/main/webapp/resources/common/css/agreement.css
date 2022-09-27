@@ -47,8 +47,11 @@ a {
 .box {
     background-color: rgba(0, 0, 0, 0.05);
 }
-.content p{
-    padding: 30px;
+.textWrapper{
+    padding: 13px 29px 13px 29px;
+}
+.textWrapper p {
+    padding-left: 30px;
 }
 footer {
     margin-top: 200px !important;
