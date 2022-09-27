@@ -118,7 +118,9 @@ header .searchContainer {
 input[type=text]:focus { /* 입력창 클릭 시 아웃라인 색깔 */
     outline-color: #68AE6D;
 }
-
+input[type=text] {
+    padding-left: 20px;
+}
 header .searchBtn i {
     color: #ffffff !important;
     line-height: 30px !important;

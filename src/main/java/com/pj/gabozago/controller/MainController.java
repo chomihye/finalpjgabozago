@@ -9,10 +9,16 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.pj.gabozago.common.SharedScopeKeys;
+import com.pj.gabozago.domain.AccomDTO;
+import com.pj.gabozago.domain.Criteria;
+import com.pj.gabozago.domain.PageDTO;
 import com.pj.gabozago.domain.WishlistPlanDTO;
 import com.pj.gabozago.exception.ControllerException;
+import com.pj.gabozago.exception.ServiceException;
+import com.pj.gabozago.service.AccomService;
 import com.pj.gabozago.service.TravelService;
 
 import lombok.AllArgsConstructor;
@@ -28,7 +34,11 @@ import lombok.extern.log4j.Log4j2;
 public class MainController {
 	
 	@Setter(onMethod_= {@Autowired})
-	private TravelService service;
+	private TravelService travelService;
+	
+	@Setter(onMethod_= {@Autowired})
+	private AccomService accomService;
+
 
 	@GetMapping("/main")
 	public String main(Model model) throws ControllerException {
@@ -37,7 +47,7 @@ public class MainController {
 		
 		try {
 			
-			List<LinkedHashMap<String, Object>> list = this.service.getBestPlan();
+			List<LinkedHashMap<String, Object>> list = this.travelService.getBestPlan();
 			
 						
 			model.addAttribute(SharedScopeKeys.LIST_KEY, list);
@@ -69,9 +79,24 @@ public class MainController {
 	
 	
 	@GetMapping("/search/result")
-	public void searchResult() {
-
+	public String searchResult(@RequestParam("keyword") String keyword, Criteria cri,AccomDTO accom, Model model) throws ServiceException {
+		
+		cri.setAmount(8);
+		
+		List<AccomDTO> list = accomService.searchList(cri,keyword);
+		model.addAttribute("list",list);
+		
+		
+		// 총 레코드 건수를 반환
+		int total = this.accomService.searchLIsttotal(keyword, accom);
+		PageDTO pageDTO = new PageDTO(cri, total);
+		model.addAttribute(SharedScopeKeys.PAGINATION_KEY, pageDTO);
+		model.addAttribute("keyword",keyword);
+		
+		return "common/search_result";
 	}
+	
+	
 	
 	
 	
