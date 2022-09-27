@@ -275,9 +275,7 @@
             (select ai.file_name from tbl_accom_images ai where r.idx = ai.idx) as file_name
         FROM tbl_accom r ,tbl_large_area a
         WHERE r.large_area_idx = a.idx
-        <if test="keyword != ''">
-            AND (r.accom_name LIKE '%'||#{keyword}||'%' OR a.large_area_name LIKE '%'||#{keyword}||'%') 
-        </if>
+        AND (r.accom_name LIKE '%'||#{keyword}||'%' OR a.large_area_name LIKE '%'||#{keyword}||'%') 
         ORDER BY r.idx asc
         OFFSET (#{cri.currPage} -1) * #{cri.amount} ROWS
         FETCH NEXT #{cri.amount} ROWS ONLY
@@ -288,9 +286,8 @@
         SELECT count(a.idx)
         FROM tbl_accom r ,tbl_large_area a
         WHERE r.large_area_idx = a.idx
-        <if test="keyword != '' ">    
-            AND (r.accom_name LIKE '%'||#{keyword}||'%' OR a.large_area_name LIKE '%'||#{keyword}||'%')
-        </if>
+        AND (r.accom_name LIKE '%'||#{keyword}||'%' OR a.large_area_name LIKE '%'||#{keyword}||'%')
+  
 
 
     </select>
