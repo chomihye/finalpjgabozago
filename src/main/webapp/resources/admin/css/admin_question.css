@@ -90,6 +90,10 @@ table {
     border-spacing: 0;
 }
 
+.board-table-top {
+    padding-bottom: 50px;
+}
+
 .board_list {
     width: 920px;
     /* padding: 20px 0 35px 0; */
@@ -185,7 +189,7 @@ td {
 }
 
 .notice_table tbody td {
-    padding: 23px 0 24px;
+    padding: 15px 0 15px;
     cursor: auto;
     cursor: initial;
 }
