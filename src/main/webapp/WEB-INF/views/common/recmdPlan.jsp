@@ -37,6 +37,9 @@
           </ul>
 
           <!-- 좋아요 수 -->
+          <c:if test="${idx == null}">
+            
+          </c:if>
           <p class="likeBtn bi bi-suit-heart">&nbsp;${list.likes}</p>
         </div>
 
@@ -71,6 +74,7 @@
 
 
   <div id="planAddModal">
+    
     <div class="modalInner">
       <p>해당 일정을 추가하시겠습니까?</p>
       <div class="addController">
@@ -96,31 +100,24 @@
       },
     });
 
-    function ajaxtest() {
-      $.ajax({
-        url: "main",
-        type: "GET",
-        success: function () { alert("성공") },
-        error: function () { alert("실패") }
-      })
-    }
-
     $(function () {
       $('.likeBtn').click(function () {
 
         ajaxtest();
-        // if ($(this).hasClass('bi-suit-heart')) {
-        //   $(this).removeClass('bi-suit-heart');
-        //   $(this).addClass('bi-suit-heart-fill');
-        // } else {
-        //   $(this).removeClass('bi-suit-heart-fill');
-        //   $(this).addClass('bi-suit-heart');
-        // }
+        if ($(this).hasClass('bi-suit-heart')) {
+          $(this).removeClass('bi-suit-heart');
+          $(this).addClass('bi-suit-heart-fill');
+        } else {
+          $(this).removeClass('bi-suit-heart-fill');
+          $(this).addClass('bi-suit-heart');
+        }
       })//click
 
       // 모달 js
       $('.planAdd').click(function () {
-        $("#planAddModal").fadeIn();
+        $("#planAddModal").css('display','block');
+
+
       })
       $('.closeBtn').click(function () {
         $("#planAddModal").fadeOut();
