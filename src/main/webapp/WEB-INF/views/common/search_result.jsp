@@ -69,13 +69,10 @@
         <script src="/resources/accom/js/reservation_main.js"></script>
 
 
-
-
-
     </head>
 
     <body>
-        <!-- <div class="header"></div> -->
+
 
         <jsp:include page="/WEB-INF/views/common/header.jsp" flush="false" />
 
@@ -83,90 +80,107 @@
             <h3>'${keyword}'의 검색 결과입니다.</h3>
             <hr>
         </div>
-        <div class="large_container" id="accom_list_container">
 
-            <c:forEach items="${list}" var="list">
-                <div class="acco_container">
-                    <div class="list">
-                        <a href="javascript:void(0);" class="list_main_name"
-                            onclick="moveToDetailPage('${list.idx}');">${list.accomName}</a>
+        <!-- 검색결과가 1개 이상일 때 -->
+        <c:if test="${not empty list}">
 
-                        <p>
-                            <br />${list.travellargeDTO.largeAreaName}<br />기준인원 2명
-                            <br />${list.accomroomDTO.minPrice}
-                            ~ ${list.accomroomDTO.maxPrice}
-                            <br />
-                        </p>
 
-                        <a href="javascript:void(0);" class="list_reserve"
-                            onclick="moveToDetailPage('${list.idx}');">예약하기</a>
+            <div class="large_container" id="accom_list_container">
+                <c:forEach items="${list}" var="list">
+                    <div class="acco_container">
+                        <div class="list">
+                            <a href="javascript:void(0);" class="list_main_name"
+                                onclick="moveToDetailPage('${list.idx}');">${list.accomName}</a>
+
+                            <p>
+                                <br />${list.travellargeDTO.largeAreaName}<br />기준인원 2명
+                                <br />${list.accomroomDTO.minPrice}
+                                ~ ${list.accomroomDTO.maxPrice}
+                                <br />
+                            </p>
+
+                            <a href="javascript:void(0);" class="list_reserve"
+                                onclick="moveToDetailPage('${list.idx}');">예약하기</a>
+                        </div>
+                        <div class="hotel_picture">
+                            <a href="javascript:void(0);" onclick="moveToDetailPage('${list.idx}');"><img
+                                    src="/resources/acco/img/himg/${list.accomimagesDTO.fileName}" alt="" /></a>
+
+                            <div class="heart_icon ${list.wishlistIdx > 0 ? 'act' : ''}" data-idx="${list.idx}"><i
+                                    class="bi bi-heart-fill"></i></div>
+                        </div>
                     </div>
-                    <div class="hotel_picture">
-                        <a href="javascript:void(0);" onclick="moveToDetailPage('${list.idx}');"><img
-                                src="/resources/acco/img/himg/${list.accomimagesDTO.fileName}" alt="" /></a>
+                </c:forEach>
 
-                        <div class="heart_icon ${list.wishlistIdx > 0 ? 'act' : ''}" data-idx="${list.idx}"><i
-                                class="bi bi-heart-fill"></i></div>
-                    </div>
-                </div>
-            </c:forEach>
+            </div>
 
+            <!-- 페이징 -->
+            <div id="pagination">
+                <form action="#" id="paginationForm">
+                    <!-- 1. 3가지 기준정보(criteria)는 hidden 정보로 제공 -->
+                    <input type="hidden" name="currPage">
 
+                    <!-- 2. PageDTO 객체의 정보를 이용해서, Pagenation 출력 -->
+                    <ul>
+                        <!-- Prev 처리 -->
+                        <li class="frontPage"><a href="/search/result?keyword=${keyword}&currPage=1"><i
+                                    class="bi bi-chevron-double-left"></i></a></li>
 
+                        <c:choose>
+                            <c:when test="${__PAGINATION__.prev}">
+                                <li class="prev"><a
+                                        href="/search/result?keyword=${keyword}&currPage=${__PAGINATION__.startPage - 1}"><i
+                                            class="bi bi-chevron-left"></i></a></li>
+                            </c:when>
+                            <c:otherwise>
+                                <li class="prev"><a href="#"><i class="bi bi-chevron-left"></i></a></li>
+                            </c:otherwise>
+                        </c:choose>
 
+                        <!-- 현재 Pagination 범위에 속한 페이지 번호 목록 출력 -->
+                        <!-- begin부터 end까지 forEach(반복문) -->
+                        <c:forEach var="pageNum" begin="${__PAGINATION__.startPage}" end="${__PAGINATION__.endPage}">
+                            <li class="${pageNum == __PAGINATION__.cri.currPage ? 'currPage' : ''}">
+                                <a href="/search/result?keyword=${keyword}&currPage=${pageNum}">
+                                    <strong>${pageNum}</strong>
+                                </a>
+                            </li>
+                        </c:forEach>
+
+                        <!-- Next 처리 -->
+                        <c:choose>
+                            <c:when test="${__PAGINATION__.next}">
+                                <li class="next"><a
+                                        href="/search/result?keyword=${keyword}&currPage=${__PAGINATION__.endPage + 1}"><i
+                                            class="bi bi-chevron-right"></i></a></li>
+                            </c:when>
+                            <c:otherwise>
+                                <li class="next"><a href="#"><i class="bi bi-chevron-right"></i></a></li>
+                            </c:otherwise>
+                        </c:choose>
+
+                        <li class="backPage"><a
+                                href="/search/result?keyword=${keyword}&currPage=${__PAGINATION__.realEndPage}"><i
+                                    class="bi bi-chevron-double-right"></i></a></li>
+                    </ul>
+                </form>
+            </div>
+        </c:if>
+
+        <div class="emptyResult">
+            <div class="bi bi-emoji-frown"></div>
+            <h3>'${keyword}'의 검색결과가 없습니다.다른 키워드로 검색해보세요</h3>
         </div>
 
-        <!-- 페이징 -->
-        <div id="pagination">
-            <form action="#" id="paginationForm">
-                <!-- 1. 3가지 기준정보(criteria)는 hidden 정보로 제공 -->
-                <input type="hidden" name="currPage">
 
-                <!-- 2. PageDTO 객체의 정보를 이용해서, Pagenation 출력 -->
-                <ul>
-                    <!-- Prev 처리 -->
-                    <li class="frontPage"><a href="/search/result?keyword=${keyword}&currPage=1"><i
-                                class="bi bi-chevron-double-left"></i></a></li>
 
-                    <c:choose>
-                        <c:when test="${__PAGINATION__.prev}">
-                            <li class="prev"><a
-                                    href="/search/result?keyword=${keyword}&currPage=${__PAGINATION__.startPage - 1}"><i
-                                        class="bi bi-chevron-left"></i></a></li>
-                        </c:when>
-                        <c:otherwise>
-                            <li class="prev"><a href="#"><i class="bi bi-chevron-left"></i></a></li>
-                        </c:otherwise>
-                    </c:choose>
 
-                    <!-- 현재 Pagination 범위에 속한 페이지 번호 목록 출력 -->
-                    <!-- begin부터 end까지 forEach(반복문) -->
-                    <c:forEach var="pageNum" begin="${__PAGINATION__.startPage}" end="${__PAGINATION__.endPage}">
-                        <li class="${pageNum == __PAGINATION__.cri.currPage ? 'currPage' : ''}">
-                            <a href="/search/result?keyword=${keyword}&currPage=${pageNum}">
-                                <strong>${pageNum}</strong>
-                            </a>
-                        </li>
-                    </c:forEach>
 
-                    <!-- Next 처리 -->
-                    <c:choose>
-                        <c:when test="${__PAGINATION__.next}">
-                            <li class="next"><a
-                                    href="/search/result?keyword=${keyword}&currPage=${__PAGINATION__.endPage + 1}"><i
-                                        class="bi bi-chevron-right"></i></a></li>
-                        </c:when>
-                        <c:otherwise>
-                            <li class="next"><a href="#"><i class="bi bi-chevron-right"></i></a></li>
-                        </c:otherwise>
-                    </c:choose>
 
-                    <li class="backPage"><a
-                            href="/search/result?keyword=${keyword}&currPage=${__PAGINATION__.realEndPage}"><i
-                                class="bi bi-chevron-double-right"></i></a></li>
-                </ul>
-            </form>
-        </div>
+
+
+
+
 
 
 

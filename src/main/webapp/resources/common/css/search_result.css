@@ -42,6 +42,7 @@ a {
   overflow: hidden;
   height: 450px;
 }
+
 /* 여행지,숙소 선택박스 */
 .select_box {
   width: 100%;
@@ -57,21 +58,24 @@ a {
 
   font-weight: 300;
 }
+
 .search_box {
   display: flex;
   width: 100%;
   padding: 12px;
 
 }
+
 .search_box ul {
   display: flex;
   width: 90%;
   justify-content: space-around;
- 
+
 }
 
 
-.search_box .travel_btn ,.person_btn{
+.search_box .travel_btn,
+.person_btn {
   border: none;
   border-bottom: 1px solid black;
   background-color: #fff;
@@ -82,7 +86,7 @@ a {
   text-align: left;
 }
 
-.search_box .datepicker_input{
+.search_box .datepicker_input {
   border: none;
   border-bottom: 1px solid black;
   outline: none;
@@ -92,7 +96,7 @@ a {
 }
 
 
-.search_box .datepicker_input::placeholder{
+.search_box .datepicker_input::placeholder {
   color: #333;
 }
 
@@ -130,6 +134,7 @@ a {
   margin-right: 20px;
   margin-top: 10px;
 }
+
 /* 숙소 부분 */
 .acco {
   font-size: 35px;
@@ -150,8 +155,8 @@ a {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  
-  
+
+
 }
 
 .acco_container {
@@ -163,7 +168,7 @@ a {
 .list {
   display: flex;
   flex-direction: column;
-  justify-content :space-around;
+  justify-content: space-around;
   margin-right: 40px;
   flex: 1;
 }
@@ -189,6 +194,7 @@ a {
   font-size: 25px;
   color: #333;
 }
+
 .list_reserve:hover {
   color: #333;
 }
@@ -206,8 +212,9 @@ a {
 
 .hotel_picture img {
   width: 100%;
- 
+
 }
+
 /* 위시리스트 */
 .heart_icon {
   position: absolute;
@@ -285,6 +292,7 @@ a {
   background-color: rgb(0, 0, 0);
   background-color: rgba(0, 0, 0, 0.5);
 }
+
 .modal_Content {
   /*메인 모달칭*/
   margin: 80px auto 0 auto;
@@ -344,6 +352,7 @@ a {
   border-radius: 20px;
   text-align: center;
 }
+
 .check_wishlist:hover {
   color: #666;
 }
@@ -353,23 +362,27 @@ a {
   /* 제목 */
   margin: 18px 0;
 }
+
 .modal_Content i,
 .modal_content_people i {
   /* 체크 아이콘 */
   color: #68ae6d;
   padding-right: 10px;
 }
+
 .modal_Content p,
 .modal_content_people p {
   /* 본문 폰트 */
   word-break: break-all;
   margin: 20px 0;
 }
+
 .center {
   /* 중앙 정렬 */
   text-align: center;
   margin: 0 auto;
 }
+
 .center.simpleTextSpaceAdd {
   /* 스타일3 모달창 위아래 추가 여백으로 height 조정 */
   margin: 70px 0 50px 0;
@@ -421,6 +434,7 @@ a {
   cursor: pointer;
   margin-left: 25px;
 }
+
 .location_cancel {
   font-size: 16px;
   line-height: 35px;
@@ -466,6 +480,7 @@ a {
   margin-left: 20px;
   border: none;
 }
+
 .plus {
   width: 40px;
   height: 40px;
@@ -486,8 +501,26 @@ a {
   margin: 0 auto;
 
 }
-.resultInfo {
+
+.resultInfo,
+.emptyResult {
   width: 1240px;
   margin: 0 auto;
   margin-top: 50px;
+}
+
+.emptyResult {
+  height: 800px;
+  text-align: center;
+}
+.emptyResult div {
+      font-size: 300px;
+      height: 500px;
+      width: 100%;
+      color: rgba(117, 116, 116, 0.599);
+      text-align: center;
+}
+.emptyResult .resultInfo {
+  text-align: left;
+  height:40px ;
 }
