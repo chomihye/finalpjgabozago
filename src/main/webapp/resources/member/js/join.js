@@ -138,14 +138,19 @@ $(function(){
     }); // 회원가입 완료 모달 확인 버튼 클릭 시 메인페이지 이동
 
     function readImage(input) {
-        if (input.files && input.files[0]) {
+		if (input.files && input.files[0].size > (1 * 1024 * 1024)) {
+        	alert("이미지 사이즈가 1MB를 넘습니다.");
+        	input.value = null;
+        	return false;
+    	} else if (input.files && input.files[0]) {
             const reader = new FileReader();
             
             reader.onload = e => {                
                 $('#profileImgSample').attr('src', e.target.result);
             }
             reader.readAsDataURL(input.files[0]);
-        }// if
+            return true;
+        }// if-else
 	}// readImage
     
     $('#uploadFile').on('change',function(e){
@@ -160,11 +165,12 @@ $(function(){
                 $('#profileImgSample').attr('src', '/resources/member/img/userprofile.jpg'); // input 파일 썸네일 지우기
                 return;
             } else{
-                var lastIndex = filePath.lastIndexOf('\\');
-                var fileName = filePath.substring(lastIndex + 1, filePath.length);
-        
-                $('#imageUploadPlaceHolder').attr('placeholder', fileName); 
-                readImage(e.target); 
+                if(readImage(e.target)){
+	                var lastIndex = filePath.lastIndexOf('\\');
+	                var fileName = filePath.substring(lastIndex + 1, filePath.length);
+	        
+	                $('#imageUploadPlaceHolder').attr('placeholder', fileName); 				
+				} // if
             }// if-else
         }// if
    	}); // 프로필 이미지 첨부 시 파일명 & 샘플 이미지 표시
