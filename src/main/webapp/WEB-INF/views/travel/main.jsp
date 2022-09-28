@@ -256,9 +256,9 @@
                     // dataType : "json", 
                     contentType: "application/json;charset=UTF-8",
                     success : function(data){   
-                        alert("일정 생성을 완료하였습니다");
-                     
-                        self.location = "/travel/plan?planIdx=" 
+                    	 alert("일정 생성을 완료하였습니다");
+                         
+                         self.location = "/travel/plan?planIdx=535" 
 
                     },
                     error : function(request,error) {
@@ -1124,7 +1124,7 @@
                 console.log("containerId:",containerId)
 
                 height = $("#"+containerId).height()
-                height += 115;
+                height += 125;
                 $("#"+containerId).height(height);
                 height = 0;
                 

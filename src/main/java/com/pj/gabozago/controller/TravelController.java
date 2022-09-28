@@ -88,12 +88,12 @@ public class TravelController implements InitializingBean {
 		}//예외 처리 
 		
 
-		return "redirect:/travel/plan";
+		return "redirect:/travel/plan?planIdx=" + planParams.getIdx();
 } // register
 	
 	
 	@GetMapping("/plan")
-	public String selectPlan(@RequestParam("planIdx") Integer planIdx, Model model,RedirectAttributes rttrs) throws ControllerException {
+	public String selectPlan(@RequestParam("planIdx") Integer planIdx, Model model) throws ControllerException {
 		log.trace(">>>>>>plan() invoked.");
 		
 		
