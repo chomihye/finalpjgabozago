@@ -110,7 +110,7 @@
                     <tr>
                         <td class="num">7</td>
                         <td class="title">
-                            <a href="/board/community/read">서울의 랜드마크를 만나다</a>
+                            <a href="/admin/content/read">서울의 랜드마크를 만나다</a>
                         </td>
                         <td class="writer">백설기</td>
                         <td class="date">2022-09-13</td>
@@ -118,7 +118,7 @@
                     <tr>
                         <td class="num">6</td>
                         <td class="title">
-                            <a href="/board/community/read">춘천에서 청정 & 낭만 에너지를 채우다</a>
+                            <a href="/admin/content/read">춘천에서 청정 & 낭만 에너지를 채우다</a>
                         </td>
                         <td class="writer">골멩이</td>
                         <td class="date">2022-09-11</td>
@@ -127,7 +127,7 @@
                     <tr>
                         <td class="num">5</td>
                         <td class="title">
-                            <a href="/board/community/read">자전거와 함께하는 풍경여행</a>
+                            <a href="/admin/content/read">자전거와 함께하는 풍경여행</a>
                         </td>
                         <td class="writer">납평치</td>
                         <td dateclass="writer">2022-09-10</td>
@@ -136,7 +136,7 @@
                     <tr>
                         <td class="num">4</td>
                         <td class="title">
-                            <a href="/board/community/read">온몸으로 즐기는 대구 2박 3일 코스 여행</a>
+                            <a href="/admin/content//read">온몸으로 즐기는 대구 2박 3일 코스 여행</a>
                         </td>
                         <td class="writer">토런스</td>
                         <td class="date">2022-09-06</td>
@@ -145,7 +145,7 @@
                     <tr>
                         <td class="num">3</td>
                         <td class="title">
-                            <a href="/board/community/read">3/1 운동의 정신을 느껴보는 서울 여행</a>
+                            <a href="/admin/content//read">3/1 운동의 정신을 느껴보는 서울 여행</a>
                         </td>
                         <td class="writer">모도리</td>
                         <td class="date">2022-09-03</td>
@@ -162,11 +162,11 @@
                             <th class="ask-title">문의</th>
                         </thead>
                         <tbody>
-                            <td><a href="/board/qna/read">문의드립니다.</a></td>  
-                            <td><a href="/board/qna/read2">문의드립니다.</a></td> 
-                            <td><a href="/board/qna/read2">문의드립니다.</a></td>
-                            <td><a href="/board/qna/read2">문의드립니다.</a></td> 
-                            <td><a href="/board/qna/read2">문의드립니다.</a></td>
+                            <td><a href="/admin/content/qnaRead">문의드립니다.</a></td>  
+                            <td><a href="/admin/content/qnaRead2">문의드립니다.</a></td> 
+                            <td><a href="/admin/content/qnaRead2">문의드립니다.</a></td>
+                            <td><a href="/admin/content/qnaRead2">문의드립니다.</a></td> 
+                            <td><a href="/admin/content/qnaRead2">문의드립니다.</a></td>
                         </tbody>
                     </table>
                 </div>
