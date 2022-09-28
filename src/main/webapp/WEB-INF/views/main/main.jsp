@@ -58,7 +58,7 @@
             var state =1;
             $('.addOkBtn').click(function () {
                 $('#planAddModal').css("display","none");
-                location.href = "travel/othersPlan"
+                location.href = "travel/main"
                 history.pushState('state'+state,'State'+state);
                 state++;
             })
