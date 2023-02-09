@@ -57,7 +57,7 @@
 - 슬라이드를 통해 상세 이미지를 볼 수 있도록 구현
 
 
-### 3️⃣Payment page
+### 4️⃣Payment page
 ![결제](https://user-images.githubusercontent.com/88229797/217471162-ed2e9a4a-28d3-45d9-b20c-ecf676aab6ac.png)
 #### 선택한 숙소의 결제 페이지입니다
 - 예약 정보를 통해 예약한 숙소의 사진과 이름, 원래 가격등의 정보를 확인 할 수 있음
