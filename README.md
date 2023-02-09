@@ -10,6 +10,15 @@
 # 🧭 개발 기간
 22.05 ~ 22.09
 
+# 🖥 사용 기술
+<img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=HTML5&logoColor=white"> <img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=CSS3&logoColor=white"> <img src="https://img.shields.io/badge/Bootstrap-7952B3?style=for-the-badge&logo=Bootstrap&logoColor=white"> <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=JavaScript&logoColor=white"> <img src="https://img.shields.io/badge/jQuery-0769AD?style=for-the-badge&logo=jQuery&logoColor=white">
+
+<img src="https://img.shields.io/badge/java-007396?style=for-the-badge&logo=java&logoColor=white"> <img src="https://img.shields.io/badge/Spring-6DB33F?style=for-the-badge&logo=Spring&logoColor=white">  <img src="https://img.shields.io/badge/Oracle-F80000?style=for-the-badge&logo=Oracle&logoColor=white"> <img src="https://img.shields.io/badge/Apache Tomcat-F8DC75?style=for-the-badge&logo=Apache Tomcat&logoColor=white">
+
+
+
+
+
 # 👩‍💻 팀 구성
 - 조미혜 : 숙박 조회 및 예약, 결제 페이지 담당 및 전체적인 개발 일정 관리, 회의진행 및 회의록 정리 팀원업무 배정
 - 김혜진 : 관리자 페이지 담당 
@@ -61,7 +70,7 @@
 ![결제](https://user-images.githubusercontent.com/88229797/217471162-ed2e9a4a-28d3-45d9-b20c-ecf676aab6ac.png)
 #### 선택한 숙소의 결제 페이지입니다
 - 예약 정보를 통해 예약한 숙소의 사진과 이름, 원래 가격등의 정보를 확인 할 수 있음
-- 포인트 사용 부분을 통해 회원이 가지고 있는 포인트를 사용 입력 가능하며 결제정보의 포인트 사용금액에 바로 반영됨
+- 포인트 사용 부분을 통해 회원이 가지고 있는 포인트를 입력 가능하며 결제정보의 포인트 사용금액에 바로 반영됨
 - 전액 사용 버튼을 통해 가지고 있는 포인트를 전부 사용 할 수 있음
 - 예약자 정보를 통해 회원의 정보를 확인 가능함
 - 약관안내 부분을 통해 결제 약관들을 확인 할 수 있음
